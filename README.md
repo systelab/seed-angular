@@ -1,4 +1,4 @@
-# `seed-angular` — Seed for Angular Systelab projects
+﻿# `seed-angular` — Seed for Angular Systelab projects
 
 This project is an application skeleton for a typical [Angular][Angular] frontend application. You can use it
 to quickly bootstrap your projects and dev environment.
@@ -40,7 +40,7 @@ The `depth=1` tells git to only pull down one commit worth of historical data.
 In order to install the dependencies you must run:
 
 ```
-mpm install
+npm install
 ```
 
 To launch the application you must run:
