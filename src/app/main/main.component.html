@@ -1,0 +1,11 @@
+<systelab-app-frame [userName]="userName" [userFullName]="userFullName" [hospitalName]="hospitalName" [menu]="menu"
+           [tabs]="sidetabs" [actions]="sideactions" (selected)="doSelect($event)">
+  <div header-content>
+    <button class="uk-button" type="button" (click)="patientSearch();">{{'COMMON_PATIENT' | translate | async}}</button>
+  </div>
+  <div main-content>
+    <p>
+      Hello!!!!
+    </p>
+  </div>
+</systelab-app-frame>
