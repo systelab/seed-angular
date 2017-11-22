@@ -1,28 +1,55 @@
-# Seed Angular
+# `seed-angular` — Seed for Angular Systelab projects
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.1.
+This project is an application skeleton for a typical [Angular][Angular] frontend application. You can use it
+to quickly bootstrap your projects and dev environment.
 
-## Development server
+The seed contains a Patient Management sample application and is preconfigured to install the Angular
+framework and a bunch of development and testing tools for instant development gratification.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+The app doesn't do much, just shows how to use different Angular standards and other suggested tools together, including the utilization of the libraries created by Systelab.
 
-## Code scaffolding
+## Getting Started
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+To get you started you can simply clone the `seed-angular` repository and install the dependencies:
 
-## Build
+### Prerequisites
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+You need [git][git] to clone the `seed-angular` repository.
 
-## Running unit tests
+You will need [Node.js][node] and [npm][npm].
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Clone `seed-angular`
 
-## Running end-to-end tests
+Clone the `seed-angular` repository using git:
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+```
+git clone https://github.com/systelab/seed-angular.git
+cd seed-angular
+```
 
-## Further help
+If you just want to start a new project without the `seed-angular` commit history then you can do:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+```
+git clone --depth=1 https://github.com/systelab/seed-angular.git <your-project-name>
+```
+
+The `depth=1` tells git to only pull down one commit worth of historical data.
+
+### Install Dependencies
+
+In order to install the dependencies you must run:
+
+```
+npm install
+```
+
+To launch the application you must run:
+
+```
+ng serve
+```
+
+[git]: https://git-scm.com/
+[npm]: https://www.npmjs.com/
+[node]: https://nodejs.org
+[Angular]: https://angular.io/
