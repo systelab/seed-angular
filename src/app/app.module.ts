@@ -25,38 +25,38 @@ import { LoginComponent } from './login/login.component';
 
 @NgModule({
 
-  imports:         [
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    SystelabTranslateModule.forRoot(),
-    SystelabPreferencesModule.forRoot(),
-    SystelabComponentsModule.forRoot(),
-    SystelabLoginModule.forRoot(),
-    ApiModule.forRoot(),
-    GlobalsModule.forRoot(),
-    AppRoutingModule
-  ],
-  declarations:    [
-    AppComponent,
-    PatientDialog,
-    PatientMaintenanceDialog,
-    PatientGrid,
-    MainComponent,
-    PageNotFoundComponent,
-    LoginComponent
-  ],
-  providers:       [
-    {provide: BASE_PATH, useValue: environment.API_BASE_PATH},
-    LoginGuard,
-    MessagePopupService,
-    DialogService
-  ],
-  entryComponents: [
-    PatientDialog,
-    PatientMaintenanceDialog
-  ],
-  bootstrap:       [AppComponent]
+	imports:         [
+		BrowserModule,
+		FormsModule,
+		HttpClientModule,
+		SystelabTranslateModule.forRoot(),
+		SystelabPreferencesModule.forRoot(),
+		SystelabComponentsModule.forRoot(),
+		SystelabLoginModule.forRoot(),
+		ApiModule.forRoot(),
+		GlobalsModule.forRoot(),
+		AppRoutingModule
+	],
+	declarations:    [
+		AppComponent,
+		PatientDialog,
+		PatientMaintenanceDialog,
+		PatientGrid,
+		MainComponent,
+		PageNotFoundComponent,
+		LoginComponent
+	],
+	providers:       [
+		{provide: BASE_PATH, useValue: environment.API_BASE_PATH},
+		LoginGuard,
+		MessagePopupService,
+		DialogService
+	],
+	entryComponents: [
+		PatientDialog,
+		PatientMaintenanceDialog
+	],
+	bootstrap:       [AppComponent]
 })
 export class AppModule {
 }
