@@ -22,13 +22,11 @@
     "@angular/platform-browser-dynamic": "^4.2.4",
     "@angular/router": "^4.2.4",
     "core-js": "^2.4.1",
-    "pako": "^1.0.6",
     "rxjs": "^5.4.2",
-    "systelab-components": "^1.2.14",
-    "systelab-login": "^0.1.2",
-    "systelab-preferences": "^0.0.5",
-    "systelab-translate": "^0.1.2",
-    "uikit": "^2.27.2",
+    "systelab-components": "^2.0.0",
+    "systelab-login": "^1.0.2",
+    "systelab-preferences": "^1.1.0",
+    "systelab-translate": "^0.1.10",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {
