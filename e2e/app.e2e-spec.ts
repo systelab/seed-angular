@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('anthema App', () => {
+describe('Seed Angular', () => {
   let page: AppPage;
 
   beforeEach(() => {

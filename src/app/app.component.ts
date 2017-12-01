@@ -10,6 +10,7 @@ export class AppComponent {
   constructor(protected i18nService: I18nService) {
     i18nService.use('en')
       .subscribe(
-        () => console.log('Language set to en.'));
+        () => console.log('Language set to en.'),
+        (error) => console.log('Error setting the language.'));
   }
 }

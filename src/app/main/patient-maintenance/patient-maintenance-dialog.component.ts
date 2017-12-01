@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { DialogRef, ModalComponent } from 'angular2-modal';
+import { DialogRef, ModalComponent } from 'ngx-modialog';
 import { I18nService } from 'systelab-translate/lib/i18n.service';
 import { PatientService } from '../../common/api/patient.service';
 import { ModulabModalContext } from 'systelab-components/widgets/modal/plugin/modulab';
