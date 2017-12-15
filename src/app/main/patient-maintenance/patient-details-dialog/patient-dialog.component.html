@@ -1,69 +1,72 @@
 <div class="ngdialog-header">{{title}}</div>
 <div class="ngdialog-message with-buttons">
-  <form
-    class="uk-form uk-form-horizontal uk-form-horizontal-medium uk-panel-space uk-flex uk-flex-column uk-flex-nowrap">
-    <div class="uk-form-row uk-text-right">
-      <systelab-switch id="switch1" name="enabled" [(isChecked)]="check2"></systelab-switch>
+    <div class="d-flex flex-column h-100 p-2">
+
+
+        <form class="w-100" style="overflow-x:hidden;">
+
+            <div class="form-group row text-right"> <!-- Full Name -->
+                <div class="col-sm-12">
+                    <systelab-switch id="switch1" name="enabled" [(isChecked)]="check2"></systelab-switch>
+                </div>
+            </div>
+
+            <div class="form-group row"> <!-- Full Name -->
+                <label for="full_name_id" class="col-sm-2 col-form-label text-truncate">Surname</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" [(ngModel)]="patient.surname" id="surname" name="surname"
+                           placeholder="Surname">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="street1_id" class="col-sm-2 col-form-label text-truncate">Name</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" [(ngModel)]="patient.name" id="name" name="name"
+                           placeholder="Name">
+                </div>
+                <label for="street1_id" class="col-sm-2 col-form-label text-truncate">Email</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" [(ngModel)]="patient.email" id="email" name="email"
+                           placeholder="email@sample.com">
+                </div>
+            </div>
+            <h4>Address</h4>
+
+            <div class="form-group row"> <!-- Full Name -->
+                <label for="full_name_id" class="col-sm-2 col-form-label text-truncate">Street</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" [(ngModel)]="patient.address.street" id="street"
+                           name="street" placeholder="street">
+                </div>
+            </div>
+            <div class="form-group row"> <!-- Full Name -->
+                <label for="full_name_id" class="col-sm-2 col-form-label text-truncate">City</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" [(ngModel)]="patient.address.city" id="city" name="city"
+                           placeholder="city">
+                </div>
+            </div>
+            <div class="form-group row"> <!-- Full Name -->
+                <label for="full_name_id" class="col-sm-2 col-form-label text-truncate">ZIP</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" [(ngModel)]="patient.address.zip" id="zip" name="zip"
+                           placeholder="zip">
+                </div>
+            </div>
+            <div class="form-group row"> <!-- Full Name -->
+                <label for="full_name_id" class="col-sm-2 col-form-label text-truncate">Coordinates</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" [(ngModel)]="patient.address.coordinates" id="coordinates"
+                           name="coordinates" placeholder="coordinates">
+                </div>
+            </div>
+        </form>
     </div>
-    <h4 class="uk-text-bold">General</h4>
-    <div class="uk-form-row">
-      <label class="uk-form-label" for="surname">Surname</label>
-      <div class="uk-form-controls">
-        <div class="uk-width-1-1"><input type="text" [(ngModel)]="patient.surname" id="surname" name="surname"
-                                         placeholder="Surname"></div>
-      </div>
-    </div>
-    <div class="uk-form-row">
-      <label class="uk-form-label" for="name">Name</label>
-      <div class="uk-form-controls">
-        <div class="uk-grid uk-grid-small">
-          <div class="uk-width-2-5"><input type="text" [(ngModel)]="patient.name" id="name" name="name"
-                                           placeholder="Name"></div>
-          <div class="uk-width-1-5"><label class="uk-form-label" for="email">E-Mail</label></div>
-          <div class="uk-width-2-5"><input type="text" [(ngModel)]="patient.email" id="email" name="email"
-                                           placeholder="email@sample.com"></div>
-        </div>
-      </div>
-    </div>
-    <div class="uk-form-row">
-      <label class="uk-form-label" for="conformity"></label>
-      <div class="uk-form-controls">
-        <div class="uk-width-1-1"><input type="checkbox" id="conformity"><label>Privacy delaration fulfilled</label>
-        </div>
-      </div>
-    </div>
-    <h4 class="uk-text-bold">Address</h4>
-    <div class="uk-form-row">
-      <label class="uk-form-label" for="street">Street</label>
-      <div class="uk-form-controls">
-        <div class="uk-width-1-1"><input type="text" id="street" name="street" [(ngModel)]="patient.address.street">
-        </div>
-      </div>
-    </div>
-    <div class="uk-form-row">
-      <label class="uk-form-label" for="city">City</label>
-      <div class="uk-form-controls">
-        <div class="uk-width-1-1"><input type="text" id="city" name="city" [(ngModel)]="patient.address.city"></div>
-      </div>
-    </div>
-    <div class="uk-form-row">
-      <label class="uk-form-label" for="zip">ZIP</label>
-      <div class="uk-form-controls">
-        <div class="uk-width-1-1"><input type="text" id="zip" name="zip" [(ngModel)]="patient.address.zip"></div>
-      </div>
-    </div>
-    <div class="uk-form-row">
-      <label class="uk-form-label" for="coordinates">Coordinates</label>
-      <div class="uk-form-controls">
-        <div class="uk-width-1-1"><input type="text" id="coordinates" name="coordinates"
-                                         [(ngModel)]="patient.address.coordinates"></div>
-      </div>
-    </div>
-  </form>
 </div>
 <div class="ngdialog-buttons">
-  <button type="button" class="uk-button uk-button-large uk-float-right" (click)="performAction()">
-    {{humanReadableAction}}
-  </button>
+    <button type="button" class="btn btn-primary float-right" (click)="performAction()">
+        {{humanReadableAction}}
+    </button>
 </div>
 <div class="ngdialog-close" (click)="close()"></div>

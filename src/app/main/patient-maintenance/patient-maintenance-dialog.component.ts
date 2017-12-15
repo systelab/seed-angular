@@ -12,88 +12,88 @@ import { GridContextMenuOption } from 'systelab-components/widgets/grid/contextm
 import { DialogService } from 'systelab-components/widgets/modal/dialog/dialog.service';
 
 export class PatientMaintenanceDialogParameters extends ModulabModalContext {
-  public width = 900;
-  public height = 550;
+	public width = 900;
+	public height = 550;
 }
 
 @Component({
-  selector:    'patient-maintenance-dialog',
-  templateUrl: 'patient-maintenance-dialog.component.html',
+	selector:    'patient-maintenance-dialog',
+	templateUrl: 'patient-maintenance-dialog.component.html',
 })
 export class PatientMaintenanceDialog extends DefaultModalActions implements ModalComponent<PatientMaintenanceDialogParameters> {
 
-  public parameters: PatientMaintenanceDialogParameters;
+	public parameters: PatientMaintenanceDialogParameters;
 
-  @ViewChild('patientgrid') patientgrid: PatientGrid;
+	@ViewChild('patientgrid') patientgrid: PatientGrid;
 
-  public title = 'Patient management';
+	public title = 'Patient management';
 
-  constructor(public dialog: DialogRef<PatientMaintenanceDialogParameters>,
-              protected dialogService: DialogService, protected i18nService: I18nService,
-              protected patientService: PatientService) {
-    super(dialog);
-    this.parameters = dialog.context;
+	constructor(public dialog: DialogRef<PatientMaintenanceDialogParameters>,
+	            protected dialogService: DialogService, protected i18nService: I18nService,
+	            protected patientService: PatientService) {
+		super(dialog);
+		this.parameters = dialog.context;
 
-  }
+	}
 
-  public close(): void {
-    this.dialog.close(false);
-  }
+	public close(): void {
+		this.dialog.close(false);
+	}
 
-  public static getParameters(): PatientMaintenanceDialogParameters {
-    return new PatientMaintenanceDialogParameters();
-  }
+	public static getParameters(): PatientMaintenanceDialogParameters {
+		return new PatientMaintenanceDialogParameters();
+	}
 
-  public createPatient() {
-    const parameters: PatientDialogParameters = PatientDialog.getParameters();
-    this.dialogService.showDialog(PatientDialog, parameters)
-      .subscribe(
-        (result) => {
-          if (result) {
-            this.patientgrid.refresh();
-          }
-        }
-      );
-  }
+	public createPatient() {
+		const parameters: PatientDialogParameters = PatientDialog.getParameters();
+		this.dialogService.showDialog(PatientDialog, parameters)
+			.subscribe(
+				(result) => {
+					if (result) {
+						this.patientgrid.refresh();
+					}
+				}
+			);
+	}
 
-  public updatePatient(contextMenuActionData: GridContextMenuActionData<Patient>) {
-    this.doSelect(contextMenuActionData.data);
-  }
+	public updatePatient(contextMenuActionData: GridContextMenuActionData<Patient>) {
+		this.doSelect(contextMenuActionData.data);
+	}
 
-  public deletePatient(contextMenuActionData: GridContextMenuActionData<Patient>) {
-    this.patientService.remove(contextMenuActionData.data.id)
-      .subscribe(
-        (result) => console.log('deleted'),
-        (error) => console.log('error')
-      );
-  }
+	public deletePatient(contextMenuActionData: GridContextMenuActionData<Patient>) {
+		this.patientService.remove(contextMenuActionData.data.id)
+			.subscribe(
+				(result) => console.log('deleted'),
+				(error) => console.log('error')
+			);
+	}
 
-  public doSelect(patient: Patient): void {
-    const parameters: PatientDialogParameters = PatientDialog.getParameters();
-    parameters.patientId = patient.id;
+	public doSelect(patient: Patient): void {
+		const parameters: PatientDialogParameters = PatientDialog.getParameters();
+		parameters.patientId = patient.id;
 
-    this.dialogService.showDialog(PatientDialog, parameters)
-      .subscribe(
-        (result) => {
-          if (result) {
-            this.patientgrid.refresh();
-          }
-        }
-      );
-  }
+		this.dialogService.showDialog(PatientDialog, parameters)
+			.subscribe(
+				(result) => {
+					if (result) {
+						this.patientgrid.refresh();
+					}
+				}
+			);
+	}
 
-  public getMenu(): Array<GridContextMenuOption<Patient>> {
-    return [
-      new GridContextMenuOption('action1', 'Update'),
-      new GridContextMenuOption('action2', 'Delete')
-    ];
-  }
+	public getMenu(): Array<GridContextMenuOption<Patient>> {
+		return [
+			new GridContextMenuOption('action1', 'Update'),
+			new GridContextMenuOption('action2', 'Delete')
+		];
+	}
 
-  public doMenuAction(contextMenuActionData: GridContextMenuActionData<Patient>) {
-    if (contextMenuActionData.actionId === 'action1') {
-      this.updatePatient(contextMenuActionData);
-    } else if (contextMenuActionData.actionId === 'action2') {
-      this.deletePatient(contextMenuActionData);
-    }
-  }
+	public doMenuAction(contextMenuActionData: GridContextMenuActionData<Patient>) {
+		if (contextMenuActionData.actionId === 'action1') {
+			this.updatePatient(contextMenuActionData);
+		} else if (contextMenuActionData.actionId === 'action2') {
+			this.deletePatient(contextMenuActionData);
+		}
+	}
 }

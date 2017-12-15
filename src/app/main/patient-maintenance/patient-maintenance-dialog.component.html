@@ -1,18 +1,14 @@
 <div class="ngdialog-header">{{title}}</div>
-<div class="ngdialog-message with-buttons uk-panel-space uk-panel-space-small uk-flex">
-  <patient-grid class="uk-flex-item-1 uk-position-relative" #patientgrid [menu]="getMenu()"
-                (action)="doMenuAction($event)"
-                (clickRow)="doSelect($event)"></patient-grid>
+<div class="ngdialog-message with-buttons">
+    <div class="d-flex flex-column h-100 p-2">
+        <patient-grid  #patientgrid class="position-relative" style="flex:1" [menu]="getMenu()"
+                      (action)="doMenuAction($event)"
+                      (clickRow)="doSelect($event)"></patient-grid>
+    </div>
 </div>
 <div class="ngdialog-buttons">
-  <button type="button" class="uk-button uk-button-large" (click)="patientgrid.showOptions()"><i
-    class="icon-times-circle"></i> Options
-  </button>
-  <button type="button" class="uk-button uk-button-large" (click)="createPatient();"><i class="icon-times-circle"></i>
-    Add
-  </button>
-  <button type="button" class="uk-button uk-button-large uk-align-right" (click)="patientgrid.refresh();"><i
-    class="icon-times-circle"></i> Refresh
-  </button>
+    <button type="button" class="btn btn-primary" (click)="patientgrid.showOptions()"><i class="icon-times-circle"></i>Options</button>
+    <button type="button" class="btn btn-primary" (click)="createPatient();"><i class="icon-times-circle"></i>Add</button>
+    <button type="button" class="btn btn-primary float-right" (click)="patientgrid.refresh();"><i class="icon-times-circle"></i>Refresh</button>
 </div>
 <div class="ngdialog-close" (click)="close()"></div>

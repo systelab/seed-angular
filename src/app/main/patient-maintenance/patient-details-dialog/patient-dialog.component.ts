@@ -10,7 +10,7 @@ import { Address } from '../../../common/model/address';
 export class PatientDialogParameters extends ModulabModalContext {
   public patientId;
   public width = 800;
-  public height = 500;
+  public height = 550;
 }
 
 @Component({
