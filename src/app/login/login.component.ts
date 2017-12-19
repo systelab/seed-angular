@@ -9,12 +9,15 @@ import { UserService } from '../common/api/user.service';
 })
 export class LoginComponent {
 
+  public userName='';
+	public password='';
+
   constructor(protected router: Router, protected userService: UserService, protected apiGlobalsService: ApiGlobalsService) {
 
   }
 
-  public doLogin(credencials:any) {
-    this.userService.authenticateUser('quentinada', 'quentinada')
+  public doLogin() {
+    this.userService.authenticateUser(this.userName, this.password)
       .subscribe(
         (response) => {
           console.log('OK');
