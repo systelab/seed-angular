@@ -9,6 +9,9 @@
       "outDir": "dist",
       "assets": [
         "assets",
+        "assets/img/brand/werfen.png",
+        "assets/img/brand/modulab.svg",
+        "assets/img/background/background.jpg",
         "favicon.ico",
         {
           "glob": "**/*",
@@ -31,6 +34,7 @@
       "prefix": "app",
       "styles": [
         "styles.css",
+        "../node_modules/uikit/dist/css/uikit.almost-flat.css",
         "../node_modules/ag-grid/dist/styles/ag-grid.css",
         "../node_modules/ag-grid/dist/styles/theme-fresh.css",
         "../node_modules/primeng/resources/themes/omega/theme.css",

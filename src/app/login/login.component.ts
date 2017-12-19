@@ -13,7 +13,7 @@ export class LoginComponent {
 
   }
 
-  public doLogin() {
+  public doLogin(credencials:any) {
     this.userService.authenticateUser('quentinada', 'quentinada')
       .subscribe(
         (response) => {
