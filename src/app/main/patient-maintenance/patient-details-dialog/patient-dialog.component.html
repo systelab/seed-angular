@@ -1,72 +1,69 @@
-<div class="slab-dialog-header">{{title}}</div>
-<div class="slab-dialog-message with-buttons">
-    <div class="d-flex flex-column h-100 p-2">
+<systelab-dialog-header [title]="title" (close)="close()"></systelab-dialog-header>
+<div class="slab-flex-1 slab-overflow-container">
 
+    <form class="p-2">
 
-        <form class="w-100" style="overflow-x:hidden;">
+        <div class="form-group row text-right"> <!-- Full Name -->
+            <div class="col-sm-12">
+                <systelab-switch id="switch1" name="enabled" [(isChecked)]="check2"></systelab-switch>
+            </div>
+        </div>
 
-            <div class="form-group row text-right"> <!-- Full Name -->
-                <div class="col-sm-12">
-                    <systelab-switch id="switch1" name="enabled" [(isChecked)]="check2"></systelab-switch>
-                </div>
+        <div class="form-group row"> <!-- Full Name -->
+            <label for="full_name_id" class="col-sm-2 col-form-label text-truncate">Surname</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="patient.surname" id="surname" name="surname"
+                       placeholder="Surname">
             </div>
+        </div>
 
-            <div class="form-group row"> <!-- Full Name -->
-                <label for="full_name_id" class="col-sm-2 col-form-label text-truncate">Surname</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" [(ngModel)]="patient.surname" id="surname" name="surname"
-                           placeholder="Surname">
-                </div>
+        <div class="form-group row">
+            <label for="street1_id" class="col-sm-2 col-form-label text-truncate">Name</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" [(ngModel)]="patient.name" id="name" name="name"
+                       placeholder="Name">
             </div>
+            <label for="street1_id" class="col-sm-2 col-form-label text-truncate">Email</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" [(ngModel)]="patient.email" id="email" name="email"
+                       placeholder="email@sample.com">
+            </div>
+        </div>
+        <h4>Address</h4>
 
-            <div class="form-group row">
-                <label for="street1_id" class="col-sm-2 col-form-label text-truncate">Name</label>
-                <div class="col-sm-4">
-                    <input type="text" class="form-control" [(ngModel)]="patient.name" id="name" name="name"
-                           placeholder="Name">
-                </div>
-                <label for="street1_id" class="col-sm-2 col-form-label text-truncate">Email</label>
-                <div class="col-sm-4">
-                    <input type="text" class="form-control" [(ngModel)]="patient.email" id="email" name="email"
-                           placeholder="email@sample.com">
-                </div>
+        <div class="form-group row"> <!-- Full Name -->
+            <label for="full_name_id" class="col-sm-2 col-form-label text-truncate">Street</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="patient.address.street" id="street"
+                       name="street" placeholder="street">
             </div>
-            <h4>Address</h4>
+        </div>
+        <div class="form-group row"> <!-- Full Name -->
+            <label for="full_name_id" class="col-sm-2 col-form-label text-truncate">City</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="patient.address.city" id="city" name="city"
+                       placeholder="city">
+            </div>
+        </div>
+        <div class="form-group row"> <!-- Full Name -->
+            <label for="full_name_id" class="col-sm-2 col-form-label text-truncate">ZIP</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="patient.address.zip" id="zip" name="zip"
+                       placeholder="zip">
+            </div>
+        </div>
+        <div class="form-group row"> <!-- Full Name -->
+            <label for="full_name_id" class="col-sm-2 col-form-label text-truncate">Coordinates</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="patient.address.coordinates" id="coordinates"
+                       name="coordinates" placeholder="coordinates">
+            </div>
+        </div>
+    </form>
 
-            <div class="form-group row"> <!-- Full Name -->
-                <label for="full_name_id" class="col-sm-2 col-form-label text-truncate">Street</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" [(ngModel)]="patient.address.street" id="street"
-                           name="street" placeholder="street">
-                </div>
-            </div>
-            <div class="form-group row"> <!-- Full Name -->
-                <label for="full_name_id" class="col-sm-2 col-form-label text-truncate">City</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" [(ngModel)]="patient.address.city" id="city" name="city"
-                           placeholder="city">
-                </div>
-            </div>
-            <div class="form-group row"> <!-- Full Name -->
-                <label for="full_name_id" class="col-sm-2 col-form-label text-truncate">ZIP</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" [(ngModel)]="patient.address.zip" id="zip" name="zip"
-                           placeholder="zip">
-                </div>
-            </div>
-            <div class="form-group row"> <!-- Full Name -->
-                <label for="full_name_id" class="col-sm-2 col-form-label text-truncate">Coordinates</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" [(ngModel)]="patient.address.coordinates" id="coordinates"
-                           name="coordinates" placeholder="coordinates">
-                </div>
-            </div>
-        </form>
-    </div>
 </div>
-<div class="slab-dialog-buttons">
+<systelab-dialog-bottom>
     <button type="button" class="btn btn-sm float-right" (click)="performAction()">
         {{humanReadableAction}}
     </button>
-</div>
-<div class="slab-dialog-close" (click)="close()"></div>
+</systelab-dialog-bottom>
