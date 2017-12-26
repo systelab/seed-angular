@@ -9,8 +9,8 @@ import { Address } from '../../../common/model/address';
 
 export class PatientDialogParameters extends ModulabModalContext {
   public patientId;
-  public width = 800;
-  public height = 550;
+  public width = 700;
+  public height = 450;
 }
 
 @Component({
