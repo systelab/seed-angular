@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { SystelabComponentsModule } from 'systelab-components';
 import { SystelabTranslateModule } from 'systelab-translate';
 import { SystelabPreferencesModule } from 'systelab-preferences';
@@ -22,6 +22,7 @@ import { PatientMaintenanceDialog } from './main/patient-maintenance/patient-mai
 import { PatientDialog } from './main/patient-maintenance/patient-details-dialog/patient-dialog.component';
 import { SystelabLoginModule } from 'systelab-login';
 import { LoginComponent } from './login/login.component';
+import { EmptyBodyInterceptor } from './common/api/empty-body.interceptor';
 
 @NgModule({
 
@@ -48,6 +49,7 @@ import { LoginComponent } from './login/login.component';
 	],
 	providers:       [
 		{provide: BASE_PATH, useValue: environment.API_BASE_PATH},
+		{provide: HTTP_INTERCEPTORS, useClass: EmptyBodyInterceptor, multi: true},
 		LoginGuard,
 		MessagePopupService,
 		DialogService
