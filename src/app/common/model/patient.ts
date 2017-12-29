@@ -13,16 +13,16 @@
 import { Address } from './address';
 
 export class Patient {
-  id: number;
-  surname: string;
-  name: string;
-  email: string;
-  dob: Date;
-  address: Address;
+	id: number;
+	surname: string;
+	name: string;
+	email: string;
+	dob: Date;
+	address: Address;
 
-  constructor() {
-    this.address = new Address();
-  }
+	constructor() {
+		this.address = new Address();
+	}
 }
 
 

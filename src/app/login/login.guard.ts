@@ -5,15 +5,15 @@ import { ApiGlobalsService } from '../globals/globals.service';
 @Injectable()
 export class LoginGuard implements CanActivate {
 
-  constructor(private apiGlobalsService: ApiGlobalsService, private router: Router) {
-  }
+	constructor(private apiGlobalsService: ApiGlobalsService, private router: Router) {
+	}
 
-  public canActivate() {
-    if (this.apiGlobalsService.bearer) {
-      return true;
-    } else {
-      this.router.navigate(['/login']);
-      return false;
-    }
-  }
+	public canActivate() {
+		if (this.apiGlobalsService.bearer) {
+			return true;
+		} else {
+			this.router.navigate(['/login']);
+			return false;
+		}
+	}
 }

@@ -7,42 +7,42 @@ import { DialogService } from 'systelab-components/widgets/modal/dialog/dialog.s
 import { PreferencesService } from 'systelab-preferences/lib/preferences.service';
 
 @Component({
-  selector:    'patient-grid',
-  templateUrl: '../../../../node_modules/systelab-components/html/abstract-grid.component.html'
+	selector:    'patient-grid',
+	templateUrl: '../../../../node_modules/systelab-components/html/abstract-grid.component.html'
 })
 export class PatientGrid extends AbstractGrid<Patient> implements AfterViewInit {
 
-  public values: Patient[] = [];
+	public values: Patient[] = [];
 
-  constructor(protected preferencesService: PreferencesService, protected i18nService: I18nService, protected dialogService: DialogService,
-              protected patientService: PatientService) {
+	constructor(protected preferencesService: PreferencesService, protected i18nService: I18nService, protected dialogService: DialogService,
+	            protected patientService: PatientService) {
 
-    super(preferencesService, i18nService, dialogService);
+		super(preferencesService, i18nService, dialogService);
 
-  }
+	}
 
-  public ngAfterViewInit() {
-    this.refresh();
-  }
+	public ngAfterViewInit() {
+		this.refresh();
+	}
 
-  protected getColumnDefs(): Array<any> {
+	protected getColumnDefs(): Array<any> {
 
-    // TODO Translate column names
-    const columnDefs: Array<any> = [
-      {colId: 'name', headerName: 'Name', field: 'name', width: 300},
-      {colId: 'surname', headerName: 'Surname', field: 'surname', width: 300},
-      {colId: 'email', headerName: 'Mail', field: 'email', width: 200}];
-    return columnDefs;
-  }
+		// TODO Translate column names
+		const columnDefs: Array<any> = [
+			{colId: 'name', headerName: 'Name', field: 'name', width: 300},
+			{colId: 'surname', headerName: 'Surname', field: 'surname', width: 300},
+			{colId: 'email', headerName: 'Mail', field: 'email', width: 200}];
+		return columnDefs;
+	}
 
-  public refresh() {
-    this.patientService.getAllPatients()
-      .subscribe(
-        (results) => {
-          this.values = results;
-          this.gridOptions.api.setRowData(this.values);
-        }
-      );
+	public refresh() {
+		this.patientService.getAllPatients()
+			.subscribe(
+				(results) => {
+					this.values = results;
+					this.gridOptions.api.setRowData(this.values);
+				}
+			);
 
-  }
+	}
 }

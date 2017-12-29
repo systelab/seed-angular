@@ -11,10 +11,10 @@
  */
 
 export class Address {
-  coordinates: string;
-  street: string;
-  city: string;
-  zip: string;
+	coordinates: string;
+	street: string;
+	city: string;
+	zip: string;
 
 }
 

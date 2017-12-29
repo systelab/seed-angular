@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiGlobalsService } from '../globals/globals.service';
 import { UserService } from '../common/api/user.service';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
 	selector:    'login',
@@ -23,8 +22,6 @@ export class LoginComponent {
 				(response) => {
 					this.apiGlobalsService.bearer = response.headers.get('Authorization');
 					this.router.navigateByUrl('/main');
-				},
-				(error) => {
 				}
 			);
 	}
