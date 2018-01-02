@@ -3,10 +3,10 @@ import { DialogRef, ModalComponent } from 'ngx-modialog';
 import { I18nService } from 'systelab-translate/lib/i18n.service';
 import { PatientService } from '../../../common/api/patient.service';
 import { Patient } from '../../../common/model/patient';
-import { ModulabModalContext } from 'systelab-components/widgets/modal/plugin/modulab';
 import { Address } from '../../../common/model/address';
+import { SystelabModalContext } from 'systelab-components/widgets/modal';
 
-export class PatientDialogParameters extends ModulabModalContext {
+export class PatientDialogParameters extends SystelabModalContext {
 	public patientId;
 	public width = 700;
 	public height = 450;
