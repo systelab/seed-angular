@@ -4,7 +4,6 @@ import { I18nService } from 'systelab-translate/lib/i18n.service';
 import { PatientService } from '../../../common/api/patient.service';
 import { Patient } from '../../../common/model/patient';
 import { ModulabModalContext } from 'systelab-components/widgets/modal/plugin/modulab';
-import { DefaultModalActions } from 'systelab-components/widgets/modal/message-popup/message-popup-view.component';
 import { Address } from '../../../common/model/address';
 
 export class PatientDialogParameters extends ModulabModalContext {
@@ -17,7 +16,7 @@ export class PatientDialogParameters extends ModulabModalContext {
 	selector:    'patient-dialog',
 	templateUrl: 'patient-dialog.component.html',
 })
-export class PatientDialog extends DefaultModalActions implements ModalComponent<PatientDialogParameters>, OnInit {
+export class PatientDialog implements ModalComponent<PatientDialogParameters>, OnInit {
 
 	public parameters: PatientDialogParameters;
 
@@ -29,7 +28,6 @@ export class PatientDialog extends DefaultModalActions implements ModalComponent
 
 	constructor(public dialog: DialogRef<PatientDialogParameters>, protected i18NService: I18nService,
 	            protected patientService: PatientService) {
-		super(dialog);
 		this.parameters = dialog.context;
 		if (this.parameters.patientId) {
 			this.humanReadableAction = 'Update';

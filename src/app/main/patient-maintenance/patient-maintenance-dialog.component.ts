@@ -3,7 +3,6 @@ import { DialogRef, ModalComponent } from 'ngx-modialog';
 import { I18nService } from 'systelab-translate/lib/i18n.service';
 import { PatientService } from '../../common/api/patient.service';
 import { ModulabModalContext } from 'systelab-components/widgets/modal/plugin/modulab';
-import { DefaultModalActions } from 'systelab-components/widgets/modal/message-popup/message-popup-view.component';
 import { PatientDialog, PatientDialogParameters } from './patient-details-dialog/patient-dialog.component';
 import { PatientGrid } from './patient-grid.component';
 import { GridContextMenuActionData } from 'systelab-components/widgets/grid/contextmenu/grid-context-menu-action-data';
@@ -20,7 +19,7 @@ export class PatientMaintenanceDialogParameters extends ModulabModalContext {
 	selector:    'patient-maintenance-dialog',
 	templateUrl: 'patient-maintenance-dialog.component.html',
 })
-export class PatientMaintenanceDialog extends DefaultModalActions implements ModalComponent<PatientMaintenanceDialogParameters> {
+export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenanceDialogParameters> {
 
 	public parameters: PatientMaintenanceDialogParameters;
 
@@ -31,9 +30,7 @@ export class PatientMaintenanceDialog extends DefaultModalActions implements Mod
 	constructor(public dialog: DialogRef<PatientMaintenanceDialogParameters>,
 	            protected dialogService: DialogService, protected i18nService: I18nService,
 	            protected patientService: PatientService) {
-		super(dialog);
 		this.parameters = dialog.context;
-
 	}
 
 	public close(): void {
