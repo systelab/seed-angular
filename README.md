@@ -49,7 +49,7 @@ To launch the application you must run:
 ng serve
 ```
 
-In order to run the application, you need a backend. A JEE Backend is implemented in the [systelab/seed-jee][https://github.com/systelab/seed-jee] repository.
+In order to run the application, you need a backend. A JEE Backend is implemented in the https://github.com/systelab/seed-jee repository.
 
 [git]: https://git-scm.com/
 [npm]: https://www.npmjs.com/
