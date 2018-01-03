@@ -18,9 +18,6 @@ You need [git][git] to clone the `seed-angular` repository.
 
 You will need [Node.js][node] and [npm][npm].
 
-In order to run the application, you need a backend. A JEE Backend is implemented in the [seed-jee][https://github.com/systelab/seed-jee] repository.
-
-
 ### Clone `seed-angular`
 
 Clone the `seed-angular` repository using git:
@@ -51,6 +48,8 @@ To launch the application you must run:
 ```
 ng serve
 ```
+
+In order to run the application, you need a backend. A JEE Backend is implemented in the [systelab/seed-jee][https://github.com/systelab/seed-jee] repository.
 
 [git]: https://git-scm.com/
 [npm]: https://www.npmjs.com/
