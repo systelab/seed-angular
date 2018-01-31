@@ -15,7 +15,7 @@ describe('Seed Angular', () => {
 		login.getUsernameField().sendKeys('quentinada');
 		login.getPasswordField().sendKeys('wrong password');
 		login.getEnterButton().click();
-		expect(login.getErrorMessage().isPresent());
+		expect(login.getErrorMessage()).toBe('Invalid username or password');
 	});
 
 	it('should enter if password is correct', () => {
@@ -23,6 +23,6 @@ describe('Seed Angular', () => {
 		login.getUsernameField().sendKeys('quentinada');
 		login.getPasswordField().sendKeys('quentinada');
 		login.getEnterButton().click();
-		expect(main.getFullUsernameField().isPresent())
+		expect(main.getFullUsernameField()).toBe('Administrator');
 	});
 });

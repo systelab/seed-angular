@@ -16,6 +16,6 @@ export class LoginPage {
 	}
 
 	getErrorMessage() {
-		return element(by.cssContainingText('.pl-5', 'Invalid username or password'));
+		return element(by.id('popup-message')).getText();
 	}
 }
