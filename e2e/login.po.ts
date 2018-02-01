@@ -1,7 +1,7 @@
 import { browser, by, element } from 'protractor';
 
 export class LoginPage {
-	navigateTo() {
+	navigateToHomePage() {
 		return browser.get('/');
 	}
 
@@ -12,10 +12,10 @@ export class LoginPage {
 		return element(by.id('inputPassword'));
 	}
 	getEnterButton() {
-		return element(by.cssContainingText('.btn', 'Enter'));
+		return element(by.buttonText('Enter'));
 	}
 
 	getErrorMessage() {
-		return element(by.id('popup-message')).getText();
+		return element(by.id('popup-message'));
 	}
 }

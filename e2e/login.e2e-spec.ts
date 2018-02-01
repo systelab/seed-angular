@@ -1,7 +1,7 @@
 import { LoginPage } from './login.po';
 import { MainPage } from './main.po';
 
-describe('Seed Angular', () => {
+describe('Seed Angular: Login', () => {
 	let login: LoginPage;
 	let main: MainPage;
 
@@ -10,19 +10,19 @@ describe('Seed Angular', () => {
 		main = new MainPage();
 	});
 
-	it('should display an error message if password is not correct', () => {
-		login.navigateTo();
+	it('Should display an error message if password is not correct', () => {
+		login.navigateToHomePage();
 		login.getUsernameField().sendKeys('quentinada');
 		login.getPasswordField().sendKeys('wrong password');
 		login.getEnterButton().click();
-		expect(login.getErrorMessage()).toBe('Invalid username or password');
+		expect(login.getErrorMessage().getText()).toBe('Invalid username or password');
 	});
 
-	it('should enter if password is correct', () => {
-		login.navigateTo();
+	it('Should enter if password is correct', () => {
+		login.navigateToHomePage();
 		login.getUsernameField().sendKeys('quentinada');
 		login.getPasswordField().sendKeys('quentinada');
 		login.getEnterButton().click();
-		expect(main.getFullUsernameField()).toBe('Administrator');
+		expect(main.getFullUsernameField().getText()).toBe('Administrator');
 	});
 });
