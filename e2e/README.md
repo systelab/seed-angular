@@ -9,24 +9,26 @@ Modify the standard protractor.conf.js in order to set a list of browsers to tes
 Initially was:
 
 ```javascript
-	capabilities:      {
-		'browserName': 'chrome'
-	},
-	directConnect:     true,
+    capabilities: {
+        'browserName': 'chrome'
+    },
+    directConnect: true,
 ```
 
 And has been changed to:
 
 ```javascript
     multiCapabilities: [{
-       'browserName': 'firefox'
+        'browserName': 'firefox'
     }, {
-       'browserName': 'chrome'
+        'browserName': 'chrome'
     }, {
-       'browserName': 'safari'
+        'browserName': 'safari'
     }],
-    seleniumAddress:   'http://localhost:4444/wd/hub',
+    seleniumAddress: 'http://localhost:4444/wd/hub',
 ```
+
+## Install and run a local Selenium server
 
 Install the Selenium server and the browser driver manager:
 
