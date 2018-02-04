@@ -18,6 +18,9 @@ export class PatientListPage {
 		return element.all(by.css('.ag-body-container div.ag-row'));
 	}
 
+	clickRow(n: number) {
+		return element.all(by.css('div[row-index="' + n + '"] div.ag-cell-value')).get(1).click();
+	}
 
 	getOptionsButton() {
 		return element(by.buttonText('Options'));

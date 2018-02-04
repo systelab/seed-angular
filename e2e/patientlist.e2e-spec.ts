@@ -2,6 +2,7 @@ import { LoginPage } from './login.po';
 import { MainPage } from './main.po';
 import { PatientListPage } from './patientlist.po';
 import { PatientPage } from './patient.po';
+import { browser } from 'protractor';
 
 describe('Seed Angular: Patient List', () => {
 	let login: LoginPage;
@@ -32,13 +33,19 @@ describe('Seed Angular: Patient List', () => {
 		});
 	});
 
-	it('Should have the expected row data', () => {
+	it('Should have the expected data in the second row', () => {
 		patientlist.getRow(1).map(function (cell) {
 			return cell.getText();
 		}).then(function (cellValues) {
-			expect(cellValues).toEqual(['', 'Alex', 'Johanson', 'ajohanson@gmail.com']);
+			expect(cellValues[1]).toEqual('Alex');
+			expect(cellValues[2]).toEqual('Johanson');
 		});
 	});
 
+	it('Should open the Update dialog for the second row and have the expected data', () => {
+		patientlist.clickRow(1);
+		expect(patient.getNameField().getAttribute('value')).toBe('Alex');
+		expect(patient.getSurnameField().getAttribute('value')).toBe('Johanson');
+	});
 });
 
