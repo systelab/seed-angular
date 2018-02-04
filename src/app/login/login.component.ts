@@ -18,7 +18,7 @@ export class LoginComponent {
 
 	}
 
-	public doLogin() {
+	public doLogin(event:any) {
 		if (this.userName && this.password) {
 			this.userService.authenticateUser(this.userName, this.password)
 				.subscribe(
