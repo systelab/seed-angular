@@ -2,7 +2,7 @@
 
 In order to create a native desktop app, you will need [electron.js][electron]. Electron is a framework that will allow you build cross platform desktop apps with JavaScript, HTML, and CSS.
 
-Specially important is the [autoUpdater API](https://electronjs.org/docs/api/auto-updater) that enable apps to automatically update themselves.
+> Specially important is the [autoUpdater API](https://electronjs.org/docs/api/auto-updater) that enable apps to automatically update themselves.
 
 To install Electron you have to run the following commands:
 
