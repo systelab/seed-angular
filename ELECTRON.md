@@ -85,7 +85,7 @@ Once this has been doing, run the following command to run and test the applicat
 npm run electron
 ```
 
-##Generate native files
+## Generate native files
 
 Electron Packager generates executables/bundles for the following target platforms:
 
