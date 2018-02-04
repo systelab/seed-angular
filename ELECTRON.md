@@ -1,6 +1,6 @@
-# Create a desktop app.
+# Going native with Electron
 
-In order to create a native desktop app, you will need [electron.js][electron]. Electron is a framework that will allow you build cross platform desktop apps with JavaScript, HTML, and CSS
+In order to create a native desktop app, you will need [electron.js][electron]. Electron is a framework that will allow you build cross platform desktop apps with JavaScript, HTML, and CSS.
 
 In order to install electron you have to run the following commands:
 
@@ -8,9 +8,9 @@ In order to install electron you have to run the following commands:
 npm install electron -g
 ```
 
-Once you have installed electron, you must create a new files in the app root folder named main.js
+Once you have installed Electron, you have to create a new file in the app root folder named main.js
 
-The content of the file will be:
+The content of the file should be something similar to this:
 
 ```javascript
 const {app, BrowserWindow} = require('electron')
@@ -53,7 +53,7 @@ app.on('activate', () => {
 })
 ```
 
-And you must add the following lines in the package.json file:
+Also, you must add the following lines in the package.json file:
 
 ```json
   "main": "main.js",
@@ -77,7 +77,7 @@ Finally, update your index.html file to let electron find your files (change the
   </script>
 ```
 
-Once this has been doing, run the following command to run and test the application
+Once this has been doing, run the following command to run and test the application:
 
 ```bash
 npm run electron
@@ -103,7 +103,7 @@ Run the following command to generate the native OS X application files.
 npm run electron-mac-generator
 ```
 
-Check the [Electron Packager](https://github.com/electron-userland/electron-packager) for detailed information on how to generate for the different platforms.
+Check the [Electron Packager documentation](https://github.com/electron-userland/electron-packager) for detailed information on how to generate for the different platforms.
 
 [electron]: https://electronjs.org/
 
