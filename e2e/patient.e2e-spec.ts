@@ -2,6 +2,7 @@ import { LoginPage } from './login.po';
 import { MainPage } from './main.po';
 import { PatientListPage } from './patientlist.po';
 import { PatientPage } from './patient.po';
+import { browser } from 'protractor';
 
 describe('Seed Angular: Patient', () => {
 	let login: LoginPage;
@@ -32,7 +33,7 @@ describe('Seed Angular: Patient', () => {
 		patient.getNameField().sendKeys('Alex');
 		patient.getSurnameField().sendKeys('Johanson');
 		const today= new Date();
-		const timestamp = today.getFullYear() + '.' + today.getMonth() + '.' + today.getDate();
+		const timestamp = today.getFullYear() + '.' + today.getMonth() + '.' + today.getDate() + '.' + today.getHours() + '.' + today.getMinutes();
 		patient.getEMailField().sendKeys('ajohanson' + timestamp + '@gmail.com');
 		patient.getCreateButton().click();
 		patientlist.getRefreshButton().click();
@@ -51,5 +52,16 @@ describe('Seed Angular: Patient', () => {
 		patient.getCreateButton().click();
 		expect(patient.getErrorMessage().isPresent());
 	});
+
+	it('Should be possible to update a patient', () => {
+			patientlist.clickRow(0);
+			const today = new Date();
+			const timestamp = today.getFullYear() + '.' + today.getMonth() + '.' + today.getDate() + '.' + today.getHours() + '.' + today.getMinutes();
+			patient.getEMailField().clear();
+			patient.getEMailField().sendKeys('ajohanson' + timestamp + '@gmail.com');
+			patient.getUpdateButton().click();
+			patientlist.getRefreshButton().click();
+			expect(patientlist.getCellWithValue('ajohanson' + timestamp + '@gmail.com').isPresent());
+		});
 
 });

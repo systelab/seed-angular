@@ -33,7 +33,7 @@ describe('Seed Angular: Patient List', () => {
 		});
 	});
 
-	it('Should have the expected data in the second row', () => {
+	it('Should have the expected data in a given row', () => {
 		patientlist.getRow(1).map(function (cell) {
 			return cell.getText();
 		}).then(function (cellValues) {
@@ -42,10 +42,15 @@ describe('Seed Angular: Patient List', () => {
 		});
 	});
 
-	it('Should open the Update dialog for the second row and have the expected data', () => {
-		patientlist.clickRow(1);
-		expect(patient.getNameField().getAttribute('value')).toBe('Alex');
-		expect(patient.getSurnameField().getAttribute('value')).toBe('Johanson');
+	it('Should open a dialog and have the expected data for a given row', () => {
+		patientlist.getRow(1).map(function (cell) {
+			return cell.getText();
+		}).then(function (cellValues) {
+			patientlist.clickRow(1);
+			expect(patient.getNameField().getAttribute('value')).toBe(cellValues[1]);
+			expect(patient.getSurnameField().getAttribute('value')).toBe(cellValues[2]);
+			expect(patient.getEMailField().getAttribute('value')).toBe(cellValues[3]);
+		});
 	});
 });
 
