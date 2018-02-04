@@ -2,13 +2,15 @@
 
 In order to create a native desktop app, you will need [electron.js][electron]. Electron is a framework that will allow you build cross platform desktop apps with JavaScript, HTML, and CSS.
 
-In order to install electron you have to run the following commands:
+Specially important is the [autoUpdater API](https://electronjs.org/docs/api/auto-updater) that enable apps to automatically update themselves.
+
+To install Electron you have to run the following commands:
 
 ```bash
 npm install electron -g
 ```
 
-Once you have installed Electron, you have to create a new file in the app root folder named main.js
+Once you have installed Electron, you have to create a new file in the project root folder named main.js
 
 The content of the file should be something similar to this:
 
