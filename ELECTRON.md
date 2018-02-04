@@ -65,7 +65,7 @@ Also, you must add the following lines in the package.json file:
     "electron-aot": "ng build --prod && electron .",
     "electron-mac-generator": "electron-packager . --platform=darwin --electron-version=1.6.2"
   },
-``
+```
 
 Finally, update your index.html file to let Electron find your files (change the base href) and add the required dependencies:
 
