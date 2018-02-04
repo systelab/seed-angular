@@ -67,7 +67,7 @@ Also, you must add the following lines in the package.json file:
   },
 ``
 
-Finally, update your index.html file to let electron find your files (change the base href) and add the required dependencies:
+Finally, update your index.html file to let Electron find your files (change the base href) and add the required dependencies:
 
 ```html
   <base href="./">
