@@ -22,14 +22,14 @@ You will need [Node.js][node] and [npm][npm].
 
 Clone the `seed-angular` repository using git:
 
-```
+```bash
 git clone https://github.com/systelab/seed-angular.git
 cd seed-angular
 ```
 
 If you just want to start a new project without the `seed-angular` commit history then you can do:
 
-```
+```bash
 git clone --depth=1 https://github.com/systelab/seed-angular.git <your-project-name>
 ```
 
@@ -37,19 +37,25 @@ The `depth=1` tells git to only pull down one commit worth of historical data.
 
 ### Install Dependencies
 
-In order to install the dependencies you must run:
+To install the dependencies you must run:
 
-```
+```bash
 npm install
 ```
 
 To launch the application you must run:
 
-```
+```bash
 ng serve
 ```
 
 In order to run the application, you need a backend. A JEE Backend is implemented in the https://github.com/systelab/seed-jee repository.
+
+## Going native
+
+Follow the [instructions](ELECTRON.md) to generate native desktop applications.
+
+
 
 [git]: https://git-scm.com/
 [npm]: https://www.npmjs.com/
