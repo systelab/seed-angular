@@ -99,7 +99,7 @@ export class MainComponent implements OnInit {
 	public changePassword(oldPassword: string, newPassword: string): Observable<boolean> {
 		console.log(this.title);
 		if (oldPassword === newPassword) {
-			this.messagePopupService.showErrorPopup('Impossible to change password', 'uk-width-1-3 uk-height-1-3');
+			this.messagePopupService.showErrorPopup('Error', 'Impossible to change password');
 
 			return Observable.of(false);
 		}
