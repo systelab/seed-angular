@@ -51,17 +51,21 @@ ng serve
 
 In order to run the application, you need a backend. A JEE Backend is implemented in the https://github.com/systelab/seed-jee repository.
 
-## Build docker image
+## Docker
 
-There is an Automated Build Task in Docker Cloud in order to build the Docker Image. Autobuild triggers a new build with every git push to your source code repository.
+### Build docker image
 
-You can allways manually create the image with the following command:
+There is an Automated Build Task in Docker Cloud in order to build the Docker Image. 
+Autobuild triggers a new build with every git push to your source code repository to create a 'latest' image.
+There is another build rule to trigger a new tag and create a 'version-x.y.z' image
+
+You can always manually create the image with the following command:
 
 ```bash
 docker build -t systelab/seed-angular . 
 ```
 
-## Run the container
+### Run the container
 
 ```bash
 docker run -d -p 8080:80 systelab/seed-angular
@@ -69,7 +73,7 @@ docker run -d -p 8080:80 systelab/seed-angular
 
 The app will be available at http://localhost:8080
 
-You can easily tweak the nginx config in nginx/default.conf
+You can easily tweak the nginx config in [nginx/default.conf](nginx/default.conf), for example to [configure the server as https](http://nginx.org/en/docs/http/configuring_https_servers.html)
 
 ## Going native
 
