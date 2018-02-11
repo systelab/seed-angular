@@ -29,7 +29,6 @@ COPY nginx/default.conf /etc/nginx/conf.d/
 COPY nginx/start.sh /etc/nginx/
 
 ## Make start command executable
-USER root
 RUN chmod +x /etc/nginx/start.sh
 
 ## Remove default nginx website
