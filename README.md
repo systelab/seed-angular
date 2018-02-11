@@ -56,7 +56,7 @@ In order to run the application, you need a backend. A JEE Backend is implemente
 ### Build docker image
 
 There is an Automated Build Task in Docker Cloud in order to build the Docker Image. 
-Autobuild triggers a new build with every git push to your source code repository to create a 'latest' image.
+This task, triggers a new build with every git push to your source code repository to create a 'latest' image.
 There is another build rule to trigger a new tag and create a 'version-x.y.z' image
 
 You can always manually create the image with the following command:
@@ -65,15 +65,30 @@ You can always manually create the image with the following command:
 docker build -t systelab/seed-angular . 
 ```
 
+The image created, will contain a [nginx server][nginx] with the application files.
+
+Nginx (pronounced engine-x) is a free, open-source, high-performance HTTP server and reverse proxy, as well as an IMAP/POP3 proxy server. It's known for its high performance, stability, rich feature set, simple configuration, and low resource consumption.
+
+As of September 2015, Nginx hosts nearly 12.18% (22.2M) of active sites across all domains. It powers several high-visibility sites, such as Netflix, Hulu, Pinterest, Cloudflare, Airbnb, WordPress.com, GitHub, ...
+
+You can easily tweak the nginx config in [nginx/default.conf](nginx/default.conf), for example to [configure the server as https](http://nginx.org/en/docs/http/configuring_https_servers.html)
+
+
 ### Run the container
 
 ```bash
-docker run -d -p 8080:80 systelab/seed-angular
+docker run -d -p 8081:80 systelab/seed-angular
 ```
 
-The app will be available at http://localhost:8080
+The app will be available at http://localhost:8081
 
-You can easily tweak the nginx config in [nginx/default.conf](nginx/default.conf), for example to [configure the server as https](http://nginx.org/en/docs/http/configuring_https_servers.html)
+In order to change the backend server, you can set the variable BACKEND, for example:
+
+```bash
+docker run -d -e BACKEND='http://www.dep.com:8080' -p 8081:80 systelab/seed-angular
+```
+
+If not set, the default value will be http://localhost:8080
 
 ## Going native
 
@@ -85,3 +100,4 @@ Follow the [instructions](ELECTRON.md) to generate native desktop applications.
 [npm]: https://www.npmjs.com/
 [node]: https://nodejs.org
 [Angular]: https://angular.io/
+[nginx]: https://nginx.org/
