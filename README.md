@@ -75,7 +75,6 @@ As of September 2015, Nginx hosts nearly 12.18% (22.2M) of active sites across a
 
 You can easily tweak the nginx config in [nginx/default.conf](nginx/default.conf), for example to [configure the server as https](http://nginx.org/en/docs/http/configuring_https_servers.html)
 
-
 ### Run the container
 
 ```bash
