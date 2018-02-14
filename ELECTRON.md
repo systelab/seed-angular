@@ -107,5 +107,6 @@ npm run electron-mac-generator
 
 Check the [Electron Packager documentation](https://github.com/electron-userland/electron-packager) for detailed information on how to generate for the different platforms.
 
+
 [electron]: https://electronjs.org/
 
