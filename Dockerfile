@@ -23,10 +23,10 @@ RUN $(npm bin)/ng build --prod --build-optimizer
 FROM nginx:1.13.3-alpine
 
 ## Copy our default nginx config
-COPY nginx/default.conf /etc/nginx/conf.d/
+COPY docker/nginx/default.conf /etc/nginx/conf.d/
 
 ## Copy the start command
-COPY nginx/start.sh /etc/nginx/
+COPY docker/nginx/start.sh /etc/nginx/
 
 ## Make start command executable
 RUN chmod +x /etc/nginx/start.sh
