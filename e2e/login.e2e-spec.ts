@@ -12,7 +12,7 @@ describe('Seed Angular: Login', () => {
 
 	it('Should display an error message if password is not correct', () => {
 		login.navigateToHomePage();
-		login.getUsernameField().sendKeys('quentinada');
+		login.getUsernameField().sendKeys('Systelab');
 		login.getPasswordField().sendKeys('wrong password');
 		login.getEnterButton().click();
 		expect(login.getErrorMessage().getText()).toBe('Invalid username or password');
@@ -20,8 +20,8 @@ describe('Seed Angular: Login', () => {
 
 	it('Should enter if password is correct', () => {
 		login.navigateToHomePage();
-		login.getUsernameField().sendKeys('quentinada');
-		login.getPasswordField().sendKeys('quentinada');
+		login.getUsernameField().sendKeys('Systelab');
+		login.getPasswordField().sendKeys('Systelab');
 		login.getEnterButton().click();
 		expect(main.getFullUsernameField().getText()).toBe('Administrator');
 	});
