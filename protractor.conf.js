@@ -1,8 +1,3 @@
-// Protractor configuration file, see link for more information
-// https://github.com/angular/protractor/blob/master/lib/config.ts
-
-var SpecReporter = require('jasmine-spec-reporter').SpecReporter;
-
 exports.config = {
 	allScriptsTimeout: 11000,
 	specs:             [
@@ -29,13 +24,16 @@ exports.config = {
 		browser.driver.manage().window().setSize(width, height);
 		browser.manage().timeouts().implicitlyWait(15000);
 
-		require('ts-node')
-			.register({
-				project: 'e2e/tsconfig.e2e.json'
-			});
+		require('ts-node').register({
+			project: 'e2e/tsconfig.e2e.json'
+		});
 
-		jasmine.getEnv()
-			.addReporter(new SpecReporter({spec: {displayStacktrace: true}}));
+		var SpecReporter = require('jasmine-spec-reporter').SpecReporter;
+		jasmine.getEnv().addReporter(new SpecReporter({
+			spec: {
+				displayStacktrace: true
+			}
+		}));
 
 		var AllureReporter = require('jasmine-allure-reporter');
 		jasmine.getEnv().addReporter(new AllureReporter({
@@ -43,6 +41,7 @@ exports.config = {
 				resultsDir: 'e2e/allure-results'
 			}
 		}));
+		
 		jasmine.getEnv().afterEach(function (done) {
 			browser.takeScreenshot().then(function (png) {
 				allure.createAttachment('Screenshot', function () {
