@@ -44,7 +44,6 @@ describe('Seed Angular: Login', () => {
 		allure.severity(allure.SEVERITY.BLOCKER);
 		allure.feature('Login');
 		allure.story('Login Story');
-		allure.link
 		navigateToHomePage();
 		setUserNameAndPassword('Systelab', 'Systelab');
 		allure.createStep('Click on Enter button', function(){})();
