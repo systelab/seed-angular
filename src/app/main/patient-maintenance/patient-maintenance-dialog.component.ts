@@ -1,8 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { DialogRef, ModalComponent } from 'ngx-modialog';
 import { I18nService } from 'systelab-translate/lib/i18n.service';
 import { PatientService } from '../../common/api/patient.service';
-import { DialogService, SystelabModalContext } from 'systelab-components/widgets/modal';
+import { DialogRef, DialogService, ModalComponent, SystelabModalContext } from 'systelab-components/widgets/modal';
 import { PatientDialog, PatientDialogParameters } from './patient-details-dialog/patient-dialog.component';
 import { PatientGrid } from './patient-grid.component';
 import { GridContextMenuActionData } from 'systelab-components/widgets/grid/contextmenu/grid-context-menu-action-data';
