@@ -1,14 +1,14 @@
 import { ModuleWithProviders, NgModule, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpModule } from '@angular/http';
 import { PatientService } from './api/patient.service';
 import { UserService } from './api/user.service';
 import { GlobalsModule } from '../globals/globals.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
 	imports:      [
 		CommonModule,
-		HttpModule,
+		HttpClientModule,
 		GlobalsModule],
 	declarations: [],
 	exports:      []
