@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/systelab/seed-angular.svg?branch=master)](https://travis-ci.org/systelab/seed-angular)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/88aef97b995c4bd0ae6e7e615b663ec5)](https://www.codacy.com/app/alfonsserra/seed-angular?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=systelab/seed-angular&amp;utm_campaign=Badge_Grade)
 
 # `seed-angular` — Seed for Angular Systelab projects
