@@ -3,12 +3,10 @@ exports.config = {
 	specs:             [
 		'./e2e/**/*.e2e-spec.ts'
 	],
-	multiCapabilities: [{
-		'browserName': 'firefox'
-	}, {
+	capabilities: {
 		'browserName': 'chrome'
-	}],
-	seleniumAddress:   'http://localhost:4444/wd/hub',
+	},
+	directConnect: true,
 	baseUrl:           'http://localhost:4200/',
 	framework:         'jasmine',
 	jasmineNodeOpts:   {
