@@ -3,6 +3,8 @@ dist: trusty
 language: node_js
 node_js:
   - 7
+services:
+  - docker
 addons:
   apt:
     sources:
@@ -12,6 +14,11 @@ addons:
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
+before_install:
+  - docker pull mysql:latest
+  - docker run -e MYSQL_ROOT_PASSWORD=supersecret -e MYSQL_DATABASE=SEED -e MYSQL_USER=SEED -e MYSQL_PASSWORD=SEED -p 3307:3306 mysql:latest
+  - docker pull systelab/seed-jee
+  - docker run -e MYSQL_HOST=127.0.0.1 -e MYSQL_PORT=3306 -e MYSQL_DATABASE=SEED -e MYSQL_USER=SEED -e MYSQL_PASSWORD=SEED -p 8080:8080 systelab/seed-jee
 install:
   - npm install
 script:
