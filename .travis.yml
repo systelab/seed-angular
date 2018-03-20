@@ -16,9 +16,9 @@ before_script:
   - sh -e /etc/init.d/xvfb start
 before_install:
   - docker pull mysql:latest
-  - docker run -d --network host -e MYSQL_ROOT_PASSWORD=supersecret -e MYSQL_DATABASE=SEED -e MYSQL_USER=SEED -e MYSQL_PASSWORD=SEED mysql:latest
-  - docker pull systelab/seed-jee
-  - docker run -d --network host -e MYSQL_HOST=127.0.0.1 -e MYSQL_PORT=3306 -e MYSQL_DATABASE=SEED -e MYSQL_USER=SEED -e MYSQL_PASSWORD=SEED systelab/seed-jee:latest
+  - docker run --link db:db -d -e MYSQL_HOST=db -e MYSQL_PORT=3306 -e MYSQL_DATABASE=SEED -e MYSQL_USER=SEED -e MYSQL_PASSWORD=SEED -p 8080:8080 systelab/seed-jee:latest
+  - docker pull systelab/seed-jee:latest
+  - docker run --name db -d -e MYSQL_ROOT_PASSWORD=supersecret -e MYSQL_DATABASE=SEED -e MYSQL_USER=SEED -e MYSQL_PASSWORD=SEED -p 3306:3306  mysql:latest
 install:
   - npm install
 script:
