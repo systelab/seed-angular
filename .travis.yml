@@ -1,0 +1,25 @@
+sudo: required
+dist: trusty
+language: node_js
+node_js:
+  - 7
+services:
+  - docker
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+before_script:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+before_install:
+  - docker pull mysql:latest
+  - docker run --name db -d -e MYSQL_ROOT_PASSWORD=supersecret -e MYSQL_DATABASE=SEED -e MYSQL_USER=SEED -e MYSQL_PASSWORD=SEED -p 3307:3306  mysql:latest
+  - docker pull systelab/seed-jee:latest
+  - docker run --link db:db -d -e MYSQL_HOST=db -e MYSQL_PORT=3306 -e MYSQL_DATABASE=SEED -e MYSQL_USER=SEED -e MYSQL_PASSWORD=SEED -p 8080:8080 systelab/seed-jee:latest
+install:
+  - npm install
+script:
+  - npm run e2e

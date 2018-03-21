@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/systelab/seed-angular.svg?branch=master)](https://travis-ci.org/systelab/seed-angular)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/88aef97b995c4bd0ae6e7e615b663ec5)](https://www.codacy.com/app/alfonsserra/seed-angular?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=systelab/seed-angular&amp;utm_campaign=Badge_Grade)
+
 # `seed-angular` — Seed for Angular Systelab projects
 
 This project is an application skeleton for a typical [Angular][Angular] frontend application. You can use it
@@ -42,14 +45,15 @@ To install the dependencies you must run:
 ```bash
 npm install
 ```
+### Run
 
-To launch the application you must run:
+To run the application use the following command:
 
 ```bash
 ng serve
 ```
 
-In order to run the application, you need a backend. A JEE Backend is implemented in the https://github.com/systelab/seed-jee repository.
+In order to login, you need a backend. A JEE Backend is implemented in the https://github.com/systelab/seed-jee repository. A .net Backend is implemented in the https://github.com/systelab/seed-dotnet repository.
 
 ## Docker
 
@@ -72,7 +76,6 @@ Nginx (pronounced engine-x) is a free, open-source, high-performance HTTP server
 As of September 2015, Nginx hosts nearly 12.18% (22.2M) of active sites across all domains. It powers several high-visibility sites, such as Netflix, Hulu, Pinterest, Cloudflare, Airbnb, WordPress.com, GitHub, ...
 
 You can easily tweak the nginx config in [nginx/default.conf](nginx/default.conf), for example to [configure the server as https](http://nginx.org/en/docs/http/configuring_https_servers.html)
-
 
 ### Run the container
 

@@ -18,8 +18,8 @@ describe('Seed Angular: Patient List', () => {
 		patient = new PatientPage();
 
 		login.navigateToHomePage();
-		login.getUsernameField().sendKeys('quentinada');
-		login.getPasswordField().sendKeys('quentinada');
+		login.getUsernameField().sendKeys('Systelab');
+		login.getPasswordField().sendKeys('Systelab');
 		login.getEnterButton().click();
 		main.getPatientButton().click();
 	});
