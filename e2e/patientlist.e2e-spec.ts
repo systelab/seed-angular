@@ -34,7 +34,7 @@ describe('Seed Angular: Patient List', () => {
 	});
 
 	it('Should have the expected data in a given row', () => {
-		patientlist.getRow(1).map(function (cell) {
+		patientlist.getRow(0).map(function (cell) {
 			return cell.getText();
 		}).then(function (cellValues) {
 			expect(cellValues[1]).toEqual('Alex');
@@ -43,10 +43,10 @@ describe('Seed Angular: Patient List', () => {
 	});
 
 	it('Should open a dialog and have the expected data for a given row', () => {
-		patientlist.getRow(1).map(function (cell) {
+		patientlist.getRow(0).map(function (cell) {
 			return cell.getText();
 		}).then(function (cellValues) {
-			patientlist.clickRow(1);
+			patientlist.clickRow(0);
 			expect(patient.getNameField().getAttribute('value')).toBe(cellValues[1]);
 			expect(patient.getSurnameField().getAttribute('value')).toBe(cellValues[2]);
 			expect(patient.getEMailField().getAttribute('value')).toBe(cellValues[3]);
