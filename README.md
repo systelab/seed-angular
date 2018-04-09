@@ -97,6 +97,9 @@ If not set, the default value will be http://localhost:8080
 
 Follow the [instructions](ELECTRON.md) to generate native desktop applications.
 
+## Scaffolding
+
+Take a look at [generator-systelab-angular repository](https://github.com/systelab/generator-systelab-angular), a [Yeoman ][yo] generator to scaffold a project based on the libraries and best practices used in this project.
 
 
 [git]: https://git-scm.com/
@@ -104,3 +107,4 @@ Follow the [instructions](ELECTRON.md) to generate native desktop applications.
 [node]: https://nodejs.org
 [Angular]: https://angular.io/
 [nginx]: https://nginx.org/
+[yo]: http://yeoman.io/
