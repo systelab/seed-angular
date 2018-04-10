@@ -57,10 +57,7 @@ export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenan
 
 	public deletePatient(contextMenuActionData: GridContextMenuActionData<Patient>) {
 		this.patientService.remove(contextMenuActionData.data.id)
-			.subscribe(
-				(result) => console.log('deleted'),
-				(error) => console.log('error')
-			);
+			.subscribe(result => this.patientgrid.refresh(), error => console.log('error'));
 	}
 
 	public doSelect(patient: Patient): void {
