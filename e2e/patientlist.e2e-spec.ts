@@ -2,7 +2,8 @@ import { LoginPage } from './login.po';
 import { MainPage } from './main.po';
 import { PatientListPage } from './patientlist.po';
 import { PatientPage } from './patient.po';
-import { browser } from 'protractor';
+
+declare const allure: any;
 
 describe('Seed Angular: Patient List', () => {
 	let login: LoginPage;
@@ -10,8 +11,10 @@ describe('Seed Angular: Patient List', () => {
 	let patientlist: PatientListPage;
 	let patient: PatientPage;
 
-
 	beforeEach(() => {
+		allure.addLabel('tms', 'TC0001_PatientManagement_e2e');
+		allure.addLabel('feature', 'Patient Test Suite.\n\nGoal:\n Check that is possible to manage a patient.\n\nEnvironment: A simple browser\nPreconditions:\nN/A.');
+
 		login = new LoginPage();
 		main = new MainPage();
 		patientlist = new PatientListPage();
@@ -24,7 +27,7 @@ describe('Seed Angular: Patient List', () => {
 		main.getPatientButton().click();
 	});
 
-	it('Should have the expected column headers', () => {
+	it('The patient grid should have the expected column headers', () => {
 		patientlist.getTableHeaderCells()
 			.map(function (header) {
 				return header.getText()
@@ -33,7 +36,7 @@ describe('Seed Angular: Patient List', () => {
 		});
 	});
 
-	it('Should have the expected data in a given row', () => {
+	it('The patient grid should have the expected data in a given row', () => {
 		patientlist.getRow(0).map(function (cell) {
 			return cell.getText();
 		}).then(function (cellValues) {
@@ -42,7 +45,7 @@ describe('Seed Angular: Patient List', () => {
 		});
 	});
 
-	it('Should open a dialog and have the expected data for a given row', () => {
+	it('Should open a patient dialog and have the expected data for a given row in the patient grid', () => {
 		patientlist.getRow(0).map(function (cell) {
 			return cell.getText();
 		}).then(function (cellValues) {

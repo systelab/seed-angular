@@ -19,17 +19,15 @@ describe('Seed Angular: Login', () => {
 	}
 
 	beforeEach(() => {
+		allure.addLabel('tms', 'TC0002_LoginManagement_e2e');
+		allure.addLabel('feature', 'Login Test Suite.\n\nGoal:\n Check the login page.\n\nEnvironment: A simple browser\nPreconditions:\nN/A.');
 		login = new LoginPage();
 		main = new MainPage();
 	});
 
 	it('Should display an error message if password is not correct', () => {
-		allure.addLabel('testId', 'TEST-1');
-		allure.addLabel('issue', 'ISSUE-1');
-		allure.description('Should display an error message if password is not correct');
 		allure.severity(allure.SEVERITY.BLOCKER);
-		allure.feature('Login');
-		allure.story('Login Story');
+		allure.story('Login');
 		navigateToHomePage();
 		setUserNameAndPassword('Systelab', 'wrong password');
 		allure.createStep('Click on Enter button', function(){})();
@@ -39,11 +37,9 @@ describe('Seed Angular: Login', () => {
 	});
 
 	it('Should enter if password is correct', () => {
-		allure.addLabel('testId', 'TEST-2');
 		allure.description('Should enter if password is correct');
 		allure.severity(allure.SEVERITY.BLOCKER);
-		allure.feature('Login');
-		allure.story('Login Story');
+		allure.story('Login');
 		navigateToHomePage();
 		setUserNameAndPassword('Systelab', 'Systelab');
 		allure.createStep('Click on Enter button', function(){})();

@@ -2,7 +2,8 @@ import { LoginPage } from './login.po';
 import { MainPage } from './main.po';
 import { PatientListPage } from './patientlist.po';
 import { PatientPage } from './patient.po';
-import { browser } from 'protractor';
+
+declare const allure: any;
 
 describe('Seed Angular: Patient', () => {
 	let login: LoginPage;
@@ -11,8 +12,10 @@ describe('Seed Angular: Patient', () => {
 	let patient: PatientPage;
 	let initialNumOfRows = 0;
 
-
 	beforeEach(() => {
+		allure.addLabel('tms', 'TC0001_PatientManagement_e2e');
+		allure.addLabel('feature', 'Patient Test Suite.\n\nGoal:\n Check that is possible to manage a patient.\n\nEnvironment: A simple browser\nPreconditions:\nN/A.');
+
 		login = new LoginPage();
 		main = new MainPage();
 		patientlist = new PatientListPage();
@@ -40,7 +43,7 @@ describe('Seed Angular: Patient', () => {
 		expect(patientlist.getCellWithValue('ajohanson' + timestamp + '@gmail.com').isPresent());
 	});
 
-	it('Should have incremented the number of rows of the grid', () => {
+	it('The patient grid should have incremented the number of rows after adding a patient', () => {
 		patientlist.getNumberOfRows().then((value) => expect(value === initialNumOfRows + 1));
 	});
 
@@ -53,7 +56,7 @@ describe('Seed Angular: Patient', () => {
 		expect(patient.getErrorMessage().isPresent());
 	});
 
-	it('Should be possible to update a patient', () => {
+	it('Should be possible to update a patient if all fields are correct', () => {
 			patientlist.clickRow(0);
 			const today = new Date();
 			const timestamp = today.getFullYear() + '.' + today.getMonth() + '.' + today.getDate() + '.' + today.getHours() + '.' + today.getMinutes();
