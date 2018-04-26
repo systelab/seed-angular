@@ -9,31 +9,26 @@ import { _throw } from 'rxjs/observable/throw';
 @Injectable()
 export class EmptyBodyInterceptor implements HttpInterceptor {
 
-	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-		return next.handle(req)
-			.pipe(
-				catchError(response => {
-						if (response instanceof HttpErrorResponse) {
+	intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+		return next.handle(request)
+			.pipe(catchError(response => {
+				if (response instanceof HttpErrorResponse) {
 
-							// Check if this error has a 2xx status
-							if (this.is2xxStatus(response)) {
+					// Check if this error has a 2xx status
+					if (this.is2xxStatus(response)) {
 
-								// Convert the error to a standard response with a null body and then return
-								return of(new HttpResponse({
-									headers:    response.headers,
-									status:     response.status,
-									statusText: response.statusText,
-									url:        response.url
-								}));
-							}
-
-						}
-
-						// This is a real error, rethrow
-						return _throw(response);
+						// Convert the error to a standard response with a null body and then return
+						return of(new HttpResponse({
+							headers:    response.headers,
+							status:     response.status,
+							statusText: response.statusText,
+							url:        response.url
+						}));
 					}
-				)
-			);
+				}
+				// This is a real error, rethrow
+				return _throw(response);
+			}));
 	}
 
 	private is2xxStatus(response: HttpResponseBase) {

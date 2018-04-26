@@ -25,7 +25,6 @@ import { LoginComponent } from './login/login.component';
 import { EmptyBodyInterceptor } from './common/api/empty-body.interceptor';
 
 @NgModule({
-
 	imports:         [
 		BrowserModule,
 		FormsModule,

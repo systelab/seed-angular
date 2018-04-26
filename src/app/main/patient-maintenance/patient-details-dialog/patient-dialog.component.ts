@@ -19,7 +19,7 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 
 	public parameters: PatientDialogParameters;
 
-	public check2 = true;
+	public active = true;
 	public title = '';
 	public humanReadableAction = '';
 
@@ -45,8 +45,7 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 		if (this.parameters.patientId) {
 
 			this.patientService.getPatient(this.parameters.patientId)
-				.subscribe(
-					(response) => {
+				.subscribe((response) => {
 						if (!response.address) {
 							response.address = new Address();
 						}
@@ -60,7 +59,7 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 		this.dialog.close(false);
 	}
 
-	public performAction() {
+	public doPerformAction() {
 		if (this.parameters.patientId) {
 			this.updatePatient(this.patient);
 		} else {
@@ -70,8 +69,7 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 
 	private createPatient(patient: Patient) {
 		this.patientService.createPatient(patient)
-			.subscribe(
-				(result) => {
+			.subscribe((result) => {
 					this.dialog.close(true);
 				},
 				(error) => console.log('Error')
@@ -80,8 +78,7 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 
 	private updatePatient(patient: Patient) {
 		this.patientService.updatePatient(patient.id, patient)
-			.subscribe(
-				(result) => {
+			.subscribe((result) => {
 					this.dialog.close(true);
 				},
 				(error) => console.log('Error')

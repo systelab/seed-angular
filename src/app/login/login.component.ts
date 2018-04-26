@@ -15,10 +15,9 @@ export class LoginComponent {
 
 	constructor(protected router: Router, protected userService: UserService, protected apiGlobalsService: ApiGlobalsService,
 	            protected messagePopupService: MessagePopupService) {
-
 	}
 
-	public doLogin(event:any) {
+	public doLogin(event: any) {
 		if (this.userName && this.password) {
 			this.userService.authenticateUser(this.userName, this.password)
 				.subscribe(
