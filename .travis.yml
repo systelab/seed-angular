@@ -16,7 +16,7 @@ before_script:
   - sh -e /etc/init.d/xvfb start
 before_install:
   - docker pull mysql:5.7.22
-  - docker run --name db -d -e MYSQL_ROOT_PASSWORD=supersecret -e MYSQL_DATABASE=SEED -e MYSQL_USER=SEED -e MYSQL_PASSWORD=SEED -p 3307:3306  mysql:latest
+  - docker run --name db -d -e MYSQL_ROOT_PASSWORD=supersecret -e MYSQL_DATABASE=SEED -e MYSQL_USER=SEED -e MYSQL_PASSWORD=SEED -p 3307:3306  mysql:5.7.22
   - docker pull systelab/seed-jee:latest
   - docker run --link db:db -d -e MYSQL_HOST=db -e MYSQL_PORT=3306 -e MYSQL_DATABASE=SEED -e MYSQL_USER=SEED -e MYSQL_PASSWORD=SEED -p 8080:8080 systelab/seed-jee:latest
 install:
