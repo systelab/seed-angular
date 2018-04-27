@@ -8,14 +8,18 @@ describe('Seed Angular: Login', () => {
 	let main: MainPage;
 
 	function navigateToHomePage() {
-		allure.createStep('Opening main page', function(){})();
+		allure.createStep('Opening main page', function() {
+		})();
 		login.navigateToHomePage();
 	}
 
 	function setUserNameAndPassword(userName: string, password: string) {
-		allure.createStep(`Set username as '${userName}' and password as '${password}'`, function(){})();
-		login.getUsernameField().sendKeys(userName);
-		login.getPasswordField().sendKeys(password);
+		allure.createStep(`Set username as '${userName}' and password as '${password}'`, function() {
+		})();
+		login.getUsernameField()
+			.sendKeys(userName);
+		login.getPasswordField()
+			.sendKeys(password);
 	}
 
 	beforeEach(() => {
@@ -25,15 +29,20 @@ describe('Seed Angular: Login', () => {
 		main = new MainPage();
 	});
 
-	it('Should display an error message if password is not correct', () => {
+	it('Shall display an error message if password is not correct', () => {
 		allure.severity(allure.SEVERITY.BLOCKER);
 		allure.story('Login');
 		navigateToHomePage();
 		setUserNameAndPassword('Systelab', 'wrong password');
-		allure.createStep('Click on Enter button', function(){})();
-		login.getEnterButton().click();
-		allure.createStep('Check that I have an error', function(){})();
-		expect(login.getErrorMessage().getText()).toBe('Invalid username or password');
+		allure.createStep('Perform Login', function() {
+		})();
+		login.getEnterButton()
+			.click();
+		allure.createStep('The application returns an error', function() {
+		})();
+		expect(login.getErrorMessage()
+			.getText())
+			.toBe('Invalid username or password');
 	});
 
 	it('Should enter if password is correct', () => {
@@ -42,9 +51,14 @@ describe('Seed Angular: Login', () => {
 		allure.story('Login');
 		navigateToHomePage();
 		setUserNameAndPassword('Systelab', 'Systelab');
-		allure.createStep('Click on Enter button', function(){})();
-		login.getEnterButton().click();
-		allure.createStep('Check that I see the main page', function(){})();
-		expect(main.getFullUsernameField().getText()).toBe('Administrator');
+		allure.createStep('Click on Enter button', function() {
+		})();
+		login.getEnterButton()
+			.click();
+		allure.createStep('Check that I see the main page', function() {
+		})();
+		expect(main.getFullUsernameField()
+			.getText())
+			.toBe('Administrator');
 	});
 });
