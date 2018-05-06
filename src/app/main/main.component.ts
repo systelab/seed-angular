@@ -1,3 +1,5 @@
+
+import {of as observableOf,  Observable } from 'rxjs';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { I18nService } from 'systelab-translate/lib/i18n.service';
 import { ApiGlobalsService } from '../globals/globals.service';
@@ -8,7 +10,6 @@ import { PatientMaintenanceDialog, PatientMaintenanceDialogParameters } from './
 import { ApplicationHeaderMenuEntry } from 'systelab-components/widgets/applicationframe/header/app-header.component';
 import { ApplicationSidebarAction, ApplicationSidebarTab } from 'systelab-components/widgets/applicationframe/sidebar/app-sidebar.component';
 import { ChangePasswordDialog, ChangePasswordDialogParameters } from 'systelab-login/widgets/change-password-dialog.component';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
 	selector:    'main',
@@ -118,8 +119,8 @@ export class MainComponent implements OnInit {
 	public changePassword(oldPassword: string, newPassword: string): Observable<boolean> {
 		if (oldPassword === newPassword) {
 			this.messagePopupService.showErrorPopup('Error', 'Impossible to change password');
-			return Observable.of(false);
+			return observableOf(false);
 		}
-		return Observable.of(true);
+		return observableOf(true);
 	}
 }
