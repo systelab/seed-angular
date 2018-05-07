@@ -14,5 +14,8 @@ spec:
       containers:
       - name: seed-angular-ctr
         image: systelab/seed-angular:latest
+        env:
+          - name: BACKEND
+            value: "http://seed-jee-svc:8080"
         ports:
         - containerPort: 80
