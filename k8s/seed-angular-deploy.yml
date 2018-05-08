@@ -1,18 +1,22 @@
-apiVersion: v1
-kind: ReplicationController
+apiVersion: extensions/v1beta1
+kind: Deployment
 metadata:
-  name: seed-angular-rc
+  name: seed-angular-deploy
 spec:
   replicas: 5
-  selector:
-    app: seed-angular
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
   template:
     metadata:
       labels:
         app: seed-angular
     spec:
       containers:
-      - name: seed-angular-ctr
+      - name: seed-angular-pod
         image: systelab/seed-angular:latest
         env:
           - name: BACKEND

@@ -14,10 +14,10 @@ Install Minikube according to the instructions for the [latest release](https://
 minikube start --vm-driver=virtualbox
 ```
 
-In order to create the Replication Controller, run:
+In order to create the Deployment, run:
 
 ```bash
-kubectl create -f seed-angular-rc.yml
+kubectl create -f seed-angular-deploy.yml
 ```
 
 To create the Service, run:
