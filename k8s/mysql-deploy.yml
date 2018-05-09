@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mysql-deploy
+spec:
+  replicas: 1
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql-pod
+        image: mysql:5.7.22
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: "supersecret"
+          - name: MYSQL_DATABASE
+            value: "SEED"
+          - name: MYSQL_USER
+            value: "SEED"
+          - name: MYSQL_PASSWORD
+            value: "SEED"
+        ports:
+        - containerPort: 3306

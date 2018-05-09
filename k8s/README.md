@@ -14,17 +14,17 @@ Install Minikube according to the instructions for the [latest release](https://
 minikube start --vm-driver=virtualbox
 ```
 
-In order to create the Deployment, run:
+In order to create the Deployments and services, run:
 
 ```bash
+kubectl create -f mysql-deploy.yml
+kubectl create -f mysql-svc.yml
+kubectl create -f sedd-jee-deploy.yml
+kubectl create -f seed-jee-svc.yml
 kubectl create -f seed-angular-deploy.yml
-```
-
-To create the Service, run:
-
-```bash
 kubectl create -f seed-angular-svc.yml
 ```
+
 
 Get the minikube ip with the following command:
 

@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: seed-jee-deploy
+spec:
+  replicas: 2
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: seed-jee
+    spec:
+      containers:
+      - name: seed-jee-pod
+        image: systelab/seed-jee:latest
+        env:
+          - name: MYSQL_URI
+            value: "mysql-svc:3306"
+          - name: MYSQL_HOST
+            value: "mysql-svc"
+          - name: MYSQL_PORT
+            value: "3306"
+          - name: MYSQL_DATABASE
+            value: "SEED"
+          - name: MYSQL_USER
+            value: "SEED"
+          - name: MYSQL_PASSWORD
+            value: "SEED"
+        ports:
+        - containerPort: 8080

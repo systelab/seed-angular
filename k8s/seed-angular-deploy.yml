@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: seed-angular-deploy
 spec:
-  replicas: 5
+  replicas: 2
   minReadySeconds: 10
   strategy:
     type: RollingUpdate
