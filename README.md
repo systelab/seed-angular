@@ -94,6 +94,10 @@ docker run -d -e BACKEND='http://www.dep.com:8080' -p 8081:80 systelab/seed-angu
 
 If not set, the default value will be http://localhost:8080
 
+### Run in Kubernetes
+
+Check the instructions in the [k8s folder](k8s)
+
 ## Going native
 
 Follow the [instructions](ELECTRON.md) to generate native desktop applications.
