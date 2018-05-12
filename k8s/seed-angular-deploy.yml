@@ -20,6 +20,6 @@ spec:
         image: systelab/seed-angular:latest
         env:
           - name: BACKEND
-            value: "http://seed-jee-svc:8080"
+            value: "http://192.168.99.100:30002"
         ports:
         - containerPort: 80
