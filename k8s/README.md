@@ -25,6 +25,7 @@ kubectl create -f seed-angular-deploy.yml
 kubectl create -f seed-angular-svc.yml
 ```
 
+> Before running, update the file seed-angular-deploy.yml and set the seed-angular-pod environment BACKEND variable to reflect your cluster IP value.
 
 Get the minikube ip with the following command:
 
