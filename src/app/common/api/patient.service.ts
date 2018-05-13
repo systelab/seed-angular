@@ -5,7 +5,9 @@ import { Patient } from '../model/patient';
 import { BASE_PATH } from '../variables';
 import { ApiGlobalsService } from '../../globals/globals.service';
 
-@Injectable()
+@Injectable({
+	providedIn: 'root'
+})
 export class PatientService {
 
 	protected basePath = 'http://localhost/seed/v1';
