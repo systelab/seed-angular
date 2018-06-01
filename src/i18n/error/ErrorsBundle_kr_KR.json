@@ -1,0 +1,6 @@
+{
+  "ERR_GEN_004": "일반 오류",
+  "ERR_IMPOSSIBLE_CHANGE_PASSWORD": "불가능한 비밀번호 변경",
+  "ERR_ERROR": "오류",
+  "ERR_INVALID_USERNAME_PASSWORD": "잘못된 사용자 이름 또는 암호"
+}
