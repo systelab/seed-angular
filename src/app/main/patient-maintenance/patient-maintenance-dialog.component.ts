@@ -6,6 +6,7 @@ import { PatientGrid } from './patient-grid.component';
 import { GridContextMenuActionData } from 'systelab-components/widgets/grid/contextmenu/grid-context-menu-action-data';
 import { Patient } from '../../common/model/patient';
 import { GridContextMenuOption } from 'systelab-components/widgets/grid/contextmenu/grid-context-menu-option';
+import { I18nService } from 'systelab-translate/lib/i18n.service';
 
 export class PatientMaintenanceDialogParameters extends SystelabModalContext {
 	public width = 900;
@@ -13,7 +14,7 @@ export class PatientMaintenanceDialogParameters extends SystelabModalContext {
 }
 
 @Component({
-	selector:    'patient-maintenance-dialog',
+	selector: 'patient-maintenance-dialog',
 	templateUrl: 'patient-maintenance-dialog.component.html',
 })
 export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenanceDialogParameters> {
@@ -22,10 +23,14 @@ export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenan
 
 	@ViewChild('patientgrid') patientgrid: PatientGrid;
 
-	public title = 'Patient management';
+	public title = '';
 
-	constructor(public dialog: DialogRef<PatientMaintenanceDialogParameters>, protected dialogService: DialogService, protected patientService: PatientService) {
+	constructor(public dialog: DialogRef<PatientMaintenanceDialogParameters>, protected dialogService: DialogService, protected patientService: PatientService, protected i18nService: I18nService) {
 		this.parameters = dialog.context;
+		i18nService.get('COMMON_PATIENT_MANAGEMENT').subscribe((res) => {
+			this.title = res;
+		});
+
 	}
 
 	public close(): void {
@@ -63,10 +68,11 @@ export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenan
 	}
 
 	public getMenu(): Array<GridContextMenuOption<Patient>> {
-		return [
-			new GridContextMenuOption('action1', 'Update'),
-			new GridContextMenuOption('action2', 'Delete')
-		];
+		const menuDefs: Array<GridContextMenuOption<Patient>> = [];
+		this.i18nService.get(['COMMON_UPDATE', 'COMMON_DELETE']).subscribe((res) => {
+			menuDefs.push(new GridContextMenuOption('action1', res.COMMON_UPDATE), new GridContextMenuOption('action2', res.COMMON_DELETE));
+		});
+		return menuDefs;
 	}
 
 	public doMenuAction(contextMenuActionData: GridContextMenuActionData<Patient>) {

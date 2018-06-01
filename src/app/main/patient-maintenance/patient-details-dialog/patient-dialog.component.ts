@@ -12,7 +12,7 @@ export class PatientDialogParameters extends SystelabModalContext {
 }
 
 @Component({
-	selector:    'patient-dialog',
+	selector: 'patient-dialog',
 	templateUrl: 'patient-dialog.component.html',
 })
 export class PatientDialog implements ModalComponent<PatientDialogParameters>, OnInit {
@@ -26,14 +26,19 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 	public patient = new Patient();
 
 	constructor(public dialog: DialogRef<PatientDialogParameters>, protected i18NService: I18nService,
-	            protected patientService: PatientService) {
+		protected patientService: PatientService) {
 		this.parameters = dialog.context;
 		if (this.parameters.patientId) {
-			this.humanReadableAction = 'Update';
-			this.title = 'Update patient';
+			i18NService.get(['COMMON_UPDATE', 'COMMON_UPDATE_PATIENT']).subscribe((res) => {
+				this.humanReadableAction = res.COMMON_UPDATE;
+				this.title = res.COMMON_UPDATE_PATIENT;
+			});
 		} else {
-			this.humanReadableAction = 'Create';
-			this.title = 'Create patient';
+			i18NService.get(['COMMON_CREATE', 'COMMON_CREATE_PATIENT']).subscribe((res) => {
+				this.humanReadableAction = res.COMMON_CREATE;
+				this.title = res.COMMON_CREATE_PATIENT;
+			});
+
 		}
 	}
 
@@ -46,11 +51,11 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 
 			this.patientService.getPatient(this.parameters.patientId)
 				.subscribe((response) => {
-						if (!response.address) {
-							response.address = new Address();
-						}
-						this.patient = response;
+					if (!response.address) {
+						response.address = new Address();
 					}
+					this.patient = response;
+				}
 				);
 		}
 	}
@@ -70,8 +75,8 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 	private createPatient(patient: Patient) {
 		this.patientService.createPatient(patient)
 			.subscribe((result) => {
-					this.dialog.close(true);
-				},
+				this.dialog.close(true);
+			},
 				(error) => console.log('Error')
 			);
 	}
@@ -79,8 +84,8 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 	private updatePatient(patient: Patient) {
 		this.patientService.updatePatient(patient.id, patient)
 			.subscribe((result) => {
-					this.dialog.close(true);
-				},
+				this.dialog.close(true);
+			},
 				(error) => console.log('Error')
 			);
 	}

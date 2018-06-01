@@ -1,11 +1,13 @@
-<systelab-app-frame [userName]="userName" [userFullName]="userFullName" [hospitalName]="hospitalName" [menu]="menu"
-           [tabs]="sidetabs" [actions]="sideactions" (selected)="doSelect($event)">
-  <div header-content>
-    <button type="button" class="btn" (click)="doPatientSearch();">{{'COMMON_PATIENT' | translate | async}}</button>
+<systelab-app-frame [userName]="userName" [userFullName]="userFullName" [hospitalName]="hospitalName" [menu]="menu" [tabs]="sidetabs"
+  [actions]="sideactions" (selected)="doSelect($event)">
+  <div header-content class="row justify-content-end mr-3">
+    <systelab-select class="float-left col-md-4 mr-3" [description]="desLanguage" [values]="comboOptionList" (change)="comboChangeEvent($event)">
+    </systelab-select>
+    <button type="button" class="btn float-left" (click)="doPatientSearch();">{{'COMMON_PATIENT' | translate | async}}</button>
   </div>
   <div main-content>
     <p>
-      Hello!!!!
+      {{'COMMON_WELCOME' | translate | async}}
     </p>
   </div>
 </systelab-app-frame>

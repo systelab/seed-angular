@@ -7,7 +7,7 @@ import { DialogService } from 'systelab-components/widgets/modal/dialog/dialog.s
 import { PreferencesService } from 'systelab-preferences/lib/preferences.service';
 
 @Component({
-	selector:    'patient-grid',
+	selector: 'patient-grid',
 	templateUrl: '../../../../node_modules/systelab-components/html/abstract-grid.component.html'
 })
 export class PatientGrid extends AbstractGrid<Patient> implements AfterViewInit {
@@ -23,11 +23,13 @@ export class PatientGrid extends AbstractGrid<Patient> implements AfterViewInit 
 	}
 
 	protected getColumnDefs(): Array<any> {
-
-		const columnDefs: Array<any> = [
-			{colId: 'name', headerName: 'Name', field: 'name', width: 300},
-			{colId: 'surname', headerName: 'Surname', field: 'surname', width: 300},
-			{colId: 'email', headerName: 'Mail', field: 'email', width: 200}];
+		const columnDefs: Array<any> = [];
+		this.i18nService.get(['COMMON_NAME', 'COMMON_SURNAME', 'COMMON_MAIL']).subscribe((res) => {
+			columnDefs.push(
+				{ colId: 'name', headerName: res.COMMON_NAME, field: 'name', width: 300 },
+				{ colId: 'surname', headerName: res.COMMON_SURNAME, field: 'surname', width: 300 },
+				{ colId: 'email', headerName: res.COMMON_MAIL, field: 'email', width: 200 });
+		});
 		return columnDefs;
 	}
 

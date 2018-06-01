@@ -6,10 +6,10 @@
 
 </div>
 <systelab-dialog-bottom>
-    <button type="button" class="btn mr-1" (click)="patientgrid.showOptions()"><i class="icon-times-circle mr-1"></i>Options
+    <button type="button" class="btn mr-1" (click)="patientgrid.showOptions()"><i class="icon-times-circle mr-1"></i>{{'COMMON_OPTIONS' | translate | async}}
     </button>
-    <button type="button" class="btn" (click)="doCreatePatient();"><i class="icon-times-circle mr-1"></i>Add</button>
+    <button type="button" class="btn" (click)="doCreatePatient();"><i class="icon-times-circle mr-1"></i>{{'COMMON_ADD' | translate | async}}</button>
     <button type="button" class="btn ml-auto" (click)="patientgrid.refresh();"><i
-            class="icon-times-circle mr-1"></i>Refresh
+            class="icon-times-circle mr-1"></i>{{'COMMON_REFRESH' | translate | async}}
     </button>
 </systelab-dialog-bottom>

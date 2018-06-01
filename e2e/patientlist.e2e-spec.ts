@@ -32,7 +32,7 @@ describe('Seed Angular: Patient List', () => {
 			.map(function (header) {
 				return header.getText()
 			}).then(function (headers) {
-			expect(headers).toEqual(['', 'Name', 'Surname', 'Mail']);
+			expect(headers).toEqual(['', 'Name', 'Surname', 'Email']);
 		});
 	});
 
