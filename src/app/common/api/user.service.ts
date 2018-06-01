@@ -4,39 +4,16 @@ import { Observable } from 'rxjs';
 import { User } from '../model/user';
 import { BASE_PATH } from '../variables';
 import { ApiGlobalsService } from '../../globals/globals.service';
+import { BaseService } from './base.service';
 
 @Injectable({
 	providedIn: 'root'
 })
-export class UserService {
-
-	protected basePath = 'http://localhost/seed/v1';
-	public defaultHeaders = new HttpHeaders();
+export class UserService extends BaseService {
 
 	constructor(protected httpClient: HttpClient, protected apiGlobalsService: ApiGlobalsService,
 	            @Optional() @Inject(BASE_PATH) basePath: string) {
-		if (basePath) {
-			this.basePath = basePath;
-		}
-	}
-
-	/**
-	 * @param consumes string[] mime-types
-	 * @return true: consumes contains 'multipart/form-data', false: otherwise
-	 */
-	private canConsumeForm(consumes: string[]): boolean {
-		const form = 'multipart/form-data';
-		for (const consume of consumes) {
-			if (form === consume) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public isJsonMime(mime: string): boolean {
-		const jsonMime: RegExp = new RegExp('^(application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(;.*)?$', 'i');
-		return mime != null && (jsonMime.test(mime) || mime.toLowerCase() === 'application/json-patch+json');
+		super(basePath, apiGlobalsService);
 	}
 
 	/**
@@ -48,7 +25,8 @@ export class UserService {
 	public authenticateUser(login?: string, password?: string): Observable<HttpResponseBase> {
 
 		const headers = this.defaultHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
-		const body = new HttpParams().set('login', login).set('password', password);
+		const body = new HttpParams().set('login', login)
+			.set('password', password);
 
 		return this.httpClient.post<HttpResponseBase>(`${this.basePath}/users/login`, body, {
 			headers: headers,
@@ -67,10 +45,8 @@ export class UserService {
 			throw new Error('Required parameter body was null or undefined when calling create.');
 		}
 
-		const headers = this.defaultHeaders.set('Authorization', this.apiGlobalsService.bearer);
-
 		return this.httpClient.post<any>(`${this.basePath}/users/user`, body, {
-			headers: headers,
+			headers: this.getAuthorizationHeader(),
 		});
 	}
 
@@ -84,10 +60,8 @@ export class UserService {
 			throw new Error('Required parameter uid was null or undefined when calling findById.');
 		}
 
-		const headers = this.defaultHeaders.set('Authorization', this.apiGlobalsService.bearer);
-
 		return this.httpClient.get<any>(`${this.basePath}/users/${encodeURIComponent(String(uid))}`, {
-			headers: headers,
+			headers: this.getAuthorizationHeader(),
 		});
 	}
 
@@ -97,9 +71,8 @@ export class UserService {
 	 */
 	public getAllUsers(): Observable<Array<User>> {
 
-		const headers = this.defaultHeaders.set('Authorization', this.apiGlobalsService.bearer);
 		return this.httpClient.get<any>(`${this.basePath}/users`, {
-			headers: headers
+			headers: this.getAuthorizationHeader()
 		});
 	}
 
@@ -113,10 +86,8 @@ export class UserService {
 			throw new Error('Required parameter uid was null or undefined when calling remove.');
 		}
 
-		const headers = this.defaultHeaders.set('Authorization', this.apiGlobalsService.bearer);
-
 		return this.httpClient.delete<any>(`${this.basePath}/users/${encodeURIComponent(String(uid))}`, {
-			headers: headers,
+			headers: this.getAuthorizationHeader(),
 		});
 	}
 
