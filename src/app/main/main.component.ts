@@ -1,16 +1,15 @@
+
+import {of as observableOf,  Observable } from 'rxjs';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { I18nService } from 'systelab-translate/lib/i18n.service';
 import { ApiGlobalsService } from '../globals/globals.service';
 import { Router } from '@angular/router';
-
 import { MessagePopupService } from 'systelab-components/widgets/modal/message-popup/message-popup.service';
 import { DialogService } from 'systelab-components/widgets/modal/dialog/dialog.service';
-
 import { PatientMaintenanceDialog, PatientMaintenanceDialogParameters } from './patient-maintenance/patient-maintenance-dialog.component';
 import { ApplicationHeaderMenuEntry } from 'systelab-components/widgets/applicationframe/header/app-header.component';
 import { ApplicationSidebarAction, ApplicationSidebarTab } from 'systelab-components/widgets/applicationframe/sidebar/app-sidebar.component';
 import { ChangePasswordDialog, ChangePasswordDialogParameters } from 'systelab-login/widgets/change-password-dialog.component';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
 	selector:    'main',
@@ -44,13 +43,8 @@ export class MainComponent implements OnInit {
 		this.hospitalName = 'Customer name';
 
 		this.setMenu();
-
-		this.sidetabs.push(new ApplicationSidebarTab('T1', 'Tab One', true));
-		this.sidetabs.push(new ApplicationSidebarTab('T2', 'Tab Two', false));
-		this.sidetabs.push(new ApplicationSidebarTab('T3', 'Tab Three', false));
-		this.sidetabs.push(new ApplicationSidebarTab('T4', 'Tab Four', false));
-
-		this.sideactions.push(new ApplicationSidebarAction(this.i18nService.instant('COMMON_DOCUMENTATION'), () => this.action1()));
+		this.setSideTabs();
+		this.setSideButtons();
 	}
 
 	public setMenu() {
@@ -63,14 +57,24 @@ export class MainComponent implements OnInit {
 			this.menu.push(new ApplicationHeaderMenuEntry('Tab Three', false, () => this.doSelect('T3')));
 			this.menu.push(new ApplicationHeaderMenuEntry('Tab Four', false, () => this.doSelect('T4')));
 			this.menu.push(new ApplicationHeaderMenuEntry('', true));
-
 		}
 
-		this.menu.push(new ApplicationHeaderMenuEntry(this.i18nService.instant('COMMON_SETUP'), false, () => this.settings()));
+		this.menu.push(new ApplicationHeaderMenuEntry(this.i18nService.instant('COMMON_SETUP'), false, () => this.doShowSettings()));
 		this.menu.push(new ApplicationHeaderMenuEntry(this.i18nService.instant('COMMON_CHANGE_PASSWORD'), false, () => this.doChangePassword()));
-		this.menu.push(new ApplicationHeaderMenuEntry(this.i18nService.instant('COMMON_CHANGE_USER'), false, () => this.logout()));
+		this.menu.push(new ApplicationHeaderMenuEntry(this.i18nService.instant('COMMON_CHANGE_USER'), false, () => this.doLogout()));
 		this.menu.push(new ApplicationHeaderMenuEntry('', true));
-		this.menu.push(new ApplicationHeaderMenuEntry(this.i18nService.instant('COMMON_ABOUT'), false, () => this.about()));
+		this.menu.push(new ApplicationHeaderMenuEntry(this.i18nService.instant('COMMON_ABOUT'), false, () => this.doShowAbout()));
+	}
+
+	public setSideTabs() {
+		this.sidetabs.push(new ApplicationSidebarTab('T1', 'Tab One', true));
+		this.sidetabs.push(new ApplicationSidebarTab('T2', 'Tab Two', false));
+		this.sidetabs.push(new ApplicationSidebarTab('T3', 'Tab Three', false));
+		this.sidetabs.push(new ApplicationSidebarTab('T4', 'Tab Four', false));
+	}
+
+	public setSideButtons() {
+		this.sideactions.push(new ApplicationSidebarAction(this.i18nService.instant('COMMON_DOCUMENTATION'), () => this.doShowDocumentation()));
 	}
 
 	@HostListener('window:resize', ['$event'])
@@ -78,14 +82,13 @@ export class MainComponent implements OnInit {
 		this.frameWidth = (window.innerWidth);
 		this.frameHeight = (window.innerHeight);
 		this.setMenu();
-
 	}
 
 	public doSelect(id: string) {
 		console.log(id);
 	}
 
-	public settings() {
+	public doShowSettings() {
 	}
 
 	public doChangePassword() {
@@ -96,31 +99,28 @@ export class MainComponent implements OnInit {
 			.subscribe();
 	}
 
-	public changePassword(oldPassword: string, newPassword: string): Observable<boolean> {
-		console.log(this.title);
-		if (oldPassword === newPassword) {
-			this.messagePopupService.showErrorPopup('Error', 'Impossible to change password');
-
-			return Observable.of(false);
-		}
-		return Observable.of(true);
+	public doShowAbout() {
 	}
 
-	public about() {
+	public doShowDocumentation() {
 	}
 
-	public action1() {
-	}
-
-	public logout() {
+	public doLogout() {
 		this.apiGlobalsService.bearer = undefined;
 		this.router.navigate(['/login']);
 	}
 
-	public patientSearch() {
+	public doPatientSearch() {
 		const parameters: PatientMaintenanceDialogParameters = PatientMaintenanceDialog.getParameters();
 		this.dialogService.showDialog(PatientMaintenanceDialog, parameters)
 			.subscribe();
 	}
 
+	public changePassword(oldPassword: string, newPassword: string): Observable<boolean> {
+		if (oldPassword === newPassword) {
+			this.messagePopupService.showErrorPopup('Error', 'Impossible to change password');
+			return observableOf(false);
+		}
+		return observableOf(true);
+	}
 }

@@ -11,8 +11,7 @@ import { I18nService } from 'systelab-translate/lib/i18n.service';
 export class AppComponent {
 	constructor(protected i18nService: I18nService) {
 		i18nService.use('en-US')
-			.subscribe(
-				() => console.log('Language set to USA english'),
+			.subscribe(() => console.log('Language set to USA english'),
 				(error) => console.log('Error setting the language.'));
 	}
 }

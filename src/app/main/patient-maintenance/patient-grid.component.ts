@@ -14,11 +14,8 @@ export class PatientGrid extends AbstractGrid<Patient> implements AfterViewInit 
 
 	public values: Patient[] = [];
 
-	constructor(protected preferencesService: PreferencesService, protected i18nService: I18nService, protected dialogService: DialogService,
-	            protected patientService: PatientService) {
-
+	constructor(protected preferencesService: PreferencesService, protected i18nService: I18nService, protected dialogService: DialogService, protected patientService: PatientService) {
 		super(preferencesService, i18nService, dialogService);
-
 	}
 
 	public ngAfterViewInit() {
@@ -27,7 +24,6 @@ export class PatientGrid extends AbstractGrid<Patient> implements AfterViewInit 
 
 	protected getColumnDefs(): Array<any> {
 
-		// TODO Translate column names
 		const columnDefs: Array<any> = [
 			{colId: 'name', headerName: 'Name', field: 'name', width: 300},
 			{colId: 'surname', headerName: 'Surname', field: 'surname', width: 300},
@@ -37,12 +33,9 @@ export class PatientGrid extends AbstractGrid<Patient> implements AfterViewInit 
 
 	public refresh() {
 		this.patientService.getAllPatients()
-			.subscribe(
-				(results) => {
-					this.values = results;
-					this.gridOptions.api.setRowData(this.values);
-				}
-			);
-
+			.subscribe((results) => {
+				this.values = results;
+				this.gridOptions.api.setRowData(this.values);
+			});
 	}
 }

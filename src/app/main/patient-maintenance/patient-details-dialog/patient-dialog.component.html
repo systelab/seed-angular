@@ -5,7 +5,7 @@
 
         <div class="form-group row text-right"> <!-- Full Name -->
             <div class="col-sm-12">
-                <systelab-switch id="switch1" name="enabled" [(isChecked)]="check2"></systelab-switch>
+                <systelab-switch id="switch1" name="enabled" [(isChecked)]="active"></systelab-switch>
             </div>
         </div>
 
@@ -63,5 +63,5 @@
 
 </div>
 <systelab-dialog-bottom>
-    <button type="button" class="btn ml-auto" (click)="performAction()">{{humanReadableAction}}</button>
+    <button type="button" class="btn ml-auto" (click)="doPerformAction()">{{humanReadableAction}}</button>
 </systelab-dialog-bottom>

@@ -1,5 +1,4 @@
 import { Component, ViewChild } from '@angular/core';
-import { I18nService } from 'systelab-translate/lib/i18n.service';
 import { PatientService } from '../../common/api/patient.service';
 import { DialogRef, DialogService, ModalComponent, SystelabModalContext } from 'systelab-components/widgets/modal';
 import { PatientDialog, PatientDialogParameters } from './patient-details-dialog/patient-dialog.component';
@@ -25,9 +24,7 @@ export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenan
 
 	public title = 'Patient management';
 
-	constructor(public dialog: DialogRef<PatientMaintenanceDialogParameters>,
-	            protected dialogService: DialogService, protected i18nService: I18nService,
-	            protected patientService: PatientService) {
+	constructor(public dialog: DialogRef<PatientMaintenanceDialogParameters>, protected dialogService: DialogService, protected patientService: PatientService) {
 		this.parameters = dialog.context;
 	}
 
@@ -39,7 +36,7 @@ export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenan
 		return new PatientMaintenanceDialogParameters();
 	}
 
-	public createPatient() {
+	public doCreatePatient() {
 		const parameters: PatientDialogParameters = PatientDialog.getParameters();
 		this.dialogService.showDialog(PatientDialog, parameters)
 			.subscribe(
@@ -48,18 +45,6 @@ export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenan
 						this.patientgrid.refresh();
 					}
 				}
-			);
-	}
-
-	public updatePatient(contextMenuActionData: GridContextMenuActionData<Patient>) {
-		this.doSelect(contextMenuActionData.data);
-	}
-
-	public deletePatient(contextMenuActionData: GridContextMenuActionData<Patient>) {
-		this.patientService.remove(contextMenuActionData.data.id)
-			.subscribe(
-				(result) => console.log('deleted'),
-				(error) => console.log('error')
 			);
 	}
 
@@ -90,5 +75,14 @@ export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenan
 		} else if (contextMenuActionData.actionId === 'action2') {
 			this.deletePatient(contextMenuActionData);
 		}
+	}
+
+	private updatePatient(contextMenuActionData: GridContextMenuActionData<Patient>) {
+		this.doSelect(contextMenuActionData.data);
+	}
+
+	private deletePatient(contextMenuActionData: GridContextMenuActionData<Patient>) {
+		this.patientService.remove(contextMenuActionData.data.id)
+			.subscribe(result => this.patientgrid.refresh(), error => console.log('error'));
 	}
 }

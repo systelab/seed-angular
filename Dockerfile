@@ -1,7 +1,9 @@
-### STAGE 1: Build ###
+### STAGE 1: Build
 
 # We label our stage as 'builder'
 FROM node:8-alpine as builder
+
+LABEL author="Alfons Serra"
 
 COPY package.json ./
 
@@ -18,7 +20,7 @@ COPY . .
 RUN $(npm bin)/ng build --prod --build-optimizer
 
 
-### STAGE 2: Setup ###
+### STAGE 2: Setup
 
 FROM nginx:1.13.3-alpine
 
