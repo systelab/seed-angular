@@ -21,13 +21,8 @@ export class BaseService {
 	 * @return true: consumes contains 'multipart/form-data', false: otherwise
 	 */
 	protected canConsumeForm(consumes: string[]): boolean {
-		const form = 'multipart/form-data';
-		for (const consume of consumes) {
-			if (form === consume) {
-				return true;
-			}
-		}
-		return false;
+		return consumes.filter(consume => (consume === 'multipart/form-data')).length > 0;
+
 	}
 
 	public isJsonMime(mime: string): boolean {
