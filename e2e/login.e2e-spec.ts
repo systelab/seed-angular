@@ -8,13 +8,13 @@ describe('Seed Angular: Login', () => {
 	let main: MainPage;
 
 	function navigateToHomePage() {
-		allure.createStep('Opening main page', () => {
+		allure.createStep('Action: Open home page', () => {
 			login.navigateToHomePage();
 		})();
 	}
 
 	function setUserNameAndPassword(userName: string, password: string) {
-		allure.createStep(`Set username as '${userName}' and password as '${password}'`, () => {
+		allure.createStep(`Action: Set username as '${userName}' and password as '${password}'`, () => {
 			login.getUsernameField()
 				.sendKeys(userName);
 			login.getPasswordField()
@@ -29,15 +29,13 @@ describe('Seed Angular: Login', () => {
 		main = new MainPage();
 	});
 
-	it('Shall display an error message if password is not correct', () => {
-		allure.severity(allure.SEVERITY.BLOCKER);
-		allure.story('Login');
+	it('Login with an incorrect password:', () => {
 		navigateToHomePage();
 		setUserNameAndPassword('Systelab', 'wrong password');
-		allure.createStep('Perform Login', () => {
+		allure.createStep('Action: Perform Login', () => {
 			login.getEnterButton()
 				.click();
-			allure.createStep('The application returns an error', () => {
+			allure.createStep('The application returns an Invalid User Name and Password error', () => {
 				expect(login.getErrorMessage()
 					.getText())
 					.toBe('Invalid username or password');
@@ -46,16 +44,13 @@ describe('Seed Angular: Login', () => {
 
 	});
 
-	it('Shall enter if password is correct', () => {
-		allure.description('Shall enter if password is correct');
-		allure.severity(allure.SEVERITY.BLOCKER);
-		allure.story('Login');
+	it('Login correct: ', () => {
 		navigateToHomePage();
 		setUserNameAndPassword('Systelab', 'Systelab');
-		allure.createStep('Perform Login', () => {
+		allure.createStep('Action: Perform Login', () => {
 			login.getEnterButton()
 				.click();
-			allure.createStep('Check that I see the main page', () => {
+			allure.createStep('The home page is displayed', () => {
 				expect(main.getFullUsernameField()
 					.getText())
 					.toBe('Administrator');
