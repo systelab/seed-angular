@@ -1,10 +1,11 @@
 import { Inject, Injectable, Optional } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Patient } from '../model/patient';
 import { BASE_PATH } from '../variables';
 import { ApiGlobalsService } from '../../globals/globals.service';
 import { BaseService } from './base.service';
+import { Page } from '../model/page';
 
 @Injectable({
 	providedIn: 'root'
@@ -35,9 +36,17 @@ export class PatientService extends BaseService {
 	 * Get all Patients
 	 *
 	 */
-	public getAllPatients(): Observable<Array<Patient>> {
+	public getAllPatients(page: number, itemsPerPage: number): Observable<Page<Patient>> {
 
+		let queryParameters = new HttpParams();
+		if (page !== null) {
+			queryParameters = queryParameters.set('page', <any>page);
+		}
+		if (itemsPerPage !== null) {
+			queryParameters = queryParameters.set('size', <any>itemsPerPage);
+		}
 		return this.httpClient.get<any>(`${this.basePath}/patients`, {
+			params:  queryParameters,
 			headers: this.getAuthorizationHeader(),
 		});
 	}

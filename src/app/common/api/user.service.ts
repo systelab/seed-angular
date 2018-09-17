@@ -5,6 +5,7 @@ import { User } from '../model/user';
 import { BASE_PATH } from '../variables';
 import { ApiGlobalsService } from '../../globals/globals.service';
 import { BaseService } from './base.service';
+import { Page } from '../model/page';
 
 @Injectable({
 	providedIn: 'root'
@@ -69,9 +70,18 @@ export class UserService extends BaseService {
 	 * Get all Users
 	 *
 	 */
-	public getAllUsers(): Observable<Array<User>> {
+	public getAllUsers(page: number, itemsPerPage: number): Observable<Page<User>> {
+
+		let queryParameters = new HttpParams();
+		if (page !== null) {
+			queryParameters = queryParameters.set('page', <any>page);
+		}
+		if (itemsPerPage !== null) {
+			queryParameters = queryParameters.set('size', <any>itemsPerPage);
+		}
 
 		return this.httpClient.get<any>(`${this.basePath}/users`, {
+			params:  queryParameters,
 			headers: this.getAuthorizationHeader()
 		});
 	}
