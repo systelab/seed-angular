@@ -24,31 +24,16 @@ export class MainComponent implements OnInit {
 	public userName: string;
 	public userFullName: string;
 	public hospitalName: string;
-	public desLanguage: string;
 
 	public menu: ApplicationHeaderMenuEntry[] = [];
 	public sideactions: ApplicationSidebarAction[] = [];
 	public sidetabs: ApplicationSidebarTab[] = [];
-	public comboOptionList: Array<Object> = [];
 
 	constructor(private router: Router, protected messagePopupService: MessagePopupService,
 	            protected dialogService: DialogService, protected i18nService: I18nService,
 	            protected apiGlobalsService: ApiGlobalsService, private localStorage: LocalStorageService) {
 		this.frameWidth = (window.innerWidth);
 		this.frameHeight = (window.innerHeight);
-		this.comboOptionList = [
-			{description: 'EN', id: 1},
-			{description: 'ES', id: 2},
-			{description: 'IT', id: 3},
-			{description: 'KR', id: 4}
-		];
-		const language = localStorage.get('language');
-		if (!language) {
-			this.desLanguage = 'EN';
-		} else {
-			const lang = JSON.parse(language);
-			this.desLanguage = lang.value.description;
-		}
 	}
 
 	public ngOnInit() {
@@ -67,6 +52,10 @@ export class MainComponent implements OnInit {
 		this.menu = [];
 		this.i18nService.get(['COMMON_SETUP', 'COMMON_CHANGE_PASSWORD', 'COMMON_CHANGE_USER', 'COMMON_ABOUT', 'COMMON_TAB_ONE', 'COMMON_TAB_TWO', 'COMMON_TAB_THREE', 'COMMON_TAB_FOUR'])
 			.subscribe((res) => {
+				this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_ABOUT, false, () => this.doShowAbout()));
+				this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_SETUP, false, () => this.doShowSettings()));
+				this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_CHANGE_PASSWORD, false, () => this.doChangePassword()));
+				this.menu.push(new ApplicationHeaderMenuEntry('', true));
 				if (this.frameWidth < 1024) {
 					this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_TAB_ONE, false, () => this.doSelect('T1')));
 					this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_TAB_TWO, false, () => this.doSelect('T2')));
@@ -74,12 +63,13 @@ export class MainComponent implements OnInit {
 					this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_TAB_FOUR, false, () => this.doSelect('T4')));
 					this.menu.push(new ApplicationHeaderMenuEntry('', true));
 				}
-
-				this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_SETUP, false, () => this.doShowSettings()));
-				this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_CHANGE_PASSWORD, false, () => this.doChangePassword()));
-				this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_CHANGE_USER, false, () => this.doLogout()));
+				this.menu.push(new ApplicationHeaderMenuEntry('English', false, () => this.doChangeLanguage('en')));
+				this.menu.push(new ApplicationHeaderMenuEntry('Español', false, () => this.doChangeLanguage('es-ES')));
+				this.menu.push(new ApplicationHeaderMenuEntry('Italiano', false, () => this.doChangeLanguage('it-IT')));
+				this.menu.push(new ApplicationHeaderMenuEntry('한국어', false, () => this.doChangeLanguage('kr-KR')));
 				this.menu.push(new ApplicationHeaderMenuEntry('', true));
-				this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_ABOUT, false, () => this.doShowAbout()));
+				this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_CHANGE_USER, false, () => this.doLogout()));
+
 			});
 
 	}
@@ -152,18 +142,13 @@ export class MainComponent implements OnInit {
 		return observableOf(true);
 	}
 
-	public comboChangeEvent(e: any): void {
-
-		let language = 'en';
-		if (e.id > 0 && e.id < 5) {
-			const languages: string[] = ['en', 'es-ES', 'it-IT', 'kr-KR'];
-			language = languages[e.id - 1];
-		}
-
-		this.localStorage.put('language', JSON.stringify({value: e}));
+	public doChangeLanguage(language: string) {
+		this.localStorage.put('language', language);
 		this.i18nService.use(language)
 			.subscribe(
 				() => window.location.reload(),
 				(error) => console.log('Error setting the language.'));
+
 	}
+
 }
