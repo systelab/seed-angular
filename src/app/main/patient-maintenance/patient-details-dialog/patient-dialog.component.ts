@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { I18nService } from 'systelab-translate/lib/i18n.service';
 import { PatientService } from '../../../common/api/patient.service';
 import { Patient } from '../../../common/model/patient';
-import { Address } from '../../../common/model/address';
 import { DialogRef, ModalComponent, SystelabModalContext } from 'systelab-components/widgets/modal';
 
 export class PatientDialogParameters extends SystelabModalContext {
-	public patientId;
+	public patientId: string;
 	public width = 700;
 	public height = 450;
 }

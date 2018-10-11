@@ -56,7 +56,7 @@ export class PatientService extends BaseService {
 	 *
 	 * @param uid
 	 */
-	public getPatient(uid: number): Observable<Patient> {
+	public getPatient(uid: string): Observable<Patient> {
 		if (uid === null || uid === undefined) {
 			throw new Error('Required parameter uid was null or undefined when calling getPatient.');
 		}
@@ -71,7 +71,7 @@ export class PatientService extends BaseService {
 	 *
 	 * @param uid
 	 */
-	public remove(uid: number): Observable<{}> {
+	public remove(uid: string): Observable<{}> {
 		if (uid === null || uid === undefined) {
 			throw new Error('Required parameter uid was null or undefined when calling remove.');
 		}
@@ -87,7 +87,7 @@ export class PatientService extends BaseService {
 	 * @param uid
 	 * @param body Patient
 	 */
-	public updatePatient(uid: number, body: Patient): Observable<Patient> {
+	public updatePatient(uid: string, body: Patient): Observable<Patient> {
 		if (uid === null || uid === undefined) {
 			throw new Error('Required parameter uid was null or undefined when calling updatePatient.');
 		}

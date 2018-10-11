@@ -56,7 +56,7 @@ export class UserService extends BaseService {
 	 *
 	 * @param uid
 	 */
-	public findById(uid: number): Observable<User> {
+	public findById(uid: string): Observable<User> {
 		if (uid === null || uid === undefined) {
 			throw new Error('Required parameter uid was null or undefined when calling findById.');
 		}
@@ -91,7 +91,7 @@ export class UserService extends BaseService {
 	 *
 	 * @param uid
 	 */
-	public remove(uid: number): Observable<{}> {
+	public remove(uid: string): Observable<{}> {
 		if (uid === null || uid === undefined) {
 			throw new Error('Required parameter uid was null or undefined when calling remove.');
 		}
