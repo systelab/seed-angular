@@ -23,18 +23,18 @@ import { EmptyBodyInterceptor } from './common/api/empty-body.interceptor';
 import { GridContextMenuComponent } from 'systelab-components/widgets/grid/contextmenu/grid-context-menu.component';
 import { GridHeaderContextMenuComponent } from 'systelab-components/widgets/grid/contextmenu/grid-header-context-menu.component';
 import { AgGridModule } from 'ag-grid-angular';
-import { DndModule } from 'ng2-dnd';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
 	imports:         [
 		BrowserModule,
 		FormsModule,
+		DragDropModule,
 		HttpClientModule,
 		SystelabTranslateModule.forRoot(),
 		SystelabPreferencesModule.forRoot(),
 		SystelabComponentsModule.forRoot(),
 		SystelabLoginModule.forRoot(),
-		DndModule.forRoot(),
 		AgGridModule.withComponents([
 			GridContextMenuComponent,
 			GridHeaderContextMenuComponent
