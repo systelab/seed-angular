@@ -10,17 +10,12 @@ to quickly bootstrap your projects and dev environment.
 The seed contains a Patient Management sample application and is preconfigured to install the Angular
 framework and a bunch of development and testing tools for instant development gratification.
 
-The app doesn't do much, just shows how to use different Angular standards and other suggested tools together, including the utilization of the libraries created by Systelab.
+The app just shows how to use different Angular standards and other suggested tools together, including the utilization of the libraries created by Systelab.
 
 ## Getting Started
-
-To get you started you can simply clone the `seed-angular` repository and install the dependencies:
-
 ### Prerequisites
 
-You need [git][git] to clone the `seed-angular` repository.
-
-You will need [Node.js][node] and [npm][npm].
+You need to install [git][git], [Node.js][node] and [npm][npm].
 
 ### Clone `seed-angular`
 
@@ -31,14 +26,6 @@ git clone https://github.com/systelab/seed-angular.git
 cd seed-angular
 ```
 
-If you just want to start a new project without the `seed-angular` commit history then you can do:
-
-```bash
-git clone --depth=1 https://github.com/systelab/seed-angular.git <your-project-name>
-```
-
-The `depth=1` tells git to only pull down one commit worth of historical data.
-
 ### Install Dependencies
 
 To install the dependencies you must run:
@@ -46,6 +33,14 @@ To install the dependencies you must run:
 ```bash
 npm install
 ```
+> In case you have any issue, remove the "node_modules" folder and execute the previous command again.
+
+### Set the Server URL
+
+In order to login, you need a backend. A JEE Backend is implemented in the https://github.com/systelab/seed-jee repository. A .net Backend is implemented in the https://github.com/systelab/seed-dotnet repository.
+
+Check that the variable API_BASE_PATH in the file "environment.ts" contains your Server url and port. For example: http://127.0.0.1:13080/seed/v1'
+
 ### Run
 
 To run the application use the following command:
@@ -54,7 +49,7 @@ To run the application use the following command:
 ng serve
 ```
 
-In order to login, you need a backend. A JEE Backend is implemented in the https://github.com/systelab/seed-jee repository. A .net Backend is implemented in the https://github.com/systelab/seed-dotnet repository.
+By default, the Angular Live Development Server is listening on localhost:4200, open your browser on http://localhost:4200/
 
 ## Docker
 
