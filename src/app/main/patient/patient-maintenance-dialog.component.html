@@ -1,9 +1,0 @@
-<systelab-dialog-header (close)="close()">{{title}}</systelab-dialog-header>
-<div class="slab-flex-1 d-flex flex-column p-2 ">
-    <patient-grid id="PatientTable" #patientgrid class="slab-flex-1 position-relative" [menu]="getMenu()" (action)="doMenuAction($event)" (clickRow)="doSelect($event)"></patient-grid>
-</div>
-<systelab-dialog-bottom>
-    <button type="button" id="PatientMaintenanceOptionsButton" class="btn mr-1"    (click)="patientgrid.showOptions()"><i class="icon-times-circle mr-1"></i>{{'COMMON_OPTIONS' | translate | async}} </button>
-    <button type="button" id="PatientMaintenanceAddButton"     class="btn"         (click)="doCreatePatient();">       <i class="icon-times-circle mr-1"></i>{{'COMMON_ADD' | translate | async}}     </button>
-    <button type="button" id="PatientMaintenanceRefreshButton" class="btn ml-auto" (click)="patientgrid.refresh();">   <i class="icon-times-circle mr-1"></i>{{'COMMON_REFRESH' | translate | async}} </button>
-</systelab-dialog-bottom>
