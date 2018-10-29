@@ -84,7 +84,6 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 		TestToolkit.checkPresentAndDisplayed(mainPage);
 		allure.createStep('Action: Click on the "Patient" button', () => {
 			mainPage.getPatientButtton().click();
-			console.log('mainPage.getPatientButtton().click()')
 			TestToolkit.showNewPageAndCheckTitleAndButtons(patientMaintenancePage, expectedWindowTitlePatientManagement, patientManagementButtons);
 		})()
 	});

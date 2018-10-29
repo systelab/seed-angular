@@ -1,13 +1,13 @@
-import { ElementFinder, by, element, promise, protractor } from 'protractor';
+import { by, ElementFinder, promise } from 'protractor';
 
 // TODO: Move components.util.service to the systelab-components. Split this file into utils for each component
 export class ComponentUtilService {
-	static tagNameContextualMenu = 'systelab-context-menu-item';
-	static classNameDropDown = 'slab-dropdown slab-dropdown-fixed';
-	static cssNameCellValue = '.ag-cell-value';
-	static cssHeaderCellText = '.ag-header-cell-text';
+	public static readonly tagNameContextualMenu = 'systelab-context-menu-item';
+	public static readonly classNameDropDown = 'slab-dropdown slab-dropdown-fixed';
+	public static readonly cssNameCellValue = '.ag-cell-value';
+	public static readonly cssHeaderCellText = '.ag-header-cell-text';
 
-	static getGridData(gridObject: ElementFinder, col?: string, row?: number): any {
+	public static getGridData(gridObject: ElementFinder, col?: string, row?: number): any {
 		if (col === undefined) {
 			return gridObject.element(by.className('ag-body-viewport'))
 				.all(by.css('div[role=row]'));
@@ -23,7 +23,7 @@ export class ComponentUtilService {
 		}
 	}
 
-	static getGridHeaders(gridObject: ElementFinder, col?: number): any {
+	public static getGridHeaders(gridObject: ElementFinder, col?: number): any {
 		if (col === undefined) {
 			return gridObject.element(by.className('ag-header-container'))
 				.element(by.className('ag-header-row'))
@@ -36,7 +36,7 @@ export class ComponentUtilService {
 		}
 	}
 
-	static getContextMenu(gridObject: ElementFinder, col?: string, row?: number, subIndex?: number) {
+	public static getContextMenu(gridObject: ElementFinder, col?: string, row?: number, subIndex?: number) {
 		if (subIndex === undefined) {
 			return this.getGridData(gridObject, col, row)
 				.all(by.tagName(ComponentUtilService.tagNameContextualMenu));
@@ -59,7 +59,7 @@ export class ComponentUtilService {
 	 return windowGrid.all(by.css(ComponentUtilService.cssNameCellValue));
 	 }*/
 
-	static isSorted(arr, arr2?) {
+	public static isSorted(arr, arr2?) {
 		// const limit = arr.length - 1;
 		return arr.every(
 			function(_, i) {
@@ -69,7 +69,7 @@ export class ComponentUtilService {
 					if (arr2 === undefined) {
 						bReturn = arr[i - 1] <= arr[i];
 					} else {
-						if (arr[i - 1] == arr[i]) {
+						if (arr[i - 1] === arr[i]) {
 							bReturn = arr2[i - 1] <= arr2[i];
 						} else {
 							bReturn = arr[i - 1] < arr[i];
@@ -81,23 +81,23 @@ export class ComponentUtilService {
 		);
 	}
 
-	static getCurrentTime() {
-		let strReturn: string = "";
+	public static getCurrentTime() {
+		let strReturn = '';
 
-		var today = new Date();
-		var hh = today.getHours();
-		var mm = today.getMinutes();
-		var ss = today.getSeconds();
+		const today = new Date();
+		const hh = today.getHours();
+		const mm = today.getMinutes();
+		const ss = today.getSeconds();
 
 		if (hh < 10) {
 			strReturn = '0';
 		}
-		strReturn += hh + ":";
+		strReturn += hh + ':';
 
 		if (mm < 10) {
 			strReturn += '0';
 		}
-		strReturn += mm + ":";
+		strReturn += mm + ':';
 
 		if (ss < 10) {
 			strReturn += '0';
@@ -107,43 +107,43 @@ export class ComponentUtilService {
 		return strReturn;
 	}
 
-	static getCurrentDate() {
-		let strReturn: string = "";
+	public static getCurrentDate() {
+		let strReturn = '';
 
-		var today = new Date();
-		var dd = today.getDate();
-		var mm = today.getMonth() + 1; //January is 0!
-		var yyyy = today.getFullYear();
+		const today = new Date();
+		const dd = today.getDate();
+		const mm = today.getMonth() + 1; // January is 0!
+		const yyyy = today.getFullYear();
 
 		if (dd < 10) {
 			strReturn = '0';
 		}
 
-		strReturn += dd + "/";
+		strReturn += dd + '/';
 		if (mm < 10) {
 			strReturn += '0';
 		}
 
-		strReturn += mm + "/" + yyyy;
+		strReturn += mm + '/' + yyyy;
 		return strReturn;
 	}
 
-	static isClickable(el: ElementFinder): promise.Promise<boolean> {
+	public static isClickable(el: ElementFinder): promise.Promise<boolean> {
 		return new promise.Promise(resolve => {
-			//let interval = setInterval(() => {
-			//console.log("flag 2");
+			// let interval = setInterval(() => {
+			// console.log("flag 2");
 			el.click()
 				.then(() => {
-					//clearInterval(interval);
+					// clearInterval(interval);
 					setTimeout(() => {
-						//console.log("flag 3");
+						// console.log("flag 3");
 						resolve(true);
 					}, 100);
 				}, () => {
-					//console.log("flag 4");
+					// console.log("flag 4");
 					resolve(false);
 				});
-			//}, 50);
+			// }, 50);
 		});
 	}
 }
