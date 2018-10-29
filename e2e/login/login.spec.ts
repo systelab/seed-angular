@@ -20,19 +20,14 @@ describe('Login Test Case: MLG_TC106_GEN_Login', () => {
 			login.navigateToHomePage();
 		})();
 		allure.createStep(`Action: Set username as ${browser.params.login.user} and password as ${browser.params.login.password}`, () => {
-			login.getUsernameField()
-				.sendKeys(browser.params.login.user);
-			login.getPasswordField()
-				.sendKeys(browser.params.login.password);
+			login.getUsernameField().sendKeys(browser.params.login.user);
+			login.getPasswordField().sendKeys(browser.params.login.password);
 		})();
 		allure.createStep('Action: Perform Login', () => {
-			login.getEnterButton()
-				.click();
+			login.getEnterButton().click();
 		})();
 		allure.createStep('The home page is displayed', () => {
-			expect(main.getFullUsernameField()
-				.getText())
-				.toEqual('Administrator');
+			expect(main.getFullUsernameField().getText()).toEqual('Administrator');
 		})();
 	});
 
@@ -41,19 +36,14 @@ describe('Login Test Case: MLG_TC106_GEN_Login', () => {
 			login.navigateToHomePage();
 		})();
 		allure.createStep('Action: Set username as noUser and password as noPass', () => {
-			login.getUsernameField()
-				.sendKeys('noUser');
-			login.getPasswordField()
-				.sendKeys('noPass');
+			login.getUsernameField().sendKeys('noUser');
+			login.getPasswordField().sendKeys('noPass');
 		})();
 		allure.createStep('Action: Perform Login', () => {
-			login.getEnterButton()
-				.click();
+			login.getEnterButton().click();
 		})();
 		allure.createStep('The application returns an Invalid User Name and Password error', () => {
-			expect(login.getPopupMessage()
-				.getText())
-				.toEqual('Invalid username or password');
+			expect(login.getPopupMessage().getText()).toEqual('Invalid username or password');
 		})();
 	});
 })

@@ -38,7 +38,6 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 	];
 
 	const patientEditCreateNewValues = ['Aparicio', 'José Luis', 'jlaparicio@werfen.com', 'Plaza de Europa, 21-23, 18th Floor', 'Barcelona', '08908', '41.356439, 2.127791'];
-	const patientEditUpdateButtons = ['update'];
 	const msTimeOutWaitForDialogWindow = 30000;   // in milliseconds
 
 	let currentDate = '';
@@ -74,8 +73,8 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 	});
 
 	afterEach(() => {
-			expect(TestToolkit.hasErrorsInConsole())
-				.toBe(false, 'Some identified errors were present in the javascript console at the end of the test.');
+		expect(TestToolkit.hasErrorsInConsole())
+			.toBe(false, 'Some identified errors were present in the javascript console at the end of the test.');
 	});
 
 	it('Access to the "Patient Management" Dialog', () => {
@@ -88,15 +87,14 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 
 	it('Patient Management: Click on the "Add" button', () => {
 		allure.createStep('Action: Click on the "Add" button', () => {
-			patientMaintenancePage.getButtonAdd()
-				.click();
+			patientMaintenancePage.getButtonAdd().click();
 			TestToolkit.showNewPageAndCheckTitleAndButtons(patientDetailPage, expectedWindowTitlePatientCreate, patientEditCreateButtons);
 		})()
 	});
 
 	// TODO: Move to a TestUtil class with all the expects documented with Allure
 
-	it('Create Patient: Validate the default values for all the fields', ()=> {
+	it('Create Patient: Validate the default values for all the fields', () => {
 
 		TestUtil.checkField(patientDetailPage.getSurnameInput(), 'Surname', '');
 		TestUtil.checkField(patientDetailPage.getNameInput(), 'Name', '');
@@ -109,20 +107,18 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 
 	// Close the window dialog so the Create Patiant that follows are consistent
 	it('Create Patient: Close the "Create Patient" dialog opened by the "Add" button', () => {
-		allure.createStep('Action: Click on the button X to close the "Add" Window Dialog', ()=> {
+		allure.createStep('Action: Click on the button X to close the "Add" Window Dialog', () => {
 			// Close the window
-			patientDetailPage.getButtonClose()
-				.click();
+			patientDetailPage.getButtonClose().click();
 			// Expect the previous window to be Present and Displayed
 			TestToolkit.checkPresentAndDisplayed(patientMaintenancePage);
 		})();
 	});
 
-	it('Create Patient: Test the Creation of Patients', ()=> {
+	it('Create Patient: Test the Creation of Patients', () => {
 		for (let i = 1; i <= browser.params.repeatabilityNumberPasses; i++) {
 			// Open the window
-			patientMaintenancePage.getButtonAdd()
-				.click();
+			patientMaintenancePage.getButtonAdd().click();
 
 			// Fill the values
 			TestToolkit.fillField(patientDetailPage.getSurnameInput(), 'Surname', 'Try #' + i + ': ' + patientEditCreateNewValues[0]);
@@ -134,11 +130,8 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 			TestToolkit.fillField(patientDetailPage.getAddressZipInput(), 'Address -> Zip', 'Try #' + i + ': ' + patientEditCreateNewValues[5]);
 			TestToolkit.fillField(patientDetailPage.getAddressCoordinatesInput(), 'Address -> Coordinates', 'Try #' + i + ': ' + patientEditCreateNewValues[6]);
 
-			patientDetailPage.getButtonSubmit()
-				.click();
-
-			// The "Create Patient" window closes itself when the record was added
-		}
+			patientDetailPage.getButtonSubmit().click();
+			}
 	});
 	/*
 		it('Main Window: Patient Management: Validate the contextual menu at the patients grid', () => {
@@ -198,12 +191,10 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 		const optionMenuDelete = 1;
 		for (let k = (browser.params.repeatabilityNumberPasses - 1); k >= 0; k--) {
 			allure.createStep(`Action: Pass #${k}: Click on the three button contextual menu at a row on the grid area to open the menu`, () => {
-				ComponentUtilService.getGridData(patientMaintenancePage.getPatientsGrid(), PatientMaintenancePage.GRID_COLUMN_CONTEXTMENU, k)
-					.click();
+				ComponentUtilService.getGridData(patientMaintenancePage.getPatientsGrid(), PatientMaintenancePage.GRID_COLUMN_CONTEXTMENU, k).click();
 
 				allure.createStep(`Action: Pass #${k}: Click on the "Delete" option`, () => {
-					ComponentUtilService.getContextMenu(patientMaintenancePage.getPatientsGrid(), PatientMaintenancePage.GRID_COLUMN_CONTEXTMENU, k, optionMenuDelete)
-						.click();
+					ComponentUtilService.getContextMenu(patientMaintenancePage.getPatientsGrid(), PatientMaintenancePage.GRID_COLUMN_CONTEXTMENU, k, optionMenuDelete).click();
 				})();
 			})();
 		}
