@@ -23,17 +23,17 @@ export class TestToolkit {
 		TestToolkit.checkPresentAndDisplayed(newPage);
 
 		allure.createStep('The title is valid', () => {
-		});
-		newPage.getTitle()
-			.getText()
-			.then((s) => {
-				TestUtil.checkString(s.toLowerCase(), 'Window title', expectedWindowTitle);
-			});
+			newPage.getTitle()
+				.getText()
+				.then((s) => {
+					TestUtil.checkString(s.toLowerCase(), 'Window title', expectedWindowTitle);
+				});
+		})();
 
 		if (buttons) {
 			allure.createStep('The buttons are valid', () => {
-			});
-			this.checkButtons(newPage, buttons);
+				this.checkButtons(newPage, buttons);
+			})();
 		}
 	}
 
@@ -66,52 +66,52 @@ export class TestToolkit {
 
 	public static checkButtons(page: BasePage, buttons: ButtonState[]) {
 		allure.createStep('Action: Get all the buttons', () => {
-		});
-		// Apart, check if the enable flag is correct
 
-		buttons.forEach((buttonElem) => {
-			page.existButton(buttonElem.name)
-				.then((existButton) => {
-					allure.createStep(`Button ${buttonElem.name} is present`, () => {
-						expect(existButton)
-							.toBe(buttonElem.exist, `Button ${buttonElem.name} should be present`);
+			// Apart, check if the enable flag is correct
+
+			buttons.forEach((buttonElem) => {
+				page.existButton(buttonElem.name)
+					.then((existButton) => {
+						allure.createStep(`Button ${buttonElem.name} is present`, () => {
+							expect(existButton)
+								.toBe(buttonElem.exist, `Button ${buttonElem.name} should be present`);
+						})()
+					});
+			});
+
+			buttons.filter((b) => b.enable)
+				.forEach((buttonElem) => {
+					page.getButtonByName(buttonElem.name)
+						.isEnabled()
+						.then((enabled) => {
+							allure.createStep(`Button ${buttonElem.name} is enabled`, () => {
+							})()
+							expect(enabled)
+								.toBe(true);
+
+						});
+				});
+			buttons.filter((b) => !b.enable)
+				.forEach((buttonElem) => {
+					page.getButtonByName(buttonElem.name)
+						.isEnabled()
+						.then((enabled) => {
+							allure.createStep(`Button ${buttonElem.name} is disabled`, () => {
+							})()
+							expect(enabled)
+								.toBe(null);
+
+						});
+				});
+			page.getAllButtons()
+				.count()
+				.then((inCount) => {
+					allure.createStep(`Buttons count should be equal to ${buttons.filter((b) => b.exist).length}`, () => {
+						expect(inCount)
+							.toBe(buttons.filter((b) => b.exist).length, 'Buttons count');
 					})()
 				});
-		});
-
-		buttons.filter((b) => b.enable)
-			.forEach((buttonElem) => {
-				page.getButtonByName(buttonElem.name)
-					.isEnabled()
-					.then((enabled) => {
-						allure.createStep(`Button ${buttonElem.name} is enabled`, () => {
-						})()
-						expect(enabled)
-							.toBe(true);
-
-					});
-			});
-		buttons.filter((b) => !b.enable)
-			.forEach((buttonElem) => {
-				page.getButtonByName(buttonElem.name)
-					.isEnabled()
-					.then((enabled) => {
-						allure.createStep(`Button ${buttonElem.name} is disabled`, () => {
-						})()
-						expect(enabled)
-							.toBe(null);
-
-					});
-			});
-		page.getAllButtons()
-			.count()
-			.then((inCount) => {
-				allure.createStep(`Buttons count should be equal to ${buttons.filter((b) => b.exist).length}`, () => {
-					expect(inCount)
-						.toBe(buttons.filter((b) => b.exist).length, 'Buttons count');
-				})()
-			});
-
+		})();
 	}
 
 	public static clearConsole() {
