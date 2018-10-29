@@ -1,16 +1,16 @@
 import { by, element } from 'protractor';
-import {MainDialogUtil} from '../common/utilities/main-dialog.util';
+import { BasePage } from '../common/utilities/base-page';
 
-export class MainPage extends MainDialogUtil {
+export class MainPage extends BasePage {
 	constructor() {
 		super('systelab-app-frame');
 	}
 
-	getFullUsernameField() {
+	public getFullUsernameField() {
 		return this.getObjectById('username');
 	}
 
-	getPatientButtton() {
+	public getPatientButtton() {
 		return this.getMainWindow().element(by.tagName('systelab-app-header')).all(by.tagName('button')).get(0);
 	}
 }

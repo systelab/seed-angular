@@ -1,7 +1,7 @@
 import { LoginPage } from './login.po';
 import { MainPage } from '../main/main.po';
-import {} from 'jasmine';
-import { browser, by, element } from 'protractor';
+import { browser } from 'protractor';
+
 declare const allure: any;
 
 describe('Login Test Case: MLG_TC106_GEN_Login', () => {

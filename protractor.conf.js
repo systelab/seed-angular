@@ -1,11 +1,7 @@
 exports.config = {
 	allScriptsTimeout: 11000,
-	specs:             [
-		'./e2e/**/*.spec.ts'
-	],
-	capabilities:      {
-		'browserName': 'chrome'
-	},
+	specs:             ['./e2e/**/*.spec.ts'],
+	capabilities:      {'browserName': 'chrome'},
 	directConnect:     true,
 	baseUrl:           'http://localhost:4200/',
 	framework:         'jasmine',
@@ -25,7 +21,6 @@ exports.config = {
 		browser.manage()
 			.timeouts()
 			.implicitlyWait(15000);
-
 		require('ts-node')
 			.register({
 				project: 'e2e/tsconfig.e2e.json'

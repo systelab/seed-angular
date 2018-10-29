@@ -1,10 +1,11 @@
 import { browser, by, element } from 'protractor';
 
 export class LoginPage {
-	public appName: string = "<not retrieved yet, available after calling navigateToHomePage()>";
-	public appDescription: string = "<not retrieved yet, available after calling navigateToHomePage()>";
-	public appVersion: string = "<not retrieved yet, available after calling navigateToHomePage()>";
-	public appCopyright: string = "<not retrieved yet, available after calling navigateToHomePage()>";
+	public static readonly NOT_RETRIEVED = '<not retrieved yet, available after calling navigateToHomePage()>';
+	public appName = LoginPage.NOT_RETRIEVED;
+	public appDescription = LoginPage.NOT_RETRIEVED;
+	public appVersion = LoginPage.NOT_RETRIEVED;
+	public appCopyright = LoginPage.NOT_RETRIEVED;
 
 	private retrieveAppParams(object: LoginPage) {
 		this.getMainWindow()
@@ -37,36 +38,36 @@ export class LoginPage {
 			});
 	}
 
-	navigateToHomePage() {
+	public navigateToHomePage() {
 		browser.get('/');
 		this.retrieveAppParams(this);
 	}
 
-	//TODO: Rename to LoginUserNameInput (systelab-login)
-	getUsernameField() {
+	// TODO: Rename to LoginUserNameInput (systelab-login)
+	public getUsernameField() {
 		return element(by.id('inputUserName'));
 	}
 
-	//TODO: Rename to LoginPasswordInput (systelab-login)
-	getPasswordField() {
+	// TODO: Rename to LoginPasswordInput (systelab-login)
+	public getPasswordField() {
 		return element(by.id('inputPassword'));
 	}
 
-	//TODO: Set id to the button and access by ID
-	getEnterButton() {
+	// TODO: Set id to the button and access by ID
+	public getEnterButton() {
 		return element(by.buttonText('Enter')); // this depends on the system locale...
 	}
 
-	getPopupMessage() {
+	public getPopupMessage() {
 		return element(by.id('popup-message'));
 	}
 
-	getMainWindow() {
+	public getMainWindow() {
 		return element(by.tagName('systelab-login'));
 	}
 
-	//TODO: Move to a navigation utils
-	login() {
+	// TODO: Move to a navigation utils
+	public login() {
 		this.getUsernameField()
 			.sendKeys(browser.params.login.user);
 		this.getPasswordField()

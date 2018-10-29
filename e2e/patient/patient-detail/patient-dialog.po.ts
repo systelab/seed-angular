@@ -1,48 +1,51 @@
-import { by, element } from 'protractor';
-import { MainDialogUtil } from '../../common/utilities/main-dialog.util';
+import { by } from 'protractor';
+import { BasePage } from '../../common/utilities/base-page';
 
-export class PatientEditPage extends MainDialogUtil {
+export class PatientDetailPage extends BasePage {
 	constructor() {
 		super('patient-dialog');
 	}
 
-    getEnableSwich() {
-        return this.getObjectById('PatientEnableSwitch').element(by.tagname('input'));
-    }
+	public getEnableSwich() {
+		return this.getObjectById('PatientEnableSwitch')
+			.element(by.tagname('input'));
+	}
 
-	getSurnameInput() {
-        return this.getObjectById('PatientSurnameInput');
-    }
+	public getSurnameInput() {
+		return this.getObjectById('PatientSurnameInput');
+	}
 
-	getNameInput() {
-        return this.getObjectById('PatientNameInput');
-    }
+	public getNameInput() {
+		return this.getObjectById('PatientNameInput');
+	}
 
-	getEmailInput() {
-        return this.getObjectById('PatientEmailInput');
-    }
+	public getEmailInput() {
+		return this.getObjectById('PatientEmailInput');
+	}
 
-	getAddressStreetInput() {
-        return this.getObjectById('PatientAddressStreetInput');
-    }
+	public getAddressStreetInput() {
+		return this.getObjectById('PatientAddressStreetInput');
+	}
 
-	getAddressCityInput() {
-        return this.getObjectById('PatientAddressCityInput');
-    }
+	public getAddressCityInput() {
+		return this.getObjectById('PatientAddressCityInput');
+	}
 
-	getAddressZipInput() {
-        return this.getObjectById('PatientAddressZipInput');
-    }
+	public getAddressZipInput() {
+		return this.getObjectById('PatientAddressZipInput');
+	}
 
-	getAddressCoordinatesInput() {
-        return this.getObjectById('PatientAddressCoordinatesInput');
-    }
+	public getAddressCoordinatesInput() {
+		return this.getObjectById('PatientAddressCoordinatesInput');
+	}
 
-    getAllButtons() {
-        return this.getMainWindow().element(by.tagName('systelab-dialog-bottom')).all(by.tagName('button'));
-    }
+	public getAllButtons() {
+		return this.getMainWindow()
+			.element(by.tagName('systelab-dialog-bottom'))
+			.all(by.tagName('button'));
+	}
 
-    getbtnSubmit() {
-        return this.getObjectById('PatientSubmitButton');
-    }
+	public getButtonSubmit() {
+		return this.getObjectById('PatientSubmitButton');
+	}
 }
