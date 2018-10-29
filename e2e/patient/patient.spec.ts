@@ -1,7 +1,6 @@
 import { browser, ExpectedConditions as EC } from 'protractor';
 import { LoginPage } from '../login/login.po';
 import { MainPage } from '../main/main.po';
-import { JSConsole } from '../common/utilities/js-console';
 import { ComponentUtilService } from '../common/utilities/component.util.service';
 import { PatientMaintenancePage } from './patient-maintenance.po';
 import { PatientDetailPage } from './patient-detail/patient-dialog.po';
@@ -47,13 +46,12 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 
 	const loginPage = new LoginPage();
 	const mainPage = new MainPage();
-	const jsConsole = new JSConsole();
 	const patientMaintenancePage = new PatientMaintenancePage();
 	const patientDetailPage = new PatientDetailPage();
 
 	beforeAll(() => {
-		currentDate = ComponentUtilService.getCurrentDate();
-		currentTime = ComponentUtilService.getCurrentTime();
+		currentDate = TestToolkit.getCurrentDate();
+		currentTime = TestToolkit.getCurrentTime();
 		// TODO: move to a NavigationUtil
 		loginPage.navigateToHomePage();
 		browser.wait(EC.presenceOf(loginPage.getMainWindow()), msTimeOutWaitForDialogWindow, 'Login Dialog Window is taking too long to appear in the DOM (timeout: ' + msTimeOutWaitForDialogWindow + ' ms).');
@@ -61,12 +59,12 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 	});
 
 	beforeEach(() => {
-		jsConsole.clear();
+		TestToolkit.clearConsole();
 
 		allure.addLabel('tms', 'TC0001_PatientManagement_e2e');
 		allure.addLabel('feature', 'Purpose: This TC is intended to verify the CRUD of a Patient');
 		browser.driver.getCapabilities()
-			.then(function(caps) {
+			.then((caps) => {
 				browser.browserName = caps.get('browserName');
 				allure.addLabel('browser', browser.browserName);
 			});
@@ -76,8 +74,8 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 	});
 
 	afterEach(() => {
-		expect(jsConsole.hasErrors())
-			.toBe(false, 'Some identified errors were present in the javascript console at the end of the test.');
+			expect(TestToolkit.hasErrorsInConsole())
+				.toBe(false, 'Some identified errors were present in the javascript console at the end of the test.');
 	});
 
 	it('Access to the "Patient Management" Dialog', () => {
@@ -88,7 +86,7 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 		})()
 	});
 
-	it('Patient Management: Click on the "Add" button', function() {
+	it('Patient Management: Click on the "Add" button', () => {
 		allure.createStep('Action: Click on the "Add" button', () => {
 			patientMaintenancePage.getButtonAdd()
 				.click();
@@ -98,7 +96,7 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 
 	// TODO: Move to a TestUtil class with all the expects documented with Allure
 
-	it('Create Patient: Validate the default values for all the fields', function() {
+	it('Create Patient: Validate the default values for all the fields', ()=> {
 
 		TestUtil.checkField(patientDetailPage.getSurnameInput(), 'Surname', '');
 		TestUtil.checkField(patientDetailPage.getNameInput(), 'Name', '');
@@ -111,7 +109,7 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 
 	// Close the window dialog so the Create Patiant that follows are consistent
 	it('Create Patient: Close the "Create Patient" dialog opened by the "Add" button', () => {
-		allure.createStep('Action: Click on the button X to close the "Add" Window Dialog', function() {
+		allure.createStep('Action: Click on the button X to close the "Add" Window Dialog', ()=> {
 			// Close the window
 			patientDetailPage.getButtonClose()
 				.click();
@@ -120,7 +118,7 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 		})();
 	});
 
-	it('Create Patient: Test the Creation of Patients', function() {
+	it('Create Patient: Test the Creation of Patients', ()=> {
 		for (let i = 1; i <= browser.params.repeatabilityNumberPasses; i++) {
 			// Open the window
 			patientMaintenancePage.getButtonAdd()
@@ -185,7 +183,7 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 						});
 				})();
 
-				allure.createStep(`Pass #${k}: Click on the three button contextual menu again to close the contextual menu`, function() {
+				allure.createStep(`Pass #${k}: Click on the three button contextual menu again to close the contextual menu`, () => {
 					ComponentUtilService.getGridData(patientMaintenancePage.getPatientsGrid(), PatientMaintenancePage.GRID_COLUMN_CONTEXTMENU, k)
 						.click();
 
@@ -199,11 +197,11 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 	it('Patient Management: Delete the elements recently added to the grid', () => {
 		const optionMenuDelete = 1;
 		for (let k = (browser.params.repeatabilityNumberPasses - 1); k >= 0; k--) {
-			allure.createStep(`Action: Pass #${k}: Click on the three button contextual menu at a row on the grid area to open the menu`, function() {
+			allure.createStep(`Action: Pass #${k}: Click on the three button contextual menu at a row on the grid area to open the menu`, () => {
 				ComponentUtilService.getGridData(patientMaintenancePage.getPatientsGrid(), PatientMaintenancePage.GRID_COLUMN_CONTEXTMENU, k)
 					.click();
 
-				allure.createStep(`Action: Pass #${k}: Click on the "Delete" option`, function() {
+				allure.createStep(`Action: Pass #${k}: Click on the "Delete" option`, () => {
 					ComponentUtilService.getContextMenu(patientMaintenancePage.getPatientsGrid(), PatientMaintenancePage.GRID_COLUMN_CONTEXTMENU, k, optionMenuDelete)
 						.click();
 				})();

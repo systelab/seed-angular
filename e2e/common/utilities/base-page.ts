@@ -1,14 +1,13 @@
 import { by, element, ElementArrayFinder, promise, protractor } from 'protractor';
-import { ButtonState } from './test-toolkit';
-
-declare const allure: any;
 
 export class BasePage {
+
+	public static readonly NOT_RETRIEVED = '<not retrieved yet, available after calling navigateToHomePage()>';
 
 	protected tagName = '';
 	protected tagNameIndex: number;
 
-	protected getAllButtons?(): any;    // this should be implemented ONLY on the child classes that will actually are going to need it
+	public getAllButtons?(): any;    // this should be implemented ONLY on the child classes that will actually are going to need it
 
 	constructor(dialogTagName: string, dialogTagNameIndex?: number) {
 		this.tagName = dialogTagName;
@@ -24,7 +23,6 @@ export class BasePage {
 			.get(this.tagNameIndex);
 	}
 
-	// TODO: Move to a unique Dialog util
 	public getTitle() {
 		return this.getMainWindow()
 			.element(by.tagName('systelab-dialog-header'))
@@ -46,7 +44,7 @@ export class BasePage {
 
 		return new promise.Promise((resolve, reject) => {
 			obj.each(
-				function(elem, index) {
+				(elem, index) => {
 					elem.getText()
 						.then(
 							(inText) => {
@@ -60,10 +58,10 @@ export class BasePage {
 				}
 			)
 				.then(
-					function() {
+					() => {
 						resolve(posFound);
 					},
-					function(err) {
+					(err) => {
 						reject(err);
 					}
 				);
@@ -86,7 +84,7 @@ export class BasePage {
 							});
 					}
 					protractor.promise.controlFlow()
-						.execute(function() {
+						.execute(() => {
 							resolve(exist);
 						});
 				});
@@ -98,49 +96,4 @@ export class BasePage {
 			.element(by.buttonText(name));
 	}
 
-	public checkButtons(buttons: ButtonState[]) {
-		allure.createStep('Action: Get all the buttons', () => {
-		});
-		// Apart, check if the enable flag is correct
-
-		buttons.forEach((buttonElem) => {
-			this.existButton(buttonElem.name)
-				.then((existButton) => {
-					allure.createStep(`Button ${buttonElem.name} is present`, () => {
-						expect(existButton)
-							.toBe(buttonElem.exist, `Button ${buttonElem.name} should be present`);
-					})()
-				});
-		});
-
-		buttons.filter((b) => b.enable)
-			.forEach((buttonElem) => {
-				this.getButtonByName(buttonElem.name).isEnabled()
-					.then((enabled) => {
-						allure.createStep(`Button ${buttonElem.name} is enabled`, () => {})()
-							expect(enabled)
-								.toBe(true);
-
-					});
-			});
-		buttons.filter((b) => !b.enable)
-			.forEach((buttonElem) => {
-				this.getButtonByName(buttonElem.name).isEnabled()
-					.then((enabled) => {
-						allure.createStep(`Button ${buttonElem.name} is disabled`, () => {})()
-							expect(enabled)
-								.toBe(null);
-
-					});
-			});
-		this.getAllButtons()
-			.count()
-			.then((inCount) => {
-				allure.createStep(`Buttons count should be equal to ${buttons.filter((b) => b.exist).length}`, () => {
-					expect(inCount)
-						.toBe(buttons.filter((b) => b.exist).length, 'Buttons count');
-				})()
-			});
-
-	}
 }

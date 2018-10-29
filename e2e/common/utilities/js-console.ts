@@ -21,7 +21,7 @@ export class JSConsole {
 					.logs()
 					.get('browser')
 					.then(
-						function(browserLog) {
+						(browserLog) => {
 							consoleMessages = require('util')
 								.inspect(browserLog)
 								.toString();
@@ -30,7 +30,7 @@ export class JSConsole {
 
 							resolve(hasErrors);
 						},
-						function(err) {
+						(err) => {
 							reject(err);
 						}
 					);

@@ -1,39 +1,39 @@
 import { browser, by, element } from 'protractor';
+import { BasePage } from '../common/utilities/base-page';
 
 export class LoginPage {
-	public static readonly NOT_RETRIEVED = '<not retrieved yet, available after calling navigateToHomePage()>';
-	public appName = LoginPage.NOT_RETRIEVED;
-	public appDescription = LoginPage.NOT_RETRIEVED;
-	public appVersion = LoginPage.NOT_RETRIEVED;
-	public appCopyright = LoginPage.NOT_RETRIEVED;
+	public appName = BasePage.NOT_RETRIEVED;
+	public appDescription = BasePage.NOT_RETRIEVED;
+	public appVersion = BasePage.NOT_RETRIEVED;
+	public appCopyright = BasePage.NOT_RETRIEVED;
 
 	private retrieveAppParams(object: LoginPage) {
 		this.getMainWindow()
 			.all(by.className('slab-text'))
 			.get(0)
 			.getText()
-			.then(function(inText) {
+			.then((inText) => {
 				object.appName = inText.trim();
 			});
 		this.getMainWindow()
 			.all(by.className('slab-text'))
 			.get(1)
 			.getText()
-			.then(function(inText) {
+			.then((inText) => {
 				object.appDescription = inText.trim();
 			});
 		this.getMainWindow()
 			.all(by.className('slab-text'))
 			.get(2)
 			.getText()
-			.then(function(inText) {
+			.then((inText) => {
 				object.appVersion = inText.trim();
 			});
 		this.getMainWindow()
 			.all(by.className('slab-text'))
 			.get(4)
 			.getText()
-			.then(function(inText) {
+			.then((inText) => {
 				object.appCopyright = inText.trim();
 			});
 	}
