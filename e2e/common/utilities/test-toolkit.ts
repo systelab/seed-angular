@@ -2,6 +2,8 @@ import { browser, ElementFinder, ExpectedConditions as EC, promise } from 'protr
 import { BasePage } from './base-page';
 import { TestUtil } from './test-util';
 import { JSConsole } from './js-console';
+import { PatientMaintenancePage } from '../../patient/patient-maintenance.po';
+import { ComponentUtilService } from './component.util.service';
 
 declare const allure: any;
 
@@ -62,6 +64,20 @@ export class TestToolkit {
 					})()
 				});
 		})();
+	}
+
+	public static checkGridPopupMenuContentAtRow(element: ElementFinder, row: number, menuitems: string[]) {
+		allure.createStep(`Pass #${row}: Click on the three button contextual menu at a row on the grid area`, () => {
+			ComponentUtilService.getGridInnerComponent(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row).click();
+			expect(ComponentUtilService.getContextMenu(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row).getText())
+				.toEqual(menuitems);
+			ComponentUtilService.getGridInnerComponent(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row).click();
+		})();
+	}
+
+	public static clickGridPopupMenuContentAtRow(element: ElementFinder, row: number, option: number) {
+		ComponentUtilService.getGridInnerComponent(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row).click();
+		ComponentUtilService.getContextMenu(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row, option).click();
 	}
 
 	public static checkButtons(page: BasePage, buttons: ButtonState[]) {
