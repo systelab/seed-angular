@@ -29,7 +29,7 @@ describe('Login Test Case: MLG_TC106_GEN_Login', () => {
 			login.getEnterButton().click();
 		})();
 		allure.createStep('The home page is displayed', () => {
-			browser.wait(EC.presenceOf(mainPage.getMainWindow()), TestToolkit.TIME_OUT_MS_FOR_DIALOG_WINDOW, 'Login Dialog Window is taking too long to appear in the DOM (timeout: ' + TestToolkit.TIME_OUT_MS_FOR_DIALOG_WINDOW + ' ms).');
+			browser.wait(EC.presenceOf(mainPage.getMainWindow()), TestToolkit.TIME_OUT_MS_FOR_DIALOG_WINDOW, 'Main Dialog Window is taking too long to appear in the DOM (timeout: ' + TestToolkit.TIME_OUT_MS_FOR_DIALOG_WINDOW + ' ms).');
 			expect(mainPage.getFullUsernameField().getText()).toEqual('Administrator');
 		})();
 	});
