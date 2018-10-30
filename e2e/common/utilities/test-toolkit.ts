@@ -15,7 +15,7 @@ export class TestToolkit {
 
 	private static console = new JSConsole();
 
-	public static readonly TIME_OUT_MS_FOR_DIALOG_WINDOW = 90000;
+	public static readonly TIME_OUT_MS_FOR_DIALOG_WINDOW = 30000;
 
 	public static showNewPageAndCheckTitleAndButtons(newPage: BasePage, expectedWindowTitle: string, buttons?: ButtonState[]) {
 
