@@ -1,18 +1,20 @@
 import { LoginPage } from './login.po';
 import { MainPage } from '../main/main.po';
-import { browser } from 'protractor';
+import { browser, ExpectedConditions as EC } from 'protractor';
+import { TestToolkit } from '../common/utilities/test-toolkit';
 
 declare const allure: any;
 
 describe('Login Test Case: MLG_TC106_GEN_Login', () => {
 	let login: LoginPage;
-	let main: MainPage;
+	let mainPage: MainPage;
 
 	beforeEach(() => {
 		allure.addLabel('tms', 'MLG_TC106_GEN_Login_e2e');
 		allure.addLabel('feature', 'Goal: The purpose of this test case is to verify the login and log out functionalities');
 		login = new LoginPage();
-		main = new MainPage();
+		mainPage = new MainPage();
+
 	});
 
 	it('Login correct', () => {
@@ -27,7 +29,8 @@ describe('Login Test Case: MLG_TC106_GEN_Login', () => {
 			login.getEnterButton().click();
 		})();
 		allure.createStep('The home page is displayed', () => {
-			expect(main.getFullUsernameField().getText()).toEqual('Administrator');
+			browser.wait(EC.presenceOf(mainPage.getMainWindow()), TestToolkit.TIME_OUT_MS_FOR_DIALOG_WINDOW, 'Login Dialog Window is taking too long to appear in the DOM (timeout: ' + TestToolkit.TIME_OUT_MS_FOR_DIALOG_WINDOW + ' ms).');
+			expect(mainPage.getFullUsernameField().getText()).toEqual('Administrator');
 		})();
 	});
 
