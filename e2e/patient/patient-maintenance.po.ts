@@ -2,7 +2,7 @@ import { by } from 'protractor';
 import { BasePage } from '../common/utilities/base-page';
 
 export class PatientMaintenancePage extends BasePage {
-	public static readonly GRID_COLUMN_CONTEXTMENU = 'contextMenu';
+	public static readonly GRID_COLUMN_CONTEXT_MENU = 'contextMenu';
 	public static readonly GRID_COLUMN_NAME = 'name';
 	public static readonly GRID_COLUMN_SURNAME = 'surname';
 	public static readonly GRID_COLUMN_EMAIL = 'email';

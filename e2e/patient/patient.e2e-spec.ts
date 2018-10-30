@@ -1,4 +1,4 @@
-import { browser, ExpectedConditions as EC } from 'protractor';
+import { browser } from 'protractor';
 import { LoginPage } from '../login/login.po';
 import { MainPage } from '../main/main.po';
 import { ComponentUtilService } from '../common/utilities/component.util.service';
@@ -11,9 +11,7 @@ declare const allure: any;
 
 describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 	const expectedWindowTitlePatientManagement = 'patient management';
-	const contextualMenuPatientManagementGrid = ['update', 'delete'];
 	const expectedWindowTitlePatientCreate = 'create patient';
-	// TODO: It would be better to create a JSON structure to manage button information such as button text or status (enabled/disabled)
 
 	const patientManagementButtons: ButtonState[] = [{
 		name:   'Options',
@@ -38,7 +36,6 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 	];
 
 	const patientEditCreateNewValues = ['Aparicio', 'José Luis', 'jlaparicio@werfen.com', 'Plaza de Europa, 21-23, 18th Floor', 'Barcelona', '08908', '41.356439, 2.127791'];
-	const msTimeOutWaitForDialogWindow = 30000;   // in milliseconds
 
 	let currentDate = '';
 	let currentTime = '';
@@ -51,9 +48,8 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 	beforeAll(() => {
 		currentDate = TestToolkit.getCurrentDate();
 		currentTime = TestToolkit.getCurrentTime();
-		// TODO: move to a NavigationUtil
+
 		loginPage.navigateToHomePage();
-		browser.wait(EC.presenceOf(loginPage.getMainWindow()), msTimeOutWaitForDialogWindow, 'Login Dialog Window is taking too long to appear in the DOM (timeout: ' + msTimeOutWaitForDialogWindow + ' ms).');
 		loginPage.login();
 	});
 
@@ -73,8 +69,7 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 	});
 
 	afterEach(() => {
-		expect(TestToolkit.hasErrorsInConsole())
-			.toBe(false, 'Some identified errors were present in the javascript console at the end of the test.');
+		expect(TestToolkit.hasErrorsInConsole()).toBe(false, 'Some identified errors were present in the javascript console at the end of the test.');
 	});
 
 	it('Access to the "Patient Management" Dialog', () => {
@@ -92,10 +87,7 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 		})()
 	});
 
-	// TODO: Move to a TestUtil class with all the expects documented with Allure
-
 	it('Create Patient: Validate the default values for all the fields', () => {
-
 		TestUtil.checkField(patientDetailPage.getSurnameInput(), 'Surname', '');
 		TestUtil.checkField(patientDetailPage.getNameInput(), 'Name', '');
 		TestUtil.checkField(patientDetailPage.getEmailInput(), 'Email', '');
@@ -105,7 +97,6 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 		TestUtil.checkField(patientDetailPage.getAddressCoordinatesInput(), 'Field "Address -> Coordinates', '');
 	});
 
-	// Close the window dialog so the Create Patiant that follows are consistent
 	it('Create Patient: Close the "Create Patient" dialog opened by the "Add" button', () => {
 		allure.createStep('Action: Click on the button X to close the "Add" Window Dialog', () => {
 			// Close the window
@@ -131,70 +122,32 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 			TestToolkit.fillField(patientDetailPage.getAddressCoordinatesInput(), 'Address -> Coordinates', 'Try #' + i + ': ' + patientEditCreateNewValues[6]);
 
 			patientDetailPage.getButtonSubmit().click();
-			}
+		}
 	});
-	/*
-		it('Main Window: Patient Management: Validate the contextual menu at the patients grid', () => {
-			let arrBooleans = contextualMenuPatientManagementGrid.map(a => {
-				return true;
-			});
 
-			for (let k = 0; k < browser.params.repeatabilityNumberPasses; k++) {
-				allure.createStep(`Pass #${k}: Click on the three button contextual menu at a row on the grid area`, () => {
-					ComponentUtilService.getGridData(patientMaintenancePage.getPatientsGrid(), PatientMaintenancePage.GRID_COLUMN_CONTEXTMENU, k)
-						.click();
+	it('Patient Management: Validate the contextual menu at the patients grid', () => {
+		const menuitems = ['Update', 'Delete'];
 
-					ComponentUtilService.getContextMenu(patientMaintenancePage.getPatientsGrid(), PatientMaintenancePage.GRID_COLUMN_CONTEXTMENU, k)
-						.isDisplayed()
-						.then((isDisplayed) => {
-							// console.log("flag 1:", isDisplayed);
-							allure.createStep('The item on the menu match', () => {
-								expect(isDisplayed)
-									.toEqual(arrBooleans)
-							})()
-						});
+		for (let k = 0; k < browser.params.repeatabilityNumberPasses; k++) {
+			allure.createStep(`Pass #${k}: Click on the three button contextual menu at a row on the grid area`, () => {
+				ComponentUtilService.getGridInnerComponent(patientMaintenancePage.getPatientsGrid(), PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, k).click();
+				expect(ComponentUtilService.getContextMenu(patientMaintenancePage.getPatientsGrid(), PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, k).getText()).toEqual(menuitems);
+			})();
 
-					ComponentUtilService.getContextMenu(patientMaintenancePage.getPatientsGrid(), PatientMaintenancePage.GRID_COLUMN_CONTEXTMENU, k)
-						.isDisplayed()
-						.then((inisDisplayed) => {
-							if (inisDisplayed) {
-								ComponentUtilService.getContextMenu(patientMaintenancePage.getPatientsGrid(), PatientMaintenancePage.GRID_COLUMN_CONTEXTMENU, k)
-									.map((el) => {
-										return el.getText();
-									})
-									.then((arrayElements) => {
-										// console.log("arrayElements: ", arrayElements);
-										allure.createStep('The item on the menu match', () => {
-											expect(arrayElements.map(x => (String.prototype.toLowerCase.call(
-												String.prototype.toLowerCase.call(x)))))
-												.toEqual(contextualMenuPatientManagementGrid);
-										})()
-									});
-							} else {
-								fail('The contextual menu could not be displayed');
-							}
-						});
-				})();
+			allure.createStep(`Pass #${k}: Click on the three button contextual menu again to close the contextual menu`, () => {
+				ComponentUtilService.getGridInnerComponent(patientMaintenancePage.getPatientsGrid(), PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, k).click();
+			})();
+		}
+	});
 
-				allure.createStep(`Pass #${k}: Click on the three button contextual menu again to close the contextual menu`, () => {
-					ComponentUtilService.getGridData(patientMaintenancePage.getPatientsGrid(), PatientMaintenancePage.GRID_COLUMN_CONTEXTMENU, k)
-						.click();
-
-					// ComponentUtilService.getContextMenu(patientMaintenancePage.getPatientsGrid(), patientMaintenancePage.GRID_COLUMN_CONTEXTMENU, k).isDisplayed().then((isDisplayed) => {
-					// expect(isDisplayed).toEqual([]);
-					// });
-				})();
-			}
-		});
-	*/
 	it('Patient Management: Delete the elements recently added to the grid', () => {
 		const optionMenuDelete = 1;
 		for (let k = (browser.params.repeatabilityNumberPasses - 1); k >= 0; k--) {
 			allure.createStep(`Action: Pass #${k}: Click on the three button contextual menu at a row on the grid area to open the menu`, () => {
-				ComponentUtilService.getGridData(patientMaintenancePage.getPatientsGrid(), PatientMaintenancePage.GRID_COLUMN_CONTEXTMENU, k).click();
+				ComponentUtilService.getGridInnerComponent(patientMaintenancePage.getPatientsGrid(), PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, k).click();
 
 				allure.createStep(`Action: Pass #${k}: Click on the "Delete" option`, () => {
-					ComponentUtilService.getContextMenu(patientMaintenancePage.getPatientsGrid(), PatientMaintenancePage.GRID_COLUMN_CONTEXTMENU, k, optionMenuDelete).click();
+					ComponentUtilService.getContextMenu(patientMaintenancePage.getPatientsGrid(), PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, k, optionMenuDelete).click();
 				})();
 			})();
 		}

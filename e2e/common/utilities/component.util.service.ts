@@ -7,43 +7,31 @@ export class ComponentUtilService {
 	public static readonly CSS_NAME_CELL_VALUE = '.ag-cell-value';
 	public static readonly CSS_HEADER_CELL_TEXT = '.ag-header-cell-text';
 
-	public static getGridData(gridObject: ElementFinder, col?: string, row?: number): any {
+	public static getGridInnerComponent(grid: ElementFinder, col?: string, row?: number): any {
 		if (col === undefined) {
-			return gridObject.element(by.className('ag-body-viewport'))
-				.all(by.css('div[role=row]'));
+			return grid.element(by.className('ag-body-viewport')).all(by.css('div[role=row]'));
 		} else {
 			if (row === undefined) {
-				return gridObject.element(by.className('ag-body-viewport'))
-					.all(by.css('div[col-id="' + col + '"]'));
+				return grid.element(by.className('ag-body-viewport')).all(by.css('div[col-id="' + col + '"]'));
 			} else {
-				return gridObject.element(by.className('ag-body-viewport'))
-					.element(by.css('div[row-index="' + row + '"]'))
-					.all(by.css('div[col-id="' + col + '"]'));
+				return grid.element(by.className('ag-body-viewport')).element(by.css('div[row-index="' + row + '"]')).all(by.css('div[col-id="' + col + '"]'));
 			}
 		}
 	}
 
-	public static getGridHeader(gridObject: ElementFinder, col?: number) {
+	public static getGridHeader(grid: ElementFinder, col?: number) {
 		if (col === undefined) {
-			return gridObject.element(by.className('ag-header-container'))
-				.element(by.className('ag-header-row'))
-				.all(by.className('ag-header-cell'));
+			return grid.element(by.className('ag-header-container')).element(by.className('ag-header-row')).all(by.className('ag-header-cell'));
 		} else {
-			return gridObject.element(by.className('ag-header-container'))
-				.element(by.className('ag-header-row'))
-				.all(by.className('ag-header-cell'))
-				.get(col);
+			return grid.element(by.className('ag-header-container')).element(by.className('ag-header-row')).all(by.className('ag-header-cell')).get(col);
 		}
 	}
 
 	public static getContextMenu(gridObject: ElementFinder, col?: string, row?: number, subIndex?: number) {
 		if (subIndex === undefined) {
-			return this.getGridData(gridObject, col, row)
-				.all(by.tagName(ComponentUtilService.TAG_NAME_CONTEXTUAL_MENU));
+			return this.getGridInnerComponent(gridObject, col, row).all(by.tagName(ComponentUtilService.TAG_NAME_CONTEXTUAL_MENU));
 		} else {
-			return this.getGridData(gridObject, col, row)
-				.all(by.tagName(ComponentUtilService.TAG_NAME_CONTEXTUAL_MENU))
-				.get(subIndex);
+			return this.getGridInnerComponent(gridObject, col, row).all(by.tagName(ComponentUtilService.TAG_NAME_CONTEXTUAL_MENU)).get(subIndex);
 		}
 	}
 
