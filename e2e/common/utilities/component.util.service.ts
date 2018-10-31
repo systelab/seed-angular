@@ -1,4 +1,4 @@
-import { by, ElementFinder } from 'protractor';
+import { by, ElementArrayFinder, ElementFinder, promise } from 'protractor';
 
 // TODO: Split this file into utils for each component
 export class ComponentUtilService {
@@ -33,6 +33,35 @@ export class ComponentUtilService {
 		} else {
 			return this.getGridInnerComponent(gridObject, col, row).all(by.tagName(ComponentUtilService.TAG_NAME_CONTEXTUAL_MENU)).get(subIndex);
 		}
+	}
+
+	public searchGridCols(obj: ElementArrayFinder, strTextToSearch: string): promise.Promise<number> {
+		let posFound = -1;
+
+		return new promise.Promise((resolve, reject) => {
+			obj.each(
+				(elem, index) => {
+					elem.getText()
+						.then(
+							(inText) => {
+								if (inText.trim()
+										.toLowerCase() === strTextToSearch.trim()
+										.toLowerCase()) {
+									posFound = index;
+								}
+							}
+						);
+				}
+			)
+				.then(
+					() => {
+						resolve(posFound);
+					},
+					(err) => {
+						reject(err);
+					}
+				);
+		});
 	}
 
 	/*static getContextualMenuByRow(mainWindow: ElementFinder) {

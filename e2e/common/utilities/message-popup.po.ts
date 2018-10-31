@@ -2,12 +2,8 @@ import { by } from 'protractor';
 import { BasePage } from './base-page';
 
 export class MesssagePopupPage extends BasePage {
-	constructor(index?: number) {
-		if (index === undefined) {
-			super('mp-modal-container', 2);
-		} else {
-			super('mp-modal-container', index);
-		}
+	constructor(index: number = 2) {
+		super('mp-modal-container', index);
 	}
 
 	public getMainWindow() {

@@ -40,13 +40,8 @@ export class TestToolkit {
 	}
 
 	public static checkPresentAndDisplayed(page: BasePage) {
-		expect(page.getMainWindow()
-			.isPresent())
-			.toBe(true, 'Window should be present on the DOM');
-
-		expect(page.getMainWindow()
-			.isDisplayed())
-			.toBe(true, 'Window should be displayed');
+		expect(page.getMainWindow().isPresent()).toBe(true, 'Window should be present on the DOM');
+		expect(page.getMainWindow().isDisplayed()).toBe(true, 'Window should be displayed');
 	}
 
 	public static fillField(field: ElementFinder, name: string, value: string) {
@@ -55,12 +50,7 @@ export class TestToolkit {
 				.sendKeys(value)
 				.then(() => {
 					allure.createStep('"' + name + '" has the filled value', () => {
-						field
-							.getAttribute('value')
-							.then((inValue) => {
-								expect(inValue)
-									.toBe(value, 'Field "' + name + '" was not properly filled');
-							});
+						expect(field.getAttribute('value')).toBe(value, 'Field "' + name + '" was not properly filled');
 					})()
 				});
 		})();
@@ -69,8 +59,7 @@ export class TestToolkit {
 	public static checkGridPopupMenuContentAtRow(element: ElementFinder, row: number, menuitems: string[]) {
 		allure.createStep(`Pass #${row}: Click on the three button contextual menu at a row on the grid area`, () => {
 			ComponentUtilService.getGridInnerComponent(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row).click();
-			expect(ComponentUtilService.getContextMenu(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row).getText())
-				.toEqual(menuitems);
+			expect(ComponentUtilService.getContextMenu(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row).getText()).toEqual(menuitems);
 			ComponentUtilService.getGridInnerComponent(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row).click();
 		})();
 	}
@@ -80,51 +69,31 @@ export class TestToolkit {
 		ComponentUtilService.getContextMenu(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row, option).click();
 	}
 
+
 	public static checkButtons(page: BasePage, buttons: ButtonState[]) {
 		allure.createStep('Action: Get all the buttons', () => {
 
-			// Apart, check if the enable flag is correct
-
 			buttons.forEach((buttonElem) => {
-				page.existButton(buttonElem.name)
-					.then((existButton) => {
-						allure.createStep(`Button ${buttonElem.name} is present`, () => {
-							expect(existButton)
-								.toBe(buttonElem.exist, `Button ${buttonElem.name} should be present`);
-						})()
-					});
+				expect(page.getButtonByName(buttonElem.name).isPresent()).toBe(true, `Button ${buttonElem.name} should be present`);
 			});
 
 			buttons.filter((b) => b.enable)
 				.forEach((buttonElem) => {
-					page.getButtonByName(buttonElem.name)
-						.isEnabled()
-						.then((enabled) => {
-							allure.createStep(`Button ${buttonElem.name} is enabled`, () => {
-							})()
-							expect(enabled)
-								.toBe(true);
-
-						});
+					allure.createStep(`Button ${buttonElem.name} is enabled`, () => {
+						expect(page.getButtonByName(buttonElem.name).isEnabled()).toBe(true);
+					})()
 				});
 			buttons.filter((b) => !b.enable)
 				.forEach((buttonElem) => {
-					page.getButtonByName(buttonElem.name)
-						.isEnabled()
-						.then((enabled) => {
-							allure.createStep(`Button ${buttonElem.name} is disabled`, () => {
-							})()
-							expect(enabled)
-								.toBe(null);
-
-						});
+					allure.createStep(`Button ${buttonElem.name} is disabled`, () => {
+						expect(page.getButtonByName(buttonElem.name).isEnabled()).toBe(null);
+					})()
 				});
 			page.getAllButtons()
 				.count()
 				.then((inCount) => {
 					allure.createStep(`Buttons count should be equal to ${buttons.filter((b) => b.exist).length}`, () => {
-						expect(inCount)
-							.toBe(buttons.filter((b) => b.exist).length, 'Buttons count');
+						expect(inCount).toBe(buttons.filter((b) => b.exist).length, 'Buttons count');
 					})()
 				});
 		})();
