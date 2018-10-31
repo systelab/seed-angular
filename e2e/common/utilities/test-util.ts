@@ -9,14 +9,14 @@ export class TestUtil {
 				.getAttribute('value')
 				.then((inValue) => {
 					allure.createStep('Field ' + name + ' is equals to "' + inValue + '"', () => {
-						expect(inValue).toBe(expectedValue, 'Field "' + name + '" should be ' + expectedValue);
+						expect(inValue).toEqual(expectedValue, 'Field "' + name + '" should be ' + expectedValue);
 					})();
 				});
 	}
 
 	public static checkString(text: string, name: string, expectedValue: string) {
 				allure.createStep('Field ' + name + ' is equals to "' + text + '"', () => {
-					expect(text).toBe(expectedValue, 'Field "' + name + '" should be ' + expectedValue);
+					expect(text).toEqual(expectedValue, 'Field "' + name + '" should be ' + expectedValue);
 				})();
 	}
 }

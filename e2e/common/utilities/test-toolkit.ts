@@ -40,8 +40,8 @@ export class TestToolkit {
 	}
 
 	public static checkPresentAndDisplayed(page: BasePage) {
-		expect(page.getMainWindow().isPresent()).toBe(true, 'Window should be present on the DOM');
-		expect(page.getMainWindow().isDisplayed()).toBe(true, 'Window should be displayed');
+		expect(page.getMainWindow().isPresent()).toEqual(true, 'Window should be present on the DOM');
+		expect(page.getMainWindow().isDisplayed()).toEqual(true, 'Window should be displayed');
 	}
 
 	public static fillField(field: ElementFinder, name: string, value: string) {
@@ -50,7 +50,7 @@ export class TestToolkit {
 				.sendKeys(value)
 				.then(() => {
 					allure.createStep('"' + name + '" has the filled value', () => {
-						expect(field.getAttribute('value')).toBe(value, 'Field "' + name + '" was not properly filled');
+						expect(field.getAttribute('value')).toEqual(value, 'Field "' + name + '" was not properly filled');
 					})()
 				});
 		})();
@@ -74,26 +74,26 @@ export class TestToolkit {
 		allure.createStep('Action: Get all the buttons', () => {
 
 			buttons.forEach((buttonElem) => {
-				expect(page.getButtonByName(buttonElem.name).isPresent()).toBe(true, `Button ${buttonElem.name} should be present`);
+				expect(page.getButtonByName(buttonElem.name).isPresent()).toEqual(true, `Button ${buttonElem.name} should be present`);
 			});
 
 			buttons.filter((b) => b.enable)
 				.forEach((buttonElem) => {
 					allure.createStep(`Button ${buttonElem.name} is enabled`, () => {
-						expect(page.getButtonByName(buttonElem.name).isEnabled()).toBe(true);
+						expect(page.getButtonByName(buttonElem.name).isEnabled()).toEqual(true);
 					})()
 				});
 			buttons.filter((b) => !b.enable)
 				.forEach((buttonElem) => {
 					allure.createStep(`Button ${buttonElem.name} is disabled`, () => {
-						expect(page.getButtonByName(buttonElem.name).isEnabled()).toBe(null);
+						expect(page.getButtonByName(buttonElem.name).isEnabled()).toEqual(null);
 					})()
 				});
 			page.getAllButtons()
 				.count()
 				.then((inCount) => {
 					allure.createStep(`Buttons count should be equal to ${buttons.filter((b) => b.exist).length}`, () => {
-						expect(inCount).toBe(buttons.filter((b) => b.exist).length, 'Buttons count');
+						expect(inCount).toEqual(buttons.filter((b) => b.exist).length, 'Buttons count');
 					})()
 				});
 		})();
