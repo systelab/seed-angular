@@ -9,9 +9,13 @@ describe('Login Test Case: MLG_TC106_GEN_Login', () => {
 	let login: LoginPage;
 	let mainPage: MainPage;
 
+	const currentDate = TestToolkit.getCurrentDate();
+	const currentTime = TestToolkit.getCurrentTime();
+
 	beforeEach(() => {
 		allure.addLabel('tms', 'MLG_TC106_GEN_Login_e2e');
-		allure.addLabel('feature', 'Goal: The purpose of this test case is to verify the login and log out functionalities');
+		TestToolkit.init('MLG_TC106_GEN_Login_e2e', 'Goal: The purpose of this test case is to verify the login and log out functionalities',
+			undefined, 'xcalvo', currentDate, currentTime);
 		login = new LoginPage();
 		mainPage = new MainPage();
 

@@ -27,9 +27,15 @@ export class TestToolkit {
 				browser.browserName = caps.get('browserName');
 				allure.addLabel('browser', browser.browserName);
 			});
-		allure.addLabel('appVersion', version);
-		allure.addLabel('tester', user);
-		allure.addLabel('testExecutionDateTime', currentDate + ' ' + currentTime);
+		if (version) {
+			allure.addLabel('appVersion', version);
+		}
+		if (user) {
+			allure.addLabel('tester', user);
+		}
+		if (currentDate && currentTime) {
+			allure.addLabel('testExecutionDateTime', currentDate + ' ' + currentTime);
+		}
 	}
 
 	public static showNewPageAndCheckTitleAndButtons(newPage: BasePage, expectedWindowTitle: string, buttons?: ButtonState[]) {
