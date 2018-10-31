@@ -8,7 +8,7 @@ import { TestUtil } from '../common/utilities/test-util';
 
 declare const allure: any;
 
-describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
+describe('Instrument Selector Case: TC0001_PatientManagement_e2e', () => {
 
 	const currentDate = TestToolkit.getCurrentDate();
 	const currentTime = TestToolkit.getCurrentTime();
@@ -57,8 +57,7 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 		})()
 	});
 
-	it('Patient Management: Click on the "Add" button', () => {
-		allure.createStep('Action: Click on the "Add" button', () => {
+	it('Click on the "Add" button', () => {
 			const title = 'Create Patient';
 			const buttons: ButtonState[] = [{
 				name:   'Create',
@@ -67,10 +66,9 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 			}];
 			patientMaintenancePage.getButtonAdd().click();
 			TestToolkit.showNewPageAndCheckTitleAndButtons(patientDetailPage, title, buttons);
-		})()
 	});
 
-	it('Create Patient: Validate the default values for all the fields', () => {
+	it('Validate the default values for all the fields', () => {
 		TestUtil.checkField(patientDetailPage.getSurnameInput(), 'Surname', '');
 		TestUtil.checkField(patientDetailPage.getNameInput(), 'Name', '');
 		TestUtil.checkField(patientDetailPage.getEmailInput(), 'Email', '');
@@ -80,32 +78,36 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 		TestUtil.checkField(patientDetailPage.getAddressCoordinatesInput(), 'Field "Address -> Coordinates', '');
 	});
 
-	it('Create Patient: Close the "Create Patient" dialog opened by the "Add" button', () => {
-		allure.createStep('Action: Click on the button X to close the "Add" Window Dialog', () => {
+	it('Close the dialog', () => {
 			patientDetailPage.getButtonClose().click();
 			TestToolkit.checkPresentAndDisplayed(patientMaintenancePage);
-		})();
 	});
 
-	it('Create Patient: Test the Creation of Patients', () => {
+	it('Create some patients', () => {
 		const patientEditCreateNewValues = ['Aparicio', 'José Luis', 'jlaparicio@werfen.com', 'Plaza de Europa, 21-23, 18th Floor', 'Barcelona', '08908', '41.356439, 2.127791'];
 		for (let i = 1; i <= browser.params.repeatabilityNumberPasses; i++) {
-			patientMaintenancePage.getButtonAdd().click();
 
-			TestToolkit.fillField(patientDetailPage.getSurnameInput(), 'Surname', 'Try #' + i + ': ' + patientEditCreateNewValues[0]);
-			TestToolkit.fillField(patientDetailPage.getNameInput(), 'Name', 'Try #' + i + ': ' + patientEditCreateNewValues[1]);
-			TestToolkit.fillField(patientDetailPage.getEmailInput(), 'Email', 'try_' + i + '_' + patientEditCreateNewValues[2]);
+			allure.createStep('Action: Create the patient ' + i, () => {
 
-			TestToolkit.fillField(patientDetailPage.getAddressStreetInput(), 'Address -> Street', 'Try #' + i + ': ' + patientEditCreateNewValues[3]);
-			TestToolkit.fillField(patientDetailPage.getAddressCityInput(), 'Address -> City', 'Try #' + i + ': ' + patientEditCreateNewValues[4]);
-			TestToolkit.fillField(patientDetailPage.getAddressZipInput(), 'Address -> Zip', 'Try #' + i + ': ' + patientEditCreateNewValues[5]);
-			TestToolkit.fillField(patientDetailPage.getAddressCoordinatesInput(), 'Address -> Coordinates', 'Try #' + i + ': ' + patientEditCreateNewValues[6]);
+				patientMaintenancePage.getButtonAdd().click();
+				TestToolkit.checkPresentAndDisplayed(patientDetailPage);
 
-			patientDetailPage.getButtonSubmit().click();
+				TestToolkit.fillField(patientDetailPage.getSurnameInput(), 'Surname', 'Try #' + i + ': ' + patientEditCreateNewValues[0]);
+				TestToolkit.fillField(patientDetailPage.getNameInput(), 'Name', 'Try #' + i + ': ' + patientEditCreateNewValues[1]);
+				TestToolkit.fillField(patientDetailPage.getEmailInput(), 'Email', 'try_' + i + '_' + patientEditCreateNewValues[2]);
+
+				TestToolkit.fillField(patientDetailPage.getAddressStreetInput(), 'Address -> Street', 'Try #' + i + ': ' + patientEditCreateNewValues[3]);
+				TestToolkit.fillField(patientDetailPage.getAddressCityInput(), 'Address -> City', 'Try #' + i + ': ' + patientEditCreateNewValues[4]);
+				TestToolkit.fillField(patientDetailPage.getAddressZipInput(), 'Address -> Zip', 'Try #' + i + ': ' + patientEditCreateNewValues[5]);
+				TestToolkit.fillField(patientDetailPage.getAddressCoordinatesInput(), 'Address -> Coordinates', 'Try #' + i + ': ' + patientEditCreateNewValues[6]);
+
+				patientDetailPage.getButtonSubmit().click();
+				TestToolkit.checkPresentAndDisplayed(patientMaintenancePage);
+			})();
 		}
 	});
 
-	it('Patient Management: Validate the contextual menu at the patients grid', () => {
+	it('Validate the contextual menu at the patients grid', () => {
 		const menuitems = ['Update', 'Delete'];
 		for (let k = 0; k < browser.params.repeatabilityNumberPasses; k++) {
 			TestToolkit.checkGridPopupMenuContentAtRow(patientMaintenancePage.getPatientsGrid(), k, menuitems);
@@ -115,7 +117,7 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 	it('Patient Management: Delete the elements recently added to the grid', () => {
 		const optionMenuDelete = 1;
 		for (let k = (browser.params.repeatabilityNumberPasses - 1); k >= 0; k--) {
-			allure.createStep(`Action: #${k}: Click on the three button contextual menu at a row on the grid area to open the menu and select option Delete`, () => {
+			allure.createStep(`Action: Click on the three button contextual menu at the row #${k} in the grid. Select the option Delete`, () => {
 				TestToolkit.clickGridPopupMenuContentAtRow(patientMaintenancePage.getPatientsGrid(), k, optionMenuDelete);
 			})();
 		}
