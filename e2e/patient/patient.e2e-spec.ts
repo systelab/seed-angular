@@ -25,17 +25,8 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 
 	beforeEach(() => {
 		TestToolkit.clearConsole();
-
-		allure.addLabel('tms', 'TC0001_PatientManagement_e2e');
-		allure.addLabel('feature', 'Purpose: This TC is intended to verify the CRUD of a Patient');
-		browser.driver.getCapabilities()
-			.then((caps) => {
-				browser.browserName = caps.get('browserName');
-				allure.addLabel('browser', browser.browserName);
-			});
-		allure.addLabel('appVersion', loginPage.appVersion);
-		allure.addLabel('tester', 'xcalvo');
-		allure.addLabel('testExecutionDateTime', currentDate + ' ' + currentTime);
+		TestToolkit.init('TC0001_PatientManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of a Patient',
+			loginPage.appVersion, 'xcalvo', currentDate, currentTime);
 	});
 
 	afterEach(() => {

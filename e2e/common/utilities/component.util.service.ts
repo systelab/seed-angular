@@ -3,9 +3,6 @@ import { by, ElementArrayFinder, ElementFinder, promise } from 'protractor';
 // TODO: Split this file into utils for each component
 export class ComponentUtilService {
 	public static readonly TAG_NAME_CONTEXTUAL_MENU = 'systelab-context-menu-item';
-	public static readonly CLASS_NAME_DROPDOWN = 'slab-dropdown slab-dropdown-fixed';
-	public static readonly CSS_NAME_CELL_VALUE = '.ag-cell-value';
-	public static readonly CSS_HEADER_CELL_TEXT = '.ag-header-cell-text';
 
 	public static getGridInnerComponent(grid: ElementFinder, col?: string, row?: number): any {
 		if (col === undefined) {
@@ -34,44 +31,4 @@ export class ComponentUtilService {
 			return this.getGridInnerComponent(gridObject, col, row).all(by.tagName(ComponentUtilService.TAG_NAME_CONTEXTUAL_MENU)).get(subIndex);
 		}
 	}
-
-	public searchGridCols(obj: ElementArrayFinder, strTextToSearch: string): promise.Promise<number> {
-		let posFound = -1;
-
-		return new promise.Promise((resolve, reject) => {
-			obj.each(
-				(elem, index) => {
-					elem.getText()
-						.then(
-							(inText) => {
-								if (inText.trim() === strTextToSearch.trim()) {
-									posFound = index;
-								}
-							}
-						);
-				}
-			)
-				.then(
-					() => {
-						resolve(posFound);
-					},
-					(err) => {
-						reject(err);
-					}
-				);
-		});
-	}
-
-	/*static getContextualMenuByRow(mainWindow: ElementFinder) {
-	 return mainWindow.all(by.className(ComponentUtilService.CLASS_NAME_DROPDOWN));
-	 }
-
-	 static getlistProfileHeaders(windowGrid: ElementFinder) {
-	 return windowGrid.all(by.css(ComponentUtilService.CSS_HEADER_CELL_TEXT));
-	 }
-
-	 static getlistCells(windowGrid: ElementFinder) {
-	 return windowGrid.all(by.css(ComponentUtilService.CSS_NAME_CELL_VALUE));
-	 }*/
-
 }

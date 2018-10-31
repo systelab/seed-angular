@@ -19,6 +19,19 @@ export class TestToolkit {
 
 	public static readonly TIME_OUT_MS_FOR_DIALOG_WINDOW = 30000;
 
+	public static init(tms: string, feature: string, version: string, user: string, currentDate: string, currentTime: string) {
+		allure.addLabel('tms', tms);
+		allure.addLabel('feature', feature);
+		browser.driver.getCapabilities()
+			.then((caps) => {
+				browser.browserName = caps.get('browserName');
+				allure.addLabel('browser', browser.browserName);
+			});
+		allure.addLabel('appVersion', version);
+		allure.addLabel('tester', user);
+		allure.addLabel('testExecutionDateTime', currentDate + ' ' + currentTime);
+	}
+
 	public static showNewPageAndCheckTitleAndButtons(newPage: BasePage, expectedWindowTitle: string, buttons?: ButtonState[]) {
 
 		browser.wait(EC.presenceOf(newPage.getMainWindow()), TestToolkit.TIME_OUT_MS_FOR_DIALOG_WINDOW, 'Dialog Window is taking too long to appear in the DOM (timeout: ' + TestToolkit.TIME_OUT_MS_FOR_DIALOG_WINDOW + ' ms).');
@@ -151,24 +164,5 @@ export class TestToolkit {
 
 		strReturn += mm + '/' + yyyy;
 		return strReturn;
-	}
-
-	public static isClickable(el: ElementFinder): promise.Promise<boolean> {
-		return new promise.Promise(resolve => {
-			// let interval = setInterval(() => {
-			// console.log("flag 2");
-			el.click()
-				.then(() => {
-					// clearInterval(interval);
-					setTimeout(() => {
-						// console.log("flag 3");
-						resolve(true);
-					}, 100);
-				}, () => {
-					// console.log("flag 4");
-					resolve(false);
-				});
-			// }, 50);
-		});
 	}
 }
