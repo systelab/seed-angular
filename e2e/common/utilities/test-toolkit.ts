@@ -25,10 +25,9 @@ export class TestToolkit {
 		TestToolkit.checkPresentAndDisplayed(newPage);
 
 		allure.createStep('The title is valid', () => {
-			newPage.getTitle()
-				.getText()
-				.then((s) => {
-					TestUtil.checkString(s.toLowerCase(), 'Window title', expectedWindowTitle);
+			newPage.getTitle().getText()
+				.then((title) => {
+					TestUtil.checkString(title, 'Window title', expectedWindowTitle);
 				});
 		})();
 

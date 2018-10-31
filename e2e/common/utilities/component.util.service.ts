@@ -44,9 +44,7 @@ export class ComponentUtilService {
 					elem.getText()
 						.then(
 							(inText) => {
-								if (inText.trim()
-										.toLowerCase() === strTextToSearch.trim()
-										.toLowerCase()) {
+								if (inText.trim() === strTextToSearch.trim()) {
 									posFound = index;
 								}
 							}

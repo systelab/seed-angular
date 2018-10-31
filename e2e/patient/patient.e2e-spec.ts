@@ -9,28 +9,6 @@ import { TestUtil } from '../common/utilities/test-util';
 declare const allure: any;
 
 describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
-	const expectedWindowTitlePatientManagement = 'patient management';
-	const expectedWindowTitlePatientCreate = 'create patient';
-
-	const patientManagementButtons: ButtonState[] = [{
-		name:   'Options',
-		exist:  true,
-		enable: true
-	}, {
-		name:   'Add',
-		exist:  true,
-		enable: true
-	}, {
-		name:   'Refresh',
-		exist:  true,
-		enable: true
-	}];
-
-	const patientEditCreateButtons: ButtonState[] = [{
-		name:   'Create',
-		exist:  true,
-		enable: true
-	}];
 
 	const currentDate = TestToolkit.getCurrentDate();
 	const currentTime = TestToolkit.getCurrentTime();
@@ -66,17 +44,38 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e ', () => {
 	});
 
 	it('Access to the "Patient Management" Dialog', () => {
+		const title = 'Patient management';
+		const buttons: ButtonState[] = [{
+			name:   'Options',
+			exist:  true,
+			enable: true
+		}, {
+			name:   'Add',
+			exist:  true,
+			enable: true
+		}, {
+			name:   'Refresh',
+			exist:  true,
+			enable: true
+		}];
+
 		TestToolkit.checkPresentAndDisplayed(mainPage);
 		allure.createStep('Action: Click on the "Patient" button', () => {
 			mainPage.getPatientButtton().click();
-			TestToolkit.showNewPageAndCheckTitleAndButtons(patientMaintenancePage, expectedWindowTitlePatientManagement, patientManagementButtons);
+			TestToolkit.showNewPageAndCheckTitleAndButtons(patientMaintenancePage, title, buttons);
 		})()
 	});
 
 	it('Patient Management: Click on the "Add" button', () => {
 		allure.createStep('Action: Click on the "Add" button', () => {
+			const title = 'Create Patient';
+			const buttons: ButtonState[] = [{
+				name:   'Create',
+				exist:  true,
+				enable: true
+			}];
 			patientMaintenancePage.getButtonAdd().click();
-			TestToolkit.showNewPageAndCheckTitleAndButtons(patientDetailPage, expectedWindowTitlePatientCreate, patientEditCreateButtons);
+			TestToolkit.showNewPageAndCheckTitleAndButtons(patientDetailPage, title, buttons);
 		})()
 	});
 
