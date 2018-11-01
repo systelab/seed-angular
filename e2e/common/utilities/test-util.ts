@@ -1,4 +1,4 @@
-import { ElementFinder } from 'protractor';
+import { ElementArrayFinder, ElementFinder } from 'protractor';
 
 declare const allure: any;
 
@@ -10,7 +10,7 @@ export class TestUtil {
 		})();
 	}
 
-	public static checkCount(field: ElementFinder, name: string, expectedCount: number) {
+	public static checkCount(field: ElementArrayFinder, name: string, expectedCount: number) {
 		allure.createStep(name + ' is equals to "' + expectedCount + '"', () => {
 			expect(field.count())
 				.toEqual(expectedCount, 'Count "' + name + '" should be ' + expectedCount);
