@@ -43,13 +43,10 @@ export class TestToolkit {
 		browser.wait(EC.presenceOf(newPage.getMainWindow()), TestToolkit.TIME_OUT_MS_FOR_DIALOG_WINDOW, 'Dialog Window is taking too long to appear in the DOM (timeout: ' + TestToolkit.TIME_OUT_MS_FOR_DIALOG_WINDOW + ' ms).');
 		TestToolkit.checkPresentAndDisplayed(newPage);
 
-			newPage.getTitle().getText()
-				.then((title) => {
-						TestUtil.checkString(title, 'Window title', expectedWindowTitle);
-					if (buttons) {
-						this.checkButtons(newPage, buttons);
-					}
-				});
+		TestUtil.checkText(newPage.getTitle(), 'Window title', expectedWindowTitle);
+		if (buttons) {
+			this.checkButtons(newPage, buttons);
+		}
 	}
 
 	public static checkPresentAndDisplayed(page: BasePage) {
@@ -60,18 +57,14 @@ export class TestToolkit {
 	public static fillField(field: ElementFinder, name: string, value: string) {
 		allure.createStep('Action: Fill "' + name + '" with value ' + value, () => {
 			field.sendKeys(value);
-			allure.createStep('"' + name + '" has the filled value', () => {
-				expect(field.getAttribute('value')).toEqual(value, 'Field "' + name + '" was not properly filled');
-			})()
+			TestUtil.checkValue(field, name, value);
 		})();
 	}
 
 	public static checkGridPopupMenuContentAtRow(element: ElementFinder, row: number, menuitems: string[]) {
 		allure.createStep(`Action: Click on the three button contextual menu at row #${row} in the grid`, () => {
 			ComponentUtilService.getGridInnerComponent(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row).click();
-			allure.createStep(`Menu shows options ` + menuitems, () => {
-				expect(ComponentUtilService.getContextMenu(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row).getText()).toEqual(menuitems);
-			})();
+			TestUtil.checkMenuOptions(ComponentUtilService.getContextMenu(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row), menuitems);
 			ComponentUtilService.getGridInnerComponent(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row).click();
 		})();
 	}
@@ -85,27 +78,19 @@ export class TestToolkit {
 	public static checkButtons(page: BasePage, buttons: ButtonState[]) {
 		allure.createStep('Action: Review the buttons', () => {
 
-			allure.createStep(`Number of buttons should be ${buttons.filter((b) => b.exist).length}`, () => {
-				expect(page.getAllButtons()
-					.count()).toEqual(buttons.filter((b) => b.exist).length, 'Buttons count');
-			})()
+			TestUtil.checkCount(page.getAllButtons(), `Number of buttons`, buttons.filter((b) => b.exist).length);
+
 			buttons.forEach((buttonElem) => {
-				allure.createStep(`Button ${buttonElem.name} is present`, () => {
-					expect(page.getButtonByName(buttonElem.name).isPresent()).toEqual(true, `Button ${buttonElem.name} should be present`);
-				})()
+				TestUtil.checkIsPresent(page.getButtonByName(buttonElem.name), `Button ${buttonElem.name}`);
 			});
 
 			buttons.filter((b) => b.enable)
 				.forEach((buttonElem) => {
-					allure.createStep(`Button ${buttonElem.name} is enabled`, () => {
-						expect(page.getButtonByName(buttonElem.name).isEnabled()).toEqual(true);
-					})()
+					TestUtil.checkIsEnabled(page.getButtonByName(buttonElem.name), `Button ${buttonElem.name}`);
 				});
 			buttons.filter((b) => !b.enable)
 				.forEach((buttonElem) => {
-					allure.createStep(`Button ${buttonElem.name} is disabled`, () => {
-						expect(page.getButtonByName(buttonElem.name).isEnabled()).toEqual(null);
-					})()
+					TestUtil.checkIsDisabled(page.getButtonByName(buttonElem.name), `Button ${buttonElem.name}`);
 				});
 		})();
 	}

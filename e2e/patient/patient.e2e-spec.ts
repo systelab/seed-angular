@@ -69,13 +69,13 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e', () => {
 	});
 
 	it('Validate the default values for all the fields', () => {
-		TestUtil.checkField(patientDetailPage.getSurnameInput(), 'Surname', '');
-		TestUtil.checkField(patientDetailPage.getNameInput(), 'Name', '');
-		TestUtil.checkField(patientDetailPage.getEmailInput(), 'Email', '');
-		TestUtil.checkField(patientDetailPage.getAddressStreetInput(), 'Address -> Street', '');
-		TestUtil.checkField(patientDetailPage.getAddressCityInput(), 'Address -> City', '');
-		TestUtil.checkField(patientDetailPage.getAddressZipInput(), 'Address -> Zip', '');
-		TestUtil.checkField(patientDetailPage.getAddressCoordinatesInput(), 'Field "Address -> Coordinates', '');
+		TestUtil.checkValue(patientDetailPage.getSurnameInput(), 'Surname', '');
+		TestUtil.checkValue(patientDetailPage.getNameInput(), 'Name', '');
+		TestUtil.checkValue(patientDetailPage.getEmailInput(), 'Email', '');
+		TestUtil.checkValue(patientDetailPage.getAddressStreetInput(), 'Address -> Street', '');
+		TestUtil.checkValue(patientDetailPage.getAddressCityInput(), 'Address -> City', '');
+		TestUtil.checkValue(patientDetailPage.getAddressZipInput(), 'Address -> Zip', '');
+		TestUtil.checkValue(patientDetailPage.getAddressCoordinatesInput(), 'Field "Address -> Coordinates', '');
 	});
 
 	it('Close the dialog', () => {

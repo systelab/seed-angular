@@ -2,6 +2,7 @@ import { LoginPage } from './login.po';
 import { MainPage } from '../main/main.po';
 import { browser, ExpectedConditions as EC } from 'protractor';
 import { TestToolkit } from '../common/utilities/test-toolkit';
+import { TestUtil } from '../common/utilities/test-util';
 
 declare const allure: any;
 
@@ -18,39 +19,33 @@ describe('Login Test Case: MLG_TC106_GEN_Login', () => {
 			undefined, 'xcalvo', currentDate, currentTime);
 		login = new LoginPage();
 		mainPage = new MainPage();
-
 	});
 
-	it('Login correct', () => {
+	function setUserNameAndPassword(userName: string, password: string) {
 		allure.createStep('Action: Open home page', () => {
 			login.navigateToHomePage();
 		})();
-		allure.createStep(`Action: Set username as ${browser.params.login.user} and password as ${browser.params.login.password}`, () => {
-			login.getUsernameField().sendKeys(browser.params.login.user);
-			login.getPasswordField().sendKeys(browser.params.login.password);
+		allure.createStep(`Action: Set username as ${userName} and password as ${password}`, () => {
+			login.getUsernameField().sendKeys(userName);
+			login.getPasswordField().sendKeys(password);
 		})();
 		allure.createStep('Action: Perform Login', () => {
 			login.getEnterButton().click();
 		})();
+	}
+
+	it('Login correct', () => {
+		setUserNameAndPassword(browser.params.login.user, browser.params.login.password);
 		allure.createStep('The home page is displayed', () => {
 			browser.wait(EC.presenceOf(mainPage.getMainWindow()), TestToolkit.TIME_OUT_MS_FOR_DIALOG_WINDOW, 'Main Dialog Window is taking too long to appear in the DOM (timeout: ' + TestToolkit.TIME_OUT_MS_FOR_DIALOG_WINDOW + ' ms).');
-			expect(mainPage.getFullUsernameField().getText()).toEqual('Administrator');
+			TestUtil.checkText(mainPage.getFullUsernameField(), 'Logged user', 'Administrator' )
 		})();
 	});
 
 	it('Login with an incorrect password', () => {
-		allure.createStep('Action: Open home page', () => {
-			login.navigateToHomePage();
-		})();
-		allure.createStep('Action: Set username as noUser and password as noPass', () => {
-			login.getUsernameField().sendKeys('noUser');
-			login.getPasswordField().sendKeys('noPass');
-		})();
-		allure.createStep('Action: Perform Login', () => {
-			login.getEnterButton().click();
-		})();
+		setUserNameAndPassword('noUser', 'noPass');
 		allure.createStep('The application returns an Invalid User Name and Password error', () => {
-			expect(login.getPopupMessage().getText()).toEqual('Invalid username or password');
+			TestUtil.checkText(login.getPopupMessage(), 'Logged user', 'Invalid username or password' )
 		})();
 	});
 })
