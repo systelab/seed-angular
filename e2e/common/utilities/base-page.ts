@@ -1,4 +1,4 @@
-import { by, element, ElementArrayFinder, promise, protractor } from 'protractor';
+import { browser, by, element, ElementArrayFinder, promise, protractor } from 'protractor';
 
 export class BasePage {
 
@@ -7,7 +7,9 @@ export class BasePage {
 	constructor(protected tagName: string, protected tagNameIndex: number = 0) {
 	}
 
-	public getAllButtons?(): any;    // this should be implemented ONLY on the child classes that will actually are going to need it
+	public getAllButtons(): ElementArrayFinder {
+		return new ElementArrayFinder(browser);
+	}
 
 	public getMainWindow() {
 		return element.all(by.tagName(this.tagName)).get(this.tagNameIndex);
