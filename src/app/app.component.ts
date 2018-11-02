@@ -5,10 +5,7 @@ import { LocalStorageService } from 'systelab-preferences/lib/local-storage.serv
 
 @Component({
 	selector: 'app-root',
-	template: `
-                <router-outlet></router-outlet>`,
-	styleUrls: ['app.component.scss'],
-	encapsulation: ViewEncapsulation.None
+	template: `<router-outlet></router-outlet>`
 })
 export class AppComponent {
 	constructor(protected i18nService: I18nService, private router: Router, private localStorage: LocalStorageService) {
