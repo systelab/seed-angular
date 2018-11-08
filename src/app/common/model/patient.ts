@@ -6,6 +6,7 @@ export interface Patient {
 	name?: string;
 	email?: string;
 	dob?: Date;
+	medicalNumber?: string;
 	address?: Address;
 
 }
