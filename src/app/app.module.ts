@@ -20,23 +20,23 @@ import { PatientDialog } from './main/patient-maintenance/patient-detail-dialog/
 import { SystelabLoginModule } from 'systelab-login';
 import { LoginComponent } from './login/login.component';
 import { EmptyBodyInterceptor } from './common/api/empty-body.interceptor';
-import { GridContextMenuComponent } from 'systelab-components/widgets/grid/contextmenu/grid-context-menu.component';
 import { GridHeaderContextMenuComponent } from 'systelab-components/widgets/grid/contextmenu/grid-header-context-menu.component';
 import { AgGridModule } from 'ag-grid-angular';
-import { DndModule } from 'ng2-dnd';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { GridContextMenuCellRendererComponent } from 'systelab-components/widgets/grid/contextmenu/grid-context-menu-cell-renderer.component';
 
 @NgModule({
 	imports:         [
 		BrowserModule,
 		FormsModule,
+		DragDropModule,
 		HttpClientModule,
 		SystelabTranslateModule.forRoot(),
 		SystelabPreferencesModule.forRoot(),
 		SystelabComponentsModule.forRoot(),
 		SystelabLoginModule.forRoot(),
-		DndModule.forRoot(),
 		AgGridModule.withComponents([
-			GridContextMenuComponent,
+			GridContextMenuCellRendererComponent,
 			GridHeaderContextMenuComponent
 		]),
 		AppRoutingModule
