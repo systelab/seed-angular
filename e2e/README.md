@@ -51,7 +51,7 @@ webdriver-manager start
 ## Run the E2E test
 
 ```bash
-ng e2e
+ng e2e --devServerTarget=
 ```
 
 You can also run the E2E automatic test with the following command:
