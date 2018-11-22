@@ -1,4 +1,5 @@
 import { ElementArrayFinder, ElementFinder } from 'protractor';
+import { FormData } from './test-toolkit';
 
 declare const allure: any;
 
@@ -21,6 +22,14 @@ export class TestUtil {
 		allure.createStep(name + ' is equals to "' + expectedText + '"', () => {
 			expect(field.getText())
 				.toEqual(expectedText, 'Field "' + name + '" should be ' + expectedText);
+		})();
+	}
+
+	public static checkForm(formData: FormData[], name: string) {
+		allure.createStep('Check data in form ' + name, () => {
+			formData.forEach((formDataItem) => {
+				expect(formDataItem.field.getAttribute('value')).toEqual(formDataItem.value, 'Field "' + formDataItem.name + '" in form "' + name + '" should be ' + formDataItem.value);
+			});
 		})();
 	}
 

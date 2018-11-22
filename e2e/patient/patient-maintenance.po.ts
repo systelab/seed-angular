@@ -7,6 +7,9 @@ export class PatientMaintenancePage extends BasePage {
 	public static readonly GRID_COLUMN_SURNAME = 'surname';
 	public static readonly GRID_COLUMN_EMAIL = 'email';
 
+	public static readonly CONTEXTMENU_OPTION_UPDATE = 0;
+	public static readonly CONTEXTMENU_OPTION_DELETE = 1;
+
 	constructor() {
 		super('patient-maintenance-dialog');
 	}

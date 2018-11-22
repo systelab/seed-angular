@@ -13,6 +13,12 @@ export interface ButtonState {
 	enable: boolean;
 }
 
+export interface FormData {
+	field: ElementFinder;
+	name: string;
+	value: string;
+}
+
 export class TestToolkit {
 
 	private static console = new JSConsole();
@@ -54,10 +60,41 @@ export class TestToolkit {
 		expect(page.getMainWindow().isDisplayed()).toEqual(true, 'Window should be displayed');
 	}
 
+	public static removeValuesInForm(formData: FormData[], name: string) {
+		allure.createStep('Action: Remove all values in form "' + name + '"', () => {
+			formData.forEach((formDataItem) => {
+				TestToolkit.clearField(formDataItem.field);
+			});
+		})();
+	}
+
+	public static fillForm(formData: FormData[], name: string) {
+		allure.createStep('Action: Fill form "' + name + '"', () => {
+			formData.forEach((formDataItem) => {
+				formDataItem.field.sendKeys(formDataItem.value);
+				expect(formDataItem.field.getAttribute('value')).toEqual(formDataItem.value, 'Field "' + formDataItem.name + '" in form "' + name + '" should be ' + formDataItem.value);
+			});
+		})();
+	}
+/*
+	public static checkForm(formData: FormData[], name: string) {
+		allure.createStep('Action: Check data in form ' + name, () => {
+			formData.forEach((formDataItem) => {
+				expect(formDataItem.field.getAttribute('value')).toEqual(formDataItem.value, 'Field "' + formDataItem.name + '" in form "' + name + '" should be ' + formDataItem.value);
+			});
+		})();
+	}
+*/
+	public static clearField(field: ElementFinder) {
+		allure.createStep('Action: Remove value', () => {
+			field.clear();
+		})();
+	}
+
 	public static fillField(field: ElementFinder, name: string, value: string) {
 		allure.createStep('Action: Fill "' + name + '" with value ' + value, () => {
 			field.sendKeys(value);
-			TestUtil.checkValue(field, name, value);
+			 // TestUtil.checkValue(field, name, value);
 		})();
 	}
 
@@ -72,6 +109,10 @@ export class TestToolkit {
 	public static clickGridPopupMenuContentAtRow(element: ElementFinder, row: number, option: number) {
 		ComponentUtilService.getGridInnerComponent(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row).click();
 		ComponentUtilService.getContextMenu(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row, option).click();
+	}
+
+	public static clickOnCell(element: ElementFinder, row: number, colName: string) {
+		ComponentUtilService.getGridInnerComponent(element, PatientMaintenancePage.GRID_COLUMN_NAME, row).click();
 	}
 
 

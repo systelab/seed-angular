@@ -1,4 +1,4 @@
-import { browser, by, element, ElementArrayFinder, promise, protractor } from 'protractor';
+import { browser, by, element, ElementArrayFinder} from 'protractor';
 
 export class BasePage {
 
