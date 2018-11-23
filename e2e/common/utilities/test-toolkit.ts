@@ -1,9 +1,7 @@
-import { browser, ElementFinder, ExpectedConditions as EC, promise } from 'protractor';
+import { browser, ElementFinder, ExpectedConditions as EC } from 'protractor';
 import { BasePage } from './base-page';
 import { TestUtil } from './test-util';
 import { JSConsole } from './js-console';
-import { PatientMaintenancePage } from '../../patient/patient-maintenance.po';
-import { ComponentUtilService } from './component.util.service';
 
 declare const allure: any;
 
@@ -76,19 +74,9 @@ export class TestToolkit {
 			});
 		})();
 	}
-/*
-	public static checkForm(formData: FormData[], name: string) {
-		allure.createStep('Action: Check data in form ' + name, () => {
-			formData.forEach((formDataItem) => {
-				expect(formDataItem.field.getAttribute('value')).toEqual(formDataItem.value, 'Field "' + formDataItem.name + '" in form "' + name + '" should be ' + formDataItem.value);
-			});
-		})();
-	}
-*/
+
 	public static clearField(field: ElementFinder) {
-		allure.createStep('Action: Remove value', () => {
 			field.clear();
-		})();
 	}
 
 	public static fillField(field: ElementFinder, name: string, value: string) {
@@ -98,26 +86,8 @@ export class TestToolkit {
 		})();
 	}
 
-	public static checkGridPopupMenuContentAtRow(element: ElementFinder, row: number, menuitems: string[]) {
-		allure.createStep(`Action: Click on the three button contextual menu at row #${row} in the grid`, () => {
-			ComponentUtilService.getGridInnerComponent(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row).click();
-			TestUtil.checkMenuOptions(ComponentUtilService.getContextMenu(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row), menuitems);
-			ComponentUtilService.getGridInnerComponent(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row).click();
-		})();
-	}
-
-	public static clickGridPopupMenuContentAtRow(element: ElementFinder, row: number, option: number) {
-		ComponentUtilService.getGridInnerComponent(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row).click();
-		ComponentUtilService.getContextMenu(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row, option).click();
-	}
-
-	public static clickOnCell(element: ElementFinder, row: number, colName: string) {
-		ComponentUtilService.getGridInnerComponent(element, PatientMaintenancePage.GRID_COLUMN_NAME, row).click();
-	}
-
-
 	public static checkButtons(page: BasePage, buttons: ButtonState[]) {
-		allure.createStep('Action: Review the buttons', () => {
+		allure.createStep('Action: Review buttons: ', () => {
 
 			TestUtil.checkCount(page.getAllButtons(), `Number of buttons`, buttons.filter((b) => b.exist).length);
 

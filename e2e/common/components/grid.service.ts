@@ -1,8 +1,9 @@
-import { by, ElementArrayFinder, ElementFinder } from 'protractor';
+import { by, ElementFinder } from 'protractor';
+import { PatientMaintenancePage } from '../../patient/patient-maintenance.po';
+import { TestUtil } from '../utilities/test-util';
+import { ContextMenuService } from './context-menu.service';
 
 export class GridService {
-	public static readonly TAG_NAME_CONTEXTUAL_MENU = 'systelab-context-menu-item';
-
 	public static getGridInnerComponent(grid: ElementFinder, col?: string, row?: number): any {
 		if (col === undefined) {
 			return grid.element(by.className('ag-body-viewport'))
@@ -30,6 +31,22 @@ export class GridService {
 				.all(by.className('ag-header-cell'))
 				.get(col);
 		}
+	}
+
+	public static checkGridPopupMenuContentAtRow(element: ElementFinder, row: number, menuitems: string[]) {
+		GridService.getGridInnerComponent(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row).click();
+		TestUtil.checkMenuOptions(ContextMenuService.getContextMenu(element), menuitems);
+		// Click outside to hide context menu
+		GridService.getGridHeader(element).click();
+	}
+
+	public static clickGridPopupMenuContentAtRow(element: ElementFinder, row: number, option: number) {
+		GridService.getGridInnerComponent(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row).click();
+		ContextMenuService.getContextMenu(element, option).click();
+	}
+
+	public static clickOnCell(element: ElementFinder, row: number, colName?: string) {
+		GridService.getGridInnerComponent(element, PatientMaintenancePage.GRID_COLUMN_NAME, row).click();
 	}
 }
 

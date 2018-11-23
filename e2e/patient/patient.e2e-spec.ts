@@ -5,7 +5,7 @@ import { PatientMaintenancePage } from './patient-maintenance.po';
 import { PatientDetailPage } from './patient-detail/patient-dialog.po';
 import { ButtonState, FormData, TestToolkit } from '../common/utilities/test-toolkit';
 import { TestUtil } from '../common/utilities/test-util';
-import { ComponentUtilService } from '../common/utilities/component.util.service';
+import { GridService } from '../common/components/grid.service';
 
 declare const allure: any;
 
@@ -30,7 +30,7 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e', () => {
 			loginPage.appVersion, 'xcalvo', currentDate, currentTime);
 	});
 
-	/* Base data to fill in form tgo Create/Update patients*/
+	/* Base data to fill/check in form Create/Update patients*/
 	function getPatientFormData(empty: boolean, i?: number): FormData[] {
 		const basePatientValues = ['Aparicio', 'José Luis', 'jlaparicio@werfen.com', 'Plaza de Europa, 21-23, 18th Floor', 'Barcelona', '08908', '41.356439, 2.127791'];
 
@@ -99,23 +99,22 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e', () => {
 		}];
 		patientMaintenancePage.getButtonAdd().click();
 		TestToolkit.showNewPageAndCheckTitleAndButtons(patientDetailPage, title, buttons);
-	/*});
-
-	it('Validate the default values for all the fields', () => {*/
 		TestUtil.checkForm(getPatientFormData(true), 'Patient Creation is empty');
 	});
 
 	it('Close the dialog', () => {
-		//allure.createStep('Action: Click on the button to close Patient Management Dialog', () => {
-		allure.createStep('Action: Click on the button to close Patient Management Dialog and no patients are created', () => {
+		allure.createStep('Action: Close Patient Management Dialog', () => {
 			patientDetailPage.getButtonClose().click();
-			TestToolkit.checkPresentAndDisplayed(patientMaintenancePage);
-/*		});
+			allure.createStep('Dialog is closed', () => {
+				TestToolkit.checkPresentAndDisplayed(patientMaintenancePage);
+			})();
+		})();
 	});
 
-	it('Validate that no patients are created yet', () => {
-		allure.createStep('Action: No patients  the patient', () => {*/
-			TestUtil.checkCount(ComponentUtilService.getGridInnerComponent(patientMaintenancePage.getPatientsGrid()),'Rows in table of Patients', 0);
+	// Disabled because looking for a non-existent element is time-consuming
+	xit('Validate that no patients are created yet', () => {
+		allure.createStep('Action: No patients  the patient', () => {
+			TestUtil.checkCount(GridService.getGridInnerComponent(patientMaintenancePage.getPatientsGrid()), 'Number of Patients', 0);
 		})();
 	});
 
@@ -124,15 +123,15 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e', () => {
 
 			allure.createStep('Action: Create the patient ' + i, () => {
 
-				patientMaintenancePage.getButtonAdd().click();
-				TestToolkit.checkPresentAndDisplayed(patientDetailPage);
+			patientMaintenancePage.getButtonAdd().click();
+			TestToolkit.checkPresentAndDisplayed(patientDetailPage);
 
-				TestToolkit.fillForm(getPatientFormData(false, i), 'Patient Creation Form');
-				TestUtil.checkForm(getPatientFormData(false, i), 'Patient Creation is correct');
+			TestToolkit.fillForm(getPatientFormData(false, i), 'Patient Creation Form');
+			TestUtil.checkForm(getPatientFormData(false, i), 'Patient Creation is correct');
 
-				patientDetailPage.getButtonSubmit().click();
-				TestToolkit.checkPresentAndDisplayed(patientMaintenancePage);
-				TestUtil.checkCount(ComponentUtilService.getGridInnerComponent(patientMaintenancePage.getPatientsGrid()), 'Rows in table of Patients', i);
+			patientDetailPage.getButtonSubmit().click();
+			TestToolkit.checkPresentAndDisplayed(patientMaintenancePage);
+			TestUtil.checkCount(GridService.getGridInnerComponent(patientMaintenancePage.getPatientsGrid()), 'Number of Patients', i);
 			})();
 		}
 
@@ -140,14 +139,16 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e', () => {
 
 	it('Validate the contextual menu at the patients grid', () => {
 		const menuItems = ['Update', 'Delete'];
-		for (let k = 0; k < browser.params.repeatabilityNumberPasses; k++) {
-			TestToolkit.checkGridPopupMenuContentAtRow(patientMaintenancePage.getPatientsGrid(), k, menuItems);
+		for (let row = 0; row < browser.params.repeatabilityNumberPasses; row++) {
+			allure.createStep(`Action: Access to each contextual menu`, () => {
+				GridService.checkGridPopupMenuContentAtRow(patientMaintenancePage.getPatientsGrid(), row, menuItems);
+			})();
 		}
 	});
 
 	it('Validate that option Update opens Patient Maintenance', () => {
 
-		TestToolkit.clickGridPopupMenuContentAtRow(patientMaintenancePage.getPatientsGrid(), 0, PatientMaintenancePage.CONTEXTMENU_OPTION_UPDATE);
+		GridService.clickGridPopupMenuContentAtRow(patientMaintenancePage.getPatientsGrid(), 0, PatientMaintenancePage.CONTEXTMENU_OPTION_UPDATE);
 		TestToolkit.checkPresentAndDisplayed(patientDetailPage);
 
 		patientDetailPage.getButtonClose().click();
@@ -156,7 +157,7 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e', () => {
 
 	it('Validate that clicking on a row opens Patient Maintenance', () => {
 
-		TestToolkit.clickOnCell(patientMaintenancePage.getPatientsGrid(), 0, PatientMaintenancePage.GRID_COLUMN_NAME);
+		GridService.clickOnCell(patientMaintenancePage.getPatientsGrid(), 0, PatientMaintenancePage.GRID_COLUMN_NAME);
 		TestToolkit.checkPresentAndDisplayed(patientDetailPage);
 
 		patientDetailPage.getButtonClose().click();
@@ -165,35 +166,26 @@ describe('Instrument Selector Case: TC0001_PatientManagement_e2e', () => {
 
 
 	it('Open modify patients and validate', () => {
-		TestToolkit.clickOnCell(patientMaintenancePage.getPatientsGrid(), 0, PatientMaintenancePage.GRID_COLUMN_NAME);
+		GridService.clickOnCell(patientMaintenancePage.getPatientsGrid(), 0, PatientMaintenancePage.GRID_COLUMN_NAME);
 		TestToolkit.checkPresentAndDisplayed(patientDetailPage);
 
 		TestUtil.checkForm( getPatientFormData(false, 1), 'Patient Management is correct');
 
 		TestToolkit.removeValuesInForm(getPatientFormData(true, ), 'Patient Management');
-		/*
-		TestToolkit.clearField(patientDetailPage.getSurnameInput());
-		TestToolkit.clearField(patientDetailPage.getNameInput());
-		TestToolkit.clearField(patientDetailPage.getEmailInput());
-		TestToolkit.clearField(patientDetailPage.getAddressStreetInput());
-		TestToolkit.clearField(patientDetailPage.getAddressCityInput());
-		TestToolkit.clearField(patientDetailPage.getAddressZipInput());
-		TestToolkit.clearField(patientDetailPage.getAddressCoordinatesInput());
-		*/
 
 		TestToolkit.fillForm(getPatientFormData(false, 4), 'Patient Creation to update previous one');
 		patientDetailPage.getButtonSubmit().click();
 
 		TestToolkit.checkPresentAndDisplayed(patientMaintenancePage);
-		TestUtil.checkCount(ComponentUtilService.getGridInnerComponent(patientMaintenancePage.getPatientsGrid()), 'Rows in table of Patients', 3);
+		TestUtil.checkCount(GridService.getGridInnerComponent(patientMaintenancePage.getPatientsGrid()), 'Rows in table of Patients', 3);
 	});
 
-	it('Patient Management: Delete the elements recently added to the grid', () => {
+	it('Delete all elements recently added to the grid', () => {
 		// const optionMenuDelete = 1;
 		for (let k = (browser.params.repeatabilityNumberPasses - 1); k >= 0; k--) {
-			allure.createStep(`Action: Click on the three button contextual menu at the row #${k} in the grid. Select the option Delete`, () => {
-				TestToolkit.clickGridPopupMenuContentAtRow(patientMaintenancePage.getPatientsGrid(), k, PatientMaintenancePage.CONTEXTMENU_OPTION_DELETE);
-				TestUtil.checkCount(ComponentUtilService.getGridInnerComponent(patientMaintenancePage.getPatientsGrid()), 'Rows in table of Patients', k);
+			allure.createStep(`Action: Access to contextual menu at the row #${k} and select the option for delete`, () => {
+				GridService.clickGridPopupMenuContentAtRow(patientMaintenancePage.getPatientsGrid(), k, PatientMaintenancePage.CONTEXTMENU_OPTION_DELETE);
+				TestUtil.checkCount(GridService.getGridInnerComponent(patientMaintenancePage.getPatientsGrid()), 'Number of Patients', k);
 			})();
 		}
 	});
