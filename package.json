@@ -1,6 +1,6 @@
 {
   "name": "seed-angular",
-  "version": "6.0.0",
+  "version": "6.1.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -24,7 +24,7 @@
     "@angular/router": "7.0.0",
     "core-js": "^2.5.7",
     "rxjs": "6.3.3",
-    "systelab-components": "^7.1.2",
+    "systelab-components": "^7.3.2",
     "systelab-login": "^5.0.0",
     "systelab-preferences": "^4.0.0",
     "systelab-translate": "^5.0.0",
