@@ -5,6 +5,7 @@ export interface Patient {
 	surname?: string;
 	name?: string;
 	email?: string;
+	medicalNumber?: string;
 	dob?: Date;
 	address?: Address;
 

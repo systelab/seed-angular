@@ -47,6 +47,6 @@
   "PASSWORD_STRENGTH_STRONG":"Strong",
   "PASSWORD_STRENGTH_VERY_STRONG":"Very Strong",
   "PASSWORD_CRITERIA_WEAK":"Password Criteria Weak",
-  "COMMON_ADDRESS":"Address"
-
+  "COMMON_ADDRESS":"Address",
+  "COMMON_MEDICALNUMBER":"Medical number"
 }
