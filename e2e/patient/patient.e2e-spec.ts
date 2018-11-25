@@ -137,6 +137,21 @@ describe('TC0001_PatientManagement_e2e', () => {
 
 	});
 
+	it('The grid should have the expected data', () => {
+		for (let row = 0; row < browser.params.repeatabilityNumberPasses; row++) {
+			GridService.getRow(patientMaintenancePage.getPatientsGrid(), row)
+				.map(function(cell) {
+					return cell.getText();
+				})
+				.then(function(cellValues) {
+					expect(cellValues[1])
+						.toEqual(getPatientFormData(false,  row + 1)[1].value);
+					expect(cellValues[2])
+						.toEqual(getPatientFormData(false,  row + 1)[0].value);
+				});
+		}
+	});
+
 	it('Contextual menu at the patients grid', () => {
 		const menuItems = ['Update', 'Delete'];
 		for (let row = 0; row < browser.params.repeatabilityNumberPasses; row++) {

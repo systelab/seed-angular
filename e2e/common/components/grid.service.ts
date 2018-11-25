@@ -58,5 +58,10 @@ export class GridService {
 		GridService.getGridInnerComponent(element, this.GRID_COLUMN_NAME, row)
 			.click();
 	}
+
+	public static getRow(grid: ElementFinder, row: number) {
+			return grid.all(by.css('div[row-index="' + row + '"] div.ag-cell-value'))
+
+	}
 }
 
