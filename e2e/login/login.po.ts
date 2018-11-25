@@ -1,5 +1,5 @@
 import { browser, by, element } from 'protractor';
-import { BasePage } from '../common/utilities/base-page';
+import { BasePage } from '../common/components/base-page';
 
 export class LoginPage extends BasePage {
 	public appName = BasePage.NOT_RETRIEVED;

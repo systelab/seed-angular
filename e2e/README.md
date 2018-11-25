@@ -1,6 +1,31 @@
-# E2E Test
+# Automatic Test Considerations - E2E #
 
 This folder contains the End to End test for the application using the standard tools Jasmine, Protractor and Selenium. Please, read the following [document][serversetup] to get more information on how to Set Up the Selenium Server.
+
+## What to test - Recommendations
+
+The recommendation is to focus in layers under UI. When the project achieves a good level of coverage in terms of Unit/Component and API/Service test, E2E test can be considered.
+For further details, refer to Test Automation Strategy at Werfen Clinical Software.
+
+The best way to prevent over-documented Test Cases:
+- You need to decide if it's necessary to report the unit test as formal.
+- Do not document the util methods
+
+## How to use Allure in Protractor
+
+The attributes are TmsLink and Feature at Spec level and Allure steps each test and step. Refer to the file patient.e2e-spec.ts
+- TmsLink: Name of the Test Case.
+
+   It must be the same as the Test Case name in Jama
+   We highly recommend you not to use the TmsLink for additional traceability purposes. It's better to keep it simple so that it is maintainable
+- Feature: Description of the Test Case. You can also add additional information as text such as preconditions, environment, etc.
+- Additional Information such as Browser, appVersion, tester, testExecutionDateAndTime
+- IT description: Step Action in the Test Case. You must enter the action to perform.
+- Allure Step: Step Expected Result or Action in the Test Case.
+
+   You can use allure.createStep('Action:.. to identify that a step is an Action. Otherwise, all the Allure Steps will be considered as Expected Results.
+   Consider that it may be nested Steps
+   All the Expected Results are documented just once, for each type of object. Refer to the file test-util.ts
 
 ## Configuration to test in multiple browsers
 

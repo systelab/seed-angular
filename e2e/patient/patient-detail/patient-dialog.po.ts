@@ -1,5 +1,5 @@
 import { by } from 'protractor';
-import { BasePage } from '../../common/utilities/base-page';
+import { BasePage } from '../../common/components/base-page';
 
 export class PatientDetailPage extends BasePage {
 	constructor() {

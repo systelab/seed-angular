@@ -1,5 +1,5 @@
 import { by, element } from 'protractor';
-import { BasePage } from '../common/utilities/base-page';
+import { BasePage } from '../common/components/base-page';
 
 export class MainPage extends BasePage {
 	constructor() {

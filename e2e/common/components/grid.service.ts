@@ -1,9 +1,12 @@
 import { by, ElementFinder } from 'protractor';
-import { PatientMaintenancePage } from '../../patient/patient-maintenance.po';
-import { TestUtil } from '../utilities/test-util';
 import { ContextMenuService } from './context-menu.service';
+import { ExpectsUtil } from '../utilities/expects-util';
+declare const allure: any;
 
 export class GridService {
+	public static readonly GRID_COLUMN_CONTEXT_MENU = 'contextMenu';
+	public static readonly GRID_COLUMN_NAME = 'name';
+
 	public static getGridInnerComponent(grid: ElementFinder, col?: string, row?: number): any {
 		if (col === undefined) {
 			return grid.element(by.className('ag-body-viewport'))
@@ -34,19 +37,26 @@ export class GridService {
 	}
 
 	public static checkGridPopupMenuContentAtRow(element: ElementFinder, row: number, menuitems: string[]) {
-		GridService.getGridInnerComponent(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row).click();
-		TestUtil.checkMenuOptions(ContextMenuService.getContextMenu(element), menuitems);
+		GridService.getGridInnerComponent(element, this.GRID_COLUMN_CONTEXT_MENU, row)
+			.click();
+		ExpectsUtil.checkMenuOptions(ContextMenuService.getContextMenu(element), menuitems);
 		// Click outside to hide context menu
-		GridService.getGridHeader(element).click();
+		GridService.getGridHeader(element)
+			.click();
+		allure.createStep('The menu buttons are in the correct status', () => {
+		})();
 	}
 
 	public static clickGridPopupMenuContentAtRow(element: ElementFinder, row: number, option: number) {
-		GridService.getGridInnerComponent(element, PatientMaintenancePage.GRID_COLUMN_CONTEXT_MENU, row).click();
-		ContextMenuService.getContextMenu(element, option).click();
+		GridService.getGridInnerComponent(element, this.GRID_COLUMN_CONTEXT_MENU, row)
+			.click();
+		ContextMenuService.getContextMenu(element, option)
+			.click();
 	}
 
 	public static clickOnCell(element: ElementFinder, row: number, colName?: string) {
-		GridService.getGridInnerComponent(element, PatientMaintenancePage.GRID_COLUMN_NAME, row).click();
+		GridService.getGridInnerComponent(element, this.GRID_COLUMN_NAME, row)
+			.click();
 	}
 }
 

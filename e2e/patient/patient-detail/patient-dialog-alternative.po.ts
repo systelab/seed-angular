@@ -1,5 +1,5 @@
 import { by, ElementFinder } from 'protractor';
-import { BasePage } from '../../common/utilities/base-page';
+import { BasePage } from '../../common/components/base-page';
 
 export enum PatientDetail {
 	Surname     = 'PatientSurnameInput',
