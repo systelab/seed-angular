@@ -1,6 +1,7 @@
 import { by, ElementFinder } from 'protractor';
 import { ContextMenuService } from './context-menu.service';
 import { ExpectsUtil } from '../utilities/expects-util';
+
 declare const allure: any;
 
 export class GridService {
@@ -60,7 +61,7 @@ export class GridService {
 	}
 
 	public static getRow(grid: ElementFinder, row: number) {
-			return grid.all(by.css('div[row-index="' + row + '"] div.ag-cell-value'))
+		return grid.all(by.css('div[row-index="' + row + '"] div.ag-cell-value'));
 
 	}
 }

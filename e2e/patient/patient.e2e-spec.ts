@@ -30,9 +30,10 @@ describe('TC0001_PatientManagement_e2e', () => {
 	});
 
 	/* Base data to fill/check in form Create/Update patients*/
-	function getPatientFormData(empty: boolean, i?: number): FormData[] {
+	function getFormData(i?: number): FormData[] {
 		const basePatientValues = ['Surname', 'Name', 'email@werfen.com', 'Plaza de Europa, 21-23', 'Barcelona', '08908', '41.356439, 2.127791'];
 
+		const empty = (i === undefined);
 		const formData: FormData[] = [{
 			field: patientDetailPage.getSurnameInput(),
 			name:  'Surname',
@@ -98,7 +99,7 @@ describe('TC0001_PatientManagement_e2e', () => {
 		patientMaintenancePage.getButtonAdd()
 			.click();
 		patientDetailPage.showNewPageAndCheckTitleAndButtons(title, buttons);
-		TestUtil.checkForm(getPatientFormData(true), 'Patient Creation is empty');
+		TestUtil.checkForm(getFormData(), 'Patient Creation is empty');
 	});
 
 	it('Close the dialog', () => {
@@ -125,30 +126,22 @@ describe('TC0001_PatientManagement_e2e', () => {
 					.click();
 				patientDetailPage.checkPresentAndDisplayed();
 
-				FormService.fillForm(getPatientFormData(false, i), 'Patient Creation Form');
-				TestUtil.checkForm(getPatientFormData(false, i), 'Patient Creation is correct');
+				FormService.fillForm(getFormData(i), 'Patient Creation Form');
+				TestUtil.checkForm(getFormData(i), 'Patient Creation is correct');
 
 				patientDetailPage.getButtonSubmit()
 					.click();
 				patientMaintenancePage.checkPresentAndDisplayed();
 				TestUtil.checkCount(GridService.getGridInnerComponent(patientMaintenancePage.getPatientsGrid()), 'Number of Patients', i);
+
+				GridService.getRow(patientMaintenancePage.getPatientsGrid(), i - 1)
+					.then(function(cellValues) {
+						TestUtil.checkText(cellValues[2], 'Row Name', getFormData(i)[0].value);
+						TestUtil.checkText(cellValues[1], 'Row Surname', getFormData(i)[1].value);
+						TestUtil.checkText(cellValues[3], 'Row Email', getFormData(i)[2].value);
+
+					});
 			})();
-		}
-
-	});
-
-	it('The grid should have the expected data', () => {
-		for (let row = 0; row < browser.params.repeatabilityNumberPasses; row++) {
-			GridService.getRow(patientMaintenancePage.getPatientsGrid(), row)
-				.map(function(cell) {
-					return cell.getText();
-				})
-				.then(function(cellValues) {
-					expect(cellValues[1])
-						.toEqual(getPatientFormData(false,  row + 1)[1].value);
-					expect(cellValues[2])
-						.toEqual(getPatientFormData(false,  row + 1)[0].value);
-				});
 		}
 	});
 
@@ -185,11 +178,11 @@ describe('TC0001_PatientManagement_e2e', () => {
 		GridService.clickOnCell(patientMaintenancePage.getPatientsGrid(), 0, GridService.GRID_COLUMN_NAME);
 		patientDetailPage.checkPresentAndDisplayed();
 
-		TestUtil.checkForm(getPatientFormData(false, 1), 'Patient Management is correct');
+		TestUtil.checkForm(getFormData(1), 'Patient Management is correct');
 
-		FormService.removeValuesInForm(getPatientFormData(true,), 'Patient Management');
+		FormService.removeValuesInForm(getFormData(), 'Patient Management');
 
-		FormService.fillForm(getPatientFormData(false, 4), 'Patient Creation to update previous one');
+		FormService.fillForm(getFormData(4), 'Patient Creation to update previous one');
 		patientDetailPage.getButtonSubmit()
 			.click();
 
