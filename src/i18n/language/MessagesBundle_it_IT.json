@@ -48,5 +48,5 @@
   "PASSWORD_STRENGTH_VERY_STRONG": "Molto forte",
   "PASSWORD_CRITERIA_WEAK": "Criteri password deboli",
   "COMMON_ADDRESS": "Indirizzo",
-  "COMMON_MEDICAL_RECORD":"Documento"
+  "COMMON_MEDICALNUMBER":"Numero medico"
 }
