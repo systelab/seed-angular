@@ -16,7 +16,7 @@ import { PatientGrid } from './main/patient-maintenance/patient-grid.component';
 import { MessagePopupService } from 'systelab-components/widgets/modal/message-popup/message-popup.service';
 import { DialogService } from 'systelab-components/widgets/modal/dialog/dialog.service';
 import { PatientMaintenanceDialog } from './main/patient-maintenance/patient-maintenance-dialog.component';
-import { PatientDialog } from './main/patient-maintenance/patient-details-dialog/patient-dialog.component';
+import { PatientDialog } from './main/patient-maintenance/patient-detail-dialog/patient-dialog.component';
 import { SystelabLoginModule } from 'systelab-login';
 import { LoginComponent } from './login/login.component';
 import { EmptyBodyInterceptor } from './common/api/empty-body.interceptor';

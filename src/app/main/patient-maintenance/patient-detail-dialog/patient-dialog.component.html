@@ -1,0 +1,68 @@
+<systelab-dialog-header (close)="close()">{{title}}</systelab-dialog-header>
+<div class="slab-flex-1 slab-overflow-container container-fluid">
+
+    <form class="p-2">
+
+        <div class="form-group row text-right">
+            <div class="col-sm-12">
+                <systelab-switch id="PatientEnableSwitch" name="enabled" [(isChecked)]="active"></systelab-switch>
+            </div>
+        </div>
+
+        <div class="row mt-1">
+            <label for="PatientSurnameInput" id="PatientSurnameLabel" class="col-sm-2 col-form-label text-truncate">{{'COMMON_SURNAME' | translate | async}}</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="patient.surname" id="PatientSurnameInput" name="surname" placeholder="{{'COMMON_SURNAME' | translate | async}}">
+            </div>
+        </div>
+
+        <div class="row mt-1">
+            <label for="PatientNameInput" id="PatientNameLabel" class="col-sm-2 col-form-label text-truncate">{{'COMMON_NAME' | translate | async}}</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" [(ngModel)]="patient.name" id="PatientNameInput" name="name" placeholder="{{'COMMON_NAME' | translate | async}}">
+            </div>
+            <label for="PatientEmailInput" id="PatientEmailLabel" class="col-sm-2 col-form-label text-truncate">{{'COMMON_MAIL' | translate | async}}</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" [(ngModel)]="patient.email" id="PatientEmailInput" name="email" placeholder="email@sample.com">
+            </div>
+        </div>
+
+        <div class="row mt-1">
+            <label for="PatientMedicalRecordInput" id="PatientMedicalRecordLabel" class="col-sm-2 col-form-label text-truncate">{{'COMMON_MEDICAL_RECORD' | translate | async}}</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="patient.medicalNumber" id="PatientMedicalRecordInput" name="medicalrecord" placeholder="{{'COMMON_MEDICAL_RECORD' | translate | async}}" disabled>
+            </div>
+        </div>
+
+        <label class="slab-form-title">{{'COMMON_ADDRESS' | translate | async}}</label>
+
+        <div class="row mt-1">
+            <label for="PatientAddressStreetInput" id="PatientAddressStreetLabel" class="col-sm-2 col-form-label text-truncate">{{'COMMON_STREET' | translate | async}}</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="patient.address.street" id="PatientAddressStreetInput" name="street" placeholder="{{'COMMON_STREET' | translate | async}}">
+            </div>
+        </div>
+        <div class="row mt-1">
+            <label for="PatientAddressCityInput" id="PatientAddressCityLabel" class="col-sm-2 col-form-label text-truncate">{{'COMMON_CITY' | translate | async}}</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="patient.address.city" id="PatientAddressCityInput" name="city" placeholder="{{'COMMON_CITY' | translate | async}}">
+            </div>
+        </div>
+        <div class="row mt-1">
+            <label for="PatientAddressZipInput" id="PatientAddressZipLabel" class="col-sm-2 col-form-label text-truncate">{{'COMMON_ZIP' | translate | async}}</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="patient.address.zip" id="PatientAddressZipInput" name="zip" placeholder="{{'COMMON_ZIP' | translate | async}}">
+            </div>
+        </div>
+        <div class="row mt-1">
+            <label for="PatientAddressCoordinatesInput" id="PatientAddressCoordinatesLabel" class="col-sm-2 col-form-label text-truncate">{{'COMMON_COORDINATES' | translate | async}}</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="patient.address.coordinates" id="PatientAddressCoordinatesInput" name="coordinates" placeholder="{{'COMMON_COORDINATES' | translate | async}}">
+            </div>
+        </div>
+    </form>
+
+</div>
+<systelab-dialog-bottom>
+    <button type="button" id="PatientSubmitButton" class="btn ml-auto" (click)="doPerformAction()">{{humanReadableAction}}</button>
+</systelab-dialog-bottom>

@@ -27,7 +27,7 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 	};
 
 	constructor(public dialog: DialogRef<PatientDialogParameters>, protected i18NService: I18nService,
-	            protected patientService: PatientService) {
+				protected patientService: PatientService) {
 		this.parameters = dialog.context;
 		if (this.parameters.patientId) {
 			i18NService.get(['COMMON_UPDATE', 'COMMON_UPDATE_PATIENT'])
