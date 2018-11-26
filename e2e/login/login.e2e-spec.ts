@@ -1,7 +1,6 @@
 import { LoginPage } from './login.po';
 import { MainPage } from '../main/main.po';
 import { browser, ExpectedConditions as EC } from 'protractor';
-import { TestToolkit } from '../common/utilities/test-toolkit';
 import { TestUtil } from '../common/utilities/test-util';
 import { BasePage } from '../common/components/base-page';
 
@@ -12,8 +11,7 @@ describe('Login Test Case: MLG_TC106_GEN_Login', () => {
 	let mainPage: MainPage;
 
 	beforeEach(() => {
-		allure.addLabel('tms', 'MLG_TC106_GEN_Login_e2e');
-		TestToolkit.init('MLG_TC106_GEN_Login_e2e', 'Goal: The purpose of this test case is to verify the login and log out functionalities',
+		TestUtil.init('MLG_TC106_GEN_Login_e2e', 'Goal: The purpose of this test case is to verify the login and log out functionalities',
 			undefined, 'userName');
 		login = new LoginPage();
 		mainPage = new MainPage();

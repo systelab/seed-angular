@@ -3,7 +3,6 @@ import { LoginPage } from '../login/login.po';
 import { MainPage } from '../main/main.po';
 import { PatientMaintenancePage } from './patient-maintenance.po';
 import { PatientDetailPage } from './patient-detail/patient-dialog.po';
-import { TestToolkit } from '../common/utilities/test-toolkit';
 import { TestUtil } from '../common/utilities/test-util';
 import { GridService } from '../common/components/grid.service';
 import { ButtonState } from '../common/components/button.service';
@@ -24,8 +23,7 @@ describe('TC0001_PatientManagement_e2e', () => {
 	});
 
 	beforeEach(() => {
-		TestToolkit.clearConsole();
-		TestToolkit.init('TC0001_PatientManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of a Patient',
+		TestUtil.init('TC0001_PatientManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of a Patient',
 			loginPage.appVersion, 'userName');
 	});
 
