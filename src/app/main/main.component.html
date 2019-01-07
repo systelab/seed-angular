@@ -1,5 +1,5 @@
-<systelab-app-frame [userName]="userName" [userFullName]="userFullName" [hospitalName]="hospitalName" [menu]="menu" [tabs]="sidetabs"
-  [actions]="sideactions" (selected)="doSelect($event)">
+<systelab-app-frame [userName]="userName" [userFullName]="userFullName" [title]="hospitalName" [menu]="menu" [tabs]="sidetabs"
+                    [actions]="sideactions" (selected)="doSelect($event)">
   <div header-content class="row justify-content-end mr-3">
     <button type="button" class="btn float-left" (click)="doPatientSearch();">{{'COMMON_PATIENT' | translate | async}}</button>
   </div>
