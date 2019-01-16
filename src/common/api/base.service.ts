@@ -1,5 +1,5 @@
 import { HttpHeaders } from '@angular/common/http';
-import { ApiGlobalsService } from '../globals/globals.service';
+import { ApiGlobalsService } from '@globals/globals.service';
 
 export class BaseService {
 

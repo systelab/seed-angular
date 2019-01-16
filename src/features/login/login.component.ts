@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiGlobalsService } from '../../common/globals/globals.service';
-import { UserService } from '../../common/api/user.service';
+import { ApiGlobalsService } from '@globals/globals.service';
+import { UserService } from '@api/user.service';
 import { MessagePopupService } from 'systelab-components/widgets/modal';
 import { I18nService } from 'systelab-translate/lib/i18n.service';
 
