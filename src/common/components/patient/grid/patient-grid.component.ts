@@ -10,7 +10,7 @@ import { map } from 'rxjs/internal/operators';
 
 @Component({
 	selector:    'patient-grid',
-	templateUrl: '../../../../../../node_modules/systelab-components/html/abstract-grid.component.html'
+	templateUrl: '../../../../../node_modules/systelab-components/html/abstract-grid.component.html'
 })
 export class PatientGrid extends AbstractApiGrid<Patient> {
 

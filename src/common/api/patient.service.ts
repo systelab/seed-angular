@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Patient } from '../model/patient';
 import { BASE_PATH } from '../variables';
-import { ApiGlobalsService } from '../../globals/globals.service';
+import { ApiGlobalsService } from '../globals/globals.service';
 import { BaseService } from './base.service';
 import { Page } from '../model/page';
 

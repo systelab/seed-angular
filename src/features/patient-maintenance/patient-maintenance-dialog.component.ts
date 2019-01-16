@@ -14,14 +14,14 @@ export class PatientMaintenanceDialogParameters extends SystelabModalContext {
 }
 
 @Component({
-	selector: 'patient-maintenance-dialog',
+	selector:    'patient-maintenance-dialog',
 	templateUrl: 'patient-maintenance-dialog.component.html',
 })
 export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenanceDialogParameters> {
 
 	public parameters: PatientMaintenanceDialogParameters;
 
-	@ViewChild('patientgrid') patientgrid: PatientGrid;
+	 @ViewChild('patientgrid') public patientgrid: PatientGrid;
 
 	public title = '';
 
