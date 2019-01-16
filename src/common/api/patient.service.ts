@@ -1,11 +1,12 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Patient } from '../model/patient';
-import { BASE_PATH } from '../variables';
-import { ApiGlobalsService } from '../globals/globals.service';
+
+import { Patient } from '@model/patient';
+import { BASE_PATH } from './variables';
+import { ApiGlobalsService } from '@globals/globals.service';
 import { BaseService } from './base.service';
-import { Page } from '../model/page';
+import { Page } from '@model/page';
 
 @Injectable({
 	providedIn: 'root'

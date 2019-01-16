@@ -3,6 +3,13 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "baseUrl": "./",
+    "paths": {
+      "@globals/*": ["common/globals/*"],
+      "@components/*": ["common/components/*"],
+      "@api/*": ["common/api/*"],
+      "@model/*": ["common/model/*"],
+      "@features/*": ["features/*"]
+    },
     "module": "es2015",
     "types": []
   },

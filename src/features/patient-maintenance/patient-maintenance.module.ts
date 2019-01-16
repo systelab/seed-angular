@@ -7,7 +7,7 @@ import { SystelabComponentsModule } from 'systelab-components';
 import { SystelabLoginModule } from 'systelab-login';
 import { PatientMaintenanceDialog } from './patient-maintenance-dialog.component';
 import { PatientDialog } from './patient-detail-dialog/patient-dialog.component';
-import { ComponentsModule } from '../../common/components/components.module';
+import { ComponentsModule } from '@components/components.module';
 
 @NgModule({
 	imports:         [

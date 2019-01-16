@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { I18nService } from 'systelab-translate/lib/i18n.service';
-import { PatientService } from '../../../common/api/patient.service';
-import { Patient } from '../../../common/model/patient';
+import { PatientService } from '@api/patient.service';
+import { Patient } from '@model/patient';
 import { DialogRef, MessagePopupService, ModalComponent, SystelabModalContext } from 'systelab-components/widgets/modal';
 import { HttpErrorResponse } from '@angular/common/http';
 

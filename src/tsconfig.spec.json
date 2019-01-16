@@ -3,6 +3,13 @@
   "compilerOptions": {
     "outDir": "../out-tsc/spec",
     "baseUrl": "./",
+    "paths": {
+      "@globals/*": ["common/globals/*"],
+      "@components/*": ["common/components/*"],
+      "@api/*": ["common/api/*"],
+      "@model/*": ["common/model/*"],
+      "@features/*": ["features/*"]
+    },
     "module": "commonjs",
     "target": "es5",
     "types": [
