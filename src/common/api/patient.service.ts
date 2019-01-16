@@ -1,6 +1,7 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+
 import { Patient } from '@model/patient';
 import { BASE_PATH } from './variables';
 import { ApiGlobalsService } from '@globals/globals.service';

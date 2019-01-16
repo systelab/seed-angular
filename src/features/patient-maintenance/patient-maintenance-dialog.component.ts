@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { PatientService } from '@api/patient.service';
 import { DialogRef, DialogService, ModalComponent, SystelabModalContext } from 'systelab-components/widgets/modal';
 import { PatientDialog, PatientDialogParameters } from './patient-detail-dialog/patient-dialog.component';
-
 import { GridContextMenuActionData } from 'systelab-components/widgets/grid/contextmenu/grid-context-menu-action-data';
 import { Patient } from '@model/patient';
 import { GridContextMenuOption } from 'systelab-components/widgets/grid/contextmenu/grid-context-menu-option';
