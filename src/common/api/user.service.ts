@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams, HttpResponseBase } from '@angular/
 import { Observable } from 'rxjs';
 import { User } from '../model/user';
 import { BASE_PATH } from '../variables';
-import { ApiGlobalsService } from '../../globals/globals.service';
+import { ApiGlobalsService } from '../globals/globals.service';
 import { BaseService } from './base.service';
 import { Page } from '../model/page';
 

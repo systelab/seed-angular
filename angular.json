@@ -24,12 +24,12 @@
               "src/favicon.png",
               {
                 "glob": "**/*",
-                "input": "src/i18n/error",
+                "input": "src/common/i18n/error",
                 "output": "/i18n/error"
               },
               {
                 "glob": "**/*",
-                "input": "src/i18n/language",
+                "input": "src/common/i18n/language",
                 "output": "/i18n/language"
               }
             ],
@@ -126,12 +126,12 @@
               "src/favicon.ico",
               {
                 "glob": "**/*",
-                "input": "src/i18n/error",
+                "input": "src/common/i18n/error",
                 "output": "/i18n/error"
               },
               {
                 "glob": "**/*",
-                "input": "src/i18n/language",
+                "input": "src/common/i18n/language",
                 "output": "/i18n/language"
               },
               "src/favicon.ico"
@@ -151,7 +151,7 @@
       }
     },
     "seed-angular-e2e": {
-      "root": "",
+      "root": "e2e",
       "sourceRoot": "",
       "projectType": "application",
       "architect": {
