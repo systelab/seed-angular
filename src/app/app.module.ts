@@ -12,7 +12,6 @@ import { environment } from '../environments/environment';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MainComponent } from './main/main.component';
 import { AppRoutingModule } from './app.routing';
-import { PatientGrid } from './main/patient-maintenance/patient-grid.component';
 import { MessagePopupService } from 'systelab-components/widgets/modal/message-popup/message-popup.service';
 import { DialogService } from 'systelab-components/widgets/modal/dialog/dialog.service';
 import { PatientMaintenanceDialog } from './main/patient-maintenance/patient-maintenance-dialog.component';
@@ -24,6 +23,7 @@ import { GridHeaderContextMenuComponent } from 'systelab-components/widgets/grid
 import { AgGridModule } from 'ag-grid-angular';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { GridContextMenuCellRendererComponent } from 'systelab-components/widgets/grid/contextmenu/grid-context-menu-cell-renderer.component';
+import { ComponentsModule } from './common/components/components.module';
 
 @NgModule({
 	imports:         [
@@ -31,6 +31,7 @@ import { GridContextMenuCellRendererComponent } from 'systelab-components/widget
 		FormsModule,
 		DragDropModule,
 		HttpClientModule,
+		ComponentsModule,
 		SystelabTranslateModule.forRoot(),
 		SystelabPreferencesModule.forRoot(),
 		SystelabComponentsModule.forRoot(),
@@ -45,7 +46,6 @@ import { GridContextMenuCellRendererComponent } from 'systelab-components/widget
 		AppComponent,
 		PatientDialog,
 		PatientMaintenanceDialog,
-		PatientGrid,
 		MainComponent,
 		PageNotFoundComponent,
 		LoginComponent

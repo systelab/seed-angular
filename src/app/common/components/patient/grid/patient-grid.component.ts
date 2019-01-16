@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { I18nService } from 'systelab-translate/lib/i18n.service';
-import { Patient } from '../../common/model/patient';
-import { PatientService } from '../../common/api/patient.service';
+import { Patient } from '../../../model/patient';
+import { PatientService } from '../../../api/patient.service';
 import { DialogService } from 'systelab-components/widgets/modal/dialog/dialog.service';
 import { PreferencesService } from 'systelab-preferences/lib/preferences.service';
 import { AbstractApiGrid } from 'systelab-components/widgets/grid/abstract-api-grid.component';
@@ -10,7 +10,7 @@ import { map } from 'rxjs/internal/operators';
 
 @Component({
 	selector:    'patient-grid',
-	templateUrl: '../../../../node_modules/systelab-components/html/abstract-grid.component.html'
+	templateUrl: '../../../../../../node_modules/systelab-components/html/abstract-grid.component.html'
 })
 export class PatientGrid extends AbstractApiGrid<Patient> {
 
