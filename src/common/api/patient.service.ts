@@ -47,6 +47,7 @@ export class PatientService extends BaseService {
 		if (itemsPerPage !== null) {
 			queryParameters = queryParameters.set('size', <any>itemsPerPage);
 		}
+
 		return this.httpClient.get<any>(`${this.basePath}/patients`, {
 			params: queryParameters,
 			headers: this.getAuthorizationHeader()
