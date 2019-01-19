@@ -12,9 +12,11 @@ import { Page } from '@model/page';
 	providedIn: 'root'
 })
 export class PatientService extends BaseService {
-
-	constructor(protected httpClient: HttpClient, protected apiGlobalsService: ApiGlobalsService,
-	            @Optional() @Inject(BASE_PATH) basePath: string) {
+	constructor(
+		protected httpClient: HttpClient,
+		protected apiGlobalsService: ApiGlobalsService,
+		@Optional() @Inject(BASE_PATH) basePath: string
+	) {
 		super(basePath, apiGlobalsService);
 	}
 
@@ -29,7 +31,7 @@ export class PatientService extends BaseService {
 		}
 
 		return this.httpClient.post<any>(`${this.basePath}/patients/patient`, body, {
-			headers: this.getAuthorizationHeader(),
+			headers: this.getAuthorizationHeader()
 		});
 	}
 
@@ -38,7 +40,6 @@ export class PatientService extends BaseService {
 	 *
 	 */
 	public getAllPatients(page: number, itemsPerPage: number): Observable<Page<Patient>> {
-
 		let queryParameters = new HttpParams();
 		if (page !== null) {
 			queryParameters = queryParameters.set('page', <any>page);
@@ -47,8 +48,8 @@ export class PatientService extends BaseService {
 			queryParameters = queryParameters.set('size', <any>itemsPerPage);
 		}
 		return this.httpClient.get<any>(`${this.basePath}/patients`, {
-			params:  queryParameters,
-			headers: this.getAuthorizationHeader(),
+			params: queryParameters,
+			headers: this.getAuthorizationHeader()
 		});
 	}
 
@@ -63,7 +64,7 @@ export class PatientService extends BaseService {
 		}
 
 		return this.httpClient.get<any>(`${this.basePath}/patients/${encodeURIComponent(String(uid))}`, {
-			headers: this.getAuthorizationHeader(),
+			headers: this.getAuthorizationHeader()
 		});
 	}
 
@@ -78,7 +79,7 @@ export class PatientService extends BaseService {
 		}
 
 		return this.httpClient.delete<any>(`${this.basePath}/patients/${encodeURIComponent(String(uid))}`, {
-			headers: this.getAuthorizationHeader(),
+			headers: this.getAuthorizationHeader()
 		});
 	}
 
@@ -97,7 +98,7 @@ export class PatientService extends BaseService {
 		}
 
 		return this.httpClient.put<any>(`${this.basePath}/patients/${encodeURIComponent(String(uid))}`, body, {
-			headers: this.getAuthorizationHeader(),
+			headers: this.getAuthorizationHeader()
 		});
 	}
 }

@@ -23,7 +23,7 @@ import { LoginModule } from '@features/login/login.module';
 import { PatientMaintenanceModule } from '@features/patient-maintenance/patient-maintenance.module';
 
 @NgModule({
-	imports:         [
+	imports: [
 		BrowserModule,
 		FormsModule,
 		DragDropModule,
@@ -34,25 +34,17 @@ import { PatientMaintenanceModule } from '@features/patient-maintenance/patient-
 		SystelabPreferencesModule.forRoot(),
 		SystelabComponentsModule.forRoot(),
 		SystelabLoginModule.forRoot(),
-		AgGridModule.withComponents([
-			GridContextMenuCellRendererComponent,
-			GridHeaderContextMenuComponent
-		]),
+		AgGridModule.withComponents([GridContextMenuCellRendererComponent, GridHeaderContextMenuComponent]),
 		AppRoutingModule
 	],
-	declarations:    [
-		AppComponent,
-		MainComponent
-	],
-	providers:       [
-		{provide: BASE_PATH, useValue: environment.API_BASE_PATH},
-		{provide: HTTP_INTERCEPTORS, useClass: EmptyBodyInterceptor, multi: true},
+	declarations: [AppComponent, MainComponent],
+	providers: [
+		{ provide: BASE_PATH, useValue: environment.API_BASE_PATH },
+		{ provide: HTTP_INTERCEPTORS, useClass: EmptyBodyInterceptor, multi: true },
 		MessagePopupService,
 		DialogService
 	],
-	entryComponents: [
-	],
-	bootstrap:       [AppComponent]
+	entryComponents: [],
+	bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}

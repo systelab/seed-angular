@@ -6,10 +6,7 @@ import { SystelabComponentsModule } from 'systelab-components';
 
 @NgModule({
 	declarations: [PatientGrid],
-	imports:      [CommonModule,
-		FormsModule,
-		SystelabComponentsModule],
-	exports:      [PatientGrid]
+	imports: [CommonModule, FormsModule, SystelabComponentsModule],
+	exports: [PatientGrid]
 })
-export class ComponentsModule {
-}
+export class ComponentsModule {}

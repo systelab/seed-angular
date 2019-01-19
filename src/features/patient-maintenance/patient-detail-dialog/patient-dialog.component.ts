@@ -12,11 +12,10 @@ export class PatientDialogParameters extends SystelabModalContext {
 }
 
 @Component({
-	selector:    'patient-dialog',
-	templateUrl: 'patient-dialog.component.html',
+	selector: 'patient-dialog',
+	templateUrl: 'patient-dialog.component.html'
 })
 export class PatientDialog implements ModalComponent<PatientDialogParameters>, OnInit {
-
 	public parameters: PatientDialogParameters;
 
 	public active = true;
@@ -27,22 +26,23 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 		address: {}
 	};
 
-	constructor(public dialog: DialogRef<PatientDialogParameters>, protected i18NService: I18nService,
-	            protected messagePopupService: MessagePopupService, protected patientService: PatientService) {
+	constructor(
+		public dialog: DialogRef<PatientDialogParameters>,
+		protected i18NService: I18nService,
+		protected messagePopupService: MessagePopupService,
+		protected patientService: PatientService
+	) {
 		this.parameters = dialog.context;
 		if (this.parameters.patientId) {
-			i18NService.get(['COMMON_UPDATE', 'COMMON_UPDATE_PATIENT'])
-				.subscribe((res) => {
-					this.humanReadableAction = res.COMMON_UPDATE;
-					this.title = res.COMMON_UPDATE_PATIENT;
-				});
+			i18NService.get(['COMMON_UPDATE', 'COMMON_UPDATE_PATIENT']).subscribe(res => {
+				this.humanReadableAction = res.COMMON_UPDATE;
+				this.title = res.COMMON_UPDATE_PATIENT;
+			});
 		} else {
-			i18NService.get(['COMMON_CREATE', 'COMMON_CREATE_PATIENT'])
-				.subscribe((res) => {
-					this.humanReadableAction = res.COMMON_CREATE;
-					this.title = res.COMMON_CREATE_PATIENT;
-				});
-
+			i18NService.get(['COMMON_CREATE', 'COMMON_CREATE_PATIENT']).subscribe(res => {
+				this.humanReadableAction = res.COMMON_CREATE;
+				this.title = res.COMMON_CREATE_PATIENT;
+			});
 		}
 	}
 
@@ -52,15 +52,12 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 
 	public ngOnInit() {
 		if (this.parameters.patientId) {
-
-			this.patientService.getPatient(this.parameters.patientId)
-				.subscribe((response) => {
-						if (!response.address) {
-							response.address = {};
-						}
-						this.patient = response;
-					}
-				);
+			this.patientService.getPatient(this.parameters.patientId).subscribe(response => {
+				if (!response.address) {
+					response.address = {};
+				}
+				this.patient = response;
+			});
 		}
 	}
 
@@ -77,27 +74,27 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 	}
 
 	private createPatient(patient: Patient) {
-		this.patientService.createPatient(patient)
-			.subscribe((result) => {
-					this.dialog.close(true);
-				},
-				(error) => this.showError(error));
+		this.patientService.createPatient(patient).subscribe(
+			result => {
+				this.dialog.close(true);
+			},
+			error => this.showError(error)
+		);
 	}
 
 	private updatePatient(patient: Patient) {
-		this.patientService.updatePatient(patient.id, patient)
-			.subscribe((result) => {
-					this.dialog.close(true);
-				},
-				(error) => this.showError(error));
+		this.patientService.updatePatient(patient.id, patient).subscribe(
+			result => {
+				this.dialog.close(true);
+			},
+			error => this.showError(error)
+		);
 	}
 
 	private showError(error: HttpErrorResponse) {
-		this.i18NService.get(['ERR_ERROR'])
-			.subscribe((res) => {
-				console.log(error);
-				this.messagePopupService.showErrorPopup(res.ERR_ERROR, error.message);
-			});
+		this.i18NService.get(['ERR_ERROR']).subscribe(res => {
+			console.log(error);
+			this.messagePopupService.showErrorPopup(res.ERR_ERROR, error.message);
+		});
 	}
-
 }

@@ -9,27 +9,11 @@ import { MessagePopupService } from 'systelab-components/widgets/modal';
 import { SystelabLoginModule } from 'systelab-login';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
-
 @NgModule({
-	imports: [
-		FormsModule,
-		SystelabTranslateModule,
-		SystelabLoginModule,
-		SystelabComponentsModule,
-		CommonModule],
-	declarations: [
-		LoginComponent,
-		PageNotFoundComponent
-	],
-	exports: [
-		PageNotFoundComponent
-	],
-	entryComponents: [
-		],
-	providers: [
-		MessagePopupService,
-		DialogService,
-	],
+	imports: [FormsModule, SystelabTranslateModule, SystelabLoginModule, SystelabComponentsModule, CommonModule],
+	declarations: [LoginComponent, PageNotFoundComponent],
+	exports: [PageNotFoundComponent],
+	entryComponents: [],
+	providers: [MessagePopupService, DialogService]
 })
-export class LoginModule {
-}
+export class LoginModule {}

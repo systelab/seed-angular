@@ -6,9 +6,7 @@ import { ApiGlobalsService } from '@globals/globals.service';
 	providedIn: 'root'
 })
 export class LoginGuard implements CanActivate {
-
-	constructor(private apiGlobalsService: ApiGlobalsService, private router: Router) {
-	}
+	constructor(private apiGlobalsService: ApiGlobalsService, private router: Router) {}
 
 	public canActivate() {
 		if (this.apiGlobalsService.bearer) {

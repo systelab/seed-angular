@@ -8,7 +8,4 @@ export interface Patient {
 	medicalNumber?: string;
 	dob?: Date;
 	address?: Address;
-
 }
-
-

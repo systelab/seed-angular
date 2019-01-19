@@ -8,10 +8,9 @@ export interface FormData {
 }
 
 export class FormService {
-
 	public static removeValuesInForm(formData: FormData[], name: string) {
 		allure.createStep('Action: Remove all values in form ' + name, () => {
-			formData.forEach((formDataItem) => {
+			formData.forEach(formDataItem => {
 				this.clearField(formDataItem.field);
 			});
 		})();
@@ -19,10 +18,12 @@ export class FormService {
 
 	public static fillForm(formData: FormData[], name: string) {
 		allure.createStep('Action: Fill form ' + name, () => {
-			formData.forEach((formDataItem) => {
+			formData.forEach(formDataItem => {
 				formDataItem.field.sendKeys(formDataItem.value);
-				expect(formDataItem.field.getAttribute('value'))
-					.toEqual(formDataItem.value, 'Field "' + formDataItem.name + '" in form "' + name + '" should be ' + formDataItem.value);
+				expect(formDataItem.field.getAttribute('value')).toEqual(
+					formDataItem.value,
+					'Field "' + formDataItem.name + '" in form "' + name + '" should be ' + formDataItem.value
+				);
 			});
 		})();
 	}
@@ -37,4 +38,3 @@ export class FormService {
 		})();
 	}
 }
-

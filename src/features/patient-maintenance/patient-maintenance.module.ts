@@ -10,26 +10,10 @@ import { PatientDialog } from './patient-detail-dialog/patient-dialog.component'
 import { ComponentsModule } from '@components/components.module';
 
 @NgModule({
-	imports:         [
-		FormsModule,
-		CommonModule,
-		SystelabTranslateModule,
-		SystelabLoginModule,
-		SystelabComponentsModule,
-		ComponentsModule],
-	declarations:    [
-		PatientMaintenanceDialog,
-		PatientDialog
-	],
-	exports:         [],
-	entryComponents: [
-		PatientMaintenanceDialog,
-		PatientDialog
-	],
-	providers:       [
-		MessagePopupService,
-		DialogService,
-	],
+	imports: [FormsModule, CommonModule, SystelabTranslateModule, SystelabLoginModule, SystelabComponentsModule, ComponentsModule],
+	declarations: [PatientMaintenanceDialog, PatientDialog],
+	exports: [],
+	entryComponents: [PatientMaintenanceDialog, PatientDialog],
+	providers: [MessagePopupService, DialogService]
 })
-export class PatientMaintenanceModule {
-}
+export class PatientMaintenanceModule {}

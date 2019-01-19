@@ -12,16 +12,32 @@ export class LoginPage extends BasePage {
 	}
 
 	private retrieveAppParams(object: LoginPage) {
-		this.getMainWindow().all(by.className('slab-text')).get(0).getText().then((inText) => {
+		this.getMainWindow()
+			.all(by.className('slab-text'))
+			.get(0)
+			.getText()
+			.then(inText => {
 				object.appName = inText.trim();
 			});
-		this.getMainWindow().all(by.className('slab-text')).get(1).getText().then((inText) => {
+		this.getMainWindow()
+			.all(by.className('slab-text'))
+			.get(1)
+			.getText()
+			.then(inText => {
 				object.appDescription = inText.trim();
 			});
-		this.getMainWindow().all(by.className('slab-text')).get(2).getText().then((inText) => {
+		this.getMainWindow()
+			.all(by.className('slab-text'))
+			.get(2)
+			.getText()
+			.then(inText => {
 				object.appVersion = inText.trim();
 			});
-		this.getMainWindow().all(by.className('slab-text')).get(4).getText().then((inText) => {
+		this.getMainWindow()
+			.all(by.className('slab-text'))
+			.get(4)
+			.getText()
+			.then(inText => {
 				object.appCopyright = inText.trim();
 			});
 	}

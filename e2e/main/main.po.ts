@@ -11,6 +11,9 @@ export class MainPage extends BasePage {
 	}
 
 	public getPatientButtton() {
-		return this.getMainWindow().element(by.tagName('systelab-app-header')).all(by.tagName('button')).get(0);
+		return this.getMainWindow()
+			.element(by.tagName('systelab-app-header'))
+			.all(by.tagName('button'))
+			.get(0);
 	}
 }

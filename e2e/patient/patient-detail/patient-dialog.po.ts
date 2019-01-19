@@ -7,8 +7,7 @@ export class PatientDetailPage extends BasePage {
 	}
 
 	public getEnableSwich() {
-		return this.getObjectById('PatientEnableSwitch')
-			.element(by.tagname('input'));
+		return this.getObjectById('PatientEnableSwitch').element(by.tagname('input'));
 	}
 
 	public getSurnameInput() {

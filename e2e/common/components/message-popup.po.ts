@@ -7,8 +7,7 @@ export class MesssagePopupPage extends BasePage {
 	}
 
 	public getMainWindow() {
-		return super.getMainWindow()
-			.element(by.tagName('dialog-view'));
+		return super.getMainWindow().element(by.tagName('dialog-view'));
 	}
 
 	public getTextMessage() {
@@ -21,7 +20,6 @@ export class MesssagePopupPage extends BasePage {
 
 	public getButtonNo() {
 		return this.getButton('No');
-
 	}
 
 	private getButton(text: string) {

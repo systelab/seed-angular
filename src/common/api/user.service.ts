@@ -12,9 +12,11 @@ import { Page } from '@model/page';
 	providedIn: 'root'
 })
 export class UserService extends BaseService {
-
-	constructor(protected httpClient: HttpClient, protected apiGlobalsService: ApiGlobalsService,
-	            @Optional() @Inject(BASE_PATH) basePath: string) {
+	constructor(
+		protected httpClient: HttpClient,
+		protected apiGlobalsService: ApiGlobalsService,
+		@Optional() @Inject(BASE_PATH) basePath: string
+	) {
 		super(basePath, apiGlobalsService);
 	}
 
@@ -25,15 +27,12 @@ export class UserService extends BaseService {
 	 * @param password
 	 */
 	public authenticateUser(login?: string, password?: string): Observable<HttpResponseBase> {
-
 		const headers = this.defaultHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
-		const body = new HttpParams().set('login', login)
-			.set('password', password);
+		const body = new HttpParams().set('login', login).set('password', password);
 
 		return this.httpClient.post<HttpResponseBase>(`${this.basePath}/users/login`, body, {
 			headers: headers,
-			observe: 'response',
-
+			observe: 'response'
 		});
 	}
 
@@ -48,7 +47,7 @@ export class UserService extends BaseService {
 		}
 
 		return this.httpClient.post<any>(`${this.basePath}/users/user`, body, {
-			headers: this.getAuthorizationHeader(),
+			headers: this.getAuthorizationHeader()
 		});
 	}
 
@@ -63,7 +62,7 @@ export class UserService extends BaseService {
 		}
 
 		return this.httpClient.get<any>(`${this.basePath}/users/${encodeURIComponent(String(uid))}`, {
-			headers: this.getAuthorizationHeader(),
+			headers: this.getAuthorizationHeader()
 		});
 	}
 
@@ -72,7 +71,6 @@ export class UserService extends BaseService {
 	 *
 	 */
 	public getAllUsers(page: number, itemsPerPage: number): Observable<Page<User>> {
-
 		let queryParameters = new HttpParams();
 		if (page !== null) {
 			queryParameters = queryParameters.set('page', <any>page);
@@ -82,7 +80,7 @@ export class UserService extends BaseService {
 		}
 
 		return this.httpClient.get<any>(`${this.basePath}/users`, {
-			params:  queryParameters,
+			params: queryParameters,
 			headers: this.getAuthorizationHeader()
 		});
 	}
@@ -98,8 +96,7 @@ export class UserService extends BaseService {
 		}
 
 		return this.httpClient.delete<any>(`${this.basePath}/users/${encodeURIComponent(String(uid))}`, {
-			headers: this.getAuthorizationHeader(),
+			headers: this.getAuthorizationHeader()
 		});
 	}
-
 }

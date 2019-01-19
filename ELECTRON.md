@@ -15,44 +15,45 @@ Once you have installed Electron, you have to create a new file in the project r
 The content of the file should be something similar to this:
 
 ```javascript
-const {app, BrowserWindow} = require('electron')
-const path = require('path')
-const url = require('url')
+const { app, BrowserWindow } = require('electron');
+const path = require('path');
+const url = require('url');
 
-let win
+let win;
 
-function createWindow () {
-  win = new BrowserWindow({width: 800, height: 600})
+function createWindow() {
+	win = new BrowserWindow({ width: 800, height: 600 });
 
-  // load the dist folder from Angular
-  win.loadURL(url.format({
-    pathname: path.join(__dirname, 'dist/index.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
+	// load the dist folder from Angular
+	win.loadURL(
+		url.format({
+			pathname: path.join(__dirname, 'dist/index.html'),
+			protocol: 'file:',
+			slashes: true
+		})
+	);
 
-  // Open the DevTools optionally:
-  // win.webContents.openDevTools()
+	// Open the DevTools optionally:
+	// win.webContents.openDevTools()
 
-  win.on('closed', () => {
-    win = null
-  })
+	win.on('closed', () => {
+		win = null;
+	});
 }
 
-app.on('ready', createWindow)
-
+app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-  app.quit()
-}
-})
+	if (process.platform !== 'darwin') {
+		app.quit();
+	}
+});
 
 app.on('activate', () => {
-  if (win === null) {
-  createWindow()
-}
-})
+	if (win === null) {
+		createWindow();
+	}
+});
 ```
 
 Also, you must add the following lines in the package.json file:
@@ -70,13 +71,13 @@ Also, you must add the following lines in the package.json file:
 Finally, update your index.html file to let Electron find your files (change the base href) and add the required dependencies:
 
 ```html
-  <base href="./">
-  <script>
-    window.pako = require('pako');
-    window.jQuery = require('jquery');
-    window.Popper = require('popper.js');
-    require('bootstrap');
-  </script>
+<base href="./" />
+<script>
+	window.pako = require('pako');
+	window.jQuery = require('jquery');
+	window.Popper = require('popper.js');
+	require('bootstrap');
+</script>
 ```
 
 Once this has been doing, run the following command to run and test the application:
@@ -89,9 +90,9 @@ npm run electron
 
 Electron Packager generates executables/bundles for the following target platforms:
 
-- Windows (also known as win32, for both 32/64 bit)
-- OS X (also known as darwin) / Mac App Store (also known as mas)
-- Linux (for x86, x86_64, armv7l, and arm64 architectures)
+-   Windows (also known as win32, for both 32/64 bit)
+-   OS X (also known as darwin) / Mac App Store (also known as mas)
+-   Linux (for x86, x86_64, armv7l, and arm64 architectures)
 
 In order to install electron-packager you have to run the following commands:
 
@@ -107,6 +108,4 @@ npm run electron-mac-generator
 
 Check the [Electron Packager documentation](https://github.com/electron-userland/electron-packager) for detailed information on how to generate for the different platforms.
 
-
 [electron]: https://electronjs.org/
-

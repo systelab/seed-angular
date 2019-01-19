@@ -2,7 +2,6 @@ import { by } from 'protractor';
 import { BasePage } from '../common/components/base-page';
 
 export class PatientMaintenancePage extends BasePage {
-
 	constructor() {
 		super('patient-maintenance-dialog');
 	}

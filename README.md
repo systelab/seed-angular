@@ -1,10 +1,10 @@
 [![Build Status](https://travis-ci.org/systelab/seed-angular.svg?branch=master)](https://travis-ci.org/systelab/seed-angular)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/88aef97b995c4bd0ae6e7e615b663ec5)](https://www.codacy.com/app/alfonsserra/seed-angular?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=systelab/seed-angular&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/88aef97b995c4bd0ae6e7e615b663ec5)](https://www.codacy.com/app/alfonsserra/seed-angular?utm_source=github.com&utm_medium=referral&utm_content=systelab/seed-angular&utm_campaign=Badge_Grade)
 [![Known Vulnerabilities](https://snyk.io/test/github/systelab/seed-angular/badge.svg?targetFile=package.json)](https://snyk.io/test/github/systelab/seed-angular?targetFile=package.json)
 
 # `seed-angular` — Seed for Angular Systelab projects
 
-This project is an application skeleton for a typical [Angular][Angular] frontend application. You can use it
+This project is an application skeleton for a typical [Angular][angular] frontend application. You can use it
 to quickly bootstrap your projects and dev environment.
 
 The seed contains a Patient Management sample application and is preconfigured to install the Angular
@@ -13,6 +13,7 @@ framework and a bunch of development and testing tools for instant development g
 The app just shows how to use different Angular standards and other suggested tools together, including the utilization of the libraries created by Systelab.
 
 ## Getting Started
+
 ### Prerequisites
 
 You need to install [git][git], [Node.js][node] and [npm][npm].
@@ -33,6 +34,7 @@ To install the dependencies you must run:
 ```bash
 npm install
 ```
+
 > In case you have any issue, remove the "node_modules" folder and execute the previous command again.
 
 ### Set the Server URL
@@ -55,14 +57,14 @@ By default, the Angular Live Development Server is listening on localhost:4200, 
 
 ### Build docker image
 
-There is an Automated Build Task in Docker Cloud in order to build the Docker Image. 
+There is an Automated Build Task in Docker Cloud in order to build the Docker Image.
 This task, triggers a new build with every git push to your source code repository to create a 'latest' image.
 There is another build rule to trigger a new tag and create a 'version-x.y.z' image
 
 You can always manually create the image with the following command:
 
 ```bash
-docker build -t systelab/seed-angular . 
+docker build -t systelab/seed-angular .
 ```
 
 The image created, will contain a [nginx server][nginx] with the application files.
@@ -97,10 +99,9 @@ Follow the [instructions](ELECTRON.md) to generate native desktop applications.
 
 Take a look at [generator-systelab-angular repository](https://github.com/systelab/generator-systelab-angular), a [Yeoman ][yo] generator to scaffold a project based on the libraries and best practices used in this project.
 
-
 [git]: https://git-scm.com/
 [npm]: https://www.npmjs.com/
 [node]: https://nodejs.org
-[Angular]: https://angular.io/
+[angular]: https://angular.io/
 [nginx]: https://nginx.org/
 [yo]: http://yeoman.io/

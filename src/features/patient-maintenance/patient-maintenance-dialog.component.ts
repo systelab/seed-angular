@@ -14,23 +14,26 @@ export class PatientMaintenanceDialogParameters extends SystelabModalContext {
 }
 
 @Component({
-	selector:    'patient-maintenance-dialog',
-	templateUrl: 'patient-maintenance-dialog.component.html',
+	selector: 'patient-maintenance-dialog',
+	templateUrl: 'patient-maintenance-dialog.component.html'
 })
 export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenanceDialogParameters> {
-
 	public parameters: PatientMaintenanceDialogParameters;
 
-	 @ViewChild('patientgrid') public patientgrid: PatientGrid;
+	@ViewChild('patientgrid') public patientgrid: PatientGrid;
 
 	public title = '';
 
-	constructor(public dialog: DialogRef<PatientMaintenanceDialogParameters>, protected dialogService: DialogService, protected patientService: PatientService, protected i18nService: I18nService) {
+	constructor(
+		public dialog: DialogRef<PatientMaintenanceDialogParameters>,
+		protected dialogService: DialogService,
+		protected patientService: PatientService,
+		protected i18nService: I18nService
+	) {
 		this.parameters = dialog.context;
-		i18nService.get('COMMON_PATIENT_MANAGEMENT').subscribe((res) => {
+		i18nService.get('COMMON_PATIENT_MANAGEMENT').subscribe(res => {
 			this.title = res;
 		});
-
 	}
 
 	public close(): void {
@@ -43,33 +46,27 @@ export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenan
 
 	public doCreatePatient() {
 		const parameters: PatientDialogParameters = PatientDialog.getParameters();
-		this.dialogService.showDialog(PatientDialog, parameters)
-			.subscribe(
-				(result) => {
-					if (result) {
-						this.patientgrid.refresh();
-					}
-				}
-			);
+		this.dialogService.showDialog(PatientDialog, parameters).subscribe(result => {
+			if (result) {
+				this.patientgrid.refresh();
+			}
+		});
 	}
 
 	public doSelect(patient: Patient): void {
 		const parameters: PatientDialogParameters = PatientDialog.getParameters();
 		parameters.patientId = patient.id;
 
-		this.dialogService.showDialog(PatientDialog, parameters)
-			.subscribe(
-				(result) => {
-					if (result) {
-						this.patientgrid.refresh();
-					}
-				}
-			);
+		this.dialogService.showDialog(PatientDialog, parameters).subscribe(result => {
+			if (result) {
+				this.patientgrid.refresh();
+			}
+		});
 	}
 
 	public getMenu(): Array<GridContextMenuOption<Patient>> {
 		const menuDefs: Array<GridContextMenuOption<Patient>> = [];
-		this.i18nService.get(['COMMON_UPDATE', 'COMMON_DELETE']).subscribe((res) => {
+		this.i18nService.get(['COMMON_UPDATE', 'COMMON_DELETE']).subscribe(res => {
 			menuDefs.push(new GridContextMenuOption('action1', res.COMMON_UPDATE), new GridContextMenuOption('action2', res.COMMON_DELETE));
 		});
 		return menuDefs;
@@ -88,7 +85,8 @@ export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenan
 	}
 
 	private deletePatient(contextMenuActionData: GridContextMenuActionData<Patient>) {
-		this.patientService.remove(contextMenuActionData.data.id)
+		this.patientService
+			.remove(contextMenuActionData.data.id)
 			.subscribe(result => this.patientgrid.refresh(), error => console.log('error'));
 	}
 }

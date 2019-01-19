@@ -10,5 +10,3 @@ export interface User {
 export namespace User {
 	export type RoleEnum = 'USER' | 'ADMIN';
 }
-
-
