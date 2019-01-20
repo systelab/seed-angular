@@ -6,9 +6,7 @@
 		</div>
 
 		<div class="row mt-1">
-			<label for="PatientSurnameInput" id="PatientSurnameLabel" class="col-sm-2 col-form-label text-truncate">{{
-				'COMMON_SURNAME' | translate | async
-			}}</label>
+			<label for="PatientSurnameInput" id="PatientSurnameLabel" class="col-sm-2 col-form-label text-truncate">{{ 'COMMON_SURNAME' | translate | async }}</label>
 			<div class="col-sm-10">
 				<input
 					type="text"
@@ -22,32 +20,12 @@
 		</div>
 
 		<div class="row mt-1">
-			<label for="PatientNameInput" id="PatientNameLabel" class="col-sm-2 col-form-label text-truncate">{{
-				'COMMON_NAME' | translate | async
-			}}</label>
+			<label for="PatientNameInput" id="PatientNameLabel" class="col-sm-2 col-form-label text-truncate">{{ 'COMMON_NAME' | translate | async }}</label>
 			<div class="col-sm-4">
-				<input
-					type="text"
-					class="form-control"
-					[(ngModel)]="patient.name"
-					id="PatientNameInput"
-					name="name"
-					placeholder="{{ 'COMMON_NAME' | translate | async }}"
-				/>
+				<input type="text" class="form-control" [(ngModel)]="patient.name" id="PatientNameInput" name="name" placeholder="{{ 'COMMON_NAME' | translate | async }}" />
 			</div>
-			<label for="PatientEmailInput" id="PatientEmailLabel" class="col-sm-2 col-form-label text-truncate">{{
-				'COMMON_MAIL' | translate | async
-			}}</label>
-			<div class="col-sm-4">
-				<input
-					type="text"
-					class="form-control"
-					[(ngModel)]="patient.email"
-					id="PatientEmailInput"
-					name="email"
-					placeholder="email@sample.com"
-				/>
-			</div>
+			<label for="PatientEmailInput" id="PatientEmailLabel" class="col-sm-2 col-form-label text-truncate">{{ 'COMMON_MAIL' | translate | async }}</label>
+			<div class="col-sm-4"><input type="text" class="form-control" [(ngModel)]="patient.email" id="PatientEmailInput" name="email" placeholder="email@sample.com" /></div>
 		</div>
 
 		<div class="row mt-1">
@@ -70,9 +48,7 @@
 		<label class="slab-form-title">{{ 'COMMON_ADDRESS' | translate | async }}</label>
 
 		<div class="row mt-1">
-			<label for="PatientAddressStreetInput" id="PatientAddressStreetLabel" class="col-sm-2 col-form-label text-truncate">{{
-				'COMMON_STREET' | translate | async
-			}}</label>
+			<label for="PatientAddressStreetInput" id="PatientAddressStreetLabel" class="col-sm-2 col-form-label text-truncate">{{ 'COMMON_STREET' | translate | async }}</label>
 			<div class="col-sm-10">
 				<input
 					type="text"
@@ -85,9 +61,7 @@
 			</div>
 		</div>
 		<div class="row mt-1">
-			<label for="PatientAddressCityInput" id="PatientAddressCityLabel" class="col-sm-2 col-form-label text-truncate">{{
-				'COMMON_CITY' | translate | async
-			}}</label>
+			<label for="PatientAddressCityInput" id="PatientAddressCityLabel" class="col-sm-2 col-form-label text-truncate">{{ 'COMMON_CITY' | translate | async }}</label>
 			<div class="col-sm-10">
 				<input
 					type="text"
@@ -100,9 +74,7 @@
 			</div>
 		</div>
 		<div class="row mt-1">
-			<label for="PatientAddressZipInput" id="PatientAddressZipLabel" class="col-sm-2 col-form-label text-truncate">{{
-				'COMMON_ZIP' | translate | async
-			}}</label>
+			<label for="PatientAddressZipInput" id="PatientAddressZipLabel" class="col-sm-2 col-form-label text-truncate">{{ 'COMMON_ZIP' | translate | async }}</label>
 			<div class="col-sm-10">
 				<input
 					type="text"

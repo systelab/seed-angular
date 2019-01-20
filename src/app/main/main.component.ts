@@ -5,15 +5,9 @@ import { ApiGlobalsService } from '@globals/globals.service';
 import { Router } from '@angular/router';
 import { MessagePopupService } from 'systelab-components/widgets/modal/message-popup/message-popup.service';
 import { DialogService } from 'systelab-components/widgets/modal/dialog/dialog.service';
-import {
-	PatientMaintenanceDialog,
-	PatientMaintenanceDialogParameters
-} from '@features/patient-maintenance/patient-maintenance-dialog.component';
+import { PatientMaintenanceDialog, PatientMaintenanceDialogParameters } from '@features/patient-maintenance/patient-maintenance-dialog.component';
 import { ApplicationHeaderMenuEntry } from 'systelab-components/widgets/applicationframe/header/app-header.component';
-import {
-	ApplicationSidebarAction,
-	ApplicationSidebarTab
-} from 'systelab-components/widgets/applicationframe/sidebar/app-sidebar.component';
+import { ApplicationSidebarAction, ApplicationSidebarTab } from 'systelab-components/widgets/applicationframe/sidebar/app-sidebar.component';
 import { ChangePasswordDialog, ChangePasswordDialogParameters } from 'systelab-login/widgets/change-password-dialog.component';
 import { LocalStorageService } from 'systelab-preferences/lib/local-storage.service';
 
@@ -60,16 +54,7 @@ export class MainComponent implements OnInit {
 	public setMenu() {
 		this.menu = [];
 		this.i18nService
-			.get([
-				'COMMON_SETUP',
-				'COMMON_CHANGE_PASSWORD',
-				'COMMON_CHANGE_USER',
-				'COMMON_ABOUT',
-				'COMMON_TAB_ONE',
-				'COMMON_TAB_TWO',
-				'COMMON_TAB_THREE',
-				'COMMON_TAB_FOUR'
-			])
+			.get(['COMMON_SETUP', 'COMMON_CHANGE_PASSWORD', 'COMMON_CHANGE_USER', 'COMMON_ABOUT', 'COMMON_TAB_ONE', 'COMMON_TAB_TWO', 'COMMON_TAB_THREE', 'COMMON_TAB_FOUR'])
 			.subscribe(res => {
 				this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_ABOUT, false, () => this.doShowAbout()));
 				this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_SETUP, false, () => this.doShowSettings()));

@@ -11,12 +11,7 @@ describe('Login Test Case: MLG_TC106_GEN_Login', () => {
 	let mainPage: MainPage;
 
 	beforeEach(() => {
-		TestUtil.init(
-			'MLG_TC106_GEN_Login_e2e',
-			'Goal: The purpose of this test case is to verify the login and log out functionalities',
-			undefined,
-			'userName'
-		);
+		TestUtil.init('MLG_TC106_GEN_Login_e2e', 'Goal: The purpose of this test case is to verify the login and log out functionalities', undefined, 'userName');
 		login = new LoginPage();
 		mainPage = new MainPage();
 	});

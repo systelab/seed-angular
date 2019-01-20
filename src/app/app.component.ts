@@ -14,9 +14,7 @@ export class AppComponent {
 		try {
 			const previousLanguage = localStorage.get('language');
 			const lang = previousLanguage ? previousLanguage : 'en';
-			i18nService
-				.use(lang)
-				.subscribe(() => console.log('Language set to ' + lang), error => console.log('Error setting the language.'));
+			i18nService.use(lang).subscribe(() => console.log('Language set to ' + lang), error => console.log('Error setting the language.'));
 		} catch (e) {
 			console.log(e);
 		}

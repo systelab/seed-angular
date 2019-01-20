@@ -12,11 +12,7 @@ import { Page } from '@model/page';
 	providedIn: 'root'
 })
 export class PatientService extends BaseService {
-	constructor(
-		protected httpClient: HttpClient,
-		protected apiGlobalsService: ApiGlobalsService,
-		@Optional() @Inject(BASE_PATH) basePath: string
-	) {
+	constructor(protected httpClient: HttpClient, protected apiGlobalsService: ApiGlobalsService, @Optional() @Inject(BASE_PATH) basePath: string) {
 		super(basePath, apiGlobalsService);
 	}
 

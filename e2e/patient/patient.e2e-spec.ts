@@ -22,25 +22,12 @@ describe('TC0001_PatientManagement_e2e', () => {
 	});
 
 	beforeEach(() => {
-		TestUtil.init(
-			'TC0001_PatientManagement_e2e',
-			'Purpose: This TC is intended to verify the CRUD of a Patient',
-			loginPage.appVersion,
-			'userName'
-		);
+		TestUtil.init('TC0001_PatientManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of a Patient', loginPage.appVersion, 'userName');
 	});
 
 	/* Base data to fill/check in form Create/Update patients*/
 	function getFormData(i?: number): FormData[] {
-		const basePatientValues = [
-			'Surname',
-			'Name',
-			'email@werfen.com',
-			'Plaza de Europa, 21-23',
-			'Barcelona',
-			'08908',
-			'41.356439, 2.127791'
-		];
+		const basePatientValues = ['Surname', 'Name', 'email@werfen.com', 'Plaza de Europa, 21-23', 'Barcelona', '08908', '41.356439, 2.127791'];
 
 		const empty = i === undefined;
 		const formData: FormData[] = [
@@ -162,12 +149,9 @@ describe('TC0001_PatientManagement_e2e', () => {
 	it('Contextual menu at the patients grid', () => {
 		const menuItems = ['Update', 'Delete'];
 		for (let row = 0; row < browser.params.repeatabilityNumberPasses; row++) {
-			allure.createStep(
-				'Action: Access to the contextual menu at row ' + row + ' in the grid with the buttons: ' + JSON.stringify(menuItems),
-				() => {
-					GridService.checkGridPopupMenuContentAtRow(patientMaintenancePage.getPatientsGrid(), row, menuItems);
-				}
-			)();
+			allure.createStep('Action: Access to the contextual menu at row ' + row + ' in the grid with the buttons: ' + JSON.stringify(menuItems), () => {
+				GridService.checkGridPopupMenuContentAtRow(patientMaintenancePage.getPatientsGrid(), row, menuItems);
+			})();
 		}
 	});
 
