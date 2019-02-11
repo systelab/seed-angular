@@ -24,8 +24,8 @@
     "@angular/router": "7.2.0",
     "core-js": "^2.6.1",
     "rxjs": "6.3.3",
-    "systelab-components": "^7.11.0",
-    "systelab-login": "^5.0.0",
+    "systelab-components": "^8.0.4",
+    "systelab-login": "^6.0.1",
     "systelab-preferences": "^4.0.0",
     "systelab-translate": "^5.0.0",
     "zone.js": "0.8.27"
