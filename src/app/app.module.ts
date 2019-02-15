@@ -11,7 +11,7 @@ import { BASE_PATH } from '@api/variables';
 import { environment } from '../environments/environment';
 import { MainComponent } from './main/main.component';
 import { AppRoutingModule } from './app.routing';
-import { MessagePopupService } from 'systelab-components/widgets/modal/message-popup/message-popup.service';
+import { MessagePopupService } from 'systelab-components/widgets/modal';
 import { DialogService } from 'systelab-components/widgets/modal/dialog/dialog.service';
 import { SystelabLoginModule } from 'systelab-login';
 import { EmptyBodyInterceptor } from '@api/empty-body.interceptor';
