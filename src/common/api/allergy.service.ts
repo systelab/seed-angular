@@ -31,7 +31,7 @@ export class AllergyService extends BaseService {
 		if (itemsPerPage !== null) {
 			queryParameters = queryParameters.set('size', <any>itemsPerPage);
 		}
-		return this.httpClient.get<Page<Allergy>>(`${this.basePath}/v1/allergies`,
+		return this.httpClient.get<Page<Allergy>>(`${this.basePath}/allergies`,
 			{
 				params:  queryParameters,
 				headers: this.getAuthorizationHeader()
@@ -48,7 +48,7 @@ export class AllergyService extends BaseService {
 			throw new Error('Required parameter uid was null or undefined when calling getAllergy.');
 		}
 
-		return this.httpClient.get<Allergy>(`${this.basePath}/v1/allergies/${encodeURIComponent(String(uid))}`,
+		return this.httpClient.get<Allergy>(`${this.basePath}/allergies/${encodeURIComponent(String(uid))}`,
 			{
 				headers: this.getAuthorizationHeader()
 			}
@@ -64,7 +64,7 @@ export class AllergyService extends BaseService {
 			throw new Error('Required parameter allergy was null or undefined when calling createAllergy.');
 		}
 
-		return this.httpClient.post<Allergy>(`${this.basePath}/v1/allergies/allergy`, allergy,
+		return this.httpClient.post<Allergy>(`${this.basePath}/allergies/allergy`, allergy,
 			{
 				headers: this.getAuthorizationHeader()
 			}
@@ -84,7 +84,7 @@ export class AllergyService extends BaseService {
 			throw new Error('Required parameter allergy was null or undefined when calling updateAllergy.');
 		}
 
-		return this.httpClient.put<Allergy>(`${this.basePath}/v1/allergies/${encodeURIComponent(String(uid))}`, allergy,
+		return this.httpClient.put<Allergy>(`${this.basePath}/allergies/${encodeURIComponent(String(uid))}`, allergy,
 			{
 				headers: this.getAuthorizationHeader()
 			}
@@ -100,7 +100,7 @@ export class AllergyService extends BaseService {
 			throw new Error('Required parameter uid was null or undefined when calling remove.');
 		}
 
-		return this.httpClient.delete<any>(`${this.basePath}/v1/allergies/${encodeURIComponent(String(uid))}`,
+		return this.httpClient.delete<any>(`${this.basePath}/allergies/${encodeURIComponent(String(uid))}`,
 			{
 				headers: this.getAuthorizationHeader()
 			}

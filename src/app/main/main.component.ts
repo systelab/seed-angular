@@ -1,5 +1,5 @@
 import { Observable, of as observableOf } from 'rxjs';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { I18nService } from 'systelab-translate/lib/i18n.service';
 import { ApiGlobalsService } from '@globals/globals.service';
 import { Router } from '@angular/router';
@@ -13,27 +13,26 @@ import { LocalStorageService } from 'systelab-preferences/lib/local-storage.serv
 
 @Component({
 	selector:    'main',
-	templateUrl: 'main.component.html'
+	templateUrl: 'main.component.html',
+	styleUrls: ['main.component.scss']
 })
 export class MainComponent implements OnInit {
 	title = 'Angular Seed Application';
 
-	private frameWidth = 0;
-	private frameHeight = 0;
-
 	public userName: string;
 	public userFullName: string;
 	public hospitalName: string;
+	public logoIcon: string;
 
 	public menu: ApplicationHeaderMenuEntry[] = [];
 	public sideactions: ApplicationSidebarAction[] = [];
 	public sidetabs: ApplicationSidebarTab[] = [];
 
+	public showConfiguration=false;
+
 	constructor(private router: Router, protected messagePopupService: MessagePopupService,
 	            protected dialogService: DialogService, protected i18nService: I18nService,
 	            protected apiGlobalsService: ApiGlobalsService, private localStorage: LocalStorageService) {
-		this.frameWidth = (window.innerWidth);
-		this.frameHeight = (window.innerHeight);
 	}
 
 	public ngOnInit() {
@@ -41,6 +40,7 @@ export class MainComponent implements OnInit {
 		this.userName = 'admin';
 		this.userFullName = 'Administrator';
 		this.hospitalName = 'Customer name';
+		this.logoIcon = 'fab fa-stumbleupon-circle';
 
 		this.setMenu();
 		this.setSideTabs();
@@ -56,49 +56,32 @@ export class MainComponent implements OnInit {
 				this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_SETUP, false, () => this.doShowSettings()));
 				this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_CHANGE_PASSWORD, false, () => this.doChangePassword()));
 				this.menu.push(new ApplicationHeaderMenuEntry('', true));
-				if (this.frameWidth < 1024) {
-					this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_TAB_ONE, false, () => this.doSelect('T1')));
-					this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_TAB_TWO, false, () => this.doSelect('T2')));
-					this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_TAB_THREE, false, () => this.doSelect('T3')));
-					this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_TAB_FOUR, false, () => this.doSelect('T4')));
-					this.menu.push(new ApplicationHeaderMenuEntry('', true));
-				}
+
 				this.menu.push(new ApplicationHeaderMenuEntry('English', false, () => this.doChangeLanguage('en')));
 				this.menu.push(new ApplicationHeaderMenuEntry('Español', false, () => this.doChangeLanguage('es-ES')));
 				this.menu.push(new ApplicationHeaderMenuEntry('Italiano', false, () => this.doChangeLanguage('it-IT')));
 				this.menu.push(new ApplicationHeaderMenuEntry('한국어', false, () => this.doChangeLanguage('kr-KR')));
 				this.menu.push(new ApplicationHeaderMenuEntry('', true));
 				this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_CHANGE_USER, false, () => this.doLogout()));
-
 			});
-
 	}
 
 	public setSideTabs() {
 		this.i18nService.get(['COMMON_TAB_ONE', 'COMMON_TAB_TWO', 'COMMON_TAB_THREE', 'COMMON_TAB_FOUR'])
 			.subscribe((res) => {
-				this.sidetabs.push(new ApplicationSidebarTab('T1', res.COMMON_TAB_ONE, true));
-				this.sidetabs.push(new ApplicationSidebarTab('T2', res.COMMON_TAB_TWO, false));
-				this.sidetabs.push(new ApplicationSidebarTab('T3', res.COMMON_TAB_THREE, false));
-				this.sidetabs.push(new ApplicationSidebarTab('T4', res.COMMON_TAB_FOUR, false));
+				this.sidetabs.push(new ApplicationSidebarTab('T1', res.COMMON_TAB_ONE, true, null, null, 'fas fa-tachometer-alt'));
+				this.sidetabs.push(new ApplicationSidebarTab('T2', res.COMMON_TAB_TWO, false, null, null, 'fas fa-satellite-dish'));
+				this.sidetabs.push(new ApplicationSidebarTab('T3', res.COMMON_TAB_THREE, false, null, null, 'fas fa-award'));
+				this.sidetabs.push(new ApplicationSidebarTab('T4', res.COMMON_TAB_FOUR, false, null, null, 'fas fa-tools'));
 			});
 	}
 
 	public setSideButtons() {
-		this.i18nService.get('COMMON_DOCUMENTATION')
-			.subscribe((res) => {
-				this.sideactions.push(new ApplicationSidebarAction(res, () => this.doShowDocumentation()));
-			});
-	}
-
-	@HostListener('window:resize', ['$event'])
-	public onResize(event) {
-		this.frameWidth = (window.innerWidth);
-		this.frameHeight = (window.innerHeight);
-		this.setMenu();
+				this.sideactions.push(new ApplicationSidebarAction('Button', null,'fas fa-bong'));
 	}
 
 	public doSelect(id: string) {
+		this.showConfiguration=(id==='T4');
 		console.log(id);
 	}
 
@@ -116,8 +99,6 @@ export class MainComponent implements OnInit {
 	public doShowAbout() {
 	}
 
-	public doShowDocumentation() {
-	}
 
 	public doLogout() {
 		this.apiGlobalsService.bearer = undefined;

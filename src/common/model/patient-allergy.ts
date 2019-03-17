@@ -3,8 +3,8 @@ import { Allergy } from './allergy';
 
 export interface PatientAllergy { 
     allergy?: Allergy;
-    lastOccurrence?: string;
-    assertedDate?: string;
+    lastOccurrence?: Date;
+    assertedDate?: Date;
     note: string;
 }
 

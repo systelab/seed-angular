@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { I18nService } from 'systelab-translate/lib/i18n.service';
 import { PatientService } from '@api/patient.service';
 import { Patient } from '@model/patient';
-import { DialogRef, MessagePopupService, ModalComponent, SystelabModalContext } from 'systelab-components/widgets/modal';
+import { DialogRef, DialogService, MessagePopupService, ModalComponent, SystelabModalContext } from 'systelab-components/widgets/modal';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PatientAllergyGrid } from '@components/patient-allergy/grid/patient-allergy-grid.component';
+import { PatientAllergyDialog, PatientAllergyDialogParameters } from '@features/patient-maintenance/patient-allergy-detail-dialog/patient-allergy-dialog.component';
 
 export class PatientDialogParameters extends SystelabModalContext {
 	public patientId: string;
@@ -18,19 +20,20 @@ export class PatientDialogParameters extends SystelabModalContext {
 export class PatientDialog implements ModalComponent<PatientDialogParameters>, OnInit {
 
 	public parameters: PatientDialogParameters;
-
-	public active = true;
 	public title = '';
 	public humanReadableAction = '';
+	public selectedTab = '';
+
+	@ViewChild('grid') public grid: PatientAllergyGrid;
 
 	public patient: Patient = {
 		address: {}
 	};
 
-	constructor(public dialog: DialogRef<PatientDialogParameters>, protected i18NService: I18nService,
+	constructor(public dialog: DialogRef<PatientDialogParameters>, protected i18NService: I18nService, protected dialogService: DialogService,
 	            protected messagePopupService: MessagePopupService, protected patientService: PatientService) {
 		this.parameters = dialog.context;
-		if (this.parameters.patientId) {
+		if (this.isUpdate()) {
 			i18NService.get(['COMMON_UPDATE', 'COMMON_UPDATE_PATIENT'])
 				.subscribe((res) => {
 					this.humanReadableAction = res.COMMON_UPDATE;
@@ -51,8 +54,7 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 	}
 
 	public ngOnInit() {
-		if (this.parameters.patientId) {
-
+		if (this.isUpdate()) {
 			this.patientService.getPatient(this.parameters.patientId)
 				.subscribe((response) => {
 						if (!response.address) {
@@ -68,12 +70,35 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 		this.dialog.close(false);
 	}
 
+	public isUpdate() {
+		return this.parameters.patientId;
+	}
+
 	public doPerformAction() {
-		if (this.parameters.patientId) {
+		if (this.isUpdate()) {
 			this.updatePatient(this.patient);
 		} else {
 			this.createPatient(this.patient);
 		}
+	}
+
+	public doSelectTab(tab: string) {
+		this.selectedTab = tab;
+	}
+
+	public doAddAllergy() {
+		const parameters: PatientAllergyDialogParameters = PatientAllergyDialog.getParameters();
+		parameters.patientId = this.parameters.patientId;
+		this.dialogService.showDialog(PatientAllergyDialog, parameters)
+			.subscribe((result) => {
+				if (result) {
+					this.grid.refresh();
+				}
+			});
+	}
+
+	public doShowOptions() {
+		this.grid.showOptions();
 	}
 
 	private createPatient(patient: Patient) {

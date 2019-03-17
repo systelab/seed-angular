@@ -25,7 +25,7 @@ export class PatientAllergyService extends BaseService {
 			throw new Error('Required parameter uid was null or undefined when calling getPatientAllergies.');
 		}
 
-		return this.httpClient.get<Array<PatientAllergy>>(`${this.basePath}/v1/patients/${encodeURIComponent(String(uid))}/allergies`,
+		return this.httpClient.get<Array<PatientAllergy>>(`${this.basePath}/patients/${encodeURIComponent(String(uid))}/allergies`,
 			{
 				headers: this.getAuthorizationHeader()
 			}
@@ -45,7 +45,7 @@ export class PatientAllergyService extends BaseService {
 			throw new Error('Required parameter patientAllergy was null or undefined when calling addAllergyToPatient.');
 		}
 
-		return this.httpClient.post<PatientAllergy>(`${this.basePath}/v1/patients/${encodeURIComponent(String(uid))}/allergies/allergy`,
+		return this.httpClient.post<PatientAllergy>(`${this.basePath}/patients/${encodeURIComponent(String(uid))}/allergies/allergy`,
 			patientAllergy,
 			{
 				headers: this.getAuthorizationHeader()
@@ -70,7 +70,7 @@ export class PatientAllergyService extends BaseService {
 			throw new Error('Required parameter patientAllergy was null or undefined when calling updateAllergyToPatient.');
 		}
 
-		return this.httpClient.put<PatientAllergy>(`${this.basePath}/v1/patients/${encodeURIComponent(String(patientId))}/allergies/${encodeURIComponent(String(allergyId))}`,
+		return this.httpClient.put<PatientAllergy>(`${this.basePath}/patients/${encodeURIComponent(String(patientId))}/allergies/${encodeURIComponent(String(allergyId))}`,
 			patientAllergy,
 			{
 				headers: this.getAuthorizationHeader()
@@ -91,7 +91,7 @@ export class PatientAllergyService extends BaseService {
 			throw new Error('Required parameter allergyId was null or undefined when calling deleteAllergyFromPatient.');
 		}
 
-		return this.httpClient.delete<any>(`${this.basePath}/v1/patients/${encodeURIComponent(String(patientId))}/allergies/${encodeURIComponent(String(allergyId))}`,
+		return this.httpClient.delete<any>(`${this.basePath}/patients/${encodeURIComponent(String(patientId))}/allergies/${encodeURIComponent(String(allergyId))}`,
 			{
 				headers: this.getAuthorizationHeader()
 			}

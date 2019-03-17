@@ -21,6 +21,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { GridContextMenuCellRendererComponent } from 'systelab-components/widgets/grid/contextmenu/grid-context-menu-cell-renderer.component';
 import { LoginModule } from '@features/login/login.module';
 import { PatientMaintenanceModule } from '@features/patient-maintenance/patient-maintenance.module';
+import { AllergyMaintenanceModule } from '@features/allergy-maintenance/allergy-maintenance.module';
 
 @NgModule({
 	imports:         [
@@ -29,6 +30,7 @@ import { PatientMaintenanceModule } from '@features/patient-maintenance/patient-
 		DragDropModule,
 		HttpClientModule,
 		PatientMaintenanceModule,
+		AllergyMaintenanceModule,
 		LoginModule,
 		SystelabTranslateModule.forRoot(),
 		SystelabPreferencesModule.forRoot(),

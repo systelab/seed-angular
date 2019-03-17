@@ -1,0 +1,38 @@
+<systelab-dialog-header (close)="close()">{{'ADD_ALLERGY' | translate | async}}</systelab-dialog-header>
+<div class="slab-flex-1">
+
+    <form class="p-2">
+        <div class="row mt-1">
+            <label class="col-sm-2 col-form-label text-truncate">{{'COMMON_ALLERGY' | translate | async}}</label>
+            <div class="col-sm-10">
+                <allergy-combobox [(id)]="allergyId" [(description)]="allergyName"></allergy-combobox>
+            </div>
+        </div>
+        <div class="row mt-1">
+            <label  class="col-sm-2 col-form-label text-truncate">{{'COMMON_ASSERTED_DATE' | translate | async}}</label>
+            <div class="col-sm-10">
+                <systelab-datepicker [(currentDate)]="assertedDate"></systelab-datepicker>
+            </div>
+        </div>
+
+        <div class="row mt-1">
+            <label  class="col-sm-2 col-form-label text-truncate">{{'COMMON_LAST_OCCURRENCE_DATE' | translate | async}}</label>
+            <div class="col-sm-10">
+                <systelab-datepicker [(currentDate)]="lastOccurrenceDate"></systelab-datepicker>
+            </div>
+        </div>
+        <div class="row mt-1">
+            <label  class="col-sm-2 col-form-label text-truncate">{{'COMMON_NOTES' | translate | async}}</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="notes" id="PatientAllergyNotes" name="notes" placeholder="{{'COMMON_NOTES' | translate | async}}">
+            </div>
+        </div>
+    </form>
+
+</div>
+<systelab-dialog-bottom>
+
+    <button type="button" id="PatientSubmitButton" class="btn ml-auto" (click)="doPerformAction()">
+        <i class="fas fa-download mr-1"></i>{{'COMMON_CREATE' | translate | async}}
+    </button>
+</systelab-dialog-bottom>
