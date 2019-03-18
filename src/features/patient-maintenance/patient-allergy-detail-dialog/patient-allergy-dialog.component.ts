@@ -37,13 +37,13 @@ export class PatientAllergyDialog implements ModalComponent<PatientAllergyDialog
 			i18NService.get(['COMMON_UPDATE', 'COMMON_UPDATE_PATIENTALLERGY'])
 				.subscribe((res) => {
 					this.humanReadableAction = res.COMMON_UPDATE;
-					this.title = res.COMMON_UPDATE_PATIENT;
+					this.title = res.COMMON_UPDATE_PATIENTALLERGY;
 				});
 		} else {
 			i18NService.get(['COMMON_CREATE', 'COMMON_CREATE_PATIENTALLERGY'])
 				.subscribe((res) => {
 					this.humanReadableAction = res.COMMON_CREATE;
-					this.title = res.COMMON_CREATE_PATIENT;
+					this.title = res.COMMON_CREATE_PATIENTALLERGY;
 				});
 
 		}

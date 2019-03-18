@@ -48,5 +48,16 @@
   "PASSWORD_STRENGTH_VERY_STRONG": "Very Strong",
   "PASSWORD_CRITERIA_WEAK": "Password Criteria Weak",
   "COMMON_ADDRESS": "Address",
-  "COMMON_MEDICAL_RECORD": "Medical number"
+  "COMMON_MEDICAL_RECORD": "Medical number",
+  "COMMON_UPDATE_ALLERGY": "Update Allergy",
+  "COMMON_CREATE_ALLERGY": "Create Allergy",
+  "COMMON_UPDATE_PATIENTALLERGY": "Update Allergy",
+  "COMMON_CREATE_PATIENTALLERGY": "Add Allergy",
+  "COMMON_ALLERGY": "Allergy",
+  "COMMON_ALLERGIES": "Allergies",
+  "COMMON_SIGNS": "Signs",
+  "COMMON_SYMPTOMS": "Symptoms",
+  "COMMON_NOTES": "Comments",
+  "COMMON_ASSERTED_DATE": "Asserted Date",
+  "COMMON_LAST_OCCURRENCE_DATE": "Last occurrence"
 }
