@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { I18nService } from 'systelab-translate/lib/i18n.service';
 import { PatientService } from '@api/patient.service';
 import { Patient } from '@model/patient';
-import { DialogRef, MessagePopupService, ModalComponent, SystelabModalContext } from 'systelab-components/widgets/modal';
-import { HttpErrorResponse } from '@angular/common/http';
+import { DialogRef, ModalComponent, SystelabModalContext } from 'systelab-components/widgets/modal';
 import { PatientAllergiesFormComponent } from '@features/patient-maintenance/allergies-form/patient-allergies-form.component';
+import { ErrorService } from '@globals/error.service';
 
 export class PatientDialogParameters extends SystelabModalContext {
 	public patientId: string;
@@ -30,7 +30,7 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 	};
 
 	constructor(public dialog: DialogRef<PatientDialogParameters>, protected i18NService: I18nService,
-	            protected messagePopupService: MessagePopupService, protected patientService: PatientService) {
+	            protected patientService: PatientService, protected errorService: ErrorService) {
 		this.parameters = dialog.context;
 		if (this.isUpdate()) {
 			this.humanReadableAction = i18NService.instant('COMMON_UPDATE');
@@ -91,7 +91,7 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 			.subscribe((result) => {
 					this.dialog.close(true);
 				},
-				(error) => this.showError(error));
+				(error) => this.errorService.showError(error));
 	}
 
 	private updatePatient(patient: Patient) {
@@ -99,11 +99,7 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 			.subscribe((result) => {
 					this.dialog.close(true);
 				},
-				(error) => this.showError(error));
-	}
-
-	private showError(error: HttpErrorResponse) {
-		this.messagePopupService.showErrorPopup(this.i18NService.instant('ERR_ERROR'), error.message);
+				(error) => this.errorService.showError(error));
 	}
 
 }

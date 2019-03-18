@@ -7,6 +7,7 @@ import { GridContextMenuActionData } from 'systelab-components/widgets/grid/cont
 import { I18nService } from 'systelab-translate/lib/i18n.service';
 import { PatientAllergy } from '@model/patient-allergy';
 import { PatientAllergyService } from '@api/patient-allergy.service';
+import { ErrorService } from '@globals/error.service';
 
 @Component({
 	selector:    'patient-allergies-form',
@@ -18,7 +19,8 @@ export class PatientAllergiesFormComponent {
 
 	@ViewChild('grid') public grid: PatientAllergyGrid;
 
-	constructor(protected dialogService: DialogService, protected patientAllergyService: PatientAllergyService, protected i18nService: I18nService) {
+	constructor(protected dialogService: DialogService, protected patientAllergyService: PatientAllergyService,
+	            protected i18nService: I18nService, protected errorService: ErrorService) {
 	}
 
 	public doShowOptions() {
@@ -72,6 +74,6 @@ export class PatientAllergiesFormComponent {
 
 	private deletePatientAllergy(contextMenuActionData: GridContextMenuActionData<PatientAllergy>) {
 		this.patientAllergyService.deleteAllergiesFromPatient(this.patientId, contextMenuActionData.data.allergy.id)
-			.subscribe(result => this.grid.refresh(), error => console.log('error'));
+			.subscribe(result => this.grid.refresh(), error => this.errorService.showError(error));
 	}
 }

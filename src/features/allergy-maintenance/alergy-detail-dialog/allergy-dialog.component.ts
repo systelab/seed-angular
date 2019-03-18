@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { I18nService } from 'systelab-translate/lib/i18n.service';
 import { AllergyService } from '@api/allergy.service';
 import { Allergy } from '@model/allergy';
-import { DialogRef, MessagePopupService, ModalComponent, SystelabModalContext } from 'systelab-components/widgets/modal';
-import { HttpErrorResponse } from '@angular/common/http';
+import { DialogRef, ModalComponent, SystelabModalContext } from 'systelab-components/widgets/modal';
+import { ErrorService } from '@globals/error.service';
 
 export class AllergyDialogParameters extends SystelabModalContext {
 	public allergyId: string;
@@ -26,7 +26,7 @@ export class AllergyDialog implements ModalComponent<AllergyDialogParameters>, O
 	public allergy: Allergy = {};
 
 	constructor(public dialog: DialogRef<AllergyDialogParameters>, protected i18NService: I18nService,
-	            protected messagePopupService: MessagePopupService, protected allergyService: AllergyService) {
+	            protected errorService: ErrorService, protected allergyService: AllergyService) {
 		this.parameters = dialog.context;
 		if (this.parameters.allergyId) {
 			this.humanReadableAction = i18NService.instant('COMMON_UPDATE');
@@ -70,7 +70,7 @@ export class AllergyDialog implements ModalComponent<AllergyDialogParameters>, O
 			.subscribe((result) => {
 					this.dialog.close(true);
 				},
-				(error) => this.showError(error));
+				(error) => this.errorService.showError(error));
 	}
 
 	private updateAllergy(allergy: Allergy) {
@@ -78,10 +78,7 @@ export class AllergyDialog implements ModalComponent<AllergyDialogParameters>, O
 			.subscribe((result) => {
 					this.dialog.close(true);
 				},
-				(error) => this.showError(error));
+				(error) => this.errorService.showError(error));
 	}
 
-	private showError(error: HttpErrorResponse) {
-		this.messagePopupService.showErrorPopup(this.i18NService.instant('ERR_ERROR'), error.message);
-	}
 }

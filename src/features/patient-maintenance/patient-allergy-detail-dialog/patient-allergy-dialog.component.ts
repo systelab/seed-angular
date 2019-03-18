@@ -4,6 +4,7 @@ import { DialogRef, DialogService, MessagePopupService, ModalComponent, Systelab
 import { HttpErrorResponse } from '@angular/common/http';
 import { PatientAllergyService } from '@api/patient-allergy.service';
 import { PatientAllergy } from '@model/patient-allergy';
+import { ErrorService } from '@globals/error.service';
 
 export class PatientAllergyDialogParameters extends SystelabModalContext {
 	public patientId: string;
@@ -30,8 +31,8 @@ export class PatientAllergyDialog implements ModalComponent<PatientAllergyDialog
 	public assertedDate: Date;
 	public lastOccurrenceDate: Date;
 
-	constructor(public dialog: DialogRef<PatientAllergyDialogParameters>, protected i18NService: I18nService, protected dialogService: DialogService,
-	            protected messagePopupService: MessagePopupService, protected patientAllergyService: PatientAllergyService) {
+	constructor(public dialog: DialogRef<PatientAllergyDialogParameters>, protected i18NService: I18nService, protected errorService: ErrorService,
+	            protected patientAllergyService: PatientAllergyService) {
 		this.parameters = dialog.context;
 		if (this.isUpdate()) {
 			this.humanReadableAction = i18NService.instant('COMMON_UPDATE');
@@ -84,7 +85,7 @@ export class PatientAllergyDialog implements ModalComponent<PatientAllergyDialog
 			.subscribe((result) => {
 					this.dialog.close(true);
 				},
-				(error) => this.showError(error));
+				(error) => this.errorService.showError(error));
 	}
 
 	private updatePatientAllergy(patientAllergy: PatientAllergy) {
@@ -92,11 +93,6 @@ export class PatientAllergyDialog implements ModalComponent<PatientAllergyDialog
 			.subscribe((result) => {
 					this.dialog.close(true);
 				},
-				(error) => this.showError(error));
+				(error) => this.errorService.showError(error));
 	}
-
-	private showError(error: HttpErrorResponse) {
-		this.messagePopupService.showErrorPopup(this.i18NService.instant('ERR_ERROR'), error.message);
-	}
-
 }
