@@ -13,15 +13,6 @@ import { map } from 'rxjs/operators';
 export class AllergyComboBox extends AbstractApiComboBox<Allergy> {
 
 	private totalItems = 0;
-	private _startsWith: string;
-
-	@Input()
-	set startsWith(value: string) {
-		this._startsWith = value;
-		this.id = '';
-		this.description = '';
-		this.refresh(null);
-	}
 
 	constructor(public myRenderer: Renderer2, public chref: ChangeDetectorRef, public allergyService: AllergyService) {
 		super(myRenderer, chref);
