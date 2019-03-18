@@ -5,7 +5,7 @@
         <div class="row mt-1">
             <label class="col-sm-3 col-form-label text-truncate">{{'COMMON_ALLERGY' | translate | async}}</label>
             <div class="col-sm-9">
-                <allergy-combobox [(id)]="allergyId" [(description)]="allergyName"></allergy-combobox>
+                <allergy-combobox [(id)]="allergyId" [(description)]="allergyName" [isDisabled]="isUpdate()"></allergy-combobox>
             </div>
         </div>
         <div class="row mt-1">
