@@ -19,14 +19,14 @@
         <div class="row mt-1">
             <label for="AllergySignsInput" id="AllergySignsLabel" class="col-sm-2 col-form-label text-truncate">{{'COMMON_SIGNS' | translate | async}}</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" [(ngModel)]="allergy.signs" id="AllergySignsInput" name="signs" placeholder="{{'COMMON_SIGNS' | translate | async}}">
+                <textarea name="signs" [(ngModel)]="allergy.signs" id="AllergySignsInput" class="slab-textarea w-100 slab-textarea-no-resize"></textarea>
             </div>
         </div>
 
         <div class="row mt-1">
             <label for="AllergySymptomsInput" id="AllergySymptomsLabel" class="col-sm-2 col-form-label text-truncate">{{'COMMON_SYMPTOMS' | translate | async}}</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" [(ngModel)]="allergy.symptoms" id="AllergySymptomsInput" name="symptoms" placeholder="{{'COMMON_SYMPTOMS' | translate | async}}">
+                <textarea name="symptoms" [(ngModel)]="allergy.symptoms" id="AllergySymptomsInput" class="slab-textarea w-100 slab-textarea-no-resize"></textarea>
             </div>
         </div>
     </form>

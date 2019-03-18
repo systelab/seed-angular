@@ -11,6 +11,7 @@ import { ComponentsModule } from '@components/components.module';
 import { PatientFormComponent } from './patient-form/patient-form.component';
 import { PatientAllergyDialog } from '@features/patient-maintenance/patient-allergy-detail-dialog/patient-allergy-dialog.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PatientAllergiesFormComponent } from '@features/patient-maintenance/allergies-form/patient-allergies-form.component';
 
 @NgModule({
 	imports:         [
@@ -25,7 +26,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 		PatientMaintenanceDialog,
 		PatientDialog,
 		PatientAllergyDialog,
-		PatientFormComponent
+		PatientFormComponent,
+		PatientAllergiesFormComponent
 	],
 	exports:         [],
 	entryComponents: [

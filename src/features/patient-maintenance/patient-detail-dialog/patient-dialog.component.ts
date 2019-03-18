@@ -2,15 +2,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { I18nService } from 'systelab-translate/lib/i18n.service';
 import { PatientService } from '@api/patient.service';
 import { Patient } from '@model/patient';
-import { DialogRef, DialogService, MessagePopupService, ModalComponent, SystelabModalContext } from 'systelab-components/widgets/modal';
+import { DialogRef, MessagePopupService, ModalComponent, SystelabModalContext } from 'systelab-components/widgets/modal';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PatientAllergyGrid } from '@components/patient-allergy/grid/patient-allergy-grid.component';
-import { PatientAllergyDialog, PatientAllergyDialogParameters } from '@features/patient-maintenance/patient-allergy-detail-dialog/patient-allergy-dialog.component';
+import { PatientAllergiesFormComponent } from '@features/patient-maintenance/allergies-form/patient-allergies-form.component';
 
 export class PatientDialogParameters extends SystelabModalContext {
 	public patientId: string;
-	public width = 700;
-	public height = 450;
+	public width = 710;
+	public height = 460;
 }
 
 @Component({
@@ -24,13 +23,13 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 	public humanReadableAction = '';
 	public selectedTab = '';
 
-	@ViewChild('grid') public grid: PatientAllergyGrid;
+	@ViewChild('allergies') public allergies: PatientAllergiesFormComponent;
 
 	public patient: Patient = {
 		address: {}
 	};
 
-	constructor(public dialog: DialogRef<PatientDialogParameters>, protected i18NService: I18nService, protected dialogService: DialogService,
+	constructor(public dialog: DialogRef<PatientDialogParameters>, protected i18NService: I18nService,
 	            protected messagePopupService: MessagePopupService, protected patientService: PatientService) {
 		this.parameters = dialog.context;
 		if (this.isUpdate()) {
@@ -87,18 +86,11 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 	}
 
 	public doAddAllergy() {
-		const parameters: PatientAllergyDialogParameters = PatientAllergyDialog.getParameters();
-		parameters.patientId = this.parameters.patientId;
-		this.dialogService.showDialog(PatientAllergyDialog, parameters)
-			.subscribe((result) => {
-				if (result) {
-					this.grid.refresh();
-				}
-			});
+		this.allergies.doAddAllergy();
 	}
 
 	public doShowOptions() {
-		this.grid.showOptions();
+		this.allergies.doShowOptions();
 	}
 
 	private createPatient(patient: Patient) {
