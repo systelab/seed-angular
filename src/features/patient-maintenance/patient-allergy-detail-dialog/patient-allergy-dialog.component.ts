@@ -34,18 +34,11 @@ export class PatientAllergyDialog implements ModalComponent<PatientAllergyDialog
 	            protected messagePopupService: MessagePopupService, protected patientAllergyService: PatientAllergyService) {
 		this.parameters = dialog.context;
 		if (this.isUpdate()) {
-			i18NService.get(['COMMON_UPDATE', 'COMMON_UPDATE_PATIENTALLERGY'])
-				.subscribe((res) => {
-					this.humanReadableAction = res.COMMON_UPDATE;
-					this.title = res.COMMON_UPDATE_PATIENTALLERGY;
-				});
+			this.humanReadableAction = i18NService.instant('COMMON_UPDATE');
+			this.title = i18NService.instant('COMMON_UPDATE_PATIENTALLERGY');
 		} else {
-			i18NService.get(['COMMON_CREATE', 'COMMON_CREATE_PATIENTALLERGY'])
-				.subscribe((res) => {
-					this.humanReadableAction = res.COMMON_CREATE;
-					this.title = res.COMMON_CREATE_PATIENTALLERGY;
-				});
-
+			this.humanReadableAction = i18NService.instant('COMMON_CREATE');
+			this.title = i18NService.instant('COMMON_CREATE_PATIENTALLERGY');
 		}
 	}
 
@@ -103,11 +96,7 @@ export class PatientAllergyDialog implements ModalComponent<PatientAllergyDialog
 	}
 
 	private showError(error: HttpErrorResponse) {
-		this.i18NService.get(['ERR_ERROR'])
-			.subscribe((res) => {
-				console.log(error);
-				this.messagePopupService.showErrorPopup(res.ERR_ERROR, error.message);
-			});
+		this.messagePopupService.showErrorPopup(this.i18NService.instant('ERR_ERROR'), error.message);
 	}
 
 }

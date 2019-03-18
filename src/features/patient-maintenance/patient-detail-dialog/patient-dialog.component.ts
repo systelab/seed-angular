@@ -33,18 +33,11 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 	            protected messagePopupService: MessagePopupService, protected patientService: PatientService) {
 		this.parameters = dialog.context;
 		if (this.isUpdate()) {
-			i18NService.get(['COMMON_UPDATE', 'COMMON_UPDATE_PATIENT'])
-				.subscribe((res) => {
-					this.humanReadableAction = res.COMMON_UPDATE;
-					this.title = res.COMMON_UPDATE_PATIENT;
-				});
+			this.humanReadableAction = i18NService.instant('COMMON_UPDATE');
+			this.title = i18NService.instant('COMMON_UPDATE_PATIENT');
 		} else {
-			i18NService.get(['COMMON_CREATE', 'COMMON_CREATE_PATIENT'])
-				.subscribe((res) => {
-					this.humanReadableAction = res.COMMON_CREATE;
-					this.title = res.COMMON_CREATE_PATIENT;
-				});
-
+			this.humanReadableAction = i18NService.instant('COMMON_CREATE');
+			this.title = i18NService.instant('COMMON_CREATE_PATIENT');
 		}
 	}
 
@@ -110,11 +103,7 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 	}
 
 	private showError(error: HttpErrorResponse) {
-		this.i18NService.get(['ERR_ERROR'])
-			.subscribe((res) => {
-				console.log(error);
-				this.messagePopupService.showErrorPopup(res.ERR_ERROR, error.message);
-			});
+		this.messagePopupService.showErrorPopup(this.i18NService.instant('ERR_ERROR'), error.message);
 	}
 
 }

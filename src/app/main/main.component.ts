@@ -14,7 +14,7 @@ import { LocalStorageService } from 'systelab-preferences/lib/local-storage.serv
 @Component({
 	selector:    'main',
 	templateUrl: 'main.component.html',
-	styleUrls: ['main.component.scss']
+	styleUrls:   ['main.component.scss']
 })
 export class MainComponent implements OnInit {
 	title = 'Angular Seed Application';
@@ -28,7 +28,7 @@ export class MainComponent implements OnInit {
 	public sideactions: ApplicationSidebarAction[] = [];
 	public sidetabs: ApplicationSidebarTab[] = [];
 
-	public showConfiguration=false;
+	public showConfiguration = false;
 
 	constructor(private router: Router, protected messagePopupService: MessagePopupService,
 	            protected dialogService: DialogService, protected i18nService: I18nService,
@@ -50,39 +50,32 @@ export class MainComponent implements OnInit {
 	public setMenu() {
 
 		this.menu = [];
-		this.i18nService.get(['COMMON_SETUP', 'COMMON_CHANGE_PASSWORD', 'COMMON_CHANGE_USER', 'COMMON_ABOUT', 'COMMON_TAB_ONE', 'COMMON_TAB_TWO', 'COMMON_TAB_THREE', 'COMMON_TAB_FOUR'])
-			.subscribe((res) => {
-				this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_ABOUT, false, () => this.doShowAbout()));
-				this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_SETUP, false, () => this.doShowSettings()));
-				this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_CHANGE_PASSWORD, false, () => this.doChangePassword()));
-				this.menu.push(new ApplicationHeaderMenuEntry('', true));
+		this.menu.push(new ApplicationHeaderMenuEntry(this.i18nService.instant('COMMON_ABOUT'), false, () => this.doShowAbout()));
+		this.menu.push(new ApplicationHeaderMenuEntry(this.i18nService.instant('COMMON_SETUP'), false, () => this.doShowSettings()));
+		this.menu.push(new ApplicationHeaderMenuEntry(this.i18nService.instant('COMMON_CHANGE_PASSWORD'), false, () => this.doChangePassword()));
+		this.menu.push(new ApplicationHeaderMenuEntry('', true));
 
-				this.menu.push(new ApplicationHeaderMenuEntry('English', false, () => this.doChangeLanguage('en')));
-				this.menu.push(new ApplicationHeaderMenuEntry('Español', false, () => this.doChangeLanguage('es-ES')));
-				this.menu.push(new ApplicationHeaderMenuEntry('Italiano', false, () => this.doChangeLanguage('it-IT')));
-				this.menu.push(new ApplicationHeaderMenuEntry('한국어', false, () => this.doChangeLanguage('kr-KR')));
-				this.menu.push(new ApplicationHeaderMenuEntry('', true));
-				this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_CHANGE_USER, false, () => this.doLogout()));
-			});
+		this.menu.push(new ApplicationHeaderMenuEntry('English', false, () => this.doChangeLanguage('en')));
+		this.menu.push(new ApplicationHeaderMenuEntry('Español', false, () => this.doChangeLanguage('es-ES')));
+		this.menu.push(new ApplicationHeaderMenuEntry('Italiano', false, () => this.doChangeLanguage('it-IT')));
+		this.menu.push(new ApplicationHeaderMenuEntry('한국어', false, () => this.doChangeLanguage('kr-KR')));
+		this.menu.push(new ApplicationHeaderMenuEntry('', true));
+		this.menu.push(new ApplicationHeaderMenuEntry(this.i18nService.instant('COMMON_CHANGE_USER'), false, () => this.doLogout()));
 	}
 
 	public setSideTabs() {
-		this.i18nService.get(['COMMON_TAB_ONE', 'COMMON_TAB_TWO', 'COMMON_TAB_THREE', 'COMMON_TAB_FOUR'])
-			.subscribe((res) => {
-				this.sidetabs.push(new ApplicationSidebarTab('T1', res.COMMON_TAB_ONE, true, null, null, 'fas fa-tachometer-alt'));
-				this.sidetabs.push(new ApplicationSidebarTab('T2', res.COMMON_TAB_TWO, false, null, null, 'fas fa-satellite-dish'));
-				this.sidetabs.push(new ApplicationSidebarTab('T3', res.COMMON_TAB_THREE, false, null, null, 'fas fa-award'));
-				this.sidetabs.push(new ApplicationSidebarTab('T4', res.COMMON_TAB_FOUR, false, null, null, 'fas fa-tools'));
-			});
+		this.sidetabs.push(new ApplicationSidebarTab('T1', this.i18nService.instant('COMMON_TAB_ONE'), true, null, null, 'fas fa-tachometer-alt'));
+		this.sidetabs.push(new ApplicationSidebarTab('T2', this.i18nService.instant('COMMON_TAB_TWO'), false, null, null, 'fas fa-satellite-dish'));
+		this.sidetabs.push(new ApplicationSidebarTab('T3', this.i18nService.instant('COMMON_TAB_THREE'), false, null, null, 'fas fa-award'));
+		this.sidetabs.push(new ApplicationSidebarTab('T4', this.i18nService.instant('COMMON_TAB_FOUR'), false, null, null, 'fas fa-tools'));
 	}
 
 	public setSideButtons() {
-				this.sideactions.push(new ApplicationSidebarAction('Button', null,'fas fa-bong'));
+		this.sideactions.push(new ApplicationSidebarAction('Button', null, 'fas fa-bong'));
 	}
 
 	public doSelect(id: string) {
-		this.showConfiguration=(id==='T4');
-		console.log(id);
+		this.showConfiguration = (id === 'T4');
 	}
 
 	public doShowSettings() {
@@ -99,7 +92,6 @@ export class MainComponent implements OnInit {
 	public doShowAbout() {
 	}
 
-
 	public doLogout() {
 		this.apiGlobalsService.bearer = undefined;
 		this.router.navigate(['/login']);
@@ -113,12 +105,8 @@ export class MainComponent implements OnInit {
 
 	public changePassword(oldPassword: string, newPassword: string): Observable<boolean> {
 		if (oldPassword === newPassword) {
-			this.i18nService.get(['ERR_ERROR', 'ERR_IMPOSSIBLE_CHANGE_PASSWORD'])
-				.subscribe((res) => {
-					this.messagePopupService.showErrorPopup(res.COMMON_ERROR, res.COMMON_IMPOSSIBLE_CHANGE_PASSWORD);
-					return observableOf(false);
-				});
-
+			this.messagePopupService.showErrorPopup(this.i18nService.instant('ERR_ERROR'), this.i18nService.instant('ERR_IMPOSSIBLE_CHANGE_PASSWORD'));
+			return observableOf(false);
 		}
 		return observableOf(true);
 	}

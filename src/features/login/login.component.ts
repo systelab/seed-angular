@@ -31,9 +31,6 @@ export class LoginComponent {
 	}
 
 	private showError() {
-		this.i18NService.get(['COMMON_CREDENTIALS', 'ERR_INVALID_USERNAME_PASSWORD'])
-			.subscribe((res) => {
-				this.messagePopupService.showErrorPopup(res.COMMON_CREDENTIALS, res.ERR_INVALID_USERNAME_PASSWORD);
-			});
+		this.messagePopupService.showErrorPopup(this.i18NService.instant('COMMON_CREDENTIALS'), this.i18NService.instant('ERR_INVALID_USERNAME_PASSWORD'));
 	}
 }

@@ -22,13 +22,10 @@ export class PatientGrid extends AbstractApiGrid<Patient> {
 
 	protected getColumnDefs(): Array<any> {
 		const columnDefs: Array<any> = [];
-		this.i18nService.get(['COMMON_NAME', 'COMMON_SURNAME', 'COMMON_MAIL'])
-			.subscribe((res) => {
-				columnDefs.push(
-					{colId: 'name', headerName: res.COMMON_NAME, field: 'name', width: 300},
-					{colId: 'surname', headerName: res.COMMON_SURNAME, field: 'surname', width: 300},
-					{colId: 'email', headerName: res.COMMON_MAIL, field: 'email', width: 200});
-			});
+		columnDefs.push(
+			{colId: 'name', headerName: this.i18nService.instant('COMMON_NAME'), field: 'name', width: 300},
+			{colId: 'surname', headerName: this.i18nService.instant('COMMON_SURNAME'), field: 'surname', width: 300},
+			{colId: 'email', headerName: this.i18nService.instant('COMMON_MAIL'), field: 'email', width: 200});
 		return columnDefs;
 	}
 

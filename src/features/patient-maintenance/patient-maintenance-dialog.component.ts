@@ -21,16 +21,10 @@ export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenan
 
 	public parameters: PatientMaintenanceDialogParameters;
 
-	 @ViewChild('patientgrid') public patientgrid: PatientGrid;
-
-	public title = '';
+	@ViewChild('patientgrid') public patientgrid: PatientGrid;
 
 	constructor(public dialog: DialogRef<PatientMaintenanceDialogParameters>, protected dialogService: DialogService, protected patientService: PatientService, protected i18nService: I18nService) {
 		this.parameters = dialog.context;
-		i18nService.get('COMMON_PATIENT_MANAGEMENT').subscribe((res) => {
-			this.title = res;
-		});
-
 	}
 
 	public close(): void {
@@ -69,9 +63,8 @@ export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenan
 
 	public getMenu(): Array<GridContextMenuOption<Patient>> {
 		const menuDefs: Array<GridContextMenuOption<Patient>> = [];
-		this.i18nService.get(['COMMON_UPDATE', 'COMMON_DELETE']).subscribe((res) => {
-			menuDefs.push(new GridContextMenuOption('action1', res.COMMON_UPDATE), new GridContextMenuOption('action2', res.COMMON_DELETE));
-		});
+		menuDefs.push(new GridContextMenuOption('action1', this.i18nService.instant('COMMON_UPDATE')));
+		menuDefs.push(new GridContextMenuOption('action2', this.i18nService.instant('COMMON_DELETE')));
 		return menuDefs;
 	}
 

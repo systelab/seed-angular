@@ -23,23 +23,18 @@ export class AllergyDialog implements ModalComponent<AllergyDialogParameters>, O
 	public title = '';
 	public humanReadableAction = '';
 
-	public allergy: Allergy={};
+	public allergy: Allergy = {};
 
 	constructor(public dialog: DialogRef<AllergyDialogParameters>, protected i18NService: I18nService,
 	            protected messagePopupService: MessagePopupService, protected allergyService: AllergyService) {
 		this.parameters = dialog.context;
 		if (this.parameters.allergyId) {
-			i18NService.get(['COMMON_UPDATE', 'COMMON_UPDATE_ALLERGY'])
-				.subscribe((res) => {
-					this.humanReadableAction = res.COMMON_UPDATE;
-					this.title = res.COMMON_UPDATE_ALLERGY;
-				});
+			this.humanReadableAction = i18NService.instant('COMMON_UPDATE');
+			this.title = i18NService.instant('COMMON_UPDATE_ALLERGY');
 		} else {
-			i18NService.get(['COMMON_CREATE', 'COMMON_CREATE_ALLERGY'])
-				.subscribe((res) => {
-					this.humanReadableAction = res.COMMON_CREATE;
-					this.title = res.COMMON_CREATE_ALLERGY;
-				});
+			this.humanReadableAction = i18NService.instant('COMMON_CREATE');
+			this.title = i18NService.instant('COMMON_CREATE_ALLERGY');
+
 		}
 	}
 
@@ -87,11 +82,6 @@ export class AllergyDialog implements ModalComponent<AllergyDialogParameters>, O
 	}
 
 	private showError(error: HttpErrorResponse) {
-		this.i18NService.get(['ERR_ERROR'])
-			.subscribe((res) => {
-				console.log(error);
-				this.messagePopupService.showErrorPopup(res.ERR_ERROR, error.message);
-			});
+		this.messagePopupService.showErrorPopup(this.i18NService.instant('ERR_ERROR'), error.message);
 	}
-
 }
