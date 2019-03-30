@@ -7,6 +7,7 @@ import { Patient } from '@model/patient';
 import { GridContextMenuOption } from 'systelab-components/widgets/grid/contextmenu/grid-context-menu-option';
 import { I18nService } from 'systelab-translate/lib/i18n.service';
 import { PatientGrid } from '@components/patient/grid/patient-grid.component';
+import { ErrorService } from '@globals/error.service';
 
 export class PatientMaintenanceDialogParameters extends SystelabModalContext {
 	public width = 900;
@@ -21,16 +22,11 @@ export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenan
 
 	public parameters: PatientMaintenanceDialogParameters;
 
-	 @ViewChild('patientgrid') public patientgrid: PatientGrid;
+	@ViewChild('patientgrid') public patientgrid: PatientGrid;
 
-	public title = '';
-
-	constructor(public dialog: DialogRef<PatientMaintenanceDialogParameters>, protected dialogService: DialogService, protected patientService: PatientService, protected i18nService: I18nService) {
+	constructor(public dialog: DialogRef<PatientMaintenanceDialogParameters>, protected dialogService: DialogService, protected patientService: PatientService,
+	            protected i18nService: I18nService, protected errorService: ErrorService) {
 		this.parameters = dialog.context;
-		i18nService.get('COMMON_PATIENT_MANAGEMENT').subscribe((res) => {
-			this.title = res;
-		});
-
 	}
 
 	public close(): void {
@@ -89,6 +85,6 @@ export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenan
 
 	private deletePatient(contextMenuActionData: GridContextMenuActionData<Patient>) {
 		this.patientService.remove(contextMenuActionData.data.id)
-			.subscribe(result => this.patientgrid.refresh(), error => console.log('error'));
+			.subscribe(result => this.patientgrid.refresh(), error => this.errorService.showError(error));
 	}
 }

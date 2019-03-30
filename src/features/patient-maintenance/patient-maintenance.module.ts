@@ -8,23 +8,32 @@ import { SystelabLoginModule } from 'systelab-login';
 import { PatientMaintenanceDialog } from './patient-maintenance-dialog.component';
 import { PatientDialog } from './patient-detail-dialog/patient-dialog.component';
 import { ComponentsModule } from '@components/components.module';
+import { PatientFormComponent } from './patient-form/patient-form.component';
+import { PatientAllergyDialog } from '@features/patient-maintenance/patient-allergy-detail-dialog/patient-allergy-dialog.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PatientAllergiesFormComponent } from '@features/patient-maintenance/allergies-form/patient-allergies-form.component';
 
 @NgModule({
 	imports:         [
 		FormsModule,
 		CommonModule,
+		BrowserAnimationsModule,
 		SystelabTranslateModule,
 		SystelabLoginModule,
 		SystelabComponentsModule,
 		ComponentsModule],
 	declarations:    [
 		PatientMaintenanceDialog,
-		PatientDialog
+		PatientDialog,
+		PatientAllergyDialog,
+		PatientFormComponent,
+		PatientAllergiesFormComponent
 	],
 	exports:         [],
 	entryComponents: [
 		PatientMaintenanceDialog,
-		PatientDialog
+		PatientDialog,
+		PatientAllergyDialog
 	],
 	providers:       [
 		MessagePopupService,

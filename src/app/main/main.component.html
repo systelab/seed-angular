@@ -1,11 +1,13 @@
-<systelab-app-frame [userName]="userName" [userFullName]="userFullName" [title]="hospitalName" [menu]="menu" [tabs]="sidetabs"
-                    [actions]="sideactions" (selected)="doSelect($event)">
-  <div header-content class="row justify-content-end mr-3">
-    <button type="button" class="btn float-left" (click)="doPatientSearch();">{{'COMMON_PATIENT' | translate | async}}</button>
-  </div>
-  <div main-content>
-    <p>
-      {{'COMMON_WELCOME' | translate | async}}
-    </p>
-  </div>
+<systelab-app-frame [userName]="userName" [userFullName]="userFullName" [title]="hospitalName" [menu]="menu" [tabs]="sidetabs" [logoIcon]="logoIcon"
+                    [actions]="sideactions" [largeSideBar]="false" (selected)="doSelect($event)">
+    <div header-content class="row justify-content-end mr-3">
+        <button type="button" class="btn float-left" (click)="doPatientSearch();">{{'COMMON_PATIENT' | translate | async}}</button>
+    </div>
+    <div main-content class="slab-flex-1 d-flex">
+        <systelab-tabs *ngIf="showConfiguration" class="slab-flex-1 mt-2" [showTabBackground]="false">
+            <systelab-tab [title]="allergiesTabTitle" [id]="'FromTab'">
+                <allergy-maintenance class="slab-flex-1 d-flex flex-column"></allergy-maintenance>
+            </systelab-tab>
+        </systelab-tabs>
+    </div>
 </systelab-app-frame>
