@@ -17,7 +17,8 @@ import { LocalStorageService } from 'systelab-preferences/lib/local-storage.serv
 	styleUrls:   ['main.component.scss']
 })
 export class MainComponent implements OnInit {
-	title = 'Angular Seed Application';
+	public title = 'Angular Seed Application';
+	public allergiesTabTitle = '';
 
 	public userName: string;
 	public userFullName: string;
@@ -45,6 +46,7 @@ export class MainComponent implements OnInit {
 		this.setMenu();
 		this.setSideTabs();
 		this.setSideButtons();
+		this.i18nService.get('COMMON_ALLERGIES').subscribe(res => this.allergiesTabTitle = res);
 	}
 
 	public setMenu() {
