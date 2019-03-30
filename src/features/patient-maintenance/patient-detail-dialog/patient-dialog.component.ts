@@ -33,11 +33,17 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 	            protected patientService: PatientService, protected errorService: ErrorService) {
 		this.parameters = dialog.context;
 		if (this.isUpdate()) {
-			this.humanReadableAction = i18NService.instant('COMMON_UPDATE');
-			this.title = i18NService.instant('COMMON_UPDATE_PATIENT');
+			i18NService.get(['COMMON_UPDATE', 'COMMON_UPDATE_PATIENT'])
+				.subscribe((res) => {
+					this.humanReadableAction = res.COMMON_UPDATE;
+					this.title = res.COMMON_UPDATE_PATIENT;
+				});
 		} else {
-			this.humanReadableAction = i18NService.instant('COMMON_CREATE');
-			this.title = i18NService.instant('COMMON_CREATE_PATIENT');
+			i18NService.get(['COMMON_CREATE', 'COMMON_CREATE_PATIENT'])
+				.subscribe((res) => {
+					this.humanReadableAction = res.COMMON_CREATE;
+					this.title = res.COMMON_CREATE_PATIENT;
+				});
 		}
 	}
 

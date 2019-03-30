@@ -23,10 +23,13 @@ export class AllergyGrid extends AbstractApiGrid<Allergy> {
 	protected getColumnDefs(): Array<any> {
 		const columnDefs: Array<any> = [];
 
-		columnDefs.push(
-			{colId: 'name', headerName: this.i18nService.instant('COMMON_NAME'), field: 'name', width: 300},
-			{colId: 'signs', headerName: this.i18nService.instant('COMMON_SIGNS'), field: 'signs', width: 300},
-			{colId: 'symptoms', headerName: this.i18nService.instant('COMMON_SYMPTOMS'), field: 'symptoms', width: 200});
+		this.i18nService.get(['COMMON_NAME', 'COMMON_SIGNS', 'COMMON_SYMPTOMS'])
+			.subscribe((res) => {
+				columnDefs.push(
+					{colId: 'name', headerName: res.COMMON_NAME, field: 'name', width: 300},
+					{colId: 'signs', headerName: res.COMMON_SIGNS, field: 'signs', width: 300},
+					{colId: 'symptoms', headerName: res.COMMON_SYMPTOMS, field: 'symptoms', width: 200});
+			});
 		return columnDefs;
 	}
 

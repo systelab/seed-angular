@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { I18nService } from 'systelab-translate/lib/i18n.service';
-import { DialogRef, DialogService, MessagePopupService, ModalComponent, SystelabModalContext } from 'systelab-components/widgets/modal';
-import { HttpErrorResponse } from '@angular/common/http';
+import { DialogRef, ModalComponent, SystelabModalContext } from 'systelab-components/widgets/modal';
 import { PatientAllergyService } from '@api/patient-allergy.service';
 import { PatientAllergy } from '@model/patient-allergy';
 import { ErrorService } from '@globals/error.service';
@@ -31,15 +30,22 @@ export class PatientAllergyDialog implements ModalComponent<PatientAllergyDialog
 	public assertedDate: Date;
 	public lastOccurrenceDate: Date;
 
-	constructor(public dialog: DialogRef<PatientAllergyDialogParameters>, protected i18NService: I18nService, protected errorService: ErrorService,
+	constructor(public dialog: DialogRef<PatientAllergyDialogParameters>, protected i18nService: I18nService, protected errorService: ErrorService,
 	            protected patientAllergyService: PatientAllergyService) {
 		this.parameters = dialog.context;
 		if (this.isUpdate()) {
-			this.humanReadableAction = i18NService.instant('COMMON_UPDATE');
-			this.title = i18NService.instant('COMMON_UPDATE_PATIENTALLERGY');
+			this.i18nService.get(['COMMON_UPDATE', 'COMMON_UPDATE_PATIENTALLERGY'])
+				.subscribe((res) => {
+					this.humanReadableAction = res.COMMON_UPDATE;
+					this.title = res.COMMON_UPDATE_PATIENTALLERGY;
+				});
+
 		} else {
-			this.humanReadableAction = i18NService.instant('COMMON_CREATE');
-			this.title = i18NService.instant('COMMON_CREATE_PATIENTALLERGY');
+			this.i18nService.get(['COMMON_CREATE', 'COMMON_CREATE_PATIENTALLERGY'])
+				.subscribe((res) => {
+					this.humanReadableAction = res.COMMON_CREATE;
+					this.title = res.COMMON_CREATE_PATIENTALLERGY;
+				});
 		}
 	}
 

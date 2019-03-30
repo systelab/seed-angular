@@ -50,24 +50,32 @@ export class MainComponent implements OnInit {
 	public setMenu() {
 
 		this.menu = [];
-		this.menu.push(new ApplicationHeaderMenuEntry(this.i18nService.instant('COMMON_ABOUT'), false, () => this.doShowAbout()));
-		this.menu.push(new ApplicationHeaderMenuEntry(this.i18nService.instant('COMMON_SETUP'), false, () => this.doShowSettings()));
-		this.menu.push(new ApplicationHeaderMenuEntry(this.i18nService.instant('COMMON_CHANGE_PASSWORD'), false, () => this.doChangePassword()));
-		this.menu.push(new ApplicationHeaderMenuEntry('', true));
+		this.i18nService.get(['COMMON_SETUP', 'COMMON_CHANGE_PASSWORD', 'COMMON_CHANGE_USER', 'COMMON_ABOUT'])
+			.subscribe((res) => {
+				this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_ABOUT, false, () => this.doShowAbout()));
+				this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_SETUP, false, () => this.doShowSettings()));
+				this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_CHANGE_PASSWORD, false, () => this.doChangePassword()));
+				this.menu.push(new ApplicationHeaderMenuEntry('', true));
 
-		this.menu.push(new ApplicationHeaderMenuEntry('English', false, () => this.doChangeLanguage('en')));
-		this.menu.push(new ApplicationHeaderMenuEntry('Español', false, () => this.doChangeLanguage('es-ES')));
-		this.menu.push(new ApplicationHeaderMenuEntry('Italiano', false, () => this.doChangeLanguage('it-IT')));
-		this.menu.push(new ApplicationHeaderMenuEntry('한국어', false, () => this.doChangeLanguage('kr-KR')));
-		this.menu.push(new ApplicationHeaderMenuEntry('', true));
-		this.menu.push(new ApplicationHeaderMenuEntry(this.i18nService.instant('COMMON_CHANGE_USER'), false, () => this.doLogout()));
+				this.menu.push(new ApplicationHeaderMenuEntry('', true));
+
+				this.menu.push(new ApplicationHeaderMenuEntry('English', false, () => this.doChangeLanguage('en')));
+				this.menu.push(new ApplicationHeaderMenuEntry('Español', false, () => this.doChangeLanguage('es-ES')));
+				this.menu.push(new ApplicationHeaderMenuEntry('Italiano', false, () => this.doChangeLanguage('it-IT')));
+				this.menu.push(new ApplicationHeaderMenuEntry('한국어', false, () => this.doChangeLanguage('kr-KR')));
+				this.menu.push(new ApplicationHeaderMenuEntry('', true));
+				this.menu.push(new ApplicationHeaderMenuEntry(res.COMMON_CHANGE_USER, false, () => this.doLogout()));
+			});
 	}
 
 	public setSideTabs() {
-		this.sidetabs.push(new ApplicationSidebarTab('T1', this.i18nService.instant('COMMON_TAB_ONE'), true, null, null, 'fas fa-tachometer-alt'));
-		this.sidetabs.push(new ApplicationSidebarTab('T2', this.i18nService.instant('COMMON_TAB_TWO'), false, null, null, 'fas fa-satellite-dish'));
-		this.sidetabs.push(new ApplicationSidebarTab('T3', this.i18nService.instant('COMMON_TAB_THREE'), false, null, null, 'fas fa-award'));
-		this.sidetabs.push(new ApplicationSidebarTab('T4', this.i18nService.instant('COMMON_TAB_FOUR'), false, null, null, 'fas fa-tools'));
+		this.i18nService.get(['COMMON_TAB_ONE', 'COMMON_TAB_TWO', 'COMMON_TAB_THREE', 'COMMON_TAB_FOUR'])
+			.subscribe((res) => {
+				this.sidetabs.push(new ApplicationSidebarTab('T1', res.COMMON_TAB_ONE, true, null, null, 'fas fa-tachometer-alt'));
+				this.sidetabs.push(new ApplicationSidebarTab('T2', res.COMMON_TAB_TWO, false, null, null, 'fas fa-satellite-dish'));
+				this.sidetabs.push(new ApplicationSidebarTab('T3', res.COMMON_TAB_THREE, false, null, null, 'fas fa-award'));
+				this.sidetabs.push(new ApplicationSidebarTab('T4', res.COMMON_TAB_FOUR, false, null, null, 'fas fa-tools'));
+			});
 	}
 
 	public setSideButtons() {
@@ -105,8 +113,11 @@ export class MainComponent implements OnInit {
 
 	public changePassword(oldPassword: string, newPassword: string): Observable<boolean> {
 		if (oldPassword === newPassword) {
-			this.messagePopupService.showErrorPopup(this.i18nService.instant('ERR_ERROR'), this.i18nService.instant('ERR_IMPOSSIBLE_CHANGE_PASSWORD'));
-			return observableOf(false);
+			this.i18nService.get(['ERR_ERROR', 'ERR_IMPOSSIBLE_CHANGE_PASSWORD'])
+				.subscribe((res) => {
+					this.messagePopupService.showErrorPopup(res.ERR_ERROR, res.ERR_IMPOSSIBLE_CHANGE_PASSWORD);
+					return observableOf(false);
+				});
 		}
 		return observableOf(true);
 	}

@@ -65,8 +65,9 @@ export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenan
 
 	public getMenu(): Array<GridContextMenuOption<Patient>> {
 		const menuDefs: Array<GridContextMenuOption<Patient>> = [];
-		menuDefs.push(new GridContextMenuOption('action1', this.i18nService.instant('COMMON_UPDATE')));
-		menuDefs.push(new GridContextMenuOption('action2', this.i18nService.instant('COMMON_DELETE')));
+		this.i18nService.get(['COMMON_UPDATE', 'COMMON_DELETE']).subscribe((res) => {
+			menuDefs.push(new GridContextMenuOption('action1', res.COMMON_UPDATE), new GridContextMenuOption('action2', res.COMMON_DELETE));
+		});
 		return menuDefs;
 	}
 

@@ -25,17 +25,20 @@ export class PatientAllergyGrid extends AbstractApiGrid<PatientAllergy> {
 	protected getColumnDefs(): Array<any> {
 		const columnDefs: Array<any> = [];
 
-		columnDefs.push({
-			colId:    'name', headerName: this.i18nService.instant('COMMON_NAME'), valueGetter: (params: any) => {
-				return this.getAllergyName(params.data);
-			}, width: 300
-		}, {
-			colId:    'asserted', headerName: this.i18nService.instant('COMMON_ASSERTED_DATE'), valueGetter: (params: any) => {
-				return this.getAssertedDate(params.data);
-			}, width: 200
-		}, {
-			colId: 'note', headerName: this.i18nService.instant('COMMON_NOTES'), field: 'note', width: 200
-		});
+		this.i18nService.get(['COMMON_NAME', 'COMMON_ASSERTED_DATE', 'COMMON_NOTES'])
+			.subscribe((res) => {
+				columnDefs.push({
+					colId:    'name', headerName: res.COMMON_NAME, valueGetter: (params: any) => {
+						return this.getAllergyName(params.data);
+					}, width: 300
+				}, {
+					colId:    'asserted', headerName: res.COMMON_ASSERTED_DATE, valueGetter: (params: any) => {
+						return this.getAssertedDate(params.data);
+					}, width: 200
+				}, {
+					colId: 'note', headerName: res.COMMON_NOTES, field: 'note', width: 200
+				});
+			});
 		return columnDefs;
 	}
 

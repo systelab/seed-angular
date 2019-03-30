@@ -7,10 +7,12 @@ import { MessagePopupService } from 'systelab-components/widgets/modal';
 })
 export class ErrorService {
 
-	constructor(protected i18NService: I18nService, protected messagePopupService: MessagePopupService) {
+	constructor(protected i18nService: I18nService, protected messagePopupService: MessagePopupService) {
 	}
 
 	public showError(error: Error) {
-		this.messagePopupService.showErrorPopup(this.i18NService.instant('ERR_ERROR'), error.message);
+		this.i18nService.get(['ERR_ERROR']).subscribe((res) => {
+			this.messagePopupService.showErrorPopup(res.ERR_ERROR, error.message);
+		});
 	}
 }

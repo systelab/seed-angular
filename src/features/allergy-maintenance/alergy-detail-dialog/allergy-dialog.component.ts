@@ -25,15 +25,21 @@ export class AllergyDialog implements ModalComponent<AllergyDialogParameters>, O
 
 	public allergy: Allergy = {};
 
-	constructor(public dialog: DialogRef<AllergyDialogParameters>, protected i18NService: I18nService,
+	constructor(public dialog: DialogRef<AllergyDialogParameters>, protected i18nService: I18nService,
 	            protected errorService: ErrorService, protected allergyService: AllergyService) {
 		this.parameters = dialog.context;
 		if (this.parameters.allergyId) {
-			this.humanReadableAction = i18NService.instant('COMMON_UPDATE');
-			this.title = i18NService.instant('COMMON_UPDATE_ALLERGY');
+			this.i18nService.get(['COMMON_UPDATE', 'COMMON_UPDATE_ALLERGY'])
+				.subscribe((res) => {
+					this.humanReadableAction = res.COMMON_UPDATE;
+					this.title = res.COMMON_UPDATE_ALLERGY;
+				});
 		} else {
-			this.humanReadableAction = i18NService.instant('COMMON_CREATE');
-			this.title = i18NService.instant('COMMON_CREATE_ALLERGY');
+			this.i18nService.get(['COMMON_CREATE', 'COMMON_CREATE_ALLERGY'])
+				.subscribe((res) => {
+					this.humanReadableAction = res.COMMON_CREATE;
+					this.title = res.COMMON_CREATE_ALLERGY;
+				});
 
 		}
 	}
