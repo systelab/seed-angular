@@ -21,6 +21,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { GridContextMenuCellRendererComponent } from 'systelab-components/widgets/grid/contextmenu/grid-context-menu-cell-renderer.component';
 import { LoginModule } from '@features/login/login.module';
 import { PatientMaintenanceModule } from '@features/patient-maintenance/patient-maintenance.module';
+import { DateInterceptor } from '@api/date.interceptor';
 import { AllergyMaintenanceModule } from '@features/allergy-maintenance/allergy-maintenance.module';
 
 @NgModule({
@@ -49,6 +50,7 @@ import { AllergyMaintenanceModule } from '@features/allergy-maintenance/allergy-
 	providers:       [
 		{provide: BASE_PATH, useValue: environment.API_BASE_PATH},
 		{provide: HTTP_INTERCEPTORS, useClass: EmptyBodyInterceptor, multi: true},
+		{provide: HTTP_INTERCEPTORS, useClass: DateInterceptor, multi: true},
 		MessagePopupService,
 		DialogService
 	],
