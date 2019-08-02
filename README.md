@@ -15,7 +15,7 @@ The app just shows how to use different Angular standards and other suggested to
 ## Getting Started
 ### Prerequisites
 
-You need to install [git][git], [Node.js][node] and [npm][npm].
+You need to install [git][git], [Node.js][node] 10 and [npm][npm].
 
 ### Clone `seed-angular`
 

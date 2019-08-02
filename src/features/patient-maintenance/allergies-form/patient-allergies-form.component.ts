@@ -17,7 +17,7 @@ export class PatientAllergiesFormComponent {
 
 	@Input() public patientId: string;
 
-	@ViewChild('grid') public grid: PatientAllergyGrid;
+	@ViewChild('grid', {static: false}) public grid: PatientAllergyGrid;
 
 	constructor(protected dialogService: DialogService, protected patientAllergyService: PatientAllergyService,
 	            protected i18nService: I18nService, protected errorService: ErrorService) {
