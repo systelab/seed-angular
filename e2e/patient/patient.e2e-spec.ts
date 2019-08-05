@@ -7,6 +7,8 @@ import { TestUtil } from '../common/utilities/test-util';
 import { GridService } from '../common/components/grid.service';
 import { ButtonState } from '../common/components/button.service';
 import { FormService, FormData } from '../common/components/form.service';
+import { LoginNavigationService } from '../login/login.navigation.service';
+import { MainNavigationService } from '../main/main.navigation.service';
 
 declare const allure: any;
 
@@ -18,8 +20,9 @@ describe('TC0001_PatientManagement_e2e', () => {
 	const patientDetailPage = new PatientDetailPage();
 
 	beforeAll(() => {
-		loginPage.navigateToHomePage();
-		loginPage.login();
+		LoginNavigationService.navigateToHomePage(loginPage);
+		LoginNavigationService.login(loginPage, false);
+		MainNavigationService.navigateToPatientMaintenancePage(mainPage);
 	});
 
 	beforeEach(() => {
@@ -63,28 +66,6 @@ describe('TC0001_PatientManagement_e2e', () => {
 		}];
 		return (formData);
 	}
-
-	it('Access to the Patient Management Dialog', () => {
-		const title = 'Patient management';
-		const buttons: ButtonState[] = [{
-			name:   'Options',
-			exist:  true,
-			enable: true
-		}, {
-			name:   'Add',
-			exist:  true,
-			enable: true
-		}, {
-			name:   'Refresh',
-			exist:  true,
-			enable: true
-		}];
-
-		mainPage.checkPresentAndDisplayed();
-		mainPage.getPatientButtton()
-			.click();
-		patientMaintenancePage.showNewPageAndCheckTitleAndButtons(title, buttons);
-	});
 
 	it('Open Patient Creation Dialog', () => {
 		const title = 'Create Patient';
@@ -137,7 +118,6 @@ describe('TC0001_PatientManagement_e2e', () => {
 						TestUtil.checkText(cellValues[2], 'Row Name', getFormData(i)[0].value);
 						TestUtil.checkText(cellValues[1], 'Row Surname', getFormData(i)[1].value);
 						TestUtil.checkText(cellValues[3], 'Row Email', getFormData(i)[2].value);
-
 					});
 			})();
 		}

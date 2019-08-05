@@ -11,7 +11,7 @@ export class LoginPage extends BasePage {
 		super('systelab-login');
 	}
 
-	private retrieveAppParams(object: LoginPage) {
+	public retrieveAppParams(object: LoginPage) {
 		this.getMainWindow().all(by.className('slab-text')).get(0).getText().then((inText) => {
 				object.appName = inText.trim();
 			});
@@ -24,11 +24,6 @@ export class LoginPage extends BasePage {
 		this.getMainWindow().all(by.className('slab-text')).get(4).getText().then((inText) => {
 				object.appCopyright = inText.trim();
 			});
-	}
-
-	public navigateToHomePage() {
-		browser.get('/');
-		this.retrieveAppParams(this);
 	}
 
 	// TODO: Rename to LoginUserNameInput (systelab-login)
@@ -48,12 +43,5 @@ export class LoginPage extends BasePage {
 
 	public getPopupMessage() {
 		return element(by.id('popup-message'));
-	}
-
-	// TODO: Move to a navigation utils
-	public login() {
-		this.getUsernameField().sendKeys(browser.params.login.user);
-		this.getPasswordField().sendKeys(browser.params.login.password);
-		this.getEnterButton().click();
 	}
 }

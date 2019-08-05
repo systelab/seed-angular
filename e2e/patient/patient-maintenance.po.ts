@@ -1,7 +1,23 @@
 import { by } from 'protractor';
 import { BasePage } from '../common/components/base-page';
+import { ButtonState } from '../common/components/button.service';
 
 export class PatientMaintenancePage extends BasePage {
+
+	public title = 'Patient management';
+	public buttons: ButtonState[] = [{
+		name:   'Options',
+		exist:  true,
+		enable: true
+	}, {
+		name:   'Add',
+		exist:  true,
+		enable: true
+	}, {
+		name:   'Refresh',
+		exist:  true,
+		enable: true
+	}];
 
 	constructor() {
 		super('patient-maintenance-dialog');
