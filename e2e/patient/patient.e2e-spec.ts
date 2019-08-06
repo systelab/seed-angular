@@ -9,6 +9,7 @@ import { ButtonState } from '../common/components/button.service';
 import { FormService, FormData } from '../common/components/form.service';
 import { LoginNavigationService } from '../login/login.navigation.service';
 import { MainNavigationService } from '../main/main.navigation.service';
+import { TabListService } from '../common/components/tab.list.service';
 
 declare const allure: any;
 
@@ -146,6 +147,13 @@ describe('TC0001_PatientManagement_e2e', () => {
 
 		GridService.clickOnCell(patientMaintenancePage.getPatientsGrid(), 0, GridService.GRID_COLUMN_NAME);
 		patientDetailPage.checkPresentAndDisplayed();
+
+        expect(TabListService.getTabs(patientDetailPage.getMainWindow()).count()).toBe(2);
+		expect(TabListService.getTabs(patientDetailPage.getMainWindow()).get(0).getText()).toEqual('General');
+		expect(TabListService.getTabs(patientDetailPage.getMainWindow()).get(1).getText()).toEqual('Allergies');
+
+		expect(TabListService.getTab(patientDetailPage.getMainWindow(), PatientDetailPage.TAG_NAME_PATIENTFORM).isPresent()).toEqual(true);
+		expect(TabListService.getTab(patientDetailPage.getMainWindow(), PatientDetailPage.TAG_NAME_PATIENTFORM).isDisplayed()).toEqual(true);
 
 		patientDetailPage.getButtonClose()
 			.click();

@@ -1,12 +1,20 @@
 import { by, ElementFinder } from 'protractor';
 import { ContextMenuService } from './context-menu.service';
 import { ExpectsUtil } from '../utilities/expects-util';
+import { BasePage } from './base-page';
 
 declare const allure: any;
 
 export class GridService {
 	public static readonly GRID_COLUMN_CONTEXT_MENU = 'contextMenu';
 	public static readonly GRID_COLUMN_NAME = 'name';
+	public static readonly  CSS_NAME_CELL_VALUE = 'ag-cell-value';
+	public static readonly CSS_HEADER_CELL_TEXT = 'ag-header-cell-text';
+	public static readonly GRID_DEFAULT_ID = 'agGrid';
+
+	public static getGridComponent(page: BasePage) {
+		return page.getObjectById(this.GRID_DEFAULT_ID);
+	}
 
 	public static getGridInnerComponent(grid: ElementFinder, col?: string, row?: number): any {
 		if (col === undefined) {
