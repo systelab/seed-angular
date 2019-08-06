@@ -1,9 +1,11 @@
 import { by } from 'protractor';
 import { BasePage } from '../../common/components/base-page';
+import { TabService } from '../../common/components/tab.service';
 
 export class PatientDetailPage extends BasePage {
 	public static readonly  TAG_NAME_PATIENTFORM = 'patient-form';
 	public static readonly TAG_NAME_PATIENTALLERGIESFORM = 'patient-allergies-form';
+	public static readonly  tabs = ['General', 'Allergies'];
 
 	constructor() {
 		super('patient-dialog');
@@ -50,5 +52,9 @@ export class PatientDetailPage extends BasePage {
 
 	public getButtonSubmit() {
 		return this.getObjectById('PatientSubmitButton');
+	}
+
+	public getAllTabs() {
+		return TabService.getAllTabs(this.getMainWindow());
 	}
 }

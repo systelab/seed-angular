@@ -8,12 +8,15 @@ declare const allure: any;
 export class GridService {
 	public static readonly GRID_COLUMN_CONTEXT_MENU = 'contextMenu';
 	public static readonly GRID_COLUMN_NAME = 'name';
-	public static readonly  CSS_NAME_CELL_VALUE = 'ag-cell-value';
-	public static readonly CSS_HEADER_CELL_TEXT = 'ag-header-cell-text';
+	public static readonly GRID_DEFAULT_TAG = 'ag-grid-angular';
 	public static readonly GRID_DEFAULT_ID = 'agGrid';
 
-	public static getGridComponent(page: BasePage) {
-		return page.getObjectById(this.GRID_DEFAULT_ID);
+	public static getGridComponentById(page: BasePage) {
+	    return page.getObjectById(this.GRID_DEFAULT_ID)
+    }
+	public static getGridComponent(myElement: ElementFinder) {
+		return myElement
+            .element(by.tagName(this.GRID_DEFAULT_TAG));
 	}
 
 	public static getGridInnerComponent(grid: ElementFinder, col?: string, row?: number): any {
