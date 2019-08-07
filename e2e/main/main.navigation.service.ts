@@ -6,7 +6,13 @@ declare const allure: any;
 export class MainNavigationService {
     public static navigateToPatientMaintenancePage(mainPage: MainPage) {
         mainPage.checkPresentAndDisplayed();
-        mainPage.getPatientButtton()
+        mainPage.getPatientButton()
+            .click();
+    }
+
+    public static navigateToAllergyMaintenancePage(mainPage: MainPage) {
+        mainPage.checkPresentAndDisplayed();
+        mainPage.getConfigIcon()
             .click();
     }
 }

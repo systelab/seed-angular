@@ -9,7 +9,6 @@ import { ButtonState } from '../common/components/button.service';
 import { FormService, FormData } from '../common/components/form.service';
 import { LoginNavigationService } from '../login/login.navigation.service';
 import { MainNavigationService } from '../main/main.navigation.service';
-import { TabService } from '../common/components/tab.service';
 
 declare const allure: any;
 
@@ -144,18 +143,14 @@ describe('TC0001_PatientManagement_e2e', () => {
     });
 
     it('Click on a row and open Patient Detail', () => {
-
+        const tabs = PatientDetailPage.tabs;
         GridService.clickOnCell(patientMaintenancePage.getPatientsGrid(), 0, GridService.GRID_COLUMN_NAME);
         patientDetailPage.checkPresentAndDisplayed();
 
-        expect(patientDetailPage.getAllTabs().count()).toBe(2);
-        expect(patientDetailPage.getAllTabs().get(0).getText()).toEqual('General');
-        expect(patientDetailPage.getAllTabs().get(1).getText()).toEqual('Allergies');
-
-        /*
-        expect(TabService.getTabByTag(patientDetailPage.getMainWindow(), PatientDetailPage.TAG_NAME_PATIENTFORM).isPresent()).toEqual(true);
-        expect(TabService.getTabByTag(patientDetailPage.getMainWindow(), PatientDetailPage.TAG_NAME_PATIENTFORM).isDisplayed()).toEqual(true);
-         */
+        TestUtil.checkCount(patientDetailPage.getAllTabs(), 'Tabs number', tabs.length);
+        tabs.forEach((tabElement, index) => {
+            TestUtil.checkText(patientDetailPage.getAllTabs().get(index), `Tab[${tabElement}]: ${tabElement}`, tabElement);
+        });
 
         patientDetailPage.getButtonClose()
             .click();
@@ -187,5 +182,4 @@ describe('TC0001_PatientManagement_e2e', () => {
             })();
         }
     });
-
 });
