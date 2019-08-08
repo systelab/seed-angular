@@ -98,6 +98,8 @@ export class GridService {
             this.getNumberOfRows(grid)
                 .then((num) => {
                     resolve(num > 0 );
+                }, (err) => {
+                    reject(false);
                 })
                 .catch((err) => {
                     reject(false);

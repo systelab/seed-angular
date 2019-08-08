@@ -57,4 +57,16 @@ export class PatientDetailPage extends BasePage {
 	public getAllTabs() {
 		return TabService.getAllTabs(this.getMainWindow());
 	}
+
+	public getBMIndex() {
+		return this.getObjectById('PatientBMIndexInput');
+	}
+
+	public getAllergyGrid() {
+		return this.getMainWindow().element(by.tagName('patient-allergy-grid'));
+	}
+
+	public getAddButton() {
+		return this.getObjectById('PatientMaintenanceAddButton');
+	}
 }

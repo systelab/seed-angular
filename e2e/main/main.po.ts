@@ -1,4 +1,4 @@
-import { by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { BasePage } from '../common/components/base-page';
 
 export class MainPage extends BasePage {
@@ -32,5 +32,27 @@ export class MainPage extends BasePage {
 
     public getAllergyGrid() {
         return this.getObjectById('AllergyTable');
+    }
+
+    public getConfigTabs() {
+        return this.getMainWindow().element(by.tagName('systelab-tabs'))
+    }
+
+    public  checkObjectPresentAndDisplayed(obj: ElementFinder, desc: string)
+    {
+        expect(obj
+            .isPresent())
+            .toEqual(true, desc + ' should be present on the DOM');
+        expect (obj
+            .isDisplayed())
+            .toEqual(true, desc + ' should be displayed');
+    }
+
+    public checkConfSectionPresentAndDisplayed() {
+        this.checkObjectPresentAndDisplayed(this.getAllergyGrid(), 'Allergy grid');
+        this.checkObjectPresentAndDisplayed(this.getAllergyAddButton(), 'Allergy Add button');
+        this.checkObjectPresentAndDisplayed(this.getAllergyOptionsButton(), 'Allergy Options button');
+        this.checkObjectPresentAndDisplayed(this.getAllergyRefreshButton(), 'Allergy Refresh button');
+        this.checkObjectPresentAndDisplayed(this.getConfigTabs(), 'Config. tabs');
     }
 }

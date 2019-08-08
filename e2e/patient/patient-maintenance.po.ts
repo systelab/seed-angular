@@ -41,7 +41,7 @@ export class PatientMaintenancePage extends BasePage {
 		return this.getObjectById('PatientMaintenanceRefreshButton');
 	}
 
-	getPatientsGrid() {
+	public getPatientsGrid() {
 		return this.getObjectById('PatientTable');
 	}
 }
