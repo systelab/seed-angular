@@ -8,7 +8,7 @@ export class AllergyDetailPage extends BasePage {
         super('allergy-dialog');
     }
 
-    public getEnableSwich() {
+    public getEnableSwitch() {
         return this.getObjectById('AllergyEnableSwitch')
             .element(by.tagname('input'));
     }

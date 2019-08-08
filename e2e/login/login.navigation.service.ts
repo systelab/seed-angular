@@ -14,7 +14,7 @@ export class LoginNavigationService {
             loginPage.getPasswordField()
                 .sendKeys('PassProvidedByTesting');
         }
-        if (clickEnter === true) {
+        if (clickEnter) {
             loginPage.getEnterButton()
                 .click();
         }
