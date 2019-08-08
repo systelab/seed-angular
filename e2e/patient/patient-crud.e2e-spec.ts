@@ -9,10 +9,6 @@ import { ButtonState } from '../common/components/button.service';
 import { FormService, FormData } from '../common/components/form.service';
 import { LoginNavigationService } from '../login/login.navigation.service';
 import { MainNavigationService } from '../main/main.navigation.service';
-import { AllergyDetailPage } from '../allergy/allergy-detail/allergy-dialog.po';
-import { ExpectsUtil } from '../common/utilities/expects-util';
-import { TabService } from '../common/components/tab.service';
-import { PatientAllergyDetailPage } from './patient-detail/patient-allergy-dialog.po';
 
 declare const allure: any;
 
@@ -22,8 +18,6 @@ describe('TC0001_PatientManagement_e2e', () => {
     const mainPage = new MainPage();
     const patientMaintenancePage = new PatientMaintenancePage();
     const patientDetailPage = new PatientDetailPage();
-    const allergyDetailPage = new AllergyDetailPage();
-    const patientAllergyDetailPage = new PatientAllergyDetailPage();
 
     beforeAll(() => {
         LoginNavigationService.navigateToHomePage(loginPage);
@@ -73,7 +67,7 @@ describe('TC0001_PatientManagement_e2e', () => {
         return (formData);
     }
 
-    xit('Open Patient Creation Dialog', () => {
+    it('Open Patient Creation Dialog', () => {
         const title = 'Create Patient';
         const buttons: ButtonState[] = [{
             name:   'Create',
@@ -87,7 +81,7 @@ describe('TC0001_PatientManagement_e2e', () => {
         TestUtil.checkForm(getFormData(), 'Patient Creation is empty');
     });
 
-    xit('Close the dialog', () => {
+    it('Close the dialog', () => {
         patientDetailPage.getButtonClose()
             .click();
         allure.createStep('Dialog is closed', () => {
@@ -102,7 +96,7 @@ describe('TC0001_PatientManagement_e2e', () => {
      })();
      });*/
 
-    xit('Create Patients', () => {
+    it('Create Patients', () => {
         for (let i = 1; i <= browser.params.repeatabilityNumberPasses; i++) {
 
             allure.createStep('Action: Create the patient ' + i, () => {
@@ -129,7 +123,7 @@ describe('TC0001_PatientManagement_e2e', () => {
         }
     });
 
-    xit('Contextual menu at the patients grid', () => {
+    it('Contextual menu at the patients grid', () => {
         const menuItems = ['Update', 'Delete'];
         for (let row = 0; row < browser.params.repeatabilityNumberPasses; row++) {
             allure.createStep('Action: Access to the contextual menu at row ' + row + ' in the grid with the buttons: ' + JSON.stringify(menuItems), () => {
@@ -138,7 +132,7 @@ describe('TC0001_PatientManagement_e2e', () => {
         }
     });
 
-    xit('The option Update opens Patient Detail', () => {
+    it('The option Update opens Patient Detail', () => {
         const optionMenuUpdate = 0;
         GridService.clickGridPopupMenuContentAtRow(patientMaintenancePage.getPatientsGrid(), 0, optionMenuUpdate);
         patientDetailPage.checkPresentAndDisplayed();
@@ -148,7 +142,7 @@ describe('TC0001_PatientManagement_e2e', () => {
         patientMaintenancePage.checkPresentAndDisplayed();
     });
 
-    xit('Click on a row and open Patient Detail', () => {
+    it('Click on a row and open Patient Detail', () => {
         const tabs = PatientDetailPage.tabs;
         GridService.clickOnCell(patientMaintenancePage.getPatientsGrid(), 0, GridService.GRID_COLUMN_NAME);
         patientDetailPage.checkPresentAndDisplayed();
@@ -163,7 +157,7 @@ describe('TC0001_PatientManagement_e2e', () => {
         patientMaintenancePage.checkPresentAndDisplayed();
     });
 
-    xit('Modify Patients', () => {
+    it('Modify Patients', () => {
         GridService.clickOnCell(patientMaintenancePage.getPatientsGrid(), 0, GridService.GRID_COLUMN_NAME);
         patientDetailPage.checkPresentAndDisplayed();
 
@@ -179,7 +173,7 @@ describe('TC0001_PatientManagement_e2e', () => {
         TestUtil.checkCount(GridService.getGridInnerComponent(patientMaintenancePage.getPatientsGrid()), 'Rows in table of Patients', 3);
     });
 
-    xit('Delete all elements recently added to the grid', () => {
+    it('Delete all elements recently added to the grid', () => {
         const optionMenuDelete = 1;
         for (let k = (browser.params.repeatabilityNumberPasses - 1); k >= 0; k--) {
             allure.createStep(`Action: Delete the Patient at the row #${k}`, () => {
@@ -187,74 +181,5 @@ describe('TC0001_PatientManagement_e2e', () => {
                 TestUtil.checkCount(GridService.getGridInnerComponent(patientMaintenancePage.getPatientsGrid()), 'Number of Patients', k);
             })();
         }
-    });
-
-    it('Assign allergy to a patient', () => {
-        // patient management page. -> go to Allergy management
-        patientMaintenancePage.getButtonClose()
-            .click();
-        mainPage.checkPresentAndDisplayed();
-        mainPage.getConfigIcon()
-            .click();
-        mainPage.checkConfSectionPresentAndDisplayed();
-        // Insert new Allergy and check
-        mainPage.getAllergyAddButton().click();
-        allergyDetailPage.checkPresentAndDisplayed();
-        allergyDetailPage.getNameInput().sendKeys('Name1');
-        allergyDetailPage.getSignsInput().sendKeys('Signs1');
-        allergyDetailPage.getSymptomsInput().sendKeys('Symptoms1');
-        allergyDetailPage.getButtonSubmit().click();
-        mainPage.checkConfSectionPresentAndDisplayed();
-        ExpectsUtil.checkCount(GridService.getGridInnerComponent(mainPage.getAllergyGrid()), 'Number of Allergies', 1);
-        // Go to patient
-        mainPage.getPatientButton().click();
-        patientMaintenancePage.checkPresentAndDisplayed();
-        // Create patient
-        patientMaintenancePage.getButtonAdd().click();
-        patientDetailPage.checkPresentAndDisplayed();
-        patientDetailPage.getNameInput().sendKeys('Patient1');
-        patientDetailPage.getSurnameInput().sendKeys('Surname1');
-        patientDetailPage.getEmailInput().sendKeys('email@kk.com');
-        patientDetailPage.getAddressStreetInput().sendKeys('Sample St');
-        patientDetailPage.getAddressCityInput().sendKeys('Khartum');
-        patientDetailPage.getAddressZipInput().sendKeys('112234');
-        patientDetailPage.getAddressCoordinatesInput().sendKeys('12.123456 32.15246')
-        patientDetailPage.getButtonSubmit().click();
-        patientMaintenancePage.checkPresentAndDisplayed();
-        ExpectsUtil.checkCount(GridService.getGridInnerComponent(patientMaintenancePage.getPatientsGrid()), 'Number of Patients', 1);
-        // Assign allergy
-        GridService.clickOnCell(patientMaintenancePage.getPatientsGrid(), 0, GridService.GRID_COLUMN_NAME);
-        patientDetailPage.checkPresentAndDisplayed();
-        TabService.getTab(patientDetailPage.getMainWindow(), 1).click();
-        patientDetailPage.getAddButton().click();
-        patientAllergyDetailPage.checkPresentAndDisplayed();
-        patientAllergyDetailPage.getAllergyCombobox().click();
-        patientAllergyDetailPage.getAllergyList().get(0).click();
-        /*
-        patientAllergyDetailPage.getAssertedDateInput().sendKeys('01/01/2019');
-        patientAllergyDetailPage.getAssertedDateInput().sendKeys(protractor.Key.TAB);
-        patientAllergyDetailPage.getLastOccurrenceDateInput().sendKeys('02/02/2019');
-        patientAllergyDetailPage.getLastOccurrenceDateInput().sendKeys(protractor.Key.TAB);
-        */
-        patientAllergyDetailPage.getAllergyNotes().sendKeys('aslhslkjhdsalkjah');
-        patientAllergyDetailPage.getSubmitButton().click();
-        // Check all
-        ExpectsUtil.checkCount(GridService.getGridInnerComponent(patientDetailPage.getAllergyGrid()), 'Number of Allergies', 1);
-        // delete patient-allergy
-        GridService.clickGridPopupMenuContentAtRow(patientDetailPage.getAllergyGrid(), 0, 1)
-        // ExpectsUtil.checkCount(GridService.getGridInnerComponent(patientDetailPage.getAllergyGrid()), 'Number of Allergies', 0);
-        expect(GridService.gridHasData(patientDetailPage.getAllergyGrid())).toBe(false);
-        // delete patient
-        patientDetailPage.getButtonClose().click();
-        ExpectsUtil.checkCount(GridService.getGridInnerComponent(patientMaintenancePage.getPatientsGrid()), 'Number of Patients', 1);
-        GridService.clickGridPopupMenuContentAtRow(patientMaintenancePage.getPatientsGrid(), 0, 1);
-        // ExpectsUtil.checkCount(GridService.getGridInnerComponent(patientMaintenancePage.getPatientsGrid()), 'Number of Patients', 0);
-        expect(GridService.gridHasData(patientMaintenancePage.getPatientsGrid())).toBe(false);
-        patientMaintenancePage.getButtonClose().click();
-        // Delete allergy
-        ExpectsUtil.checkCount(GridService.getGridInnerComponent(mainPage.getAllergyGrid()), 'Number of Allergies', 1);
-        GridService.clickGridPopupMenuContentAtRow(mainPage.getAllergyGrid(), 0, 1);
-        // ExpectsUtil.checkCount(GridService.getGridInnerComponent(mainPage.getAllergyGrid()), 'Number of Allergies', 0);
-        expect(GridService.gridHasData(mainPage.getAllergyGrid())).toBe(false);
     });
 });
