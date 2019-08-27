@@ -10,7 +10,6 @@
       "@model/*": ["common/model/*"],
       "@features/*": ["features/*"]
     },
-    "module": "es2015",
     "types": []
   },
   "exclude": [

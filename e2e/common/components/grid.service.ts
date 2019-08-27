@@ -10,14 +10,14 @@ export class GridService {
 
 	public static getGridInnerComponent(grid: ElementFinder, col?: string, row?: number): any {
 		if (col === undefined) {
-			return grid.element(by.className('ag-body-viewport'))
+			return grid.element(by.className('ag-center-cols-container'))
 				.all(by.css('div[role=row]'));
 		} else {
 			if (row === undefined) {
-				return grid.element(by.className('ag-body-viewport'))
+				return grid.element(by.className('ag-center-cols-container'))
 					.all(by.css('div[col-id="' + col + '"]'));
 			} else {
-				return grid.element(by.className('ag-body-viewport'))
+				return grid.element(by.className('ag-center-cols-container'))
 					.element(by.css('div[row-index="' + row + '"]'))
 					.all(by.css('div[col-id="' + col + '"]'));
 			}

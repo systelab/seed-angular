@@ -3,10 +3,10 @@ import { I18nService } from 'systelab-translate/lib/i18n.service';
 import { DialogService } from 'systelab-components/widgets/modal/dialog/dialog.service';
 import { PreferencesService } from 'systelab-preferences/lib/preferences.service';
 import { AbstractApiGrid } from 'systelab-components/widgets/grid/abstract-api-grid.component';
-import { Observable } from 'rxjs/Rx';
 import { map } from 'rxjs/internal/operators';
 import { PatientAllergy } from '@model/patient-allergy';
 import { PatientAllergyService } from '@api/patient-allergy.service';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector:    'patient-allergy-grid',

@@ -22,7 +22,7 @@ export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenan
 
 	public parameters: PatientMaintenanceDialogParameters;
 
-	@ViewChild('patientgrid') public patientgrid: PatientGrid;
+	@ViewChild('patientgrid', {static: false}) public patientgrid: PatientGrid;
 
 	constructor(public dialog: DialogRef<PatientMaintenanceDialogParameters>, protected dialogService: DialogService, protected patientService: PatientService,
 	            protected i18nService: I18nService, protected errorService: ErrorService) {

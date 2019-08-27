@@ -15,7 +15,7 @@ import { ErrorService } from '@globals/error.service';
 })
 export class AllergyMaintenanceComponent implements OnInit {
 
-	@ViewChild('allergygrid') public allergygrid: AllergyGrid;
+	@ViewChild('allergygrid', {static: false}) public allergygrid: AllergyGrid;
 
 	constructor(protected dialogService: DialogService, protected allergyService: AllergyService,
 	            protected i18nService: I18nService, protected errorService: ErrorService) {
