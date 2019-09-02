@@ -20,22 +20,6 @@ export class LoginNavigationService {
         }
     }
 
-    public static setUserNameAndPassword(loginPage: LoginPage, userName: string, password: string) {
-        allure.createStep('Action: Open home page', () => {
-            LoginNavigationService.navigateToHomePage(loginPage);
-        })();
-        allure.createStep(`Action: Set username as ${userName} and password as ${password}`, () => {
-            loginPage.getUsernameField()
-                .sendKeys(userName);
-            loginPage.getPasswordField()
-                .sendKeys(password);
-        })();
-        allure.createStep('Action: Perform Login', () => {
-            loginPage.getEnterButton()
-                .click();
-        })();
-    }
-
     public static navigateToHomePage(loginPage: LoginPage) {
         browser.get('/#/login');
         loginPage.retrieveAppParams(loginPage);

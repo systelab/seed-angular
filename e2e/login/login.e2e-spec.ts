@@ -11,6 +11,21 @@ describe('Login Test Case: MLG_TC106_GEN_Login', () => {
 	let login: LoginPage;
 	let mainPage: MainPage;
 
+	function setUserNameAndPassword(loginPage: LoginPage, userName: string, password: string) {
+		allure.createStep('Action: Open home page', () => {
+			LoginNavigationService.navigateToHomePage(loginPage);
+		})();
+		allure.createStep(`Action: Set username as ${userName} and password as ${password}`, () => {
+			loginPage.getUsernameField()
+				.sendKeys(userName);
+			loginPage.getPasswordField()
+				.sendKeys(password);
+		})();
+		allure.createStep('Action: Perform Login', () => {
+			loginPage.getEnterButton()
+				.click();
+		})();
+	}
 	beforeEach(() => {
 		TestUtil.init('MLG_TC106_GEN_Login_e2e', 'Goal: The purpose of this test case is to verify the login and log out functionalities',
 			undefined, 'userName');
@@ -19,7 +34,7 @@ describe('Login Test Case: MLG_TC106_GEN_Login', () => {
 	});
 
 	it('Login correct', () => {
-		LoginNavigationService.setUserNameAndPassword(login, browser.params.login.user, browser.params.login.password);
+		setUserNameAndPassword(login, browser.params.login.user, browser.params.login.password);
 		allure.createStep('The home page is displayed', () => {
 			browser.wait(EC.presenceOf(mainPage.getMainWindow()), BasePage.TIME_OUT_MS_FOR_DIALOG_WINDOW, 'Main Dialog Window is taking too long to appear in the DOM (timeout: ' + BasePage.TIME_OUT_MS_FOR_DIALOG_WINDOW + ' ms).');
 			TestUtil.checkText(mainPage.getFullUsernameField(), 'Logged user', 'Administrator')
@@ -27,7 +42,7 @@ describe('Login Test Case: MLG_TC106_GEN_Login', () => {
 	});
 
 	it('Login with an incorrect password', () => {
-		LoginNavigationService.setUserNameAndPassword(login, 'noUser', 'noPass');
+		setUserNameAndPassword(login, 'noUser', 'noPass');
 		allure.createStep('The application returns an Invalid User Name and Password error', () => {
 			TestUtil.checkText(login.getPopupMessage(), 'Logged user', 'Invalid username or password')
 		})();
