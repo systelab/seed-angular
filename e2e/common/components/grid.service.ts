@@ -1,4 +1,4 @@
-import { by, ElementFinder } from 'protractor';
+import { by, ElementArrayFinder, ElementFinder, promise } from 'protractor';
 import { ContextMenuService } from './context-menu.service';
 import { ExpectsUtil } from '../utilities/expects-util';
 import { BasePage } from './base-page';
@@ -119,6 +119,29 @@ export class GridService {
                     TestUtil.checkText(GridService.getNoDataMessage(grid), 'NoData_Message', GridService.GRID_NODATA_MESSAGE);
                 }
             });
+    }
+
+    public static searchGridCols(obj: ElementArrayFinder,  strTextToSearch: string): promise.Promise<number>  {
+        let posFound = -1;
+
+        return new promise.Promise((resolve, reject) => {
+            obj.each((elem, index) => {
+                    elem.getText().then( inText => {
+                            if (inText.trim().toLowerCase() === strTextToSearch.trim().toLowerCase()) {
+                                posFound = index;
+                            }
+                        }
+                    );
+                }
+            ).then(
+                () => {
+                    resolve(posFound);
+                },
+                err => {
+                    reject(err);
+                }
+            );
+        });
     }
 }
 

@@ -106,29 +106,6 @@ export class BasePage {
         }
     }
 
-    public searchGridCols(obj: ElementArrayFinder,  strTextToSearch: string): promise.Promise<number>  {
-        let posFound = -1;
-
-        return new promise.Promise((resolve, reject) => {
-            obj.each((elem, index) => {
-                    elem.getText().then( inText => {
-                            if (inText.trim().toLowerCase() === strTextToSearch.trim().toLowerCase()) {
-                                posFound = index;
-                            }
-                        }
-                    );
-                }
-            ).then(
-                () => {
-                    resolve(posFound);
-                },
-                err => {
-                    reject(err);
-                }
-            );
-        });
-    }
-
     public existButton(buttonText: string): promise.Promise<boolean>  {
         buttonText = buttonText.toLowerCase().trim();
         return new promise.Promise((resolve, reject) => {
