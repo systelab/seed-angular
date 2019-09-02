@@ -9,6 +9,7 @@ import { ButtonState } from '../common/components/button.service';
 import { FormService, FormData } from '../common/components/form.service';
 import { LoginNavigationService } from '../login/login.navigation.service';
 import { MainNavigationService } from '../main/main.navigation.service';
+import { TabService } from '../common/components/tab.service';
 
 declare const allure: any;
 
@@ -147,9 +148,9 @@ describe('TC0001_PatientManagement_e2e', () => {
         GridService.clickOnCell(patientMaintenancePage.getPatientsGrid(), 0, GridService.GRID_COLUMN_NAME);
         patientDetailPage.checkPresentAndDisplayed();
 
-        TestUtil.checkCount(patientDetailPage.getAllTabs(), 'Tabs number', tabs.length);
+        TestUtil.checkCount(TabService.getAllTabs(patientDetailPage.getMainWindow()), 'Tabs number', tabs.length);
         tabs.forEach((tabElement, index) => {
-            TestUtil.checkText(patientDetailPage.getAllTabs().get(index), `Tab[${tabElement}]: ${tabElement}`, tabElement);
+            TestUtil.checkText(TabService.getAllTabs(patientDetailPage.getMainWindow()).get(index), `Tab[${tabElement}]: ${tabElement}`, tabElement);
         });
 
         patientDetailPage.getButtonClose()

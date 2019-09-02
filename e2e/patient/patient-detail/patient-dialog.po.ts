@@ -54,10 +54,6 @@ export class PatientDetailPage extends BasePage {
 		return this.getObjectById('PatientSubmitButton');
 	}
 
-	public getAllTabs() {
-		return TabService.getAllTabs(this.getMainWindow());
-	}
-
 	public getBMIndex() {
 		return this.getObjectById('PatientBMIndexInput');
 	}
