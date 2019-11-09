@@ -5,7 +5,7 @@ import { PatientService } from '@api/patient.service';
 import { DialogService } from 'systelab-components/widgets/modal/dialog/dialog.service';
 import { PreferencesService } from 'systelab-preferences/lib/preferences.service';
 import { AbstractApiGrid } from 'systelab-components/widgets/grid/abstract-api-grid.component';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators';
 
 @Component({

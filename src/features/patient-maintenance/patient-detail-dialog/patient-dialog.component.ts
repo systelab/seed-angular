@@ -23,7 +23,7 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 	public humanReadableAction = '';
 	public selectedTab = '';
 
-	@ViewChild('allergies') public allergies: PatientAllergiesFormComponent;
+	@ViewChild('allergies', {static: false}) public allergies: PatientAllergiesFormComponent;
 
 	public patient: Patient = {
 		address: {}
