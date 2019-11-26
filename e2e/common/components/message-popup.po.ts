@@ -1,32 +1,40 @@
 import { by } from 'protractor';
 import { BasePage } from './base-page';
+import { ButtonService } from './button.service';
+import { TestUtil } from '../utilities/test-util';
 
 export class MesssagePopupPage extends BasePage {
-	constructor(index: number = 2) {
-		super('mp-modal-container', index);
-	}
+    public BUTTON_CLOSE = 0;
+    public BUTTONS_YES_NO = 1;
 
-	public getMainWindow() {
-		return super.getMainWindow()
-			.element(by.tagName('dialog-view'));
-	}
+    constructor(index: number = 2) {
+        super('mp-modal-container', index);
+    }
 
-	public getTextMessage() {
-		return this.getObjectById('popup-message');
-	}
+    public getMainWindow() {
+        return super.getMainWindow()
+            .element(by.tagName('dialog-view'));
+    }
 
-	public getButtonYes() {
-		return this.getButton('Yes');
-	}
+    public getTextMessage() {
+        return this.getObjectById('popup-message');
+    }
 
-	public getButtonNo() {
-		return this.getButton('No');
+    public getButtonYes() {
+        return this.getButton('Yes');
+    }
 
-	}
+    public getButtonNo() {
+        return this.getButton('No');
+    }
 
-	private getButton(text: string) {
-		return this.getMainWindow()
-			.element(by.tagName('systelab-dialog-bottom'))
-			.element(by.buttonText(text)); // this depends on the system locale...
-	}
+    public getButtonClose() {
+        return this.getButton('Close');
+    }
+
+    private getButton(text: string) {
+        return this.getMainWindow()
+            .element(by.tagName('systelab-dialog-bottom'))
+            .element(by.buttonText(text)); // this depends on the system locale...
+    }
 }
