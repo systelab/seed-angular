@@ -13,8 +13,16 @@ export class BasePage {
     public static readonly NOT_RETRIEVED = '<not retrieved yet, available after calling navigateToHomePage()>';
     public static readonly TIME_OUT_MS_FOR_DIALOG_WINDOW = 30000;
 
-    constructor(protected tagName: string, protected tagNameIndex: number = 0) {
+    public current:ElementFinder;
+
+    constructor(private selector: string, private index: number = 0) {
+        this.current=element.all(by.tagName(this.selector)).get(this.index);
     }
+
+    public waitForVisible() {
+        browser.wait(EC.presenceOf(this.current), BasePage.TIME_OUT_MS_FOR_DIALOG_WINDOW, 'Main Dialog Window is taking too long to appear in the DOM (timeout: ' + BasePage.TIME_OUT_MS_FOR_DIALOG_WINDOW + ' ms).');
+    }
+
 
     public getDefaultConf(): IDefault[] {
         return [] as IDefault[];
@@ -56,24 +64,20 @@ export class BasePage {
         return new ElementArrayFinder(browser);
     }
 
-    public getMainWindow() {
-        return element.all(by.tagName(this.tagName))
-            .get(this.tagNameIndex);
-    }
 
     public getTitle() {
-        return this.getMainWindow()
+        return this.current
             .element(by.tagName('systelab-dialog-header'))
             .element(by.className('slab-dialog-header'));
     }
 
     public getButtonClose() {
-        return this.getMainWindow()
+        return this.current
             .element(by.className('slab-dialog-close'));
     }
 
     public getObjectById(id: string) {
-        return this.getMainWindow()
+        return this.current
             .element(by.id(id));
     }
 
@@ -82,25 +86,25 @@ export class BasePage {
     }
 
     public getButtonByName(name: string) {
-        return this.getMainWindow()
+        return this.current
             .element(by.buttonText(name));
     }
 
     public checkPresentAndDisplayed() {
-        expect(this.getMainWindow()
+        expect(this.current
             .isPresent())
             .toEqual(true, 'Window should be present on the DOM');
-        expect(this.getMainWindow()
+        expect(this.current
             .isDisplayed())
             .toEqual(true, 'Window should be displayed');
     }
 
     public showNewPageAndCheckTitleAndButtons(expectedWindowTitle: string, buttons?: ButtonState[]) {
 
-        browser.wait(EC.presenceOf(this.getMainWindow()), BasePage.TIME_OUT_MS_FOR_DIALOG_WINDOW, 'Dialog Window is taking too long to appear in the DOM (timeout: ' + BasePage.TIME_OUT_MS_FOR_DIALOG_WINDOW + ' ms).');
+        browser.wait(EC.presenceOf(this.current), BasePage.TIME_OUT_MS_FOR_DIALOG_WINDOW, 'Dialog Window is taking too long to appear in the DOM (timeout: ' + BasePage.TIME_OUT_MS_FOR_DIALOG_WINDOW + ' ms).');
         this.checkPresentAndDisplayed();
 
-        TestUtil.checkText(this.getTitle(), 'Window title', expectedWindowTitle);
+     //   TestUtil.checkText(this.getTitle(), 'Window title', expectedWindowTitle);
         if (buttons) {
             ButtonService.checkButtons(this, buttons);
         }

@@ -1,11 +1,14 @@
 import { by } from 'protractor';
 import { BasePage } from '../../common/components/base-page';
-import { TabService } from '../../common/components/tab.service';
+import { Tabs } from '../../common/components/tabs-test';
+import { Grid } from '../../common/components/grid-test';
+import { Button } from '../../common/components/button-test';
+import { InputField } from '../../common/components/inputfield-test';
 
 export class PatientDetailPage extends BasePage {
-	public static readonly  TAG_NAME_PATIENTFORM = 'patient-form';
+	public static readonly TAG_NAME_PATIENTFORM = 'patient-form';
 	public static readonly TAG_NAME_PATIENTALLERGIESFORM = 'patient-allergies-form';
-	public static readonly  tabs = ['General', 'Allergies'];
+	public static readonly tabs = ['General', 'Allergies'];
 
 	constructor() {
 		super('patient-dialog');
@@ -16,53 +19,57 @@ export class PatientDetailPage extends BasePage {
 			.element(by.tagname('input'));
 	}
 
-	public getSurnameInput() {
-		return this.getObjectById('PatientSurnameInput');
+	public getSurnameInput(): InputField {
+		return new InputField(this.getObjectById('PatientSurnameInput'));
 	}
 
-	public getNameInput() {
-		return this.getObjectById('PatientNameInput');
+	public getNameInput(): InputField {
+		return new InputField(this.getObjectById('PatientNameInput'));
 	}
 
-	public getEmailInput() {
-		return this.getObjectById('PatientEmailInput');
+	public getEmailInput(): InputField {
+		return new InputField(this.getObjectById('PatientEmailInput'));
 	}
 
-	public getAddressStreetInput() {
-		return this.getObjectById('PatientAddressStreetInput');
+	public getAddressStreetInput(): InputField {
+		return new InputField(this.getObjectById('PatientAddressStreetInput'));
 	}
 
-	public getAddressCityInput() {
-		return this.getObjectById('PatientAddressCityInput');
+	public getAddressCityInput(): InputField {
+		return new InputField(this.getObjectById('PatientAddressCityInput'));
 	}
 
-	public getAddressZipInput() {
-		return this.getObjectById('PatientAddressZipInput');
+	public getAddressZipInput(): InputField {
+		return new InputField(this.getObjectById('PatientAddressZipInput'));
 	}
 
-	public getAddressCoordinatesInput() {
-		return this.getObjectById('PatientAddressCoordinatesInput');
+	public getAddressCoordinatesInput(): InputField {
+		return new InputField(this.getObjectById('PatientAddressCoordinatesInput'));
 	}
 
 	public getAllButtons() {
-		return this.getMainWindow()
+		return this.current
 			.element(by.tagName('systelab-dialog-bottom'))
 			.all(by.tagName('button'));
 	}
 
-	public getButtonSubmit() {
-		return this.getObjectById('PatientSubmitButton');
+	public getButtonSubmit(): Button {
+		return new Button(this.getObjectById('PatientSubmitButton'));
 	}
 
 	public getBMIndex() {
 		return this.getObjectById('PatientBMIndexInput');
 	}
 
-	public getAllergyGrid() {
-		return this.getMainWindow().element(by.tagName('patient-allergy-grid'));
+	public getAllergyGrid(): Grid {
+		return new Grid(this.current.element(by.tagName('patient-allergy-grid')));
 	}
 
-	public getAddButton() {
-		return this.getObjectById('PatientMaintenanceAddButton');
+	public getAddButton(): Button {
+		return new Button(this.getObjectById('PatientMaintenanceAddButton'));
+	}
+
+	public getTabs(): Tabs {
+		return new Tabs(this.current.element(by.tagName('systelab-tabs')));
 	}
 }

@@ -1,5 +1,7 @@
 import { ElementArrayFinder, ElementFinder } from 'protractor';
 import { FormData } from '../components/form.service';
+import { Widget } from '../components/widget-test';
+import { AppRoutingModule } from '../../../src/app/app.routing';
 
 export class ExpectsUtil {
 
@@ -25,6 +27,11 @@ export class ExpectsUtil {
         });
     }
 
+
+    public static checkNumber(n: Promise<number>, name: string, expectedCount: number) {
+        expect(n)
+          .toEqual(expectedCount, 'Count "' + name + '" should be ' + expectedCount);
+    }
     public static checkCount(field: ElementArrayFinder, name: string, expectedCount: number) {
         expect(field.count())
             .toEqual(expectedCount, 'Count "' + name + '" should be ' + expectedCount);
@@ -35,8 +42,9 @@ export class ExpectsUtil {
             .toBeGreaterThan(expectedCount, 'Count "' + name + '" should be greater than "' + expectedCount + '"');
     }
 
-    public static checkText(field: ElementFinder, name: string, expectedText: string) {
-        expect(field.getText())
+
+    public static checkText(text: Promise<string>, name: string, expectedText: string) {
+        expect(text)
             .toEqual(expectedText, 'Field "' + name + '" should be ' + expectedText);
     }
 
@@ -72,5 +80,15 @@ export class ExpectsUtil {
     public static checkIsDisabled(field: ElementFinder, name: string) {
         expect(field.isEnabled())
             .toEqual(null, name + ' is disabled');
+    }
+
+    public static checkWidgetPresentAndDisplayed(obj: Widget, desc: string)
+    {
+        expect(obj.getElement()
+          .isPresent())
+          .toEqual(true, desc + ' should be present on the DOM');
+        expect (obj.getElement()
+          .isDisplayed())
+          .toEqual(true, desc + ' should be displayed');
     }
 }

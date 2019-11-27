@@ -1,6 +1,8 @@
 import { by } from 'protractor';
 import { BasePage } from '../common/components/base-page';
 import { ButtonState } from '../common/components/button.service';
+import { Button } from '../common/components/button-test';
+import { Grid } from '../common/components/grid-test';
 
 export class PatientMaintenancePage extends BasePage {
 
@@ -24,24 +26,24 @@ export class PatientMaintenancePage extends BasePage {
 	}
 
 	public getAllButtons() {
-		return this.getMainWindow()
+		return this.current
 			.element(by.tagName('systelab-dialog-bottom'))
 			.all(by.tagName('button'));
 	}
 
-	public getButtonOptions() {
-		return this.getObjectById('PatientMaintenanceOptionsButton');
+	public getButtonOptions(): Button {
+		return new Button(this.getObjectById('PatientMaintenanceOptionsButton'));
 	}
 
-	public getButtonAdd() {
-		return this.getObjectById('PatientMaintenanceAddButton');
+	public getButtonAdd(): Button {
+		return new Button(this.getObjectById('PatientMaintenanceAddButton'));
 	}
 
-	public getButtonRefresh() {
-		return this.getObjectById('PatientMaintenanceRefreshButton');
+	public getButtonRefresh(): Button {
+		return new Button(this.getObjectById('PatientMaintenanceRefreshButton'));
 	}
 
-	public getPatientsGrid() {
-		return this.getObjectById('PatientTable');
+	public getPatientsGrid(): Grid {
+		return new Grid(this.getObjectById('PatientTable'));
 	}
 }

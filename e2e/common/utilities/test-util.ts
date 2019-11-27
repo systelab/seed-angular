@@ -49,9 +49,9 @@ export class TestUtil extends ExpectsUtil {
         })();
     }
 
-    public static checkText(field: ElementFinder, name: string, expectedText: string) {
+    public static checkText(text: Promise<string>, name: string, expectedText: string) {
         allure.createStep(name + ' is equals to ' + expectedText, () => {
-            super.checkText(field, name, expectedText);
+            super.checkText(text, name, expectedText);
         })();
     }
 

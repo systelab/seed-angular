@@ -4,12 +4,9 @@ import { MainPage } from '../main/main.po';
 import { PatientMaintenancePage } from './patient-maintenance.po';
 import { PatientDetailPage } from './patient-detail/patient-dialog.po';
 import { TestUtil } from '../common/utilities/test-util';
-import { GridService } from '../common/components/grid.service';
 import { ButtonState } from '../common/components/button.service';
 import { FormService, FormData } from '../common/components/form.service';
-import { LoginNavigationService } from '../login/login.navigation.service';
-import { MainNavigationService } from '../main/main.navigation.service';
-import { TabService } from '../common/components/tab.service';
+import { NavigationService } from '../common/utilities/navigation.service';
 
 declare const allure: any;
 
@@ -21,9 +18,9 @@ describe('TC0001_PatientManagement_e2e', () => {
     const patientDetailPage = new PatientDetailPage();
 
     beforeAll(() => {
-        LoginNavigationService.navigateToHomePage(loginPage);
-        LoginNavigationService.login(loginPage, false);
-        MainNavigationService.navigateToPatientMaintenancePage(mainPage);
+        NavigationService.navigateToHomePage(loginPage);
+        NavigationService.login(loginPage, false);
+        NavigationService.navigateToPatientMaintenancePage(mainPage);
     });
 
     beforeEach(() => {
@@ -37,31 +34,31 @@ describe('TC0001_PatientManagement_e2e', () => {
 
         const empty = (i === undefined);
         const formData: FormData[] = [{
-            field: patientDetailPage.getSurnameInput(),
+            field: patientDetailPage.getSurnameInput().getElement(),
             name:  'Surname',
             value: empty ? '' : 'Try #' + i + ': ' + basePatientValues[0]
         }, {
-            field: patientDetailPage.getNameInput(),
+            field: patientDetailPage.getNameInput().getElement(),
             name:  'Name',
             value: empty ? '' : 'Try #' + i + ': ' + basePatientValues[1]
         }, {
-            field: patientDetailPage.getEmailInput(),
+            field: patientDetailPage.getEmailInput().getElement(),
             name:  'Email',
             value: empty ? '' : 'try_' + i + '_' + basePatientValues[2]
         }, {
-            field: patientDetailPage.getAddressStreetInput(),
+            field: patientDetailPage.getAddressStreetInput().getElement(),
             name:  'Address -> Street',
             value: empty ? '' : 'Try #' + i + ': ' + basePatientValues[3]
         }, {
-            field: patientDetailPage.getAddressCityInput(),
+            field: patientDetailPage.getAddressCityInput().getElement(),
             name:  'Address -> City',
             value: empty ? '' : 'Try #' + i + ': ' + basePatientValues[4]
         }, {
-            field: patientDetailPage.getAddressZipInput(),
+            field: patientDetailPage.getAddressZipInput().getElement(),
             name:  'Address -> Zip',
             value: empty ? '' : 'Try #' + i + ': ' + basePatientValues[5]
         }, {
-            field: patientDetailPage.getAddressCoordinatesInput(),
+            field: patientDetailPage.getAddressCoordinatesInput().getElement(),
             name:  'Address -> Coordinates',
             value: empty ? '' : 'Try #' + i + ': ' + basePatientValues[6]
         }];
@@ -76,90 +73,84 @@ describe('TC0001_PatientManagement_e2e', () => {
             enable: true
         }];
         patientMaintenancePage.checkPresentAndDisplayed();
-        patientMaintenancePage.getButtonAdd()
-            .click();
+        patientMaintenancePage.getButtonAdd().click();
         patientDetailPage.showNewPageAndCheckTitleAndButtons(title, buttons);
         TestUtil.checkForm(getFormData(), 'Patient Creation is empty');
     });
 
     it('Close the dialog', () => {
-        patientDetailPage.getButtonClose()
-            .click();
+        patientDetailPage.getButtonClose().click();
         allure.createStep('Dialog is closed', () => {
             patientMaintenancePage.checkPresentAndDisplayed();
         })();
     });
-
-    // Disabled because looking for a non-existent element is time-consuming
-    /*xit('Validate that no patients are created yet', () => {
-     allure.createStep('Action: No patients  the patient', () => {
-     TestUtil.checkCount(GridService.getGridInnerComponent(patientMaintenancePage.getPatientsGrid()), 'Number of Patients', 0);
-     })();
-     });*/
 
     it('Create Patients', () => {
         for (let i = 1; i <= browser.params.repeatabilityNumberPasses; i++) {
 
             allure.createStep('Action: Create the patient ' + i, () => {
 
-                patientMaintenancePage.getButtonAdd()
-                    .click();
+                patientMaintenancePage.getButtonAdd().click();
                 patientDetailPage.checkPresentAndDisplayed();
 
                 FormService.fillForm(getFormData(i), 'Patient Creation Form');
                 TestUtil.checkForm(getFormData(i), 'Patient Creation is correct');
 
-                patientDetailPage.getButtonSubmit()
-                    .click();
+                patientDetailPage.getButtonSubmit().click();
                 patientMaintenancePage.checkPresentAndDisplayed();
-                TestUtil.checkCount(GridService.getGridInnerComponent(patientMaintenancePage.getPatientsGrid()), 'Number of Patients', i);
+                TestUtil.checkNumber(patientMaintenancePage.getPatientsGrid().getNumberOfRows(), 'Number of Patients', i);
 
-                GridService.getRow(patientMaintenancePage.getPatientsGrid(), i - 1)
-                    .then(function(cellValues) {
-                        TestUtil.checkText(cellValues[2], 'Row Name', getFormData(i)[0].value);
-                        TestUtil.checkText(cellValues[1], 'Row Surname', getFormData(i)[1].value);
-                        TestUtil.checkText(cellValues[3], 'Row Email', getFormData(i)[2].value);
+                patientMaintenancePage.getPatientsGrid().getRow(i-1)
+                    .then((cellValues) => {
+                        TestUtil.checkText(Promise.resolve(cellValues[2]), 'Row Name', getFormData(i)[0].value);
+                        TestUtil.checkText(Promise.resolve(cellValues[1]), 'Row Surname', getFormData(i)[1].value);
+                        TestUtil.checkText(Promise.resolve(cellValues[3]), 'Row Email', getFormData(i)[2].value);
                     });
             })();
         }
     });
 
-    it('Contextual menu at the patients grid', () => {
+    it('Contextual menu at the patients grid', async () => {
         const menuItems = ['Update', 'Delete'];
         for (let row = 0; row < browser.params.repeatabilityNumberPasses; row++) {
-            allure.createStep('Action: Access to the contextual menu at row ' + row + ' in the grid with the buttons: ' + JSON.stringify(menuItems), () => {
-                GridService.checkGridPopupMenuContentAtRow(patientMaintenancePage.getPatientsGrid(), row, menuItems);
+            await allure.createStep('Action: Access to the contextual menu at row ' + row + ' in the grid with the buttons: ' + JSON.stringify(menuItems), async () => {
+                 patientMaintenancePage.getPatientsGrid().clickOnRowMenu(row);
+                 await patientMaintenancePage.getPatientsGrid().getMenu().getOptions().then( async (options)=>{
+                     TestUtil.checkText(Promise.resolve(options[0]), 'First Option', menuItems[0]);
+                     TestUtil.checkText(Promise.resolve(options[1]), 'Second Option', menuItems[1]);
+                     await patientMaintenancePage.getPatientsGrid().clickOnHeader();
+                });
             })();
         }
     });
 
     it('The option Update opens Patient Detail', () => {
         const optionMenuUpdate = 0;
-        GridService.clickGridPopupMenuContentAtRow(patientMaintenancePage.getPatientsGrid(), 0, optionMenuUpdate);
+        patientMaintenancePage.getPatientsGrid().clickOnRowMenu(0);
+        patientMaintenancePage.getPatientsGrid().getMenu().selectOption(optionMenuUpdate);
         patientDetailPage.checkPresentAndDisplayed();
 
-        patientDetailPage.getButtonClose()
-            .click();
+        patientDetailPage.getButtonClose().click();
         patientMaintenancePage.checkPresentAndDisplayed();
     });
 
-    it('Click on a row and open Patient Detail', () => {
+   it('Click on a row and open Patient Detail', () => {
         const tabs = PatientDetailPage.tabs;
-        GridService.clickOnCell(patientMaintenancePage.getPatientsGrid(), 0, GridService.GRID_COLUMN_NAME);
+        patientMaintenancePage.getPatientsGrid().clickOnCell(0,'name');
         patientDetailPage.checkPresentAndDisplayed();
 
-        TestUtil.checkCount(TabService.getAllTabs(patientDetailPage.getMainWindow()), 'Tabs number', tabs.length);
+
+        TestUtil.checkNumber(patientDetailPage.getTabs().getNumberOfTabs(), 'Tabs number', tabs.length);
         tabs.forEach((tabElement, index) => {
-            TestUtil.checkText(TabService.getAllTabs(patientDetailPage.getMainWindow()).get(index), `Tab[${tabElement}]: ${tabElement}`, tabElement);
+          TestUtil.checkText(patientDetailPage.getTabs().getTab(index).getText(), `Tab[${tabElement}]: ${tabElement}`, tabElement);
         });
 
-        patientDetailPage.getButtonClose()
-            .click();
+        patientDetailPage.getButtonClose().click();
         patientMaintenancePage.checkPresentAndDisplayed();
     });
 
     it('Modify Patients', () => {
-        GridService.clickOnCell(patientMaintenancePage.getPatientsGrid(), 0, GridService.GRID_COLUMN_NAME);
+        patientMaintenancePage.getPatientsGrid().clickOnCell(0,'name');
         patientDetailPage.checkPresentAndDisplayed();
 
         TestUtil.checkForm(getFormData(1), 'Patient Management is correct');
@@ -167,20 +158,21 @@ describe('TC0001_PatientManagement_e2e', () => {
         FormService.removeValuesInForm(getFormData(), 'Patient Management');
 
         FormService.fillForm(getFormData(4), 'Patient Creation to update previous one');
-        patientDetailPage.getButtonSubmit()
-            .click();
+        patientDetailPage.getButtonSubmit().click();
 
         patientMaintenancePage.checkPresentAndDisplayed();
-        TestUtil.checkCount(GridService.getGridInnerComponent(patientMaintenancePage.getPatientsGrid()), 'Rows in table of Patients', 3);
+        TestUtil.checkNumber(patientMaintenancePage.getPatientsGrid().getNumberOfRows(), 'Rows in table of Patients', 3);
     });
 
     it('Delete all elements recently added to the grid', () => {
         const optionMenuDelete = 1;
         for (let k = (browser.params.repeatabilityNumberPasses - 1); k >= 0; k--) {
             allure.createStep(`Action: Delete the Patient at the row #${k}`, () => {
-                GridService.clickGridPopupMenuContentAtRow(patientMaintenancePage.getPatientsGrid(), k, optionMenuDelete);
-                TestUtil.checkCount(GridService.getGridInnerComponent(patientMaintenancePage.getPatientsGrid()), 'Number of Patients', k);
+                patientMaintenancePage.getPatientsGrid().clickOnRowMenu(k);
+                patientMaintenancePage.getPatientsGrid().getMenu().selectOption(optionMenuDelete);
+                TestUtil.checkNumber(patientMaintenancePage.getPatientsGrid().getNumberOfRows(), 'Number of Patients', k);
             })();
         }
     });
+
 });

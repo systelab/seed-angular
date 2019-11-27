@@ -1,6 +1,8 @@
 import { BasePage } from '../../common/components/base-page';
 import { by } from 'protractor';
 import { TabService } from '../../common/components/tab.service';
+import { InputField } from '../../common/components/inputfield-test';
+import { Button } from '../../common/components/button-test';
 
 export class AllergyDetailPage extends BasePage {
 
@@ -13,25 +15,26 @@ export class AllergyDetailPage extends BasePage {
             .element(by.tagname('input'));
     }
 
-    public getNameInput() {
-        return this.getObjectById('AllergyNameInput');
+    public getNameInput(): InputField {
+        return new InputField(this.getObjectById('AllergyNameInput'));
     }
 
-    public getSignsInput() {
-        return this.getObjectById('AllergySignsInput');
+    public getSignsInput(): InputField {
+        return new InputField(this.getObjectById('AllergySignsInput'));
     }
 
-    public getSymptomsInput() {
-        return this.getObjectById('AllergySymptomsInput');
+    public getSymptomsInput(): InputField {
+        return new InputField(this.getObjectById('AllergySymptomsInput'));
     }
 
     public getAllButtons() {
-        return this.getMainWindow()
+        return this.current
             .element(by.tagName('systelab-dialog-bottom'))
             .all(by.tagName('button'));
     }
 
-    public getButtonSubmit() {
-        return this.getObjectById('AllergySubmitButton');
+    public getButtonSubmit(): Button {
+        return new Button(this.getObjectById('AllergySubmitButton'));
     }
+
 }

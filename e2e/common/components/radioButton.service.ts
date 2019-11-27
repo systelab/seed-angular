@@ -9,15 +9,4 @@ export class RadioButtonService {
 					.toBe(expected);
 			});
 	}
-
-	public static PassToChecked(myElement) {
-		myElement.getAttribute('id')
-			.then(attr => {
-				// TODO pending review
-				//expect(typeof attr)
-				//	.toBe('string');
-				const elementLabel = element(by.css('label[for=\'' + attr + '\']'));
-				elementLabel.click();
-			});
-	}
 }

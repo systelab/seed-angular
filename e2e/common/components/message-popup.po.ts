@@ -9,11 +9,7 @@ export class MesssagePopupPage extends BasePage {
 
     constructor(index: number = 2) {
         super('mp-modal-container', index);
-    }
-
-    public getMainWindow() {
-        return super.getMainWindow()
-            .element(by.tagName('dialog-view'));
+        this.current=this.current.element(by.tagName('dialog-view'));
     }
 
     public getTextMessage() {
@@ -33,7 +29,7 @@ export class MesssagePopupPage extends BasePage {
     }
 
     private getButton(text: string) {
-        return this.getMainWindow()
+        return this.current
             .element(by.tagName('systelab-dialog-bottom'))
             .element(by.buttonText(text)); // this depends on the system locale...
     }

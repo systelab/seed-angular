@@ -1,5 +1,8 @@
-import { browser, by, element } from 'protractor';
+import { by, element } from 'protractor';
 import { BasePage } from '../common/components/base-page';
+import { Popup } from '../common/components/popup-test';
+import { Button } from '../common/components/button-test';
+import { InputField } from '../common/components/inputfield-test';
 
 export class LoginPage extends BasePage {
     public appName = BasePage.NOT_RETRIEVED;
@@ -12,36 +15,25 @@ export class LoginPage extends BasePage {
     }
 
     public retrieveAppParams(object: LoginPage) {
-        this.getMainWindow().all(by.className('slab-text')).get(0).getText().then((inText) => {
-            object.appName = inText.trim();
-        });
-        this.getMainWindow().all(by.className('slab-text')).get(1).getText().then((inText) => {
-            object.appDescription = inText.trim();
-        });
-        this.getMainWindow().all(by.className('slab-text')).get(2).getText().then((inText) => {
-            object.appVersion = inText.trim();
-        });
-        this.getMainWindow().all(by.className('slab-text')).get(4).getText().then((inText) => {
-            object.appCopyright = inText.trim();
-        });
+        this.current.all(by.className('slab-text')).get(0).getText().then(inText => object.appName = inText.trim());
+        this.current.all(by.className('slab-text')).get(1).getText().then(inText => object.appDescription = inText.trim());
+        this.current.all(by.className('slab-text')).get(2).getText().then(inText => object.appVersion = inText.trim());
+        this.current.all(by.className('slab-text')).get(4).getText().then(inText => object.appCopyright = inText.trim());
     }
 
-    // TODO: Rename to LoginUserNameInput (systelab-login)
-    public getUsernameField() {
-        return element(by.id('inputUserName'));
+    public getUsernameField(): InputField {
+        return new InputField(element(by.id('inputUserName')));
     }
 
-    // TODO: Rename to LoginPasswordInput (systelab-login)
-    public getPasswordField() {
-        return element(by.id('inputPassword'));
+    public getPasswordField(): InputField {
+        return new InputField(element(by.id('inputPassword')));
     }
 
-    // TODO: Set id to the button and access by ID
-    public getEnterButton() {
-        return element(by.buttonText('Enter')); // this depends on the system locale...
+    public getEnterButton(): Button {
+        return new Button(element(by.buttonText('Enter'))); // this depends on the system locale...
     }
 
-    public getPopupMessage() {
-        return element(by.id('popup-message'));
+    public getPopupMessage(): Popup {
+        return new Popup(element(by.id('popup-message')));
     }
 }
