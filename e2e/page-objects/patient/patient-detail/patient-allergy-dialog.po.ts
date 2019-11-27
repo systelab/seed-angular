@@ -1,8 +1,7 @@
-import { BasePage } from '../../common/components/base-page';
 import { by } from 'protractor';
-import { Datepicker } from '../../common/components/datepicker-test';
-import { Button } from '../../common/components/button-test';
-import { InputField } from '../../common/components/inputfield-test';
+import { BasePage } from '../../base-page';
+import { Button, Datepicker, InputField } from '../../../widgets';
+
 
 export class PatientAllergyDetailPage extends BasePage {
 

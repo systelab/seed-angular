@@ -1,8 +1,7 @@
 import { by } from 'protractor';
-import { BasePage } from '../common/components/base-page';
-import { ButtonState } from '../common/components/button.service';
-import { Button } from '../common/components/button-test';
-import { Grid } from '../common/components/grid-test';
+import { BasePage } from '../base-page';
+import { Button, Grid } from '../../widgets';
+import { ButtonState } from '../../services/button.service';
 
 export class PatientMaintenancePage extends BasePage {
 

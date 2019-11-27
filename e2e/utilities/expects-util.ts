@@ -1,7 +1,6 @@
 import { ElementArrayFinder, ElementFinder } from 'protractor';
-import { FormData } from '../components/form.service';
-import { Widget } from '../components/widget-test';
-import { AppRoutingModule } from '../../../src/app/app.routing';
+import { FormData } from '../services/form.service';
+import { Widget } from '../widgets/index';
 
 export class ExpectsUtil {
 

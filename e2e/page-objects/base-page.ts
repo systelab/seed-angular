@@ -1,6 +1,5 @@
 import { browser, by, element, ElementArrayFinder, ElementFinder, ExpectedConditions as EC, protractor, promise } from 'protractor';
-import { ButtonService, ButtonState } from './button.service';
-import { TestUtil } from '../utilities/test-util';
+import { ButtonService, ButtonState } from '../services/button.service';
 
 export interface IDefault {
     element: ElementFinder;

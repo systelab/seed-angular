@@ -1,9 +1,6 @@
 import { by } from 'protractor';
-import { BasePage } from '../../common/components/base-page';
-import { Tabs } from '../../common/components/tabs-test';
-import { Grid } from '../../common/components/grid-test';
-import { Button } from '../../common/components/button-test';
-import { InputField } from '../../common/components/inputfield-test';
+import { BasePage } from '../../base-page';
+import { Button, Grid, InputField, Tabs } from '../../../widgets';
 
 export class PatientDetailPage extends BasePage {
 	public static readonly TAG_NAME_PATIENTFORM = 'patient-form';

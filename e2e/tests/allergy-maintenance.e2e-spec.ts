@@ -1,8 +1,7 @@
-import { LoginPage } from '../login/login.po';
-import { MainPage } from '../main/main.po';
-import { TestUtil } from '../common/utilities/test-util';
-import { NavigationService } from '../common/utilities/navigation.service';
-
+import { LoginPage } from '../page-objects/login/login.po';
+import { MainPage } from '../page-objects/main/main.po';
+import { NavigationService } from '../services/navigation.service';
+import { TestUtil } from '../utilities/test-util';
 
 declare const allure: any;
 

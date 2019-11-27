@@ -1,6 +1,6 @@
 import { browser, ElementArrayFinder, ElementFinder } from 'protractor';
 import { ExpectsUtil } from './expects-util';
-import { FormData } from '../components/form.service';
+import { FormData } from '../services/form.service';
 import { JSConsole } from './js-console';
 
 declare const allure: any;

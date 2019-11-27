@@ -1,11 +1,11 @@
-import { LoginPage } from '../login/login.po';
-import { MainPage } from '../main/main.po';
-import { TestUtil } from '../common/utilities/test-util';
-import { ButtonState } from '../common/components/button.service';
-import { AllergyDetailPage } from './allergy-detail/allergy-dialog.po';
-import { FormService, FormData} from '../common/components/form.service';
 import { browser } from 'protractor';
-import { NavigationService } from '../common/utilities/navigation.service';
+import { LoginPage } from '../page-objects/login/login.po';
+import { MainPage } from '../page-objects/main/main.po';
+import { AllergyDetailPage } from '../page-objects/allergy/allergy-detail/allergy-dialog.po';
+import { NavigationService } from '../services/navigation.service';
+import { TestUtil } from '../utilities/test-util';
+import { ButtonState } from '../services/button.service';
+import { FormService, FormData } from '../services/form.service';
 
 declare const allure: any;
 

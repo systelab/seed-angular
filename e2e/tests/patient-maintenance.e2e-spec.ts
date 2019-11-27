@@ -1,13 +1,13 @@
-import { LoginPage } from '../login/login.po';
-import { MainPage } from '../main/main.po';
-import { PatientMaintenancePage } from './patient-maintenance.po';
-import { TestUtil } from '../common/utilities/test-util';
-import { ExpectsUtil } from '../common/utilities/expects-util';
-import { AllergyDetailPage } from '../allergy/allergy-detail/allergy-dialog.po';
-import { PatientDetailPage } from './patient-detail/patient-dialog.po';
-import { PatientAllergyDetailPage } from './patient-detail/patient-allergy-dialog.po';
-import { NavigationService } from '../common/utilities/navigation.service';
 import { browser } from 'protractor';
+import { LoginPage } from '../page-objects/login/login.po';
+import { MainPage } from '../page-objects/main/main.po';
+import { PatientMaintenancePage } from '../page-objects/patient/patient-maintenance.po';
+import { AllergyDetailPage } from '../page-objects/allergy/allergy-detail/allergy-dialog.po';
+import { PatientDetailPage } from '../page-objects/patient/patient-detail/patient-dialog.po';
+import { PatientAllergyDetailPage } from '../page-objects/patient/patient-detail/patient-allergy-dialog.po';
+import { NavigationService } from '../services/navigation.service';
+import { TestUtil } from '../utilities/test-util';
+import { ExpectsUtil } from '../utilities/expects-util';
 
 declare const allure: any;
 

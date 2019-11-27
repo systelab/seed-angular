@@ -1,5 +1,5 @@
 import { ExpectsUtil } from '../utilities/expects-util';
-import { BasePage } from './base-page';
+import { BasePage } from '../page-objects/base-page';
 declare const allure: any;
 
 export interface ButtonState {

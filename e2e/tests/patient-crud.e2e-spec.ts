@@ -1,12 +1,13 @@
 import { browser, protractor } from 'protractor';
-import { LoginPage } from '../login/login.po';
-import { MainPage } from '../main/main.po';
-import { PatientMaintenancePage } from './patient-maintenance.po';
-import { PatientDetailPage } from './patient-detail/patient-dialog.po';
-import { TestUtil } from '../common/utilities/test-util';
-import { ButtonState } from '../common/components/button.service';
-import { FormService, FormData } from '../common/components/form.service';
-import { NavigationService } from '../common/utilities/navigation.service';
+import { NavigationService } from '../services/navigation.service';
+import { LoginPage } from '../page-objects/login/login.po';
+import { MainPage } from '../page-objects/main/main.po';
+import { PatientMaintenancePage } from '../page-objects/patient/patient-maintenance.po';
+import { PatientDetailPage } from '../page-objects/patient/patient-detail/patient-dialog.po';
+import { TestUtil } from '../utilities/test-util';
+import { ButtonState } from '../services/button.service';
+import { FormService, FormData } from '../services/form.service';
+
 
 declare const allure: any;
 

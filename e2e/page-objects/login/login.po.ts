@@ -1,8 +1,7 @@
 import { by, element } from 'protractor';
-import { BasePage } from '../common/components/base-page';
-import { Popup } from '../common/components/popup-test';
-import { Button } from '../common/components/button-test';
-import { InputField } from '../common/components/inputfield-test';
+import { BasePage } from '../base-page';
+import { Button, InputField, Popup } from '../../widgets';
+
 
 export class LoginPage extends BasePage {
     public appName = BasePage.NOT_RETRIEVED;

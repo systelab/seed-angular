@@ -1,7 +1,8 @@
-import { BasePage } from '../../common/components/base-page';
 import { by } from 'protractor';
-import { InputField } from '../../common/components/inputfield-test';
-import { Button } from '../../common/components/button-test';
+import { Button, InputField } from '../../../widgets';
+import { BasePage } from '../../base-page';
+
+
 
 export class AllergyDetailPage extends BasePage {
 

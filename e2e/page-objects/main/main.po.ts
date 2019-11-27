@@ -1,10 +1,7 @@
 import { by, element, ElementFinder } from 'protractor';
-import { BasePage } from '../common/components/base-page';
-import { Label } from '../common/components/label-test';
-import { Button } from '../common/components/button-test';
-import { Tabs } from '../common/components/tabs-test';
-import { Grid } from '../common/components/grid-test';
-import { Icon } from '../common/components/icon-test';
+import { BasePage } from '../base-page';
+import { Button, Grid, Label, Tabs, Icon } from '../../widgets';
+
 
 export class MainPage extends BasePage {
     constructor() {
