@@ -12,14 +12,12 @@ export class Grid extends Widget {
 
 	public async getRow(row: number): Promise<Array<string>> {
 		let content: string[] = [];
-		let rows: ElementArrayFinder = this.elem.all(by.css('div[row-index="' + row + '"] div.ag-cell-value'));
-		let numberOfRows: number = await rows.count();
+		let cols:ElementArrayFinder = this.elem.all(by.css('div[row-index="' + row + '"] div.ag-cell-value'));
+		let numberOfRows: number = await cols.count();
 		for (let i = 0; i < numberOfRows; i++) {
-			let text: string = await rows.get(i)
-				.getText();
+			let text: string = await cols.get(i).getText();
 			content.push(text);
 		}
-
 		return content;
 	}
 
@@ -48,22 +46,15 @@ export class Grid extends Widget {
 			.click();
 	}
 
-	public async checkGridHeaders(titles: string[]): Promise<void> {
-		titles.forEach((titleElem, index) => {
-			//	TestUtil.checkText(GridService.getGridHeaderText(grid, index), `Column[${index}]: ${titleElem}`, titleElem);
-		});
-		/*
-		GridService.gridHasData(grid)
-			.then((data) => {
-				if (data === true) {
-					TestUtil.checkIsPresent(GridService.getRow(grid, 0)
-						.get(0), 'a Cell');
-				} else {
-					//		TestUtil.checkText(GridService.getNoDataMessage(grid), 'NoData_Message', GridService.GRID_NODATA_MESSAGE);
-				}
-			});
-
-		 */
+	public async getGridHeader(): Promise<Array<string>> {
+		let content: string[] = [];
+		let cols:ElementArrayFinder = this.elem.all(by.className('ag-header-container')).all(by.className('ag-header-cell-label'));
+		let numberOfRows: number = await cols.count();
+		for (let i = 0; i < numberOfRows; i++) {
+			let text: string = await cols.get(i).element(by.className('ag-header-cell-text')).getText();
+			content.push(text);
+		}
+		return content;
 	}
 
 	public getMenu(): ContextMenu {

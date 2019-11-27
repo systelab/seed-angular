@@ -1,6 +1,5 @@
 import { BasePage } from '../../common/components/base-page';
 import { by } from 'protractor';
-import { TabService } from '../../common/components/tab.service';
 import { InputField } from '../../common/components/inputfield-test';
 import { Button } from '../../common/components/button-test';
 

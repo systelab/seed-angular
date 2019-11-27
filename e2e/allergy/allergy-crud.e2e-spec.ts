@@ -2,7 +2,6 @@ import { LoginPage } from '../login/login.po';
 import { MainPage } from '../main/main.po';
 import { TestUtil } from '../common/utilities/test-util';
 import { ButtonState } from '../common/components/button.service';
-import { GridService } from '../common/components/grid.service';
 import { AllergyDetailPage } from './allergy-detail/allergy-dialog.po';
 import { FormService, FormData} from '../common/components/form.service';
 import { browser } from 'protractor';

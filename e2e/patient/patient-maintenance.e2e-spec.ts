@@ -80,8 +80,8 @@ describe('TC0001_PatientManagement_e2e', () => {
 
     it('Access to the Patient Management Dialog', () => {
         patientMaintenancePage.showNewPageAndCheckTitleAndButtons(patientMaintenancePage.title, patientMaintenancePage.buttons);
-        const titles = ['', 'Name', 'Surname', 'Email']
-        patientMaintenancePage.getPatientsGrid().checkGridHeaders(titles);
+        const titles = ['', 'Name', 'Surname', 'Email'];
+        expect(patientMaintenancePage.getPatientsGrid().getGridHeader()).toEqual(titles);
     });
 
     it('Assign allergy to a patient', () => {

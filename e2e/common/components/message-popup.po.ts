@@ -1,7 +1,5 @@
 import { by } from 'protractor';
 import { BasePage } from './base-page';
-import { ButtonService } from './button.service';
-import { TestUtil } from '../utilities/test-util';
 
 export class MesssagePopupPage extends BasePage {
     public BUTTON_CLOSE = 0;

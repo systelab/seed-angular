@@ -24,10 +24,9 @@ describe('TC0002_AllergyManagement_e2e', () => {
     it('Access to the allergy screen', () => {
         const tabs = ['Allergies'];
         const titles = ['', 'Name', 'Signs', 'Symptoms']
-        const grid = mainPage.getAllergyGrid();
 
         TestUtil.checkNumber(mainPage.getConfigTabs().getNumberOfTabs(), 'tabs', 1);
         TestUtil.checkText(mainPage.getConfigTabs().getTab(0).getText(), `Tab[0]: ${tabs[0]}`, tabs[0]);
-     //   GridService.checkGridHeaders(grid, titles);
+        expect(mainPage.getAllergyGrid().getGridHeader()).toEqual(titles);
     });
 });
