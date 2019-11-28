@@ -1,8 +1,8 @@
 import { browser} from 'protractor';
-import { LoginPage } from '../page-objects/login/login.po';
-import { MainPage } from '../page-objects/main/main.po';
-import { NavigationService } from '../services/navigation.service';
-import { TestUtil } from '../utilities/test-util';
+import { LoginPage } from '../../page-objects/login/login.po';
+import { MainPage } from '../../page-objects/main/main.po';
+import { NavigationService } from '../../services/navigation.service';
+import { TestUtil } from '../../utilities/test-util';
 
 declare const allure: any;
 
@@ -33,7 +33,7 @@ describe('Login Test Case: MLG_TC106_GEN_Login', () => {
 	it('Login correct', () => {
 		loginWithUserNameAndPassword(login, browser.params.login.user, browser.params.login.password);
 		allure.createStep('The home page is displayed', () => {
-			NavigationService.waitForVisible(mainPage);
+			NavigationService.waitForPageToBeVisible(mainPage);
 			TestUtil.checkText(mainPage.getFullUsernameField().getText(), 'Logged user', 'Administrator')
 		})();
 	});

@@ -1,11 +1,11 @@
 import { browser, protractor } from 'protractor';
-import { NavigationService } from '../services/navigation.service';
-import { LoginPage } from '../page-objects/login/login.po';
-import { MainPage } from '../page-objects/main/main.po';
-import { PatientMaintenancePage } from '../page-objects/patient/patient-maintenance.po';
-import { PatientDetailPage } from '../page-objects/patient/patient-detail/patient-dialog.po';
-import { TestUtil } from '../utilities/test-util';
-import { FormService, FormData, ButtonState } from '../services/form.service';
+import { NavigationService } from '../../services/navigation.service';
+import { LoginPage } from '../../page-objects/login/login.po';
+import { MainPage } from '../../page-objects/main/main.po';
+import { PatientMaintenancePage } from '../../page-objects/patient/patient-maintenance.po';
+import { PatientDetailPage } from '../../page-objects/patient/patient-detail/patient-dialog.po';
+import { TestUtil } from '../../utilities/test-util';
+import { FormService, FormData, ButtonState } from '../../services/form.service';
 
 
 declare const allure: any;
@@ -72,7 +72,7 @@ describe('TC0001_PatientManagement_e2e', () => {
             exist:  true,
             enable: true
         }];
-        NavigationService.checkPresentAndDisplayed(patientMaintenancePage);
+        NavigationService.checkPageIsPresentAndDisplayed(patientMaintenancePage);
         patientMaintenancePage.getButtonAdd().click();
         NavigationService.checkPageTitleAndButtons(patientDetailPage, title, buttons);
         TestUtil.checkForm(getFormData(), 'Patient Creation is empty');
@@ -81,7 +81,7 @@ describe('TC0001_PatientManagement_e2e', () => {
     it('Close the dialog', () => {
         patientDetailPage.getButtonClose().click();
         allure.createStep('Dialog is closed', () => {
-            NavigationService.checkPresentAndDisplayed(patientMaintenancePage);
+            NavigationService.checkPageIsPresentAndDisplayed(patientMaintenancePage);
         })();
     });
 
@@ -91,13 +91,13 @@ describe('TC0001_PatientManagement_e2e', () => {
             allure.createStep('Action: Create the patient ' + i, () => {
 
                 patientMaintenancePage.getButtonAdd().click();
-                NavigationService.checkPresentAndDisplayed(patientDetailPage);
+                NavigationService.checkPageIsPresentAndDisplayed(patientDetailPage);
 
                 FormService.fillForm(getFormData(i), 'Patient Creation Form');
                 TestUtil.checkForm(getFormData(i), 'Patient Creation is correct');
 
                 patientDetailPage.getButtonSubmit().click();
-                NavigationService.checkPresentAndDisplayed(patientMaintenancePage);
+                NavigationService.checkPageIsPresentAndDisplayed(patientMaintenancePage);
                 TestUtil.checkNumber(patientMaintenancePage.getPatientsGrid().getNumberOfRows(), 'Number of Patients', i);
 
                 patientMaintenancePage.getPatientsGrid().getRow(i-1)
@@ -128,16 +128,16 @@ describe('TC0001_PatientManagement_e2e', () => {
         const optionMenuUpdate = 0;
         patientMaintenancePage.getPatientsGrid().clickOnRowMenu(0);
         patientMaintenancePage.getPatientsGrid().getMenu().selectOption(optionMenuUpdate);
-        NavigationService.checkPresentAndDisplayed(patientDetailPage);
+        NavigationService.checkPageIsPresentAndDisplayed(patientDetailPage);
 
         patientDetailPage.getButtonClose().click();
-        NavigationService.checkPresentAndDisplayed(patientMaintenancePage);
+        NavigationService.checkPageIsPresentAndDisplayed(patientMaintenancePage);
     });
 
    it('Click on a row and open Patient Detail', () => {
         const tabs = PatientDetailPage.tabs;
         patientMaintenancePage.getPatientsGrid().clickOnCell(0,'name');
-       NavigationService.checkPresentAndDisplayed(patientDetailPage);
+       NavigationService.checkPageIsPresentAndDisplayed(patientDetailPage);
 
 
         TestUtil.checkNumber(patientDetailPage.getTabs().getNumberOfTabs(), 'Tabs number', tabs.length);
@@ -146,12 +146,12 @@ describe('TC0001_PatientManagement_e2e', () => {
         });
 
         patientDetailPage.getButtonClose().click();
-       NavigationService.checkPresentAndDisplayed(patientMaintenancePage);
+       NavigationService.checkPageIsPresentAndDisplayed(patientMaintenancePage);
     });
 
     it('Modify Patients', () => {
         patientMaintenancePage.getPatientsGrid().clickOnCell(0,'name');
-        NavigationService.checkPresentAndDisplayed(patientDetailPage);
+        NavigationService.checkPageIsPresentAndDisplayed(patientDetailPage);
 
         TestUtil.checkForm(getFormData(1), 'Patient Management is correct');
 
@@ -160,7 +160,7 @@ describe('TC0001_PatientManagement_e2e', () => {
         FormService.fillForm(getFormData(4), 'Patient Creation to update previous one');
         patientDetailPage.getButtonSubmit().click();
 
-        NavigationService.checkPresentAndDisplayed(patientMaintenancePage);
+        NavigationService.checkPageIsPresentAndDisplayed(patientMaintenancePage);
         TestUtil.checkNumber(patientMaintenancePage.getPatientsGrid().getNumberOfRows(), 'Rows in table of Patients', 3);
     });
 

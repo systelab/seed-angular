@@ -29,20 +29,20 @@ export class NavigationService {
     }
 
     public static navigateToPatientMaintenancePage(mainPage: MainPage) {
-        this.checkPresentAndDisplayed(mainPage);
+        this.checkPageIsPresentAndDisplayed(mainPage);
         mainPage.getPatientButton().click();
     }
 
     public static navigateToAllergyMaintenancePage(mainPage: MainPage) {
-        this.checkPresentAndDisplayed(mainPage);
+        this.checkPageIsPresentAndDisplayed(mainPage);
         mainPage.getConfigIcon().click();
     }
 
-    public static waitForVisible(page: BasePage) {
+    public static waitForPageToBeVisible(page: BasePage) {
         browser.wait(EC.presenceOf(page.getElementFinder()), NavigationService.TIME_OUT_MS_FOR_DIALOG_WINDOW, 'Main Dialog Window is taking too long to appear in the DOM (timeout: ' + NavigationService.TIME_OUT_MS_FOR_DIALOG_WINDOW + ' ms).');
     }
 
-    public static checkPresentAndDisplayed(page: BasePage) {
+    public static checkPageIsPresentAndDisplayed(page: BasePage) {
         expect(page.getElementFinder()
           .isPresent())
           .toEqual(true, 'Window should be present on the DOM');
@@ -52,8 +52,8 @@ export class NavigationService {
     }
 
     public static checkPageTitleAndButtons(page: BasePage, expectedTitle: string, buttons?: ButtonState[]) {
-        this.waitForVisible(page);
-        this.checkPresentAndDisplayed(page);
+        this.waitForPageToBeVisible(page);
+        this.checkPageIsPresentAndDisplayed(page);
 
         TestUtil.checkText(page.getTitle(), 'Window title', expectedTitle);
         if (buttons) {
