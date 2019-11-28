@@ -1,10 +1,18 @@
 import { ElementFinder } from 'protractor';
+import { BasePage } from '../page-objects/base-page';
+import { TestUtil } from '../utilities/test-util';
 declare const allure: any;
 
 export interface FormData {
     field: ElementFinder;
     name: string;
     value: string;
+}
+
+export interface ButtonState {
+    name: string;
+    exist: boolean;
+    enable: boolean;
 }
 
 export class FormService {
@@ -34,6 +42,28 @@ export class FormService {
     public static fillField(field: ElementFinder, name: string, value: string) {
         allure.createStep('Action: Fill ' + name + ' with value ' + value, () => {
             field.sendKeys(value);
+        })();
+    }
+
+    public static checkButtons(page: BasePage, buttons: ButtonState[]) {
+        allure.createStep('Action: Review the button name and status:' + JSON.stringify(buttons), () => {
+
+            TestUtil.checkNumber(page.getNumberOfButtons(), `Number of buttons`, buttons.filter((b) => b.exist).length);
+
+            buttons.forEach((buttonElem) => {
+                TestUtil.checkIsPresent(page.getButtonByName(buttonElem.name), `Button ${buttonElem.name}`);
+            });
+
+            buttons.filter((b) => b.enable)
+              .forEach((buttonElem) => {
+                  TestUtil.checkIsEnabled(page.getButtonByName(buttonElem.name), `Button ${buttonElem.name}`);
+              });
+            buttons.filter((b) => !b.enable)
+              .forEach((buttonElem) => {
+                  TestUtil.checkIsDisabled(page.getButtonByName(buttonElem.name), `Button ${buttonElem.name}`);
+              });
+            allure.createStep('The buttons are in the correct status', () => {
+            })();
         })();
     }
 }

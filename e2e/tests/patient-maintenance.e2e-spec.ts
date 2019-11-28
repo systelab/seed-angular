@@ -1,4 +1,3 @@
-import { browser } from 'protractor';
 import { LoginPage } from '../page-objects/login/login.po';
 import { MainPage } from '../page-objects/main/main.po';
 import { PatientMaintenancePage } from '../page-objects/patient/patient-maintenance.po';
@@ -7,7 +6,6 @@ import { PatientDetailPage } from '../page-objects/patient/patient-detail/patien
 import { PatientAllergyDetailPage } from '../page-objects/patient/patient-detail/patient-allergy-dialog.po';
 import { NavigationService } from '../services/navigation.service';
 import { TestUtil } from '../utilities/test-util';
-import { ExpectsUtil } from '../utilities/expects-util';
 
 declare const allure: any;
 
@@ -33,24 +31,24 @@ describe('TC0001_PatientManagement_e2e', () => {
 
     function createAllergyItem(allergyData: string[]) {
         mainPage.getAllergyAddButton().click();
-        allergyDetailPage.checkPresentAndDisplayed();
+        NavigationService.checkPresentAndDisplayed(allergyDetailPage);
         allergyDetailPage.getNameInput().setText(allergyData[0]);
         allergyDetailPage.getSignsInput().setText(allergyData[1]);
         allergyDetailPage.getSymptomsInput().setText(allergyData[2]);
         allergyDetailPage.getButtonSubmit().click();
 
-        ExpectsUtil.checkWidgetPresentAndDisplayed(mainPage.getConfigTabs(), 'Config. tabs');
-        ExpectsUtil.checkWidgetPresentAndDisplayed(mainPage.getAllergyAddButton(), 'Allergy Add button');
-        ExpectsUtil.checkWidgetPresentAndDisplayed(mainPage.getAllergyRefreshButton(), 'Allergy Refresh button');
-        ExpectsUtil.checkWidgetPresentAndDisplayed(mainPage.getAllergyOptionsButton(), 'Allergy Options button');
-        ExpectsUtil.checkWidgetPresentAndDisplayed(mainPage.getAllergyGrid(), 'Allergy grid');
+        TestUtil.checkWidgetPresentAndDisplayed(mainPage.getConfigTabs(), 'Config. tabs');
+        TestUtil.checkWidgetPresentAndDisplayed(mainPage.getAllergyAddButton(), 'Allergy Add button');
+        TestUtil.checkWidgetPresentAndDisplayed(mainPage.getAllergyRefreshButton(), 'Allergy Refresh button');
+        TestUtil.checkWidgetPresentAndDisplayed(mainPage.getAllergyOptionsButton(), 'Allergy Options button');
+        TestUtil.checkWidgetPresentAndDisplayed(mainPage.getAllergyGrid(), 'Allergy grid');
 
-        ExpectsUtil.checkNumber(mainPage.getAllergyGrid().getNumberOfRows(), 'Number of Allergies', 1);
+        TestUtil.checkNumber(mainPage.getAllergyGrid().getNumberOfRows(), 'Number of Allergies', 1);
     }
 
     function createPatientItem(patientData: string[]) {
         patientMaintenancePage.getButtonAdd().click();
-        patientDetailPage.checkPresentAndDisplayed();
+        NavigationService.checkPresentAndDisplayed(patientDetailPage);
         patientDetailPage.getNameInput().setText(patientData[0]);
         patientDetailPage.getSurnameInput().setText(patientData[1]);
         patientDetailPage.getEmailInput().setText(patientData[2]);
@@ -59,13 +57,13 @@ describe('TC0001_PatientManagement_e2e', () => {
         patientDetailPage.getAddressZipInput().setText(patientData[5]);
         patientDetailPage.getAddressCoordinatesInput().setText(patientData[6])
         patientDetailPage.getButtonSubmit().click();
-        patientMaintenancePage.checkPresentAndDisplayed();
-        ExpectsUtil.checkNumber(patientMaintenancePage.getPatientsGrid().getNumberOfRows(), 'Number of Patients', 1);
+        NavigationService.checkPresentAndDisplayed(patientMaintenancePage);
+        TestUtil.checkNumber(patientMaintenancePage.getPatientsGrid().getNumberOfRows(), 'Number of Patients', 1);
     }
 
     function assignAllegryToPatient(allergyNum: number) {
         patientDetailPage.getAddButton().click();
-        patientAllergyDetailPage.checkPresentAndDisplayed();
+        NavigationService.checkPresentAndDisplayed(patientAllergyDetailPage);
         patientAllergyDetailPage.getAllergyCombobox().click();
         patientAllergyDetailPage.getAllergyList().get(0).click();
 
@@ -75,11 +73,11 @@ describe('TC0001_PatientManagement_e2e', () => {
 */
         patientAllergyDetailPage.getAllergyNotes().setText('aslhslkjhdsalkjah');
         patientAllergyDetailPage.getSubmitButton().click();
-        ExpectsUtil.checkNumber(patientDetailPage.getAllergyGrid().getNumberOfRows(), 'Number of Allergies', 1);
+        TestUtil.checkNumber(patientDetailPage.getAllergyGrid().getNumberOfRows(), 'Number of Allergies', 1);
     }
 
     it('Access to the Patient Management Dialog', () => {
-        patientMaintenancePage.showNewPageAndCheckTitleAndButtons(patientMaintenancePage.title, patientMaintenancePage.buttons);
+        NavigationService.checkPageTitleAndButtons(patientMaintenancePage,patientMaintenancePage.title, patientMaintenancePage.buttons);
         const titles = ['', 'Name', 'Surname', 'Email'];
         expect(patientMaintenancePage.getPatientsGrid().getGridHeader()).toEqual(titles);
     });
@@ -94,10 +92,10 @@ describe('TC0001_PatientManagement_e2e', () => {
         NavigationService.navigateToPatientMaintenancePage(mainPage);
         createPatientItem(['Patient1', 'Surname1', 'email@kk.com', 'Sample St', 'Khartum', '112234', '12.123456 32.15246']);
         patientMaintenancePage.getPatientsGrid().clickOnCell(0, 'name');
-        patientDetailPage.checkPresentAndDisplayed();
+        NavigationService.checkPresentAndDisplayed(patientDetailPage);
         patientDetailPage.getTabs().selectTab(1);
 
-        ExpectsUtil.checkNumber(patientMaintenancePage.getPatientsGrid().getNumberOfRows(), 'Number of Patients', 1);
+        TestUtil.checkNumber(patientMaintenancePage.getPatientsGrid().getNumberOfRows(), 'Number of Patients', 1);
 
         assignAllegryToPatient(0);
 
@@ -112,7 +110,7 @@ describe('TC0001_PatientManagement_e2e', () => {
         patientMaintenancePage.getPatientsGrid().getMenu().selectOption(optionMenuDelete);
 
         patientMaintenancePage.getButtonClose().click();
-        ExpectsUtil.checkNumber(mainPage.getAllergyGrid().getNumberOfRows(), 'Number of Allergies', 1);
+        TestUtil.checkNumber(mainPage.getAllergyGrid().getNumberOfRows(), 'Number of Allergies', 1);
 
         // Delete the created allergy
         mainPage.getAllergyGrid().clickOnRowMenu(0);

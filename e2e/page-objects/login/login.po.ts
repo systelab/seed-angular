@@ -4,10 +4,12 @@ import { Button, InputField, Popup } from '../../widgets';
 
 
 export class LoginPage extends BasePage {
-    public appName = BasePage.NOT_RETRIEVED;
-    public appDescription = BasePage.NOT_RETRIEVED;
-    public appVersion = BasePage.NOT_RETRIEVED;
-    public appCopyright = BasePage.NOT_RETRIEVED;
+    public static readonly NOT_RETRIEVED = '<not retrieved yet, available after calling navigateToHomePage()>';
+
+    public appName = LoginPage.NOT_RETRIEVED;
+    public appDescription = LoginPage.NOT_RETRIEVED;
+    public appVersion = LoginPage.NOT_RETRIEVED;
+    public appCopyright = LoginPage.NOT_RETRIEVED;
 
     constructor() {
         super('systelab-login');

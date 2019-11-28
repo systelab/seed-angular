@@ -4,8 +4,7 @@ import { MainPage } from '../page-objects/main/main.po';
 import { AllergyDetailPage } from '../page-objects/allergy/allergy-detail/allergy-dialog.po';
 import { NavigationService } from '../services/navigation.service';
 import { TestUtil } from '../utilities/test-util';
-import { ButtonState } from '../services/button.service';
-import { FormService, FormData } from '../services/form.service';
+import { FormService, FormData, ButtonState } from '../services/form.service';
 
 declare const allure: any;
 
@@ -52,10 +51,9 @@ describe('TC0002_AllergyManagement_e2e', () => {
             enable: true
         }];
 
-        mainPage.checkPresentAndDisplayed();
-        mainPage.getAllergyAddButton()
-            .click();
-        allergyDetailPage.showNewPageAndCheckTitleAndButtons(title, buttons);
+	      NavigationService.checkPresentAndDisplayed(mainPage);
+        mainPage.getAllergyAddButton().click();
+	      NavigationService.checkPageTitleAndButtons(allergyDetailPage,title, buttons);
         TestUtil.checkForm(getFormData(), 'Allergy Creation is empty');
     });
 
@@ -63,7 +61,7 @@ describe('TC0002_AllergyManagement_e2e', () => {
         allergyDetailPage.getButtonClose()
             .click();
         allure.createStep('Dialog is closed', () => {
-            mainPage.checkPresentAndDisplayed();
+	        NavigationService.checkPresentAndDisplayed(mainPage);
         })();
     });
 
@@ -73,13 +71,13 @@ describe('TC0002_AllergyManagement_e2e', () => {
             allure.createStep('Action: Create the allergy ' + i, () => {
 
                 mainPage.getAllergyAddButton().click();
-                allergyDetailPage.checkPresentAndDisplayed();
+                NavigationService.checkPresentAndDisplayed(allergyDetailPage);
 
                 FormService.fillForm(getFormData(i), 'Allergy Creation Form');
                 TestUtil.checkForm(getFormData(i), 'Allergy Creation is correct');
 
                 allergyDetailPage.getButtonSubmit().click();
-                mainPage.checkPresentAndDisplayed();
+	              NavigationService.checkPresentAndDisplayed(mainPage);
                 TestUtil.checkNumber(mainPage.getAllergyGrid().getNumberOfRows(), 'Number of Allergies', i);
 
                 mainPage.getAllergyGrid().getRow(i-1)
@@ -111,21 +109,21 @@ describe('TC0002_AllergyManagement_e2e', () => {
 				 const optionMenuUpdate = 0;
          mainPage.getAllergyGrid().clickOnRowMenu(0);
          mainPage.getAllergyGrid().getMenu().selectOption(optionMenuUpdate);
-				 allergyDetailPage.checkPresentAndDisplayed();
+         NavigationService.checkPresentAndDisplayed(allergyDetailPage);
 
 				 allergyDetailPage.getButtonClose().click();
-				 mainPage.checkPresentAndDisplayed();
+			   NavigationService.checkPresentAndDisplayed(mainPage);
 		 });
 		 it('Click on a row and open Allergy Detail', () => {
          mainPage.getAllergyGrid().clickOnCell(0, 'name');
-				 allergyDetailPage.checkPresentAndDisplayed();
+			   NavigationService.checkPresentAndDisplayed(allergyDetailPage);
 				 allergyDetailPage.getButtonClose().click();
-				 mainPage.checkPresentAndDisplayed();
+				 NavigationService.checkPresentAndDisplayed(mainPage);
 		 });
 
 				 it('Modify Allergies', () => {
              mainPage.getAllergyGrid().clickOnCell(0,'name');
-						 allergyDetailPage.checkPresentAndDisplayed();
+						 NavigationService.checkPresentAndDisplayed(allergyDetailPage);
 
 						 TestUtil.checkForm(getFormData(1), 'Allergy Management is correct');
 
@@ -134,7 +132,7 @@ describe('TC0002_AllergyManagement_e2e', () => {
 						 FormService.fillForm(getFormData(4), 'Allergy Creation to update previous one');
 						 allergyDetailPage.getButtonSubmit().click();
 
-						 mainPage.checkPresentAndDisplayed();
+						 NavigationService.checkPresentAndDisplayed(mainPage);
 						 TestUtil.checkNumber(mainPage.getAllergyGrid().getNumberOfRows(), 'Rows in table of Allergies', 3);
 				 });
 

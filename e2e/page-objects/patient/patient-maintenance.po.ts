@@ -1,7 +1,7 @@
 import { by } from 'protractor';
 import { BasePage } from '../base-page';
 import { Button, Grid } from '../../widgets';
-import { ButtonState } from '../../services/button.service';
+import { ButtonState } from '../../services/form.service';
 
 export class PatientMaintenancePage extends BasePage {
 
@@ -22,12 +22,6 @@ export class PatientMaintenancePage extends BasePage {
 
 	constructor() {
 		super('patient-maintenance-dialog');
-	}
-
-	public getAllButtons() {
-		return this.current
-			.element(by.tagName('systelab-dialog-bottom'))
-			.all(by.tagName('button'));
 	}
 
 	public getButtonOptions(): Button {

@@ -44,12 +44,6 @@ export class PatientDetailPage extends BasePage {
 		return new InputField(this.getObjectById('PatientAddressCoordinatesInput'));
 	}
 
-	public getAllButtons() {
-		return this.current
-			.element(by.tagName('systelab-dialog-bottom'))
-			.all(by.tagName('button'));
-	}
-
 	public getButtonSubmit(): Button {
 		return new Button(this.getObjectById('PatientSubmitButton'));
 	}

@@ -33,7 +33,7 @@ describe('Login Test Case: MLG_TC106_GEN_Login', () => {
 	it('Login correct', () => {
 		loginWithUserNameAndPassword(login, browser.params.login.user, browser.params.login.password);
 		allure.createStep('The home page is displayed', () => {
-			mainPage.waitForVisible();
+			NavigationService.waitForVisible(mainPage);
 			TestUtil.checkText(mainPage.getFullUsernameField().getText(), 'Logged user', 'Administrator')
 		})();
 	});

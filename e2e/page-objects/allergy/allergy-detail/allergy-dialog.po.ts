@@ -27,12 +27,6 @@ export class AllergyDetailPage extends BasePage {
         return new InputField(this.getObjectById('AllergySymptomsInput'));
     }
 
-    public getAllButtons() {
-        return this.current
-            .element(by.tagName('systelab-dialog-bottom'))
-            .all(by.tagName('button'));
-    }
-
     public getButtonSubmit(): Button {
         return new Button(this.getObjectById('AllergySubmitButton'));
     }
