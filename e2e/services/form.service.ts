@@ -18,6 +18,14 @@ export interface ButtonState {
 
 export class FormService {
 
+	public static checkDialogTitleAndButtons(page: SystelabDialogTest, expectedTitle: string, buttons?: ButtonState[]) {
+		TestUtil.checkWidgetPresentAndDisplayed(page,expectedTitle);
+		TestUtil.checkText(page.getTitle(), 'Window title', expectedTitle);
+		if (buttons) {
+			FormService.checkButtons(page, buttons);
+		}
+	}
+
 	public static removeValuesInForm(formData: FormData[], name: string) {
 		allure.createStep('Action: Remove all values in form ' + name, () => {
 			formData.forEach((formDataItem) => {

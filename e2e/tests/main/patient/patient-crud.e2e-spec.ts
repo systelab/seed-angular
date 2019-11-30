@@ -1,11 +1,12 @@
 import { browser } from 'protractor';
-import { NavigationService } from '../../../services/navigation.service';
+import { MainNavigationService } from '../../../services/main-navigation.service';
 import { LoginPage } from '../../../page-objects/login/login.po';
 import { MainPage } from '../../../page-objects/main/main.po';
 import { TestUtil } from '../../../utilities/test-util';
 import { FormService, ButtonState } from '../../../services/form.service';
 import { PatientDialog } from '../../../page-objects/main/patient/patient-detail/patient-dialog';
 import { PatientMaintenanceDialog } from '../../../page-objects/main/patient/patient-maintenance';
+import { LoginNavigationService } from '../../../services/login-navigation.service';
 
 
 declare const allure: any;
@@ -16,10 +17,10 @@ describe('TC0001_PatientManagement_e2e', () => {
     let maintenanceDialog: PatientMaintenanceDialog;
 
     beforeAll(() => {
-        NavigationService.navigateToHomePage(loginPage);
-        NavigationService.login(loginPage, false);
-        maintenanceDialog=NavigationService.navigateToPatientMaintenancePage(new MainPage());
-        TestUtil.checkIsPresentAndDisplayed(maintenanceDialog);
+        LoginNavigationService.navigateToHomePage(loginPage);
+        LoginNavigationService.login(loginPage, false);
+        maintenanceDialog=MainNavigationService.navigateToPatientMaintenancePage(new MainPage());
+        TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog,'Maintenance Dialog');
     });
 
     beforeEach(() => {
@@ -36,11 +37,11 @@ describe('TC0001_PatientManagement_e2e', () => {
         }];
 
         maintenanceDialog.getButtonAdd().click();
-        NavigationService.checkPageTitleAndButtons(maintenanceDialog.getPatientDialog(), title, buttons);
+        FormService.checkDialogTitleAndButtons(maintenanceDialog.getPatientDialog(), title, buttons);
         TestUtil.checkForm(maintenanceDialog.getPatientDialog().getFormData(), 'Patient Creation is empty');
         maintenanceDialog.getPatientDialog().getButtonClose().click();
         allure.createStep('Dialog is closed', () => {
-            TestUtil.checkIsPresentAndDisplayed(maintenanceDialog);
+            TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog,'Maintenance Dialog');
         })();
     });
 
@@ -51,14 +52,14 @@ describe('TC0001_PatientManagement_e2e', () => {
 
                 maintenanceDialog.getButtonAdd().click();
                 let patientDetail=maintenanceDialog.getPatientDialog();
-                TestUtil.checkIsPresentAndDisplayed(patientDetail);
+                TestUtil.checkWidgetPresentAndDisplayed(patientDetail, 'Patient Dialog');
 
                 let formData=maintenanceDialog.getPatientDialog().getFormData(i);
                 FormService.fillForm(formData, 'Patient Creation Form');
                 TestUtil.checkForm(formData, 'Patient Creation is correct');
 
                 patientDetail.getButtonSubmit().click();
-                TestUtil.checkIsPresentAndDisplayed(maintenanceDialog);
+                TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog,'Maintenance Dialog');
                 TestUtil.checkNumber(maintenanceDialog.getPatientsGrid().getNumberOfRows(), 'Number of Patients', i);
 
                 maintenanceDialog.getPatientsGrid().getRow(i-1)
@@ -89,16 +90,16 @@ describe('TC0001_PatientManagement_e2e', () => {
         const optionMenuUpdate = 0;
         maintenanceDialog.getPatientsGrid().clickOnRowMenu(0);
         maintenanceDialog.getPatientsGrid().getMenu().selectOption(optionMenuUpdate);
-        TestUtil.checkIsPresentAndDisplayed(maintenanceDialog.getPatientDialog());
+        TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog.getPatientDialog(), 'Patient Dialog');
 
         maintenanceDialog.getPatientDialog().getButtonClose().click();
-        TestUtil.checkIsPresentAndDisplayed(maintenanceDialog);
+        TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog,'Maintenance Dialog');
     });
 
    it('Click on a row and open Patient Detail', () => {
         const tabs = PatientDialog.tabs;
         maintenanceDialog.getPatientsGrid().clickOnCell(0,'name');
-        TestUtil.checkIsPresentAndDisplayed(maintenanceDialog.getPatientDialog());
+        TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog.getPatientDialog(), 'Patient Dialog');
 
         TestUtil.checkNumber(maintenanceDialog.getPatientDialog().getTabs().getNumberOfTabs(), 'Tabs number', tabs.length);
         tabs.forEach((tabElement, index) => {
@@ -106,12 +107,12 @@ describe('TC0001_PatientManagement_e2e', () => {
         });
 
        maintenanceDialog.getPatientDialog().getButtonClose().click();
-       TestUtil.checkIsPresentAndDisplayed(maintenanceDialog);
+       TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog,'Maintenance Dialog');
     });
 
     it('Modify Patients', () => {
         maintenanceDialog.getPatientsGrid().clickOnCell(0,'name');
-        TestUtil.checkIsPresentAndDisplayed(maintenanceDialog.getPatientDialog());
+        TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog.getPatientDialog(), 'Patient Dialog');
 
         TestUtil.checkForm(maintenanceDialog.getPatientDialog().getFormData(1), 'Patient Management is correct');
 
@@ -120,7 +121,7 @@ describe('TC0001_PatientManagement_e2e', () => {
         FormService.fillForm(maintenanceDialog.getPatientDialog().getFormData(4), 'Patient Creation to update previous one');
         maintenanceDialog.getPatientDialog().getButtonSubmit().click();
 
-        TestUtil.checkIsPresentAndDisplayed(maintenanceDialog);
+        TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog,'Maintenance Dialog');
         TestUtil.checkNumber(maintenanceDialog.getPatientsGrid().getNumberOfRows(), 'Rows in table of Patients', 3);
     });
 

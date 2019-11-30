@@ -1,8 +1,10 @@
 import { LoginPage } from '../../../page-objects/login/login.po';
 import { MainPage } from '../../../page-objects/main/main.po';
-import { NavigationService } from '../../../services/navigation.service';
+import { LoginNavigationService } from '../../../services/login-navigation.service';
 import { TestUtil } from '../../../utilities/test-util';
 import { PatientMaintenanceDialog } from '../../../page-objects/main/patient/patient-maintenance';
+import { FormService } from '../../../services/form.service';
+import { MainNavigationService } from '../../../services/main-navigation.service';
 
 declare const allure: any;
 
@@ -13,9 +15,9 @@ describe('TC0001_PatientManagement_e2e', () => {
     let maintenanceDialog: PatientMaintenanceDialog;
 
     beforeAll(() => {
-        NavigationService.navigateToHomePage(loginPage);
-        NavigationService.login(loginPage);
-        maintenanceDialog= NavigationService.navigateToPatientMaintenancePage(mainPage);
+        LoginNavigationService.navigateToHomePage(loginPage);
+        LoginNavigationService.login(loginPage);
+        maintenanceDialog= MainNavigationService.navigateToPatientMaintenancePage(mainPage);
     });
 
     beforeEach(() => {
@@ -25,7 +27,7 @@ describe('TC0001_PatientManagement_e2e', () => {
 
     function createAllergyItem(allergyData: string[]) {
         mainPage.getAllergyAddButton().click();
-        TestUtil.checkIsPresentAndDisplayed(mainPage.getAllergyDetailDialog());
+        TestUtil.checkWidgetPresentAndDisplayed(mainPage.getAllergyDetailDialog(), 'Allergy Dialog');
         mainPage.getAllergyDetailDialog().getNameInput().setText(allergyData[0]);
         mainPage.getAllergyDetailDialog().getSignsInput().setText(allergyData[1]);
         mainPage.getAllergyDetailDialog().getSymptomsInput().setText(allergyData[2]);
@@ -43,7 +45,7 @@ describe('TC0001_PatientManagement_e2e', () => {
     function createPatientItem(patientData: string[]) {
         maintenanceDialog.getButtonAdd().click();
         let patientDialog=maintenanceDialog.getPatientDialog();
-        TestUtil.checkIsPresentAndDisplayed(patientDialog);
+        TestUtil.checkWidgetPresentAndDisplayed(patientDialog, 'Patient Dialog');
         patientDialog.getNameInput().setText(patientData[0]);
         patientDialog.getSurnameInput().setText(patientData[1]);
         patientDialog.getEmailInput().setText(patientData[2]);
@@ -52,13 +54,13 @@ describe('TC0001_PatientManagement_e2e', () => {
         patientDialog.getAddressZipInput().setText(patientData[5]);
         patientDialog.getAddressCoordinatesInput().setText(patientData[6])
         patientDialog.getButtonSubmit().click();
-        TestUtil.checkIsPresentAndDisplayed(maintenanceDialog);
+        TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog, 'Patient Maintenance Dialog');
         TestUtil.checkNumber(maintenanceDialog.getPatientsGrid().getNumberOfRows(), 'Number of Patients', 1);
     }
 
     function assignAllegryToPatient(allergyNum: number) {
         maintenanceDialog.getPatientDialog().getAddButton().click();
-        TestUtil.checkIsPresentAndDisplayed(maintenanceDialog.getPatientDialog().getPatientAllergyDialog());
+        TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog.getPatientDialog().getPatientAllergyDialog(), 'Patient Allergy Dialog');
         maintenanceDialog.getPatientDialog().getPatientAllergyDialog().getAllergyCombobox().click();
         maintenanceDialog.getPatientDialog().getPatientAllergyDialog().getAllergyList().get(0).click();
 
@@ -72,7 +74,7 @@ describe('TC0001_PatientManagement_e2e', () => {
     }
 
     it('Access to the Patient Management Dialog', () => {
-        NavigationService.checkPageTitleAndButtons(maintenanceDialog,maintenanceDialog.title, maintenanceDialog.buttons);
+        FormService.checkDialogTitleAndButtons(maintenanceDialog,maintenanceDialog.title, maintenanceDialog.buttons);
         const titles = ['', 'Name', 'Surname', 'Email'];
         expect(maintenanceDialog.getPatientsGrid().getGridHeader()).toEqual(titles);
     });
@@ -81,13 +83,13 @@ describe('TC0001_PatientManagement_e2e', () => {
         const optionMenuDelete = 1;
 
         maintenanceDialog.getButtonClose().click();
-        NavigationService.navigateToAllergyMaintenancePage(mainPage);
+        MainNavigationService.navigateToAllergyMaintenancePage(mainPage);
         createAllergyItem(['Name1', 'Signs1', 'Symptoms1']);
 
-        NavigationService.navigateToPatientMaintenancePage(mainPage);
+        MainNavigationService.navigateToPatientMaintenancePage(mainPage);
         createPatientItem(['Patient1', 'Surname1', 'email@kk.com', 'Sample St', 'Khartum', '112234', '12.123456 32.15246']);
         maintenanceDialog.getPatientsGrid().clickOnCell(0, 'name');
-        TestUtil.checkIsPresentAndDisplayed(maintenanceDialog.getPatientDialog());
+        TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog.getPatientDialog(), 'Patient Dialog');
         maintenanceDialog.getPatientDialog().getTabs().selectTab(1);
 
         TestUtil.checkNumber(maintenanceDialog.getPatientsGrid().getNumberOfRows(), 'Number of Patients', 1);

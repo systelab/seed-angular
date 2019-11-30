@@ -32,18 +32,6 @@ export class TestUtil {
 		return this.console.hasErrors();
 	}
 
-	public static checkValue(field: ElementFinder, name: string, expectedValue: string, verbose = true) {
-		let expectation = (field, name, expectedValue) => expect(field.getAttribute('value'))
-			.toEqual(expectedValue, 'Field "' + name + '" should be ' + expectedValue);
-		this.doIt3(expectation, verbose, name + ' is equals to ' + expectedValue, field, name, expectedValue);
-	}
-
-	public static checkCount(field: ElementArrayFinder, name: string, expectedCount: number, verbose = true) {
-		let expectation = (field, name, expectedCount) => expect(field.getAttribute('value'))
-			.toEqual(expectedCount, 'Field "' + name + '" should be ' + expectedCount);
-		this.doIt3(expectation, verbose, name + ' is equals to ' + expectedCount, field, name, expectedCount);
-	}
-
 	public static checkNumber(n: Promise<number>, name: string, expectedCount: number, verbose = true) {
 		let expectation = (n, name, expectedCount) => expect(n)
 			.toEqual(expectedCount, 'Count "' + name + '" should be ' + expectedCount)
@@ -55,27 +43,10 @@ export class TestUtil {
 		this.doIt2(expectation, verbose, name, n, name);
 	}
 
-	public static checkCountGreaterThan(field: ElementArrayFinder, name: string, expectedCount: number, verbose = true) {
-		let expectation = (field, name, expectedCount) => expect(field.count())
-			.toBeGreaterThan(expectedCount, 'Count "' + name + '" should be greater than "' + expectedCount + '"');
-		this.doIt3(expectation, verbose, name + ' is greater than ' + expectedCount, field, name, expectedCount);
-	}
-
 	public static checkText(text: Promise<string>, name: string, expectedText: string, verbose = true) {
 		let expectation = (text, name, expectedText) =>expect(text)
 			.toEqual(expectedText, 'Field "' + name + '" should be ' + expectedText);
 		this.doIt3(expectation, verbose, name + ' is equals to' + expectedText, text, name, expectedText);
-	}
-
-	public static checkWidgetPresentAndDisplayed(obj: Widget, desc: string)
-	{
-		let expectation = (obj,desc)=> {
-			expect(obj.isPresent())
-			.toEqual(true, desc + ' should be present on the DOM');
-			expect (obj.isDisplayed())
-			.toEqual(true, desc + ' should be displayed'); };
-
-		this.doIt2(expectation, false, 'Widget is Present', obj, desc);
 	}
 
 	public static checkForm(formData: FormData[], name: string, verbose = true) {
@@ -114,7 +85,6 @@ export class TestUtil {
 		this.doIt2(expectation, verbose, name + ' is disabled', field, name);
 	}
 
-
 	public static checkAttribute(field: ElementFinder, attributeName: string, name: string, expectedValue: string, verbose = true) {
 		let expectation = (field, attributeName, name, expectedValue)=>expect(field.getAttribute(attributeName))
 			.toEqual(expectedValue, 'Attribute: "' + attributeName + '" of Field: "' + name + '" should be ' + expectedValue);
@@ -134,15 +104,18 @@ export class TestUtil {
 			.toEqual(true, 'Window should be displayed');
 	}
 
-	public static checkIsPresentAndDisplayed(widget: Widget) {
-		expect(widget.isPresent())
-			.toEqual(true, 'Window should be present on the DOM');
-		expect(widget.isDisplayed())
-			.toEqual(true, 'Window should be displayed');
+	public static checkWidgetPresentAndDisplayed(obj: Widget, desc: string)
+	{
+		let expectation = (obj,desc)=> {
+			expect(obj.isPresent())
+				.toEqual(true, desc + ' should be present on the DOM');
+			expect (obj.isDisplayed())
+				.toEqual(true, desc + ' should be displayed'); };
+
+		this.doIt2(expectation, false, 'Widget is Present', obj, desc);
 	}
 
 	private static doIt2(expectation: (x,y) => any, verbose, text, param1, param2) {
-
 		if (verbose) {
 			allure.createStep(text, () => {
 				expectation(param1, param2);
@@ -151,8 +124,8 @@ export class TestUtil {
 			expectation(param1, param2);
 		}
 	}
-	private static doIt3(expectation: (x,y,z) => any, verbose, text, param1, param2, param3) {
 
+	private static doIt3(expectation: (x,y,z) => any, verbose, text, param1, param2, param3) {
 		if (verbose) {
 			allure.createStep(text, () => {
 				expectation(param1, param2, param3);
@@ -161,8 +134,8 @@ export class TestUtil {
 			expectation(param1, param2, param3);
 		}
 	}
-	private static doIt4(expectation: (x,y,z,k) => any, verbose, text, param1, param2, param3, param4) {
 
+	private static doIt4(expectation: (x,y,z,k) => any, verbose, text, param1, param2, param3, param4) {
 		if (verbose) {
 			allure.createStep(text, () => {
 				expectation(param1, param2, param3, param4);

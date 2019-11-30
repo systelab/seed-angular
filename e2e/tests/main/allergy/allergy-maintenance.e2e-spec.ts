@@ -1,7 +1,8 @@
 import { LoginPage } from '../../../page-objects/login/login.po';
 import { MainPage } from '../../../page-objects/main/main.po';
-import { NavigationService } from '../../../services/navigation.service';
+import { LoginNavigationService } from '../../../services/login-navigation.service';
 import { TestUtil } from '../../../utilities/test-util';
+import { MainNavigationService } from '../../../services/main-navigation.service';
 
 declare const allure: any;
 
@@ -10,9 +11,9 @@ describe('TC0002_AllergyManagement_e2e', () => {
 	const mainPage = new MainPage();
 
 	beforeAll(() => {
-		NavigationService.navigateToHomePage(loginPage);
-		NavigationService.login(loginPage);
-		NavigationService.navigateToAllergyMaintenancePage(mainPage);
+		LoginNavigationService.navigateToHomePage(loginPage);
+		LoginNavigationService.login(loginPage);
+		MainNavigationService.navigateToAllergyMaintenancePage(mainPage);
 	});
 
 	beforeEach(() => {

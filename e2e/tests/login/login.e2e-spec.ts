@@ -1,8 +1,9 @@
 import { browser} from 'protractor';
 import { LoginPage } from '../../page-objects/login/login.po';
 import { MainPage } from '../../page-objects/main/main.po';
-import { NavigationService } from '../../services/navigation.service';
+import { LoginNavigationService } from '../../services/login-navigation.service';
 import { TestUtil } from '../../utilities/test-util';
+import { Test } from 'tslint';
 
 declare const allure: any;
 
@@ -12,7 +13,7 @@ describe('Login Test Case: MLG_TC106_GEN_Login', () => {
 
 	function loginWithUserNameAndPassword(loginPage: LoginPage, userName: string, password: string) {
 		allure.createStep('Action: Open home page', () => {
-			NavigationService.navigateToHomePage(loginPage);
+			LoginNavigationService.navigateToHomePage(loginPage);
 		})();
 		allure.createStep(`Action: Set username as ${userName} and password as ${password}`, () => {
 			loginPage.getUsernameField().setText(userName);
@@ -33,7 +34,7 @@ describe('Login Test Case: MLG_TC106_GEN_Login', () => {
 	it('Login correct', () => {
 		loginWithUserNameAndPassword(login, browser.params.login.user, browser.params.login.password);
 		allure.createStep('The home page is displayed', () => {
-			NavigationService.waitForPageToBeVisible(mainPage);
+			TestUtil.checkPageIsPresentAndDisplayed(mainPage);
 			TestUtil.checkText(mainPage.getFullUsernameField().getText(), 'Logged user', 'Administrator')
 		})();
 	});

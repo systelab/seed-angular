@@ -1,9 +1,10 @@
 import { browser } from 'protractor';
 import { LoginPage } from '../../../page-objects/login/login.po';
 import { MainPage } from '../../../page-objects/main/main.po';
-import { NavigationService } from '../../../services/navigation.service';
+import { LoginNavigationService } from '../../../services/login-navigation.service';
 import { TestUtil } from '../../../utilities/test-util';
 import { ButtonState, FormService } from '../../../services/form.service';
+import { MainNavigationService } from '../../../services/main-navigation.service';
 
 declare const allure: any;
 
@@ -12,9 +13,9 @@ describe('TC0002_AllergyManagement_e2e', () => {
 	const mainPage = new MainPage();
 
 	beforeAll(() => {
-		NavigationService.navigateToHomePage(loginPage);
-		NavigationService.login(loginPage);
-		NavigationService.navigateToAllergyMaintenancePage(mainPage);
+		LoginNavigationService.navigateToHomePage(loginPage);
+		LoginNavigationService.login(loginPage);
+		MainNavigationService.navigateToAllergyMaintenancePage(mainPage);
 	});
 
 	beforeEach(() => {
@@ -31,7 +32,7 @@ describe('TC0002_AllergyManagement_e2e', () => {
 		}];
 		TestUtil.checkPageIsPresentAndDisplayed(mainPage);
 		mainPage.getAllergyAddButton().click();
-		NavigationService.checkPageTitleAndButtons(mainPage.getAllergyDetailDialog(), title, buttons);
+		FormService.checkDialogTitleAndButtons(mainPage.getAllergyDetailDialog(), title, buttons);
 		TestUtil.checkForm(mainPage.getAllergyDetailDialog().getFormData(), 'Allergy Creation is empty');
 	});
 
@@ -48,7 +49,7 @@ describe('TC0002_AllergyManagement_e2e', () => {
 			allure.createStep('Action: Create the allergy ' + i, () => {
 
 				mainPage.getAllergyAddButton().click();
-				TestUtil.checkIsPresentAndDisplayed(mainPage.getAllergyDetailDialog());
+				TestUtil.checkWidgetPresentAndDisplayed(mainPage.getAllergyDetailDialog(), 'Allergy Dialog');
 				let formData = mainPage.getAllergyDetailDialog().getFormData(i);
 
 				FormService.fillForm(mainPage.getAllergyDetailDialog().getFormData(i), 'Allergy Creation Form');
@@ -88,7 +89,7 @@ describe('TC0002_AllergyManagement_e2e', () => {
 		const optionMenuUpdate = 0;
 		mainPage.getAllergyGrid().clickOnRowMenu(0);
 		mainPage.getAllergyGrid().getMenu().selectOption(optionMenuUpdate);
-		TestUtil.checkIsPresentAndDisplayed(mainPage.getAllergyDetailDialog());
+		TestUtil.checkWidgetPresentAndDisplayed(mainPage.getAllergyDetailDialog(), 'Allergy Dialog');
 
 		mainPage.getAllergyDetailDialog().getButtonClose().click();
 		TestUtil.checkPageIsPresentAndDisplayed(mainPage);
@@ -96,14 +97,14 @@ describe('TC0002_AllergyManagement_e2e', () => {
 
 	it('Click on a row and open Allergy Detail', () => {
 		mainPage.getAllergyGrid().clickOnCell(0, 'name');
-		TestUtil.checkIsPresentAndDisplayed(mainPage.getAllergyDetailDialog());
+		TestUtil.checkWidgetPresentAndDisplayed(mainPage.getAllergyDetailDialog(), 'Allergy Dialog');
 		mainPage.getAllergyDetailDialog().getButtonClose().click();
 		TestUtil.checkPageIsPresentAndDisplayed(mainPage);
 	});
 
 	it('Modify Allergies', () => {
 		mainPage.getAllergyGrid().clickOnCell(0, 'name');
-		TestUtil.checkIsPresentAndDisplayed(mainPage.getAllergyDetailDialog());
+		TestUtil.checkWidgetPresentAndDisplayed(mainPage.getAllergyDetailDialog(), 'Allergy Dialog');
 
 		TestUtil.checkForm(mainPage.getAllergyDetailDialog().getFormData(1), 'Allergy Management is correct');
 
