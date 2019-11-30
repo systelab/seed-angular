@@ -3,7 +3,6 @@ import { FormData } from '../services/form.service';
 import { JSConsole } from './js-console';
 import { Widget } from '../widgets';
 import { BasePage } from '../page-objects/base-page';
-import { SystelabDialogTest } from '../widgets/systelab-dialog-test';
 
 declare const allure: any;
 
@@ -55,7 +54,6 @@ export class TestUtil {
 		let expectation = (n, name) => expect(n).toBeTruthy(name)
 		this.doIt2(expectation, verbose, name, n, name);
 	}
-
 
 	public static checkCountGreaterThan(field: ElementArrayFinder, name: string, expectedCount: number, verbose = true) {
 		let expectation = (field, name, expectedCount) => expect(field.count())

@@ -5,7 +5,7 @@ import { BasePage } from '../page-objects/base-page';
 import { TestUtil } from '../utilities/test-util';
 import { ButtonState, FormService } from './form.service';
 import { SystelabDialogTest } from '../widgets/systelab-dialog-test';
-import { PatientMaintenanceDialog } from '../page-objects/patient/patient-maintenance.po';
+import { PatientMaintenanceDialog } from '../page-objects/patient/patient-maintenance';
 
 declare const allure: any;
 

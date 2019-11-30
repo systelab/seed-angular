@@ -2,6 +2,7 @@ import { LoginPage } from '../../page-objects/login/login.po';
 import { MainPage } from '../../page-objects/main/main.po';
 import { NavigationService } from '../../services/navigation.service';
 import { TestUtil } from '../../utilities/test-util';
+import { PatientMaintenanceDialog } from '../../page-objects/patient/patient-maintenance';
 
 declare const allure: any;
 
@@ -9,7 +10,7 @@ describe('TC0001_PatientManagement_e2e', () => {
 
     const loginPage = new LoginPage();
     const mainPage = new MainPage();
-    let maintenanceDialog;
+    let maintenanceDialog: PatientMaintenanceDialog;
 
     beforeAll(() => {
         NavigationService.navigateToHomePage(loginPage);

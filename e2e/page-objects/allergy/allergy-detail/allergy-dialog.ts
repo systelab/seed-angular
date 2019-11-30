@@ -5,10 +5,8 @@ import { FormData } from '../../../services/form.service';
 
 export class AllergyDetailDialog extends SystelabDialogTest {
 
-
     public getEnableSwitch() {
-        return this.byId('AllergyEnableSwitch')
-            .element(by.tagname('input'));
+        return this.byId('AllergyEnableSwitch').element(by.tagname('input'));
     }
 
     public getNameInput(): InputField {
@@ -26,7 +24,6 @@ export class AllergyDetailDialog extends SystelabDialogTest {
     public getButtonSubmit(): Button {
         return new Button(this.byId('AllergySubmitButton'));
     }
-
 
     public getFormData(i?: number): FormData[]{
         const baseAllergyValues = ['Name', 'A sign', 'A symptom'];
@@ -46,5 +43,4 @@ export class AllergyDetailDialog extends SystelabDialogTest {
         }];
         return (formData);
     }
-
 }

@@ -4,7 +4,7 @@ import { LoginPage } from '../../page-objects/login/login.po';
 import { MainPage } from '../../page-objects/main/main.po';
 import { TestUtil } from '../../utilities/test-util';
 import { FormService, ButtonState } from '../../services/form.service';
-import { PatientDialog } from '../../page-objects/patient/patient-detail/patient-dialog.po';
+import { PatientDialog } from '../../page-objects/patient/patient-detail/patient-dialog';
 
 
 declare const allure: any;

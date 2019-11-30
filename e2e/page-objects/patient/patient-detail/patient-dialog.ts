@@ -1,18 +1,15 @@
 import { by, element } from 'protractor';
 import { Button, Grid, InputField, Tabs } from '../../../widgets';
 import { SystelabDialogTest } from '../../../widgets/systelab-dialog-test';
-import { PatientAllergyDialog } from './patient-allergy-dialog.po';
+import { PatientAllergyDialog } from './patient-allergy-dialog';
 import { FormData } from '../../../services/form.service';
 
 export class PatientDialog extends SystelabDialogTest {
-	public static readonly TAG_NAME_PATIENTFORM = 'patient-form';
-	public static readonly TAG_NAME_PATIENTALLERGIESFORM = 'patient-allergies-form';
 	public static readonly tabs = ['General', 'Allergies'];
 
 
 	public getEnableSwich() {
-		return this.byId('PatientEnableSwitch')
-			.element(by.tagname('input'));
+		return this.byId('PatientEnableSwitch').element(by.tagname('input'));
 	}
 
 	public getSurnameInput(): InputField {

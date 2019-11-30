@@ -1,8 +1,8 @@
 import { by, element } from 'protractor';
 import { BasePage } from '../base-page';
 import { Button, Grid, Label, Tabs, Icon } from '../../widgets';
-import { AllergyDetailDialog } from '../allergy/allergy-detail/allergy-dialog.po';
-import { PatientMaintenanceDialog } from '../patient/patient-maintenance.po';
+import { AllergyDetailDialog } from '../allergy/allergy-detail/allergy-dialog';
+import { PatientMaintenanceDialog } from '../patient/patient-maintenance';
 
 
 export class MainPage extends BasePage {
