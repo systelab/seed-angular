@@ -1,9 +1,9 @@
 import { browser } from 'protractor';
-import { LoginPage } from '../../page-objects/login/login.po';
-import { MainPage } from '../../page-objects/main/main.po';
-import { NavigationService } from '../../services/navigation.service';
-import { TestUtil } from '../../utilities/test-util';
-import { ButtonState, FormService } from '../../services/form.service';
+import { LoginPage } from '../../../page-objects/login/login.po';
+import { MainPage } from '../../../page-objects/main/main.po';
+import { NavigationService } from '../../../services/navigation.service';
+import { TestUtil } from '../../../utilities/test-util';
+import { ButtonState, FormService } from '../../../services/form.service';
 
 declare const allure: any;
 

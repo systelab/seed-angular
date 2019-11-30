@@ -1,7 +1,7 @@
 import { by } from 'protractor';
-import { Button, InputField } from '../../../widgets';
-import { SystelabDialogTest } from '../../../widgets/systelab-dialog-test';
-import { FormData } from '../../../services/form.service';
+import { Button, InputField } from '../../../../widgets';
+import { SystelabDialogTest } from '../../../../widgets/systelab-dialog-test';
+import { FormData } from '../../../../services/form.service';
 
 export class AllergyDetailDialog extends SystelabDialogTest {
 

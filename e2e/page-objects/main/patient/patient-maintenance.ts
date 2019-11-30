@@ -1,7 +1,7 @@
 import { by, element } from 'protractor';
-import { Button, Grid } from '../../widgets';
-import { ButtonState } from '../../services/form.service';
-import { SystelabDialogTest } from '../../widgets/systelab-dialog-test';
+import { Button, Grid } from '../../../widgets';
+import { ButtonState } from '../../../services/form.service';
+import { SystelabDialogTest } from '../../../widgets/systelab-dialog-test';
 import { PatientDialog } from './patient-detail/patient-dialog';
 
 export class PatientMaintenanceDialog extends SystelabDialogTest {

@@ -1,10 +1,11 @@
 import { browser } from 'protractor';
-import { NavigationService } from '../../services/navigation.service';
-import { LoginPage } from '../../page-objects/login/login.po';
-import { MainPage } from '../../page-objects/main/main.po';
-import { TestUtil } from '../../utilities/test-util';
-import { FormService, ButtonState } from '../../services/form.service';
-import { PatientDialog } from '../../page-objects/patient/patient-detail/patient-dialog';
+import { NavigationService } from '../../../services/navigation.service';
+import { LoginPage } from '../../../page-objects/login/login.po';
+import { MainPage } from '../../../page-objects/main/main.po';
+import { TestUtil } from '../../../utilities/test-util';
+import { FormService, ButtonState } from '../../../services/form.service';
+import { PatientDialog } from '../../../page-objects/main/patient/patient-detail/patient-dialog';
+import { PatientMaintenanceDialog } from '../../../page-objects/main/patient/patient-maintenance';
 
 
 declare const allure: any;
@@ -12,7 +13,7 @@ declare const allure: any;
 describe('TC0001_PatientManagement_e2e', () => {
 
     const loginPage = new LoginPage();
-    let maintenanceDialog;
+    let maintenanceDialog: PatientMaintenanceDialog;
 
     beforeAll(() => {
         NavigationService.navigateToHomePage(loginPage);

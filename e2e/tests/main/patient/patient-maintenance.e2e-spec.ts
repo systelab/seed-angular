@@ -1,8 +1,8 @@
-import { LoginPage } from '../../page-objects/login/login.po';
-import { MainPage } from '../../page-objects/main/main.po';
-import { NavigationService } from '../../services/navigation.service';
-import { TestUtil } from '../../utilities/test-util';
-import { PatientMaintenanceDialog } from '../../page-objects/patient/patient-maintenance';
+import { LoginPage } from '../../../page-objects/login/login.po';
+import { MainPage } from '../../../page-objects/main/main.po';
+import { NavigationService } from '../../../services/navigation.service';
+import { TestUtil } from '../../../utilities/test-util';
+import { PatientMaintenanceDialog } from '../../../page-objects/main/patient/patient-maintenance';
 
 declare const allure: any;
 

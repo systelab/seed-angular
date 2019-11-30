@@ -1,6 +1,6 @@
 import { by } from 'protractor';
-import { Button, Datepicker, InputField } from '../../../widgets';
-import { SystelabDialogTest } from '../../../widgets/systelab-dialog-test';
+import { Button, Datepicker, InputField } from '../../../../widgets';
+import { SystelabDialogTest } from '../../../../widgets/systelab-dialog-test';
 
 
 export class PatientAllergyDialog extends SystelabDialogTest {

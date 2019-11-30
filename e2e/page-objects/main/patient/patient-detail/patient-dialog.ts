@@ -1,8 +1,8 @@
 import { by, element } from 'protractor';
-import { Button, Grid, InputField, Tabs } from '../../../widgets';
-import { SystelabDialogTest } from '../../../widgets/systelab-dialog-test';
+import { Button, Grid, InputField, Tabs } from '../../../../widgets';
+import { SystelabDialogTest } from '../../../../widgets/systelab-dialog-test';
 import { PatientAllergyDialog } from './patient-allergy-dialog';
-import { FormData } from '../../../services/form.service';
+import { FormData } from '../../../../services/form.service';
 
 export class PatientDialog extends SystelabDialogTest {
 	public static readonly tabs = ['General', 'Allergies'];
