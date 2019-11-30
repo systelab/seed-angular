@@ -2,6 +2,8 @@ import { browser, ElementArrayFinder, ElementFinder } from 'protractor';
 import { FormData } from '../services/form.service';
 import { JSConsole } from './js-console';
 import { Widget } from '../widgets';
+import { BasePage } from '../page-objects/base-page';
+import { SystelabDialogTest } from '../widgets/systelab-dialog-test';
 
 declare const allure: any;
 
@@ -49,6 +51,12 @@ export class TestUtil {
 		this.doIt3(expectation, verbose, name + ' is equals to ' + expectedCount, n, name, expectedCount);
 	}
 
+	public static checkBoolean(n: Promise<boolean>, name: string, verbose = true) {
+		let expectation = (n, name) => expect(n).toBeTruthy(name)
+		this.doIt2(expectation, verbose, name, n, name);
+	}
+
+
 	public static checkCountGreaterThan(field: ElementArrayFinder, name: string, expectedCount: number, verbose = true) {
 		let expectation = (field, name, expectedCount) => expect(field.count())
 			.toBeGreaterThan(expectedCount, 'Count "' + name + '" should be greater than "' + expectedCount + '"');
@@ -64,11 +72,9 @@ export class TestUtil {
 	public static checkWidgetPresentAndDisplayed(obj: Widget, desc: string)
 	{
 		let expectation = (obj,desc)=> {
-			expect(obj.getElement()
-			.isPresent())
+			expect(obj.isPresent())
 			.toEqual(true, desc + ' should be present on the DOM');
-			expect (obj.getElement()
-			.isDisplayed())
+			expect (obj.isDisplayed())
 			.toEqual(true, desc + ' should be displayed'); };
 
 		this.doIt2(expectation, false, 'Widget is Present', obj, desc);
@@ -76,7 +82,7 @@ export class TestUtil {
 
 	public static checkForm(formData: FormData[], name: string, verbose = true) {
 		let expectation =(formData, name)=>formData.forEach((formDataItem) => {
-			expect(formDataItem.field.getAttribute('value'))
+			expect(formDataItem.field.getText())
 				.toEqual(formDataItem.value, 'Field "' + formDataItem.name + '" in form "' + name + '" should be ' + formDataItem.value);
 		});
 		this.doIt2(expectation, verbose, 'Check data in form ' + name, formData, name);
@@ -121,6 +127,20 @@ export class TestUtil {
 		let expectation = (field, name, expectedValue )=>expect(field.getAttribute('disabled'))
 			.toEqual(expectedValue, 'Field "' + name + '" should be ' + expectedValue);
 		this.doIt3(expectation, verbose, 'Field "' + name + '" is disabled is equal ' + expectedValue, field, name, expectedValue);
+	}
+
+	public static checkPageIsPresentAndDisplayed(page: BasePage) {
+		expect(page.isPresent())
+			.toEqual(true, 'Window should be present on the DOM');
+		expect(page.isDisplayed())
+			.toEqual(true, 'Window should be displayed');
+	}
+
+	public static checkIsPresentAndDisplayed(widget: Widget) {
+		expect(widget.isPresent())
+			.toEqual(true, 'Window should be present on the DOM');
+		expect(widget.isDisplayed())
+			.toEqual(true, 'Window should be displayed');
 	}
 
 	private static doIt2(expectation: (x,y) => any, verbose, text, param1, param2) {

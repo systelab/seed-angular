@@ -1,34 +1,30 @@
 import { by } from 'protractor';
-import { BasePage } from '../../base-page';
 import { Button, Datepicker, InputField } from '../../../widgets';
+import { SystelabDialogTest } from '../../../widgets/systelab-dialog-test';
 
 
-export class PatientAllergyDetailPage extends BasePage {
-
-	constructor() {
-		super('patient-allergy-dialog');
-	}
+export class PatientAllergyDialog extends SystelabDialogTest {
 
 	public getSubmitButton(): Button {
-		return new Button(this.getObjectById('PatientSubmitButton'));
+		return new Button(this.byId('PatientSubmitButton'));
 	}
 
 	public getAllergyNotes(): InputField {
-		return new InputField(this.getObjectById('PatientAllergyNotes'));
+		return new InputField(this.byId('PatientAllergyNotes'));
 	}
 
 	public getAssertedDate(): Datepicker {
-		return new Datepicker(this.current.all(by.tagName('systelab-datepicker'))
+		return new Datepicker(this.elem.all(by.tagName('systelab-datepicker'))
 			.get(0));
 	}
 
 	public getLastOccurrenceDate(): Datepicker {
-		return new Datepicker(this.current.all(by.tagName('systelab-datepicker'))
+		return new Datepicker(this.elem.all(by.tagName('systelab-datepicker'))
 			.get(1));
 	}
 
 	public getAllergyCombobox() {
-		return this.current.element(by.tagName('allergy-combobox'));
+		return this.elem.element(by.tagName('allergy-combobox'));
 	}
 
 	public getAllergyComboInput() {

@@ -1,9 +1,10 @@
-import { by } from 'protractor';
-import { BasePage } from '../base-page';
+import { by, element } from 'protractor';
 import { Button, Grid } from '../../widgets';
 import { ButtonState } from '../../services/form.service';
+import { SystelabDialogTest } from '../../widgets/systelab-dialog-test';
+import { PatientDialog } from './patient-detail/patient-dialog.po';
 
-export class PatientMaintenancePage extends BasePage {
+export class PatientMaintenanceDialog extends SystelabDialogTest {
 
 	public title = 'Patient management';
 	public buttons: ButtonState[] = [{
@@ -20,23 +21,24 @@ export class PatientMaintenancePage extends BasePage {
 		enable: true
 	}];
 
-	constructor() {
-		super('patient-maintenance-dialog');
-	}
-
 	public getButtonOptions(): Button {
-		return new Button(this.getObjectById('PatientMaintenanceOptionsButton'));
+		return new Button(this.byId('PatientMaintenanceOptionsButton'));
 	}
 
 	public getButtonAdd(): Button {
-		return new Button(this.getObjectById('PatientMaintenanceAddButton'));
+		return new Button(this.byId('PatientMaintenanceAddButton'));
 	}
 
 	public getButtonRefresh(): Button {
-		return new Button(this.getObjectById('PatientMaintenanceRefreshButton'));
+		return new Button(this.byId('PatientMaintenanceRefreshButton'));
 	}
 
 	public getPatientsGrid(): Grid {
-		return new Grid(this.getObjectById('PatientTable'));
+		return new Grid(this.byId('PatientTable'));
 	}
+
+	public getPatientDialog(): PatientDialog {
+		return new PatientDialog(element(by.tagName('patient-dialog')));
+	}
+
 }

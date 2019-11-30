@@ -1,10 +1,11 @@
 import { ElementFinder } from 'protractor';
-import { BasePage } from '../page-objects/base-page';
 import { TestUtil } from '../utilities/test-util';
+import { InputableInterface } from '../widgets/inputable.interface';
+import { SystelabDialogTest } from '../widgets/systelab-dialog-test';
 declare const allure: any;
 
 export interface FormData {
-    field: ElementFinder;
+    field: InputableInterface;
     name: string;
     value: string;
 }
@@ -28,39 +29,39 @@ export class FormService {
     public static fillForm(formData: FormData[], name: string) {
         allure.createStep('Action: Fill form ' + name, () => {
             formData.forEach((formDataItem) => {
-                formDataItem.field.sendKeys(formDataItem.value);
-                expect(formDataItem.field.getAttribute('value'))
+                formDataItem.field.setText(formDataItem.value);
+                expect(formDataItem.field.getText())
                     .toEqual(formDataItem.value, 'Field "' + formDataItem.name + '" in form "' + name + '" should be ' + formDataItem.value);
             });
         })();
     }
 
-    public static clearField(field: ElementFinder) {
-        field.clear();
+    public static clearField(widget: InputableInterface) {
+        widget.clear();
     }
 
-    public static fillField(field: ElementFinder, name: string, value: string) {
+    public static fillField(widget: InputableInterface, name: string, value: string) {
         allure.createStep('Action: Fill ' + name + ' with value ' + value, () => {
-            field.sendKeys(value);
+            widget.setText(value);
         })();
     }
 
-    public static checkButtons(page: BasePage, buttons: ButtonState[]) {
+    public static checkButtons(page: SystelabDialogTest, buttons: ButtonState[]) {
         allure.createStep('Action: Review the button name and status:' + JSON.stringify(buttons), () => {
 
             TestUtil.checkNumber(page.getNumberOfButtons(), `Number of buttons`, buttons.filter((b) => b.exist).length);
 
             buttons.forEach((buttonElem) => {
-                TestUtil.checkIsPresent(page.getButtonByName(buttonElem.name), `Button ${buttonElem.name}`);
+                TestUtil.checkBoolean(page.getButtonByName(buttonElem.name).isPresent(), `Button ${buttonElem.name} is present`);
             });
 
             buttons.filter((b) => b.enable)
               .forEach((buttonElem) => {
-                  TestUtil.checkIsEnabled(page.getButtonByName(buttonElem.name), `Button ${buttonElem.name}`);
+                  TestUtil.checkBoolean(page.getButtonByName(buttonElem.name).isEnabled(), `Button ${buttonElem.name} is enabled`);
               });
             buttons.filter((b) => !b.enable)
               .forEach((buttonElem) => {
-                  TestUtil.checkIsDisabled(page.getButtonByName(buttonElem.name), `Button ${buttonElem.name}`);
+                  TestUtil.checkBoolean(page.getButtonByName(buttonElem.name).isDisabled(), `Button ${buttonElem.name} is disabled`);
               });
             allure.createStep('The buttons are in the correct status', () => {
             })();

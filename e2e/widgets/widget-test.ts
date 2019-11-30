@@ -8,19 +8,24 @@ export class Widget {
 		return this.elem;
 	}
 
-	public async clear() {
-		await this.elem.clear();
+	public async isPresent(): Promise<boolean> {
+		return await this.elem.isPresent();
 	}
 
-	public async click(): Promise<void> {
-		await this.elem.click();
+	public async isDisplayed(): Promise<boolean> {
+		return await this.elem.isDisplayed();
 	}
 
-	public async setText(text: string): Promise<void> {
-		await this.elem.sendKeys(text);
+	public async isEnabled(): Promise<boolean> {
+		return await this.elem.isEnabled();
 	}
 
-	public async getText(): Promise<string> {
-		return await this.elem.getText()
+	public async isDisabled(): Promise<boolean> {
+		return await this.elem.isEnabled()
+			.then(enabled => !enabled);
+	}
+
+	public byId(id: string): ElementFinder {
+		return this.elem.element(by.id((id)));
 	}
 }
