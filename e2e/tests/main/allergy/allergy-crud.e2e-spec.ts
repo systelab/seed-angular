@@ -1,10 +1,10 @@
 import { browser } from 'protractor';
 import { LoginPage } from '../../../page-objects/login/login.po';
 import { MainPage } from '../../../page-objects/main/main.po';
-import { LoginNavigationService } from '../../../services/login-navigation.service';
-import { TestUtil } from '../../../utilities/test-util';
-import { ButtonState, FormService } from '../../../services/form.service';
-import { MainNavigationService } from '../../../services/main-navigation.service';
+import { LoginNavigationService } from '../../../services/login/login-navigation.service';
+import { MainNavigationService } from '../../../services/main/main-navigation.service';
+import { TestUtil } from 'systelab-components-test/lib/utilities';
+import { FormButtonElement, FormService } from 'systelab-components-test/lib/services';
 
 declare const allure: any;
 
@@ -25,7 +25,7 @@ describe('TC0002_AllergyManagement_e2e', () => {
 
 	it('Open allergy creation dialog', () => {
 		const title = 'Create Allergy';
-		const buttons: ButtonState[] = [{
+		const buttons: FormButtonElement[] = [{
 			name:   'Create',
 			exist:  true,
 			enable: true

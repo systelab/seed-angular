@@ -1,6 +1,6 @@
 import { by, element } from 'protractor';
-import { BasePage } from '../base-page';
-import { Button, InputField, Popup } from '../../widgets';
+import { Button, InputField, Popup } from 'systelab-components-test';
+import { BasePage } from 'systelab-components-test/lib/page-objects/base-page';
 
 
 export class LoginPage extends BasePage {

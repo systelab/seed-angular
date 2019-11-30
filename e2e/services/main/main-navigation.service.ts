@@ -1,7 +1,7 @@
-import { MainPage } from '../page-objects/main/main.po';
-import { TestUtil } from '../utilities/test-util';
-import { PatientMaintenanceDialog } from '../page-objects/main/patient/patient-maintenance';
-import { AllergyDetailDialog } from '../page-objects/main/allergy/allergy-detail/allergy-dialog';
+import { MainPage } from '../../page-objects/main/main.po';
+import { PatientMaintenanceDialog } from '../../page-objects/main/patient/patient-maintenance';
+import { AllergyDetailDialog } from '../../page-objects/main/allergy/allergy-detail/allergy-dialog';
+import { TestUtil } from 'systelab-components-test/lib/utilities/test-util';
 
 export class MainNavigationService {
 

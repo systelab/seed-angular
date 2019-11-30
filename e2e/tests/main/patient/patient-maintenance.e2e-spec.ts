@@ -1,10 +1,10 @@
 import { LoginPage } from '../../../page-objects/login/login.po';
 import { MainPage } from '../../../page-objects/main/main.po';
-import { LoginNavigationService } from '../../../services/login-navigation.service';
-import { TestUtil } from '../../../utilities/test-util';
+import { LoginNavigationService } from '../../../services/login/login-navigation.service';
 import { PatientMaintenanceDialog } from '../../../page-objects/main/patient/patient-maintenance';
-import { FormService } from '../../../services/form.service';
-import { MainNavigationService } from '../../../services/main-navigation.service';
+import { MainNavigationService } from '../../../services/main/main-navigation.service';
+import { TestUtil } from 'systelab-components-test/lib/utilities';
+import { FormService } from 'systelab-components-test/lib/services';
 
 declare const allure: any;
 

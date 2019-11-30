@@ -1,8 +1,8 @@
 import { LoginPage } from '../../../page-objects/login/login.po';
 import { MainPage } from '../../../page-objects/main/main.po';
-import { LoginNavigationService } from '../../../services/login-navigation.service';
-import { TestUtil } from '../../../utilities/test-util';
-import { MainNavigationService } from '../../../services/main-navigation.service';
+import { LoginNavigationService } from '../../../services/login/login-navigation.service';
+import { MainNavigationService } from '../../../services/main/main-navigation.service';
+import { TestUtil } from 'systelab-components-test/lib/utilities';
 
 declare const allure: any;
 

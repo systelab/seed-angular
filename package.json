@@ -54,6 +54,7 @@
     "systelab-schematics": "^1.2.10",
     "ts-node": "^6.2.0",
     "tslint": "~5.3.2",
-    "typescript": "3.5.3"
+    "typescript": "3.5.3",
+    "systelab-components-test": "^1.0.10"
   }
 }

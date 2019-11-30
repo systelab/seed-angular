@@ -1,13 +1,12 @@
 import { by, element } from 'protractor';
-import { Button, Grid } from '../../../widgets';
-import { ButtonState } from '../../../services/form.service';
-import { SystelabDialogTest } from '../../../widgets/systelab-dialog-test';
 import { PatientDialog } from './patient-detail/patient-dialog';
+import { Button, Grid, SystelabDialogTest } from 'systelab-components-test';
+import { FormButtonElement } from 'systelab-components-test/lib/services';
 
 export class PatientMaintenanceDialog extends SystelabDialogTest {
 
 	public title = 'Patient management';
-	public buttons: ButtonState[] = [{
+	public buttons: FormButtonElement[] = [{
 		name:   'Options',
 		exist:  true,
 		enable: true

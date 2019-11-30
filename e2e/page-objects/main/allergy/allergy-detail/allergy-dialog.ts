@@ -1,7 +1,6 @@
 import { by } from 'protractor';
-import { Button, InputField } from '../../../../widgets';
-import { SystelabDialogTest } from '../../../../widgets/systelab-dialog-test';
-import { FormData } from '../../../../services/form.service';
+import { Button, InputField, SystelabDialogTest } from 'systelab-components-test';
+import { FormInputElement } from 'systelab-components-test/lib/services';
 
 export class AllergyDetailDialog extends SystelabDialogTest {
 
@@ -25,10 +24,10 @@ export class AllergyDetailDialog extends SystelabDialogTest {
         return new Button(this.byId('AllergySubmitButton'));
     }
 
-    public getFormData(i?: number): FormData[]{
+    public getFormData(i?: number): FormInputElement[]{
         const baseAllergyValues = ['Name', 'A sign', 'A symptom'];
         const empty = (i === undefined);
-        const formData: FormData[] = [{
+        const form: FormInputElement[] = [{
             field: this.getNameInput(),
             name: 'Name',
             value: empty ? '' : 'Try #' + i + ': ' + baseAllergyValues[0]
@@ -41,6 +40,6 @@ export class AllergyDetailDialog extends SystelabDialogTest {
             name: 'Symptoms',
             value: empty ? '' : 'Try #' + i + ': ' + baseAllergyValues[2]
         }];
-        return (formData);
+        return (form);
     }
 }

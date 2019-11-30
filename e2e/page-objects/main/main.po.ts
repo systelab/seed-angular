@@ -1,8 +1,8 @@
 import { by, element } from 'protractor';
-import { BasePage } from '../base-page';
-import { Button, Grid, Label, Tabs, Icon } from '../../widgets';
 import { AllergyDetailDialog } from './allergy/allergy-detail/allergy-dialog';
 import { PatientMaintenanceDialog } from './patient/patient-maintenance';
+import { Button, Grid, Icon, Label, Tabs } from 'systelab-components-test';
+import { BasePage } from 'systelab-components-test/lib/page-objects';
 
 
 export class MainPage extends BasePage {

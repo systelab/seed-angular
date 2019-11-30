@@ -1,12 +1,12 @@
 import { browser } from 'protractor';
-import { MainNavigationService } from '../../../services/main-navigation.service';
+import { MainNavigationService } from '../../../services/main/main-navigation.service';
 import { LoginPage } from '../../../page-objects/login/login.po';
 import { MainPage } from '../../../page-objects/main/main.po';
-import { TestUtil } from '../../../utilities/test-util';
-import { FormService, ButtonState } from '../../../services/form.service';
 import { PatientDialog } from '../../../page-objects/main/patient/patient-detail/patient-dialog';
 import { PatientMaintenanceDialog } from '../../../page-objects/main/patient/patient-maintenance';
-import { LoginNavigationService } from '../../../services/login-navigation.service';
+import { LoginNavigationService } from '../../../services/login/login-navigation.service';
+import { TestUtil } from 'systelab-components-test/lib/utilities';
+import { FormButtonElement, FormService } from 'systelab-components-test/lib/services';
 
 
 declare const allure: any;
@@ -30,7 +30,7 @@ describe('TC0001_PatientManagement_e2e', () => {
 
     it('Open Patient Creation Dialog', () => {
         const title = 'Create Patient';
-        const buttons: ButtonState[] = [{
+        const buttons: FormButtonElement[] = [{
             name:   'Create',
             exist:  true,
             enable: true

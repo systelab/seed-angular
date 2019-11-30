@@ -1,8 +1,7 @@
 import { by, element } from 'protractor';
-import { Button, Grid, InputField, Tabs } from '../../../../widgets';
-import { SystelabDialogTest } from '../../../../widgets/systelab-dialog-test';
 import { PatientAllergyDialog } from './patient-allergy-dialog';
-import { FormData } from '../../../../services/form.service';
+import { Button, Grid, InputField, SystelabDialogTest, Tabs } from 'systelab-components-test';
+import { FormInputElement } from 'systelab-components-test/lib/services';
 
 export class PatientDialog extends SystelabDialogTest {
 	public static readonly tabs = ['General', 'Allergies'];
@@ -64,11 +63,11 @@ export class PatientDialog extends SystelabDialogTest {
 		return new PatientAllergyDialog(element(by.tagName('patient-allergy-dialog')));
 	}
 
-	public getFormData(i?: number): FormData[] {
+	public getFormData(i?: number): FormInputElement[] {
 		const values = ['Surname', 'Name', 'email@werfen.com', 'Plaza de Europa, 21-23', 'Barcelona', '08908', '41.356439, 2.127791'];
 
 		const empty = (i === undefined);
-		const formData: FormData[] = [{
+		const form: FormInputElement[] = [{
 			field: this.getSurnameInput(),
 			name:  'Surname',
 			value: empty ? '' : 'Try #' + i + ': ' + values[0]
@@ -97,6 +96,6 @@ export class PatientDialog extends SystelabDialogTest {
 			name:  'Address -> Coordinates',
 			value: empty ? '' : 'Try #' + i + ': ' + values[6]
 		}];
-		return (formData);
+		return (form);
 	}
 }
