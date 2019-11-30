@@ -1,5 +1,5 @@
 import { by } from 'protractor';
-import { Button, Datepicker, InputField, SystelabDialogTest } from 'systelab-components-test';
+import { Button, ComboBox, Datepicker, InputField, SystelabDialogTest } from 'systelab-components-test';
 
 export class PatientAllergyDialog extends SystelabDialogTest {
 
@@ -21,17 +21,7 @@ export class PatientAllergyDialog extends SystelabDialogTest {
 			.get(1));
 	}
 
-	public getAllergyCombobox() {
-		return this.elem.element(by.tagName('allergy-combobox'));
-	}
-
-	public getAllergyComboInput() {
-		return this.getAllergyCombobox()
-			.element(by.tagName('input'));
-	}
-
-	public getAllergyList() {
-		return this.getAllergyCombobox()
-			.all(by.css('.ag-cell-value'));
+	public getAllergyCombobox(): ComboBox {
+		return new ComboBox(this.elem.element(by.tagName('allergy-combobox')));
 	}
 }

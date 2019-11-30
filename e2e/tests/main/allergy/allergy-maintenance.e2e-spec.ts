@@ -11,7 +11,6 @@ describe('TC0002_AllergyManagement_e2e', () => {
 	const mainPage = new MainPage();
 
 	beforeAll(() => {
-		LoginNavigationService.navigateToHomePage(loginPage);
 		LoginNavigationService.login(loginPage);
 		MainNavigationService.navigateToAllergyMaintenancePage(mainPage);
 	});

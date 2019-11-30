@@ -4,7 +4,6 @@ import { Button, Grid, InputField, SystelabDialogTest, Tabs } from 'systelab-com
 import { FormInputElement } from 'systelab-components-test/lib/services';
 
 export class PatientDialog extends SystelabDialogTest {
-	public static readonly tabs = ['General', 'Allergies'];
 
 
 	public getEnableSwich() {

@@ -15,7 +15,6 @@ describe('TC0001_PatientManagement_e2e', () => {
     let maintenanceDialog: PatientMaintenanceDialog;
 
     beforeAll(() => {
-        LoginNavigationService.navigateToHomePage(loginPage);
         LoginNavigationService.login(loginPage);
         maintenanceDialog= MainNavigationService.navigateToPatientMaintenancePage(mainPage);
     });
@@ -62,7 +61,7 @@ describe('TC0001_PatientManagement_e2e', () => {
         maintenanceDialog.getPatientDialog().getAddButton().click();
         TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog.getPatientDialog().getPatientAllergyDialog(), 'Patient Allergy Dialog');
         maintenanceDialog.getPatientDialog().getPatientAllergyDialog().getAllergyCombobox().click();
-        maintenanceDialog.getPatientDialog().getPatientAllergyDialog().getAllergyList().get(0).click();
+        maintenanceDialog.getPatientDialog().getPatientAllergyDialog().getAllergyCombobox().getPage().then(page => page[0].click());
 
 /*
         patientAllergyDetailPage.getAssertedDate().setValue('01/01/2019');

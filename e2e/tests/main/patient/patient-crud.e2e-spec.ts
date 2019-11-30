@@ -17,8 +17,7 @@ describe('TC0001_PatientManagement_e2e', () => {
     let maintenanceDialog: PatientMaintenanceDialog;
 
     beforeAll(() => {
-        LoginNavigationService.navigateToHomePage(loginPage);
-        LoginNavigationService.login(loginPage, false);
+        LoginNavigationService.login(loginPage);
         maintenanceDialog=MainNavigationService.navigateToPatientMaintenancePage(new MainPage());
         TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog,'Maintenance Dialog');
     });
@@ -97,12 +96,13 @@ describe('TC0001_PatientManagement_e2e', () => {
     });
 
    it('Click on a row and open Patient Detail', () => {
-        const tabs = PatientDialog.tabs;
+        const tabNames = ['General', 'Allergies'];
+
         maintenanceDialog.getPatientsGrid().clickOnCell(0,'name');
         TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog.getPatientDialog(), 'Patient Dialog');
 
-        TestUtil.checkNumber(maintenanceDialog.getPatientDialog().getTabs().getNumberOfTabs(), 'Tabs number', tabs.length);
-        tabs.forEach((tabElement, index) => {
+        TestUtil.checkNumber(maintenanceDialog.getPatientDialog().getTabs().getNumberOfTabs(), 'Tabs number', tabNames.length);
+        tabNames.forEach((tabElement, index) => {
            TestUtil.checkText(maintenanceDialog.getPatientDialog().getTabs().getTab(index).getText(), `Tab[${tabElement}]: ${tabElement}`, tabElement);
         });
 
@@ -115,9 +115,7 @@ describe('TC0001_PatientManagement_e2e', () => {
         TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog.getPatientDialog(), 'Patient Dialog');
 
         TestUtil.checkForm(maintenanceDialog.getPatientDialog().getFormData(1), 'Patient Management is correct');
-
         FormService.removeValuesInForm(maintenanceDialog.getPatientDialog().getFormData(), 'Patient Management');
-
         FormService.fillForm(maintenanceDialog.getPatientDialog().getFormData(4), 'Patient Creation to update previous one');
         maintenanceDialog.getPatientDialog().getButtonSubmit().click();
 
