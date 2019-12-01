@@ -2,11 +2,12 @@ import { browser } from 'protractor';
 import { MainNavigationService } from '../../../services/main/main-navigation.service';
 import { LoginPage } from '../../../page-objects/login/login.po';
 import { MainPage } from '../../../page-objects/main/main.po';
-import { PatientDialog } from '../../../page-objects/main/patient/patient-detail/patient-dialog';
 import { PatientMaintenanceDialog } from '../../../page-objects/main/patient/patient-maintenance';
 import { LoginNavigationService } from '../../../services/login/login-navigation.service';
 import { TestUtil } from 'systelab-components-test/lib/utilities';
 import { FormButtonElement, FormService } from 'systelab-components-test/lib/services';
+import { Grid } from 'systelab-components-test';
+import { PatientDialog } from '../../../page-objects/main/patient/patient-detail/patient-dialog';
 
 
 declare const allure: any;
@@ -14,12 +15,17 @@ declare const allure: any;
 describe('TC0001_PatientManagement_e2e', () => {
 
     const loginPage = new LoginPage();
-    let maintenanceDialog: PatientMaintenanceDialog;
+    let patientMaintenanceDialog: PatientMaintenanceDialog;
+    let patientDialog : PatientDialog;
+    let patientGrid : Grid;
 
     beforeAll(() => {
         LoginNavigationService.login(loginPage);
-        maintenanceDialog=MainNavigationService.navigateToPatientMaintenancePage(new MainPage());
-        TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog,'Maintenance Dialog');
+        patientMaintenanceDialog=MainNavigationService.navigateToPatientMaintenancePage(new MainPage());
+        patientDialog = patientMaintenanceDialog.getPatientDialog();
+        patientGrid = patientMaintenanceDialog.getPatientsGrid();
+
+        TestUtil.checkWidgetPresentAndDisplayed(patientMaintenanceDialog,'Maintenance Dialog');
     });
 
     beforeEach(() => {
@@ -35,12 +41,12 @@ describe('TC0001_PatientManagement_e2e', () => {
             enable: true
         }];
 
-        maintenanceDialog.getButtonAdd().click();
-        FormService.checkDialogTitleAndButtons(maintenanceDialog.getPatientDialog(), title, buttons);
-        TestUtil.checkForm(maintenanceDialog.getPatientDialog().getFormData(), 'Patient Creation is empty');
-        maintenanceDialog.getPatientDialog().getButtonClose().click();
+        patientMaintenanceDialog.getButtonAdd().click();
+        FormService.checkDialogTitleAndButtons(patientDialog, title, buttons);
+        TestUtil.checkForm(patientDialog.getFormData(), 'Patient Creation is empty');
+        patientDialog.getButtonClose().click();
         allure.createStep('Dialog is closed', () => {
-            TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog,'Maintenance Dialog');
+            TestUtil.checkWidgetPresentAndDisplayed(patientMaintenanceDialog,'Maintenance Dialog');
         })();
     });
 
@@ -49,19 +55,18 @@ describe('TC0001_PatientManagement_e2e', () => {
 
             allure.createStep('Action: Create the patient ' + i, () => {
 
-                maintenanceDialog.getButtonAdd().click();
-                let patientDetail=maintenanceDialog.getPatientDialog();
-                TestUtil.checkWidgetPresentAndDisplayed(patientDetail, 'Patient Dialog');
+                patientMaintenanceDialog.getButtonAdd().click();
+                TestUtil.checkWidgetPresentAndDisplayed(patientDialog, 'Patient Dialog');
 
-                let formData=maintenanceDialog.getPatientDialog().getFormData(i);
+                let formData=patientDialog.getFormData(i);
                 FormService.fillForm(formData, 'Patient Creation Form');
                 TestUtil.checkForm(formData, 'Patient Creation is correct');
 
-                patientDetail.getButtonSubmit().click();
-                TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog,'Maintenance Dialog');
-                TestUtil.checkNumber(maintenanceDialog.getPatientsGrid().getNumberOfRows(), 'Number of Patients', i);
+                patientDialog.getButtonSubmit().click();
+                TestUtil.checkWidgetPresentAndDisplayed(patientMaintenanceDialog,'Maintenance Dialog');
+                TestUtil.checkNumber(patientMaintenanceDialog.getPatientsGrid().getNumberOfRows(), 'Number of Patients', i);
 
-                maintenanceDialog.getPatientsGrid().getRow(i-1)
+                patientGrid.getRow(i-1)
                     .then((cellValues) => {
                         TestUtil.checkText(Promise.resolve(cellValues[2]), 'Row Name', formData[0].value);
                         TestUtil.checkText(Promise.resolve(cellValues[1]), 'Row Surname', formData[1].value);
@@ -73,63 +78,62 @@ describe('TC0001_PatientManagement_e2e', () => {
 
     it('Contextual menu at the patients grid', async () => {
         const menuItems = ['Update', 'Delete'];
+
         for (let row = 0; row < browser.params.repeatabilityNumberPasses; row++) {
             await allure.createStep('Action: Access to the contextual menu at row ' + row + ' in the grid with the buttons: ' + JSON.stringify(menuItems), async () => {
-                maintenanceDialog.getPatientsGrid().clickOnRowMenu(row);
-                 await maintenanceDialog.getPatientsGrid().getMenu().getOptions().then( async (options)=>{
-                     TestUtil.checkText(Promise.resolve(options[0]), 'First Option', menuItems[0]);
-                     TestUtil.checkText(Promise.resolve(options[1]), 'Second Option', menuItems[1]);
-                     await maintenanceDialog.getPatientsGrid().clickOnHeader();
-                });
+                await patientGrid.clickOnRowMenu(row);
+                expect(await patientGrid.getMenu().getOptions()).toEqual(menuItems);
+                await patientGrid.clickOnHeader();
             })();
         }
     });
 
     it('The option Update opens Patient Detail', () => {
         const optionMenuUpdate = 0;
-        maintenanceDialog.getPatientsGrid().clickOnRowMenu(0);
-        maintenanceDialog.getPatientsGrid().getMenu().selectOption(optionMenuUpdate);
-        TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog.getPatientDialog(), 'Patient Dialog');
 
-        maintenanceDialog.getPatientDialog().getButtonClose().click();
-        TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog,'Maintenance Dialog');
+        patientGrid.clickOnRowMenu(0);
+        patientGrid.getMenu().selectOption(optionMenuUpdate);
+        TestUtil.checkWidgetPresentAndDisplayed(patientDialog, 'Patient Dialog');
+
+        patientDialog.getButtonClose().click();
+        TestUtil.checkWidgetPresentAndDisplayed(patientMaintenanceDialog,'Maintenance Dialog');
     });
 
    it('Click on a row and open Patient Detail', () => {
         const tabNames = ['General', 'Allergies'];
 
-        maintenanceDialog.getPatientsGrid().clickOnCell(0,'name');
-        TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog.getPatientDialog(), 'Patient Dialog');
+       patientGrid.clickOnCell(0,'name');
+        TestUtil.checkWidgetPresentAndDisplayed(patientDialog, 'Patient Dialog');
 
-        TestUtil.checkNumber(maintenanceDialog.getPatientDialog().getTabs().getNumberOfTabs(), 'Tabs number', tabNames.length);
+        TestUtil.checkNumber(patientDialog.getTabs().getNumberOfTabs(), 'Tabs number', tabNames.length);
         tabNames.forEach((tabElement, index) => {
-           TestUtil.checkText(maintenanceDialog.getPatientDialog().getTabs().getTab(index).getText(), `Tab[${tabElement}]: ${tabElement}`, tabElement);
+           TestUtil.checkText(patientDialog.getTabs().getTab(index).getText(), `Tab[${tabElement}]: ${tabElement}`, tabElement);
         });
 
-       maintenanceDialog.getPatientDialog().getButtonClose().click();
-       TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog,'Maintenance Dialog');
+       patientDialog.getButtonClose().click();
+       TestUtil.checkWidgetPresentAndDisplayed(patientMaintenanceDialog,'Maintenance Dialog');
     });
 
     it('Modify Patients', () => {
-        maintenanceDialog.getPatientsGrid().clickOnCell(0,'name');
-        TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog.getPatientDialog(), 'Patient Dialog');
+        patientGrid.clickOnCell(0,'name');
+        TestUtil.checkWidgetPresentAndDisplayed(patientDialog, 'Patient Dialog');
 
-        TestUtil.checkForm(maintenanceDialog.getPatientDialog().getFormData(1), 'Patient Management is correct');
-        FormService.removeValuesInForm(maintenanceDialog.getPatientDialog().getFormData(), 'Patient Management');
-        FormService.fillForm(maintenanceDialog.getPatientDialog().getFormData(4), 'Patient Creation to update previous one');
-        maintenanceDialog.getPatientDialog().getButtonSubmit().click();
+        TestUtil.checkForm(patientDialog.getFormData(1), 'Patient Management is correct');
+        FormService.removeValuesInForm(patientDialog.getFormData(), 'Patient Management');
+        FormService.fillForm(patientDialog.getFormData(4), 'Patient Creation to update previous one');
+        patientDialog.getButtonSubmit().click();
 
-        TestUtil.checkWidgetPresentAndDisplayed(maintenanceDialog,'Maintenance Dialog');
-        TestUtil.checkNumber(maintenanceDialog.getPatientsGrid().getNumberOfRows(), 'Rows in table of Patients', 3);
+        TestUtil.checkWidgetPresentAndDisplayed(patientMaintenanceDialog,'Maintenance Dialog');
+        TestUtil.checkNumber(patientGrid.getNumberOfRows(), 'Rows in table of Patients', 3);
     });
 
     it('Delete all elements recently added to the grid', () => {
         const optionMenuDelete = 1;
         for (let k = (browser.params.repeatabilityNumberPasses - 1); k >= 0; k--) {
             allure.createStep(`Action: Delete the Patient at the row #${k}`, () => {
-                maintenanceDialog.getPatientsGrid().clickOnRowMenu(k);
-                maintenanceDialog.getPatientsGrid().getMenu().selectOption(optionMenuDelete);
-                TestUtil.checkNumber(maintenanceDialog.getPatientsGrid().getNumberOfRows(), 'Number of Patients', k);
+                patientGrid.clickOnRowMenu(k);
+                patientGrid.getMenu().selectOption(optionMenuDelete);
+                TestUtil.checkNumber(patientGrid.getNumberOfRows(), 'Number of Patients', k);
             })();
         }
     });

@@ -35,7 +35,4 @@ export class LoginNavigationService {
             loginPage.getEnterButton().click();
         })();
     }
-
-
-
 }

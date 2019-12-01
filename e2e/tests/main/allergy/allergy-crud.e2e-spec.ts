@@ -5,16 +5,22 @@ import { LoginNavigationService } from '../../../services/login/login-navigation
 import { MainNavigationService } from '../../../services/main/main-navigation.service';
 import { TestUtil } from 'systelab-components-test/lib/utilities';
 import { FormButtonElement, FormService } from 'systelab-components-test/lib/services';
+import { AllergyDetailDialog } from '../../../page-objects/main/allergy/allergy-detail/allergy-dialog';
+import { Grid } from 'systelab-components-test';
 
 declare const allure: any;
 
 describe('TC0002_AllergyManagement_e2e', () => {
 	const loginPage = new LoginPage();
 	const mainPage = new MainPage();
+	let allergyDialog: AllergyDetailDialog;
+	let allergyGrid : Grid;
 
 	beforeAll(() => {
 		LoginNavigationService.login(loginPage);
 		MainNavigationService.navigateToAllergyMaintenancePage(mainPage);
+		allergyDialog = mainPage.getAllergyDetailDialog();
+		allergyGrid = mainPage.getAllergyGrid();
 	});
 
 	beforeEach(() => {
@@ -31,12 +37,12 @@ describe('TC0002_AllergyManagement_e2e', () => {
 		}];
 		TestUtil.checkPageIsPresentAndDisplayed(mainPage);
 		mainPage.getAllergyAddButton().click();
-		FormService.checkDialogTitleAndButtons(mainPage.getAllergyDetailDialog(), title, buttons);
-		TestUtil.checkForm(mainPage.getAllergyDetailDialog().getFormData(), 'Allergy Creation is empty');
+		FormService.checkDialogTitleAndButtons(allergyDialog, title, buttons);
+		TestUtil.checkForm(allergyDialog.getFormData(), 'Allergy Creation is empty');
 	});
 
 	it('Close the dialog', () => {
-		mainPage.getAllergyDetailDialog().getButtonClose().click();
+		allergyDialog.getButtonClose().click();
 		allure.createStep('Dialog is closed', () => {
 			TestUtil.checkPageIsPresentAndDisplayed(mainPage);
 		})();
@@ -48,17 +54,17 @@ describe('TC0002_AllergyManagement_e2e', () => {
 			allure.createStep('Action: Create the allergy ' + i, () => {
 
 				mainPage.getAllergyAddButton().click();
-				TestUtil.checkWidgetPresentAndDisplayed(mainPage.getAllergyDetailDialog(), 'Allergy Dialog');
-				let formData = mainPage.getAllergyDetailDialog().getFormData(i);
+				TestUtil.checkWidgetPresentAndDisplayed(allergyDialog, 'Allergy Dialog');
+				let formData = allergyDialog.getFormData(i);
 
-				FormService.fillForm(mainPage.getAllergyDetailDialog().getFormData(i), 'Allergy Creation Form');
+				FormService.fillForm(allergyDialog.getFormData(i), 'Allergy Creation Form');
 				TestUtil.checkForm(formData, 'Allergy Creation is correct');
 
-				mainPage.getAllergyDetailDialog().getButtonSubmit().click();
+				allergyDialog.getButtonSubmit().click();
 				TestUtil.checkPageIsPresentAndDisplayed(mainPage);
-				TestUtil.checkNumber(mainPage.getAllergyGrid().getNumberOfRows(), 'Number of Allergies', i);
+				TestUtil.checkNumber(allergyGrid.getNumberOfRows(), 'Number of Allergies', i);
 
-				mainPage.getAllergyGrid()
+				allergyGrid
 					.getRow(i - 1)
 					.then((cellValues) => {
 						TestUtil.checkText(Promise.resolve(cellValues[1]), 'Col Name', formData[0].value);
@@ -70,60 +76,56 @@ describe('TC0002_AllergyManagement_e2e', () => {
 	});
 
 	it('Contextual menu at the allergies grid', async () => {
-
 		const menuItems = ['Update', 'Delete'];
+
 		for (let row = 0; row < browser.params.repeatabilityNumberPasses; row++) {
 			await allure.createStep('Action: Access to the contextual menu at row ' + row + ' in the grid with the buttons: ' + JSON.stringify(menuItems), async () => {
-				await mainPage.getAllergyGrid().clickOnRowMenu(row);
-				await mainPage.getAllergyGrid().getMenu().getOptions().then(async (options) => {
-						TestUtil.checkText(Promise.resolve(options[0]), 'First Option', menuItems[0]);
-						TestUtil.checkText(Promise.resolve(options[1]), 'Second Option', menuItems[1]);
-						await mainPage.getAllergyGrid().clickOnHeader();
-					});
+				await allergyGrid.clickOnRowMenu(row);
+				expect(await allergyGrid.getMenu().getOptions()).toEqual(menuItems);
+				await allergyGrid.clickOnHeader();
 			})();
 		}
 	});
 
 	it('The option Update opens Allergy Detail', () => {
 		const optionMenuUpdate = 0;
-		mainPage.getAllergyGrid().clickOnRowMenu(0);
-		mainPage.getAllergyGrid().getMenu().selectOption(optionMenuUpdate);
-		TestUtil.checkWidgetPresentAndDisplayed(mainPage.getAllergyDetailDialog(), 'Allergy Dialog');
+		allergyGrid.clickOnRowMenu(0);
+		allergyGrid.getMenu().selectOption(optionMenuUpdate);
+		TestUtil.checkWidgetPresentAndDisplayed(allergyDialog, 'Allergy Dialog');
 
-		mainPage.getAllergyDetailDialog().getButtonClose().click();
+		allergyDialog.getButtonClose().click();
 		TestUtil.checkPageIsPresentAndDisplayed(mainPage);
 	});
 
 	it('Click on a row and open Allergy Detail', () => {
-		mainPage.getAllergyGrid().clickOnCell(0, 'name');
-		TestUtil.checkWidgetPresentAndDisplayed(mainPage.getAllergyDetailDialog(), 'Allergy Dialog');
-		mainPage.getAllergyDetailDialog().getButtonClose().click();
+		allergyGrid.clickOnCell(0, 'name');
+		TestUtil.checkWidgetPresentAndDisplayed(allergyDialog, 'Allergy Dialog');
+		allergyDialog.getButtonClose().click();
 		TestUtil.checkPageIsPresentAndDisplayed(mainPage);
 	});
 
 	it('Modify Allergies', () => {
-		mainPage.getAllergyGrid().clickOnCell(0, 'name');
-		TestUtil.checkWidgetPresentAndDisplayed(mainPage.getAllergyDetailDialog(), 'Allergy Dialog');
+		allergyGrid.clickOnCell(0, 'name');
+		TestUtil.checkWidgetPresentAndDisplayed(allergyDialog, 'Allergy Dialog');
 
-		TestUtil.checkForm(mainPage.getAllergyDetailDialog().getFormData(1), 'Allergy Management is correct');
+		TestUtil.checkForm(allergyDialog.getFormData(1), 'Allergy Management is correct');
 
-		FormService.removeValuesInForm(mainPage.getAllergyDetailDialog().getFormData(), 'Allergy Management');
+		FormService.removeValuesInForm(allergyDialog.getFormData(), 'Allergy Management');
 
-		FormService.fillForm(mainPage.getAllergyDetailDialog().getFormData(4), 'Allergy Creation to update previous one');
-		mainPage.getAllergyDetailDialog().getButtonSubmit().click();
+		FormService.fillForm(allergyDialog.getFormData(4), 'Allergy Creation to update previous one');
+		allergyDialog.getButtonSubmit().click();
 
 		TestUtil.checkPageIsPresentAndDisplayed(mainPage);
-		TestUtil.checkNumber(mainPage.getAllergyGrid()
-			.getNumberOfRows(), 'Rows in table of Allergies', 3);
+		TestUtil.checkNumber(allergyGrid.getNumberOfRows(), 'Rows in table of Allergies', 3);
 	});
 
 	it('Delete all elements recently added to the grid', () => {
 		const optionMenuDelete = 1;
 		for (let k = (browser.params.repeatabilityNumberPasses - 1); k >= 0; k--) {
 			allure.createStep(`Action: Delete the Allergy at the row #${k}`, () => {
-				mainPage.getAllergyGrid().clickOnRowMenu(0);
-				mainPage.getAllergyGrid().getMenu().selectOption(optionMenuDelete);
-				TestUtil.checkNumber(mainPage.getAllergyGrid().getNumberOfRows(), 'Number of Allergies', k);
+				allergyGrid.clickOnRowMenu(0);
+				allergyGrid.getMenu().selectOption(optionMenuDelete);
+				TestUtil.checkNumber(allergyGrid.getNumberOfRows(), 'Number of Allergies', k);
 			})();
 		}
 	});
