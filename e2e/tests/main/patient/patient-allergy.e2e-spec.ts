@@ -3,33 +3,34 @@ import { MainPage } from '../../../page-objects/main/main.po';
 import { LoginNavigationService } from '../../../services/login/login-navigation.service';
 import { MainNavigationService } from '../../../services/main/main-navigation.service';
 import { TestUtil } from 'systelab-components-test/lib/utilities';
+import { MainActionService } from '../../../services/main/main-action.service';
+import { main } from '@angular/compiler-cli/src/main';
+import { PatientDialog } from '../../../page-objects/main/patient/patient-detail/patient-dialog';
+import { PatientMaintenanceDialog } from '../../../page-objects/main/patient/patient-maintenance';
 
 declare const allure: any;
 
-describe('TC0003_PatientManagement_Allergy_e2e', () => {
+fdescribe('TC0003_PatientManagement_Allergy_e2e', () => {
 
 	const loginPage = new LoginPage();
 	const mainPage = new MainPage();
-	let patientMaintenanceDialog;
-	let patientDialog;
+	let patientMaintenanceDialog: PatientMaintenanceDialog;
+	let patientDialog: PatientDialog;
 
 
 	beforeAll(async () => {
 		await LoginNavigationService.login(loginPage);
-		await MainNavigationService.createAllergy(mainPage, ['Name1', 'Signs1', 'Symptoms1']);
-		await MainNavigationService.createPatient(mainPage, ['Patient1', 'Surname1', 'email@kk.com', 'Sample St', 'Khartum', '112234', '12.123456 32.15246']);
-		await MainNavigationService.navigateToPatientMaintenancePage(mainPage);
-		patientMaintenanceDialog = mainPage.getPatientMaintenanceDialog();
-		await patientMaintenanceDialog.getPatientsGrid().clickOnCell(0, 'name');
-		patientDialog = patientMaintenanceDialog.getPatientDialog();
-		await patientDialog.getTabs().selectTab(1);
+		await MainActionService.createAllergy(mainPage, ['Name1', 'Signs1', 'Symptoms1']);
+		await MainActionService.createPatient(mainPage, ['Patient1', 'Surname1', 'email@kk.com', 'Sample St', 'Khartum', '112234', '12.123456 32.15246']);
+		patientMaintenanceDialog =await MainNavigationService.navigateToPatientMaintenancePage(mainPage);
+		patientDialog = await MainNavigationService.navigateToPatientDialog(patientMaintenanceDialog,0);
 	});
 
 	afterAll(async () => {
-		await patientDialog.getButtonClose().click();
-		await patientMaintenanceDialog.getButtonClose().click();
-		await MainNavigationService.deleteFirstPatient(mainPage);
-		await MainNavigationService.deleteFirstAllergy(mainPage);
+		await patientDialog.back();
+		await patientMaintenanceDialog.back();
+		await MainActionService.deleteFirstPatient(mainPage);
+		await MainActionService.deleteFirstAllergy(mainPage);
 	});
 
 	beforeEach(async () => {

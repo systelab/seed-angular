@@ -48,7 +48,6 @@ describe('TC0001_PatientManagement_e2e', () => {
             exist:  true,
             enable: true
         }];
-
         await patientMaintenanceDialog.getButtonAdd().click();
         await FormService.checkDialogTitleAndButtons(patientDialog, title, buttons);
         await TestUtil.checkForm(patientDialog.getFormData(), 'Patient Creation is empty');
