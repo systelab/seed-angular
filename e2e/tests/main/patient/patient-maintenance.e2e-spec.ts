@@ -13,9 +13,10 @@ describe('TC0001_PatientManagement_e2e', () => {
 	const mainPage = new MainPage();
 	let patientMaintenanceDialog: PatientMaintenanceDialog;
 
-	beforeAll(() => {
-		LoginNavigationService.login(loginPage);
-		patientMaintenanceDialog = MainNavigationService.navigateToPatientMaintenancePage(mainPage);
+	beforeAll(async () => {
+		await LoginNavigationService.login(loginPage);
+		await MainNavigationService.navigateToPatientMaintenancePage(mainPage);
+		patientMaintenanceDialog = mainPage.getPatientMaintenanceDialog();
 	});
 
 	beforeEach(() => {
@@ -23,10 +24,10 @@ describe('TC0001_PatientManagement_e2e', () => {
 			loginPage.appVersion, 'userName');
 	});
 
-	it('Access to the Patient Management Dialog', () => {
-		FormService.checkDialogTitleAndButtons(patientMaintenanceDialog, patientMaintenanceDialog.title, patientMaintenanceDialog.buttons);
+	it('Access to the Patient Management Dialog', async () => {
+		await FormService.checkDialogTitleAndButtons(patientMaintenanceDialog, patientMaintenanceDialog.title, patientMaintenanceDialog.buttons);
 		const titles = ['', 'Name', 'Surname', 'Email'];
-		expect(patientMaintenanceDialog.getPatientsGrid().getGridHeader()).toEqual(titles);
+		expect(await patientMaintenanceDialog.getPatientsGrid().getGridHeader()).toEqual(titles);
 	});
 
 });

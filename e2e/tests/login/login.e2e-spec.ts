@@ -17,18 +17,18 @@ describe('Login Test Case: MLG_TC106_GEN_Login', () => {
 		mainPage = new MainPage();
 	});
 
-	it('Login correct', () => {
-		LoginNavigationService.loginWithUserNameAndPassword(login, browser.params.login.user, browser.params.login.password);
-		allure.createStep('The home page is displayed', () => {
-			TestUtil.checkPageIsPresentAndDisplayed(mainPage);
-			TestUtil.checkText(mainPage.getFullUsernameField().getText(), 'Logged user', 'Administrator')
+	it('Login correct', async () => {
+		await LoginNavigationService.loginWithUserNameAndPassword(login, browser.params.login.user, browser.params.login.password);
+		await allure.createStep('The home page is displayed', async () => {
+			await TestUtil.checkPageIsPresentAndDisplayed(mainPage);
+			await TestUtil.checkText(mainPage.getFullUsernameField().getText(), 'Logged user', 'Administrator')
 		})();
 	});
 
-	it('Login with an incorrect password', () => {
-		LoginNavigationService.loginWithUserNameAndPassword(login, 'noUser', 'noPass');
-		allure.createStep('The application returns an Invalid User Name and Password error', () => {
-			TestUtil.checkText(login.getPopupMessage().getText(), 'Logged user', 'Invalid username or password')
+	it('Login with an incorrect password', async () => {
+		await LoginNavigationService.loginWithUserNameAndPassword(login, 'noUser', 'noPass');
+		await allure.createStep('The application returns an Invalid User Name and Password error', async () => {
+			await TestUtil.checkText(login.getPopupMessage().getText(), 'Logged user', 'Invalid username or password')
 		})();
 	});
 });

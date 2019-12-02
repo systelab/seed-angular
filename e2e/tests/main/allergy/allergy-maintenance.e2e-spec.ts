@@ -10,9 +10,9 @@ describe('TC0002_AllergyManagement_e2e', () => {
 	const loginPage = new LoginPage();
 	const mainPage = new MainPage();
 
-	beforeAll(() => {
-		LoginNavigationService.login(loginPage);
-		MainNavigationService.navigateToAllergyMaintenancePage(mainPage);
+	beforeAll(async () => {
+		await LoginNavigationService.login(loginPage);
+		await MainNavigationService.navigateToAllergyMaintenancePage(mainPage);
 	});
 
 	beforeEach(() => {
@@ -20,11 +20,11 @@ describe('TC0002_AllergyManagement_e2e', () => {
 			loginPage.appVersion, 'userName');
 	});
 
-	it('Access to the allergy screen', () => {
+	it('Access to the allergy screen', async () => {
 		const tabs = ['Allergies'];
 		const titles = ['', 'Name', 'Signs', 'Symptoms']
-		TestUtil.checkNumber(mainPage.getConfigTabs().getNumberOfTabs(), 'tabs', 1);
-		TestUtil.checkText(mainPage.getConfigTabs().getTab(0).getText(), `Tab[0]: ${tabs[0]}`, tabs[0]);
-		expect(mainPage.getAllergyGrid().getGridHeader()).toEqual(titles);
+		await TestUtil.checkNumber(mainPage.getConfigTabs().getNumberOfTabs(), 'tabs', 1);
+		await TestUtil.checkText(mainPage.getConfigTabs().getTab(0).getText(), `Tab[0]: ${tabs[0]}`, tabs[0]);
+		expect(await mainPage.getAllergyGrid().getGridHeader()).toEqual(titles);
 	});
 });

@@ -16,9 +16,9 @@ describe('TC0002_AllergyManagement_e2e', () => {
 	let allergyDialog: AllergyDetailDialog;
 	let allergyGrid : Grid;
 
-	beforeAll(() => {
-		LoginNavigationService.login(loginPage);
-		MainNavigationService.navigateToAllergyMaintenancePage(mainPage);
+	beforeAll(async () => {
+		await LoginNavigationService.login(loginPage);
+		await MainNavigationService.navigateToAllergyMaintenancePage(mainPage);
 		allergyDialog = mainPage.getAllergyDetailDialog();
 		allergyGrid = mainPage.getAllergyGrid();
 	});
@@ -28,49 +28,47 @@ describe('TC0002_AllergyManagement_e2e', () => {
 			loginPage.appVersion, 'userName');
 	});
 
-	it('Open allergy creation dialog', () => {
+	it('Open allergy creation dialog', async () => {
 		const title = 'Create Allergy';
 		const buttons: FormButtonElement[] = [{
 			name:   'Create',
 			exist:  true,
 			enable: true
 		}];
-		TestUtil.checkPageIsPresentAndDisplayed(mainPage);
-		mainPage.getAllergyAddButton().click();
-		FormService.checkDialogTitleAndButtons(allergyDialog, title, buttons);
-		TestUtil.checkForm(allergyDialog.getFormData(), 'Allergy Creation is empty');
+		await TestUtil.checkPageIsPresentAndDisplayed(mainPage);
+		await mainPage.getAllergyAddButton().click();
+		await FormService.checkDialogTitleAndButtons(allergyDialog, title, buttons);
+		await TestUtil.checkForm(allergyDialog.getFormData(), 'Allergy Creation is empty');
 	});
 
-	it('Close the dialog', () => {
-		allergyDialog.getButtonClose().click();
-		allure.createStep('Dialog is closed', () => {
-			TestUtil.checkPageIsPresentAndDisplayed(mainPage);
+	it('Close the dialog', async () => {
+		await allergyDialog.getButtonClose().click();
+		await allure.createStep('Dialog is closed', async () => {
+			await TestUtil.checkPageIsPresentAndDisplayed(mainPage);
 		})();
 	});
 
-	it('Create Allergies', () => {
+	it('Create Allergies', async () => {
 		for (let i = 1; i <= browser.params.repeatabilityNumberPasses; i++) {
 
-			allure.createStep('Action: Create the allergy ' + i, () => {
+			await allure.createStep('Action: Create the allergy ' + i, async () => {
 
-				mainPage.getAllergyAddButton().click();
-				TestUtil.checkWidgetPresentAndDisplayed(allergyDialog, 'Allergy Dialog');
+				await mainPage.getAllergyAddButton().click();
+				await TestUtil.checkWidgetPresentAndDisplayed(allergyDialog, 'Allergy Dialog');
 				let formData = allergyDialog.getFormData(i);
 
-				FormService.fillForm(allergyDialog.getFormData(i), 'Allergy Creation Form');
-				TestUtil.checkForm(formData, 'Allergy Creation is correct');
+				await FormService.fillForm(allergyDialog.getFormData(i), 'Allergy Creation Form');
+				await TestUtil.checkForm(formData, 'Allergy Creation is correct');
 
-				allergyDialog.getButtonSubmit().click();
-				TestUtil.checkPageIsPresentAndDisplayed(mainPage);
-				TestUtil.checkNumber(allergyGrid.getNumberOfRows(), 'Number of Allergies', i);
+				await allergyDialog.getButtonSubmit().click();
+				await TestUtil.checkPageIsPresentAndDisplayed(mainPage);
+				await TestUtil.checkNumber(allergyGrid.getNumberOfRows(), 'Number of Allergies', i);
 
-				allergyGrid
-					.getRow(i - 1)
-					.then((cellValues) => {
-						TestUtil.checkText(Promise.resolve(cellValues[1]), 'Col Name', formData[0].value);
-						TestUtil.checkText(Promise.resolve(cellValues[2]), 'Col Signs', formData[1].value);
-						TestUtil.checkText(Promise.resolve(cellValues[3]), 'Col Symptoms', formData[2].value);
-					});
+				let row=await allergyGrid.getRow(i - 1);
+				await TestUtil.checkText(Promise.resolve(row[1]), 'Col Name', formData[0].value);
+				await TestUtil.checkText(Promise.resolve(row[2]), 'Col Signs', formData[1].value);
+				await TestUtil.checkText(Promise.resolve(row[3]), 'Col Symptoms', formData[2].value);
+
 			})();
 		}
 	});
@@ -87,45 +85,45 @@ describe('TC0002_AllergyManagement_e2e', () => {
 		}
 	});
 
-	it('The option Update opens Allergy Detail', () => {
+	it('The option Update opens Allergy Detail', async () => {
 		const optionMenuUpdate = 0;
-		allergyGrid.clickOnRowMenu(0);
-		allergyGrid.getMenu().selectOption(optionMenuUpdate);
-		TestUtil.checkWidgetPresentAndDisplayed(allergyDialog, 'Allergy Dialog');
+		await allergyGrid.clickOnRowMenu(0);
+		await allergyGrid.getMenu().selectOption(optionMenuUpdate);
+		await TestUtil.checkWidgetPresentAndDisplayed(allergyDialog, 'Allergy Dialog');
 
-		allergyDialog.getButtonClose().click();
-		TestUtil.checkPageIsPresentAndDisplayed(mainPage);
+		await allergyDialog.getButtonClose().click();
+		await TestUtil.checkPageIsPresentAndDisplayed(mainPage);
 	});
 
-	it('Click on a row and open Allergy Detail', () => {
-		allergyGrid.clickOnCell(0, 'name');
-		TestUtil.checkWidgetPresentAndDisplayed(allergyDialog, 'Allergy Dialog');
-		allergyDialog.getButtonClose().click();
-		TestUtil.checkPageIsPresentAndDisplayed(mainPage);
+	it('Click on a row and open Allergy Detail', async () => {
+		await allergyGrid.clickOnCell(0, 'name');
+		await TestUtil.checkWidgetPresentAndDisplayed(allergyDialog, 'Allergy Dialog');
+		await allergyDialog.getButtonClose().click();
+		await TestUtil.checkPageIsPresentAndDisplayed(mainPage);
 	});
 
-	it('Modify Allergies', () => {
-		allergyGrid.clickOnCell(0, 'name');
-		TestUtil.checkWidgetPresentAndDisplayed(allergyDialog, 'Allergy Dialog');
+	it('Modify Allergies', async () => {
+		await allergyGrid.clickOnCell(0, 'name');
+		await TestUtil.checkWidgetPresentAndDisplayed(allergyDialog, 'Allergy Dialog');
 
-		TestUtil.checkForm(allergyDialog.getFormData(1), 'Allergy Management is correct');
+		await TestUtil.checkForm(allergyDialog.getFormData(1), 'Allergy Management is correct');
 
-		FormService.removeValuesInForm(allergyDialog.getFormData(), 'Allergy Management');
+		await FormService.removeValuesInForm(allergyDialog.getFormData(), 'Allergy Management');
 
-		FormService.fillForm(allergyDialog.getFormData(4), 'Allergy Creation to update previous one');
-		allergyDialog.getButtonSubmit().click();
+		await FormService.fillForm(allergyDialog.getFormData(4), 'Allergy Creation to update previous one');
+		await allergyDialog.getButtonSubmit().click();
 
-		TestUtil.checkPageIsPresentAndDisplayed(mainPage);
-		TestUtil.checkNumber(allergyGrid.getNumberOfRows(), 'Rows in table of Allergies', 3);
+		await TestUtil.checkPageIsPresentAndDisplayed(mainPage);
+		await TestUtil.checkNumber(allergyGrid.getNumberOfRows(), 'Rows in table of Allergies', 3);
 	});
 
-	it('Delete all elements recently added to the grid', () => {
+	it('Delete all elements recently added to the grid', async () => {
 		const optionMenuDelete = 1;
 		for (let k = (browser.params.repeatabilityNumberPasses - 1); k >= 0; k--) {
-			allure.createStep(`Action: Delete the Allergy at the row #${k}`, () => {
-				allergyGrid.clickOnRowMenu(0);
-				allergyGrid.getMenu().selectOption(optionMenuDelete);
-				TestUtil.checkNumber(allergyGrid.getNumberOfRows(), 'Number of Allergies', k);
+			await allure.createStep(`Action: Delete the Allergy at the row #${k}`, async () => {
+				await allergyGrid.clickOnRowMenu(0);
+				await allergyGrid.getMenu().selectOption(optionMenuDelete);
+				await TestUtil.checkNumber(allergyGrid.getNumberOfRows(), 'Number of Allergies', k);
 			})();
 		}
 	});
