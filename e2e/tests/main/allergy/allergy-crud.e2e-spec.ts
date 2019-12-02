@@ -10,7 +10,7 @@ import { Grid } from 'systelab-components-test';
 
 declare const allure: any;
 
-describe('TC0002_AllergyManagement_e2e', () => {
+describe('TC0004_AllergyManagement_e2e', () => {
 	const loginPage = new LoginPage();
 	const mainPage = new MainPage();
 	let allergyDialog: AllergyDetailDialog;
@@ -24,8 +24,16 @@ describe('TC0002_AllergyManagement_e2e', () => {
 	});
 
 	beforeEach(() => {
-		TestUtil.init('TC0002_AllergyManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of an Allergy',
+		TestUtil.init('TC0004_AllergyManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of an Allergy',
 			loginPage.appVersion, 'userName');
+	});
+
+	it('Access to the allergy screen', async () => {
+		const tabs = ['Allergies'];
+		const titles = ['', 'Name', 'Signs', 'Symptoms']
+		await TestUtil.checkNumber(mainPage.getConfigTabs().getNumberOfTabs(), 'tabs', 1);
+		await TestUtil.checkText(mainPage.getConfigTabs().getTab(0).getText(), `Tab[0]: ${tabs[0]}`, tabs[0]);
+		expect(await mainPage.getAllergyGrid().getGridHeader()).toEqual(titles);
 	});
 
 	it('Open allergy creation dialog', async () => {
@@ -39,9 +47,6 @@ describe('TC0002_AllergyManagement_e2e', () => {
 		await mainPage.getAllergyAddButton().click();
 		await FormService.checkDialogTitleAndButtons(allergyDialog, title, buttons);
 		await TestUtil.checkForm(allergyDialog.getFormData(), 'Allergy Creation is empty');
-	});
-
-	it('Close the dialog', async () => {
 		await allergyDialog.getButtonClose().click();
 		await allure.createStep('Dialog is closed', async () => {
 			await TestUtil.checkPageIsPresentAndDisplayed(mainPage);
@@ -57,7 +62,7 @@ describe('TC0002_AllergyManagement_e2e', () => {
 				await TestUtil.checkWidgetPresentAndDisplayed(allergyDialog, 'Allergy Dialog');
 				let formData = allergyDialog.getFormData(i);
 
-				await FormService.fillForm(allergyDialog.getFormData(i), 'Allergy Creation Form');
+				await FormService.fillForm(formData, 'Allergy Creation Form');
 				await TestUtil.checkForm(formData, 'Allergy Creation is correct');
 
 				await allergyDialog.getButtonSubmit().click();

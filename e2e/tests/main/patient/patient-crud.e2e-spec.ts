@@ -35,6 +35,12 @@ describe('TC0001_PatientManagement_e2e', () => {
             loginPage.appVersion, 'userName');
     });
 
+    it('Access to the Patient Management Dialog', async () => {
+        await FormService.checkDialogTitleAndButtons(patientMaintenanceDialog, patientMaintenanceDialog.title, patientMaintenanceDialog.buttons);
+        const titles = ['', 'Name', 'Surname', 'Email'];
+        expect(await patientMaintenanceDialog.getPatientsGrid().getGridHeader()).toEqual(titles);
+    });
+
     it('Open Patient Creation Dialog', async () => {
         const title = 'Create Patient';
         const buttons: FormButtonElement[] = [{
