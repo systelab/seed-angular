@@ -1,8 +1,8 @@
 import { browser} from 'protractor';
-import { LoginPage } from '../../page-objects/login/login.po';
-import { MainPage } from '../../page-objects/main/main.po';
-import { LoginNavigationService } from '../../services/login/login-navigation.service';
 import { TestUtil } from 'systelab-components-test/lib/utilities';
+import { LoginPage } from '../page-objects/login.po';
+import { MainPage } from '../../main/page-objects/main.po';
+import { LoginNavigationService } from '../services/login-navigation.service';
 
 declare const allure: any;
 

@@ -1,4 +1,4 @@
-import { MainPage } from '../../page-objects/main/main.po';
+import { MainPage } from '../page-objects/main.po';
 
 declare const allure: any;
 

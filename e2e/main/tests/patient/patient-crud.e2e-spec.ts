@@ -1,13 +1,13 @@
 import { browser } from 'protractor';
-import { MainNavigationService } from '../../../services/main/main-navigation.service';
-import { LoginPage } from '../../../page-objects/login/login.po';
-import { MainPage } from '../../../page-objects/main/main.po';
-import { PatientMaintenanceDialog } from '../../../page-objects/main/patient/patient-maintenance';
-import { LoginNavigationService } from '../../../services/login/login-navigation.service';
 import { TestUtil } from 'systelab-components-test/lib/utilities';
 import { FormButtonElement, FormInputService } from 'systelab-components-test/lib/services';
 import { Grid } from 'systelab-components-test';
-import { PatientDialog } from '../../../page-objects/main/patient/patient-detail/patient-dialog';
+import { LoginPage } from '../../../login/page-objects/login.po';
+import { MainPage } from '../../page-objects/main.po';
+import { PatientMaintenanceDialog } from '../../page-objects/patient/patient-maintenance';
+import { PatientDialog } from '../../page-objects/patient/patient-detail/patient-dialog';
+import { LoginNavigationService } from '../../../login/services/login-navigation.service';
+import { MainNavigationService } from '../../services/main-navigation.service';
 
 declare const allure: any;
 

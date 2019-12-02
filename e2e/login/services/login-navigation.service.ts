@@ -1,5 +1,5 @@
 import { browser } from 'protractor';
-import { LoginPage } from '../../page-objects/login/login.po';
+import { LoginPage } from '../page-objects/login.po';
 
 declare const allure: any;
 

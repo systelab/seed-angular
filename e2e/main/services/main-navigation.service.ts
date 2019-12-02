@@ -1,7 +1,7 @@
-import { MainPage } from '../../page-objects/main/main.po';
 import { TestUtil } from 'systelab-components-test/lib/utilities/test-util';
-import { PatientMaintenanceDialog } from '../../page-objects/main/patient/patient-maintenance';
-import { PatientDialog } from '../../page-objects/main/patient/patient-detail/patient-dialog';
+import { PatientMaintenanceDialog } from '../page-objects/patient/patient-maintenance';
+import { MainPage } from '../page-objects/main.po';
+import { PatientDialog } from '../page-objects/patient/patient-detail/patient-dialog';
 
 declare const allure: any;
 
