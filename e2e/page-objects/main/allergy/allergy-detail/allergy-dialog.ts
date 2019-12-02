@@ -24,7 +24,7 @@ export class AllergyDetailDialog extends SystelabDialogTest {
         return new Button(this.byId('AllergySubmitButton'));
     }
 
-    public getFormData(i?: number): FormInputElement[]{
+    public getInputElements(i?: number): FormInputElement[]{
         const baseAllergyValues = ['Name', 'A sign', 'A symptom'];
         const empty = (i === undefined);
         const form: FormInputElement[] = [{

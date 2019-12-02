@@ -62,7 +62,7 @@ export class PatientDialog extends SystelabDialogTest {
 		return new PatientAllergyDialog(element(by.tagName('patient-allergy-dialog')));
 	}
 
-	public getFormData(i?: number): FormInputElement[] {
+	public getInputElements(i?: number): FormInputElement[] {
 		const values = ['Surname', 'Name', 'email@werfen.com', 'Plaza de Europa, 21-23', 'Barcelona', '08908', '41.356439, 2.127791'];
 
 		const empty = (i === undefined);

@@ -1,5 +1,4 @@
 import { MainPage } from '../../page-objects/main/main.po';
-import { TestUtil } from 'systelab-components-test/lib/utilities/test-util';
 
 declare const allure: any;
 

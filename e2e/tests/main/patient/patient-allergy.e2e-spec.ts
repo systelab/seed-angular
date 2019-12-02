@@ -10,7 +10,7 @@ import { PatientMaintenanceDialog } from '../../../page-objects/main/patient/pat
 
 declare const allure: any;
 
-fdescribe('TC0003_PatientManagement_Allergy_e2e', () => {
+describe('TC0003_PatientManagement_Allergy_e2e', () => {
 
 	const loginPage = new LoginPage();
 	const mainPage = new MainPage();
@@ -55,11 +55,11 @@ fdescribe('TC0003_PatientManagement_Allergy_e2e', () => {
 		})();
 
 		await TestUtil.checkNumber(patientDialog.getAllergyGrid().getNumberOfRows(), 'Number of Allergies for patient', 1);
+
 		await allure.createStep('Action: Remove an allergy to the patient', async () => {
 			await patientDialog.getAllergyGrid().clickOnRowMenu(0);
 			await patientDialog.getAllergyGrid().getMenu().selectOption(1);
 		})();
-
 		await TestUtil.checkNumber(patientDialog.getAllergyGrid().getNumberOfRows(), 'Number of Allergies for patient', 0);
   });
 
