@@ -1,5 +1,5 @@
 import { browser } from 'protractor';
-import { TestUtil } from 'systelab-components-test/lib/utilities';
+import { Check } from 'systelab-components-test/lib/utilities/check';
 import { FormButtonElement, FormInputService } from 'systelab-components-test/lib/services';
 import { Grid } from 'systelab-components-test';
 import { LoginPage } from '../../../login/page-objects/login.po';
@@ -27,22 +27,22 @@ describe('TC0001_PatientManagement_e2e', () => {
         patientDialog = patientMaintenanceDialog.getPatientDialog();
         patientGrid = patientMaintenanceDialog.getPatientsGrid();
 
-        await TestUtil.checkWidgetPresentAndDisplayed(patientMaintenanceDialog,'Maintenance Dialog');
+        await Check.wait(patientMaintenanceDialog);
     });
 
     beforeEach(() => {
-        TestUtil.init('TC0001_PatientManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of a Patient',
+        Check.init('TC0001_PatientManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of a Patient',
             loginPage.appVersion, 'userName');
     });
 
     async function checkGridValues(row,formData) {
-        await TestUtil.checkText(Promise.resolve(row[2]), 'Row Name', formData[0].value);
-        await TestUtil.checkText(Promise.resolve(row[1]), 'Row Surname', formData[1].value);
-        await TestUtil.checkText(Promise.resolve(row[3]), 'Row Email', formData[2].value);
+        await Check.checkText(Promise.resolve(row[2]), 'Row Name', formData[0].value);
+        await Check.checkText(Promise.resolve(row[1]), 'Row Surname', formData[1].value);
+        await Check.checkText(Promise.resolve(row[3]), 'Row Email', formData[2].value);
     }
 
     it('Access to the Patient Management Dialog', async () => {
-        await TestUtil.checkDialogTitleAndButtons(patientMaintenanceDialog, patientMaintenanceDialog.title, patientMaintenanceDialog.buttons);
+        await Check.checkDialogTitleAndButtons(patientMaintenanceDialog, patientMaintenanceDialog.title, patientMaintenanceDialog.buttons);
         const titles = ['', 'Name', 'Surname', 'Email'];
         expect(await patientMaintenanceDialog.getPatientsGrid().getGridHeader()).toEqual(titles);
     });
@@ -55,11 +55,11 @@ describe('TC0001_PatientManagement_e2e', () => {
             enable: true
         }];
         await patientMaintenanceDialog.getButtonAdd().click();
-        await TestUtil.checkDialogTitleAndButtons(patientDialog, title, buttons);
-        await TestUtil.checkForm(patientDialog.getInputElements(), 'Patient Creation is empty');
+        await Check.checkDialogTitleAndButtons(patientDialog, title, buttons);
+        await Check.checkForm(patientDialog.getInputElements(), 'Patient Creation is empty');
         await patientDialog.getButtonClose().click();
         await allure.createStep('Dialog is closed', async () => {
-            await TestUtil.checkWidgetPresentAndDisplayed(patientMaintenanceDialog,'Maintenance Dialog');
+            await Check.wait(patientMaintenanceDialog);
         })();
     });
 
@@ -70,19 +70,19 @@ describe('TC0001_PatientManagement_e2e', () => {
             await allure.createStep('Action: Create the patient ' + i, async () => {
 
                 await patientMaintenanceDialog.getButtonAdd().click();
-                await TestUtil.checkWidgetPresentAndDisplayed(patientDialog, 'Patient Dialog');
+                await Check.wait(patientDialog);
 
-                let formData=patientDialog.getInputElements(i);
+                const formData = patientDialog.getInputElements(i);
                 await FormInputService.fillValues(formData, 'Patient Creation Form');
-                await TestUtil.checkForm(formData, 'Patient Creation is correct');
+                await Check.checkForm(formData, 'Patient Creation is correct');
 
                 await patientDialog.getButtonSubmit().click();
 
-                await TestUtil.checkWidgetPresentAndDisplayed(patientMaintenanceDialog,'Maintenance Dialog');
-                await TestUtil.checkNumber(patientMaintenanceDialog.getPatientsGrid().getNumberOfRows(), 'Number of Patients', i);
+                await Check.wait(patientMaintenanceDialog);
+                await Check.checkNumber(patientMaintenanceDialog.getPatientsGrid().getNumberOfRows(), 'Number of Patients', i);
 
-                let row=await patientGrid.getRow(i-1);
-                await checkGridValues(row,formData);
+                const row = await patientGrid.getRow(i - 1);
+                await checkGridValues(row, formData);
             })();
         }
     });
@@ -104,41 +104,41 @@ describe('TC0001_PatientManagement_e2e', () => {
 
         await patientGrid.clickOnRowMenu(0);
         await patientGrid.getMenu().selectOption(optionMenuUpdate);
-        await TestUtil.checkWidgetPresentAndDisplayed(patientDialog, 'Patient Dialog');
+        await Check.wait(patientDialog);
 
         await patientDialog.getButtonClose().click();
-        await TestUtil.checkWidgetPresentAndDisplayed(patientMaintenanceDialog,'Maintenance Dialog');
+        await Check.wait(patientMaintenanceDialog);
     });
 
    it('Click on a row and open Patient Detail', async () => {
         const tabNames = ['General', 'Allergies'];
 
-        await patientGrid.clickOnCell(0,'name');
-        await TestUtil.checkWidgetPresentAndDisplayed(patientDialog, 'Patient Dialog');
+        await patientGrid.clickOnCell(0, 'name');
+        await Check.wait(patientDialog);
 
-        await TestUtil.checkNumber(patientDialog.getTabs().getNumberOfTabs(), 'Tabs number', tabNames.length);
-        for(let i=0;i<tabNames.length; i++) {
-            await TestUtil.checkText(patientDialog.getTabs().getTab(i).getText(), `Tab[${tabNames[i]}]: ${tabNames[i]}`, tabNames[i]);
+        await Check.checkNumber(patientDialog.getTabs().getNumberOfTabs(), 'Tabs number', tabNames.length);
+        for(let i = 0 ; i < tabNames.length; i++) {
+            await Check.checkText(patientDialog.getTabs().getTab(i).getText(), `Tab[${tabNames[i]}]: ${tabNames[i]}`, tabNames[i]);
         }
 
        await patientDialog.getButtonClose().click();
-       await TestUtil.checkWidgetPresentAndDisplayed(patientMaintenanceDialog,'Maintenance Dialog');
+       await Check.wait(patientMaintenanceDialog);
     });
 
     it('Modify Patients', async () => {
-        await patientGrid.clickOnCell(0,'name');
-        await TestUtil.checkWidgetPresentAndDisplayed(patientDialog, 'Patient Dialog');
+        await patientGrid.clickOnCell(0, 'name');
+        await Check.wait(patientDialog);
 
         await FormInputService.removeValues(patientDialog.getInputElements(), 'Patient Management');
-        let elementsToUpdate=patientDialog.getInputElements(4);
+        const elementsToUpdate = patientDialog.getInputElements(4);
         await FormInputService.fillValues(elementsToUpdate, 'Patient Creation to update previous one');
         await patientDialog.getButtonSubmit().click();
 
-        await TestUtil.checkWidgetPresentAndDisplayed(patientMaintenanceDialog,'Maintenance Dialog');
-        await TestUtil.checkNumber(patientGrid.getNumberOfRows(), 'Rows in table of Patients', 3);
+        await Check.wait(patientMaintenanceDialog);
+        await Check.checkNumber(patientGrid.getNumberOfRows(), 'Rows in table of Patients', 3);
 
-        let row=await patientGrid.getRow(2);
-        await checkGridValues(row,elementsToUpdate);
+        const row = await patientGrid.getRow(2);
+        await checkGridValues(row, elementsToUpdate);
     });
 
     it('Delete all elements recently added to the grid', async () => {
@@ -147,7 +147,7 @@ describe('TC0001_PatientManagement_e2e', () => {
             await allure.createStep(`Action: Delete the Patient at the row #${k}`, async () => {
                 await patientGrid.clickOnRowMenu(k);
                 await patientGrid.getMenu().selectOption(optionMenuDelete);
-                await TestUtil.checkNumber(patientGrid.getNumberOfRows(), 'Number of Patients', k);
+                await Check.checkNumber(patientGrid.getNumberOfRows(), 'Number of Patients', k);
             })();
         }
     });

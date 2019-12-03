@@ -1,4 +1,4 @@
-import { TestUtil } from 'systelab-components-test/lib/utilities';
+import { Check } from 'systelab-components-test/lib/utilities/check';
 import { LoginPage } from '../../../login/page-objects/login.po';
 import { MainPage } from '../../page-objects/main.po';
 import { PatientMaintenanceDialog } from '../../page-objects/patient/patient-maintenance';
@@ -33,7 +33,7 @@ describe('TC0003_PatientManagement_Allergy_e2e', () => {
 	});
 
 	beforeEach(async () => {
-		await TestUtil.init('TC0003_PatientManagement_Allergy_e2e', 'Purpose: This TC is intended to verify the CRUD of a Patient',
+		await Check.init('TC0003_PatientManagement_Allergy_e2e', 'Purpose: This TC is intended to verify the CRUD of a Patient',
 			loginPage.appVersion, 'userName');
 	});
 
@@ -42,7 +42,7 @@ describe('TC0003_PatientManagement_Allergy_e2e', () => {
 		// Add an allergy to the patient
 		await allure.createStep('Action: Add an allergy to the patient', async () => {
 			await patientDialog.getAddButton().click();
-			let patientAllergyDialog = patientDialog.getPatientAllergyDialog();
+			const patientAllergyDialog = patientDialog.getPatientAllergyDialog();
 			await patientAllergyDialog.getAllergyCombobox().click();
 			await patientAllergyDialog.getAllergyCombobox().selectOption(0);
 
@@ -53,13 +53,13 @@ describe('TC0003_PatientManagement_Allergy_e2e', () => {
 			await patientAllergyDialog.getSubmitButton().click();
 		})();
 
-		await TestUtil.checkNumber(patientDialog.getAllergyGrid().getNumberOfRows(), 'Number of Allergies for patient', 1);
+		await Check.checkNumber(patientDialog.getAllergyGrid().getNumberOfRows(), 'Number of Allergies for patient', 1);
 
 		await allure.createStep('Action: Remove an allergy to the patient', async () => {
 			await patientDialog.getAllergyGrid().clickOnRowMenu(0);
 			await patientDialog.getAllergyGrid().getMenu().selectOption(1);
 		})();
-		await TestUtil.checkNumber(patientDialog.getAllergyGrid().getNumberOfRows(), 'Number of Allergies for patient', 0);
+		await Check.checkNumber(patientDialog.getAllergyGrid().getNumberOfRows(), 'Number of Allergies for patient', 0);
   });
 
 });
