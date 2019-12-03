@@ -34,15 +34,15 @@ describe('TC0004_AllergyManagement_e2e', () => {
 		await Check.checkText(Promise.resolve(row[3]), 'Col Symptoms', formData[2].value);
 	}
 
-	it('Access to the allergy screen', async () => {
+	it('Access to the Allergy Screen', async () => {
 		const tabs = ['Allergies'];
 		const titles = ['', 'Name', 'Signs', 'Symptoms']
-		await Check.checkNumber(mainPage.getConfigTabs().getNumberOfTabs(), 'tabs', 1);
-		await Check.checkText(mainPage.getConfigTabs().getTab(0).getText(), `Tab[0]: ${tabs[0]}`, tabs[0]);
+		await Check.checkNumber(mainPage.getConfigTabs().getNumberOfTabs(), 'Number of Tabs', 1);
+		await Check.checkText(mainPage.getConfigTabs().getTab(0).getText(), `First tab title ${tabs[0]}`, tabs[0]);
 		expect(await mainPage.getAllergyGrid().getGridHeader()).toEqual(titles);
 	});
 
-	it('Open allergy creation dialog', async () => {
+	it('Open Allergy Creation dialog', async () => {
 		const title = 'Create Allergy';
 		const buttons: FormButtonElement[] = [{
 			name:   'Create',
