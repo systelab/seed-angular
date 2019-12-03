@@ -1,4 +1,3 @@
-import { browser } from 'protractor';
 import { Check } from 'systelab-components-test/lib/utilities/check';
 import { LoginPage } from '../../../login/page-objects/login.po';
 import { MainPage } from '../../page-objects/main.po';
@@ -8,6 +7,7 @@ import { LoginNavigationService } from '../../../login/services/login-navigation
 import { MainNavigationService } from '../../services/main-navigation.service';
 import { Grid } from 'systelab-components-test';
 import { FormButtonElement, FormInputService } from 'systelab-components-test/lib/services';
+import { GeneralParameters } from '../../../general-parameters';
 
 declare const allure: any;
 
@@ -65,7 +65,7 @@ describe('TC0001_PatientManagement_e2e', () => {
 
     it('Create Patients', async () => {
 
-        for (let i = 1; i <= browser.params.repeatabilityNumberPasses; i++) {
+        for (let i = 1; i <= GeneralParameters.REPETEABILITY_NUMBER_PASSES; i++) {
 
             await allure.createStep('Action: Create the patient ' + i, async () => {
 
@@ -90,7 +90,7 @@ describe('TC0001_PatientManagement_e2e', () => {
     it('Contextual menu at the patients grid', async () => {
         const menuItems = ['Update', 'Delete'];
 
-        for (let row = 0; row < browser.params.repeatabilityNumberPasses; row++) {
+        for (let row = 0; row < GeneralParameters.REPETEABILITY_NUMBER_PASSES; row++) {
             await allure.createStep('Action: Access to the contextual menu at row ' + row + ' in the grid with the buttons: ' + JSON.stringify(menuItems), async () => {
                 await patientGrid.clickOnRowMenu(row);
                 expect(await patientGrid.getMenu().getOptions()).toEqual(menuItems);
@@ -143,7 +143,7 @@ describe('TC0001_PatientManagement_e2e', () => {
 
     it('Delete all elements recently added to the grid', async () => {
         const optionMenuDelete = 1;
-        for (let k = (browser.params.repeatabilityNumberPasses - 1); k >= 0; k--) {
+        for (let k = (GeneralParameters.REPETEABILITY_NUMBER_PASSES - 1); k >= 0; k--) {
             await allure.createStep(`Action: Delete the Patient at the row #${k}`, async () => {
                 await patientGrid.clickOnRowMenu(k);
                 await patientGrid.getMenu().selectOption(optionMenuDelete);

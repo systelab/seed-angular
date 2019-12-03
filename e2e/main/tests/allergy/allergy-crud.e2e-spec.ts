@@ -1,4 +1,3 @@
-import { browser } from 'protractor';
 import { LoginPage } from '../../../login/page-objects/login.po';
 import { MainPage } from '../../page-objects/main.po';
 import { AllergyDetailDialog } from '../../page-objects/allergy/allergy-detail/allergy-dialog';
@@ -7,6 +6,7 @@ import { MainNavigationService } from '../../services/main-navigation.service';
 import { Grid } from 'systelab-components-test';
 import { Check } from 'systelab-components-test/lib/utilities';
 import { FormButtonElement, FormInputService } from 'systelab-components-test/lib/services';
+import { GeneralParameters } from '../../../general-parameters';
 
 declare const allure: any;
 
@@ -60,7 +60,7 @@ describe('TC0004_AllergyManagement_e2e', () => {
 	});
 
 	it('Create Allergies', async () => {
-		for (let i = 1; i <= browser.params.repeatabilityNumberPasses; i++) {
+		for (let i = 1; i <= GeneralParameters.REPETEABILITY_NUMBER_PASSES; i++) {
 
 			await allure.createStep('Action: Create the allergy ' + i, async () => {
 
@@ -126,7 +126,7 @@ describe('TC0004_AllergyManagement_e2e', () => {
 
 	it('Delete all elements recently added to the grid', async () => {
 		const optionMenuDelete = 1;
-		for (let k = (browser.params.repeatabilityNumberPasses - 1); k >= 0; k--) {
+		for (let k = (GeneralParameters.REPETEABILITY_NUMBER_PASSES - 1); k >= 0; k--) {
 			await allure.createStep(`Action: Delete the Allergy at the row #${k}`, async () => {
 				await allergyGrid.clickOnRowMenu(0);
 				await allergyGrid.getMenu().selectOption(optionMenuDelete);

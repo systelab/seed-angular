@@ -1,5 +1,6 @@
 import { browser } from 'protractor';
 import { LoginPage } from '../page-objects/login.po';
+import { GeneralParameters } from '../../general-parameters';
 
 declare const allure: any;
 
@@ -12,9 +13,9 @@ export class LoginNavigationService {
 
     public static async login(loginPage: LoginPage, useWrongPassword: boolean = false, clickEnter: boolean = true) {
         await this.navigateToHomePage(loginPage);
-        await loginPage.getUsernameField().setText(browser.params.login.user);
+        await loginPage.getUsernameField().setText(GeneralParameters.USERNAME);
         if (!useWrongPassword) {
-            await loginPage.getPasswordField().setText(browser.params.login.password);
+            await loginPage.getPasswordField().setText(GeneralParameters.PASSWORD);
         } else {
             await loginPage.getPasswordField().setText('PassProvidedByTesting');
         }

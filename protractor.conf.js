@@ -55,16 +55,8 @@ exports.config = {
 			});
 	},
 	params:            {
-		appBeingTested:                '',    // so far, options are:  'laboratory' or 'hemohub', please visit the file main.po.ts at the method: mainWindow()
-		performTestOnRefreshButton:    true,
 		searchJavascriptConsoleErrors: true,
 		javascriptConsoleErrors:       ["ERROR", "404 (Not Found)", "(CORB) blocked", "Failed to load"],    // BEWARE: Case sensitive comparison ( it will be used with ".indexOf() == -1" )
-		repeatabilityNumberPasses:     3,
-		beVerbose:                     false,
-		login:                         {
-			user:     'Systelab',
-			password: 'Systelab'
-		},
 	},
 };
 
