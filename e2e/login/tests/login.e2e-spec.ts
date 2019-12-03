@@ -2,7 +2,7 @@ import { browser} from 'protractor';
 import { LoginPage } from '../page-objects/login.po';
 import { MainPage } from '../../main/page-objects/main.po';
 import { LoginNavigationService } from '../services/login-navigation.service';
-import { Check } from 'systelab-components-test/lib/utilities/check';
+import { Check } from 'systelab-components-test/lib/utilities';
 
 declare const allure: any;
 
@@ -20,7 +20,7 @@ describe('TC0002_LoginManagement_e2e', () => {
 	it('Login correct', async () => {
 		await LoginNavigationService.loginWithUserNameAndPassword(login, browser.params.login.user, browser.params.login.password);
 		await allure.createStep('The home page is displayed', async () => {
-			await Check.wait(mainPage);
+			await mainPage.wait();
 			await Check.checkText(mainPage.getFullUsernameField().getText(), 'Logged user', 'Administrator')
 		})();
 	});

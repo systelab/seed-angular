@@ -5,7 +5,6 @@ import { FormInputElement } from 'systelab-components-test/lib/services';
 
 export class PatientDialog extends SystelabDialogTest {
 
-
 	public getEnableSwich() {
 		return this.byId('PatientEnableSwitch').element(by.tagname('input'));
 	}

@@ -1,18 +1,17 @@
 import { PatientMaintenanceDialog } from '../page-objects/patient/patient-maintenance';
 import { MainPage } from '../page-objects/main.po';
 import { PatientDialog } from '../page-objects/patient/patient-detail/patient-dialog';
-import { Check } from 'systelab-components-test/lib/utilities/check';
 
 export class MainNavigationService {
 
 	public static async navigateToPatientMaintenancePage(mainPage: MainPage): Promise<PatientMaintenanceDialog> {
-		await Check.wait(mainPage);
+		await mainPage.wait();
 		await mainPage.getPatientButton().click();
 		return mainPage.getPatientMaintenanceDialog();
 	}
 
 	public static async navigateToAllergyMaintenancePage(mainPage: MainPage): Promise<MainPage> {
-		await Check.wait(mainPage);
+		await mainPage.wait();
 		await mainPage.getConfigIcon().click();
 		return mainPage;
 	}

@@ -1,4 +1,3 @@
-import { Check } from 'systelab-components-test/lib/utilities/check';
 import { LoginPage } from '../../../login/page-objects/login.po';
 import { MainPage } from '../../page-objects/main.po';
 import { PatientMaintenanceDialog } from '../../page-objects/patient/patient-maintenance';
@@ -6,6 +5,7 @@ import { PatientDialog } from '../../page-objects/patient/patient-detail/patient
 import { LoginNavigationService } from '../../../login/services/login-navigation.service';
 import { MainActionService } from '../../services/main-action.service';
 import { MainNavigationService } from '../../services/main-navigation.service';
+import { Check } from 'systelab-components-test/lib/utilities';
 
 declare const allure: any;
 
@@ -21,7 +21,7 @@ describe('TC0003_PatientManagement_Allergy_e2e', () => {
 		await LoginNavigationService.login(loginPage);
 		await MainActionService.createAllergy(mainPage, ['Name1', 'Signs1', 'Symptoms1']);
 		await MainActionService.createPatient(mainPage, ['Patient1', 'Surname1', 'email@kk.com', 'Sample St', 'Khartum', '112234', '12.123456 32.15246']);
-		patientMaintenanceDialog =await MainNavigationService.navigateToPatientMaintenancePage(mainPage);
+		patientMaintenanceDialog = await MainNavigationService.navigateToPatientMaintenancePage(mainPage);
 		patientDialog = await MainNavigationService.navigateToPatientDialog(patientMaintenanceDialog,0);
 	});
 
