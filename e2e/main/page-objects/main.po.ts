@@ -5,6 +5,11 @@ import { BasePage } from 'systelab-components-test/lib/page-objects';
 import { Button, Grid, Icon, Label, Tabs } from 'systelab-components-test';
 
 export class MainPage extends BasePage {
+
+    public allergyGridHeaderTitles = ['', 'Name', 'Signs', 'Symptoms'];
+    public allergyGridMenuItems = ['Update', 'Delete'];
+    public allergyTabTitles = ['Allergies'];
+
     constructor() {
         super('systelab-app-frame');
     }

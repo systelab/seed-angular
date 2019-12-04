@@ -1,9 +1,16 @@
 import { by, element } from 'protractor';
 import { PatientAllergyDialog } from './patient-allergy-dialog';
 import { Button, Grid, InputField, SystelabDialogTest, Tabs } from 'systelab-components-test';
-import { FormInputElement } from 'systelab-components-test/lib/services';
+import { FormButtonElement, FormInputElement } from 'systelab-components-test/lib/services';
 
 export class PatientDialog extends SystelabDialogTest {
+
+	public title = 'Create Patient';
+	public buttons: FormButtonElement[] = [{
+		name:   'Create',
+		exist:  true,
+		enable: true
+	}];
 
 	public getEnableSwich() {
 		return this.byId('PatientEnableSwitch').element(by.tagname('input'));

@@ -7,7 +7,7 @@ import { MainNavigationService } from '../../services/main-navigation.service';
 import { GeneralParameters } from '../../../general-parameters';
 import { Grid } from 'systelab-components-test';
 import { Check } from 'systelab-components-test/lib/utilities';
-import { FormButtonElement, FormInputService } from 'systelab-components-test/lib/services';
+import { FormInputService } from 'systelab-components-test/lib/services';
 
 declare const allure: any;
 
@@ -50,14 +50,8 @@ describe('TC0001_PatientManagement_e2e', () => {
     });
 
     it('Open Patient Creation Dialog', async () => {
-        const title = 'Create Patient';
-        const buttons: FormButtonElement[] = [{
-            name:   'Create',
-            exist:  true,
-            enable: true
-        }];
         await patientMaintenanceDialog.getButtonAdd().click();
-        await Check.checkDialogTitleAndButtons(patientDialog, title, buttons);
+        await Check.checkDialogTitleAndButtons(patientDialog, patientDialog.title, patientDialog.buttons);
         await Check.checkForm(patientDialog.getInputElements(), 'Patient Creation');
         await patientDialog.back();
         await allure.createStep('Action: Close the Allergy Creation dialog', async () => {

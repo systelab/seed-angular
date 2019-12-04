@@ -5,7 +5,7 @@ import { LoginNavigationService } from '../../../login/services/login-navigation
 import { MainNavigationService } from '../../services/main-navigation.service';
 import { Grid } from 'systelab-components-test';
 import { Check } from 'systelab-components-test/lib/utilities';
-import { FormButtonElement, FormInputService } from 'systelab-components-test/lib/services';
+import { FormInputService } from 'systelab-components-test/lib/services';
 import { GeneralParameters } from '../../../general-parameters';
 
 declare const allure: any;
@@ -35,23 +35,15 @@ describe('TC0004_AllergyManagement_e2e', () => {
 	}
 
 	it('Access to the Allergy Screen', async () => {
-		const tabs = ['Allergies'];
-		const titles = ['', 'Name', 'Signs', 'Symptoms']
 		await Check.checkNumber(mainPage.getConfigTabs().getNumberOfTabs(), 'Number of Tabs', 1);
-		await Check.checkText(mainPage.getConfigTabs().getTab(0).getText(), `First tab title ${tabs[0]}`, tabs[0]);
-		expect(await mainPage.getAllergyGrid().getGridHeader()).toEqual(titles);
+		await Check.checkText(mainPage.getConfigTabs().getTab(0).getText(), `First tab title ${mainPage.allergyTabTitles[0]}`, mainPage.allergyTabTitles[0]);
+		expect(await mainPage.getAllergyGrid().getGridHeader()).toEqual(mainPage.allergyGridHeaderTitles);
 	});
 
 	it('Open Allergy Creation dialog', async () => {
-		const title = 'Create Allergy';
-		const buttons: FormButtonElement[] = [{
-			name:   'Create',
-			exist:  true,
-			enable: true
-		}];
 		await mainPage.wait();
 		await mainPage.getAllergyAddButton().click();
-		await Check.checkDialogTitleAndButtons(allergyDialog, title, buttons);
+		await Check.checkDialogTitleAndButtons(allergyDialog, allergyDialog.title, allergyDialog.buttons);
 		await Check.checkForm(allergyDialog.getInputElements(), 'Allergy Creation');
 		await allure.createStep('Action: Close the Allergy Creation dialog', async () => {
 			await allergyDialog.back();
@@ -84,10 +76,9 @@ describe('TC0004_AllergyManagement_e2e', () => {
 	});
 
 	it('Contextual menu at the allergies grid', async () => {
-		const menuItems = ['Update', 'Delete'];
-		await allure.createStep('Action: Access to the contextual menu and check that the options: ' + JSON.stringify(menuItems) + ' are available', async () => {
+		await allure.createStep('Action: Access to the contextual menu and check that the options: ' + JSON.stringify(mainPage.allergyGridMenuItems) + ' are available', async () => {
 			await allergyGrid.clickOnRowMenu(0);
-			expect(await allergyGrid.getMenu().getOptions()).toEqual(menuItems);
+			expect(await allergyGrid.getMenu().getOptions()).toEqual(mainPage.allergyGridMenuItems);
 			await allergyGrid.clickOnHeader();
 			await allure.createStep('The contextual menu is in the correct status', () => {
 			})();
