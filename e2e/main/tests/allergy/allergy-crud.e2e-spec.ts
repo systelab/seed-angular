@@ -97,7 +97,7 @@ describe('TC0004_AllergyManagement_e2e', () => {
 	it('The option Update opens Allergy Detail', async () => {
 		const optionMenuUpdate = 0;
 		await allergyGrid.clickOnRowMenu(0);
-		await allergyGrid.getMenu().selectOption(optionMenuUpdate);
+		await allergyGrid.getMenu().selectOptionByNumber(optionMenuUpdate);
 		await allergyDialog.wait();
 
 		await allergyDialog.back();
@@ -137,7 +137,7 @@ describe('TC0004_AllergyManagement_e2e', () => {
 		for (let k = (GeneralParameters.REPETEABILITY_NUMBER_PASSES - 1); k >= 0; k--) {
 			await allure.createStep(`Action: Delete the Allergy at the row #${k}`, async () => {
 				await allergyGrid.clickOnRowMenu(0);
-				await allergyGrid.getMenu().selectOption(optionMenuDelete);
+				await allergyGrid.getMenu().selectOptionByNumber(optionMenuDelete);
 				await Check.checkNumber(allergyGrid.getNumberOfRows(), 'Number of Allergies', k);
 			})();
 		}
