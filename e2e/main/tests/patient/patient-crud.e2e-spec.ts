@@ -1,13 +1,13 @@
-import { Check } from 'systelab-components-test/lib/utilities/check';
 import { LoginPage } from '../../../login/page-objects/login.po';
 import { MainPage } from '../../page-objects/main.po';
 import { PatientMaintenanceDialog } from '../../page-objects/patient/patient-maintenance';
 import { PatientDialog } from '../../page-objects/patient/patient-detail/patient-dialog';
 import { LoginNavigationService } from '../../../login/services/login-navigation.service';
 import { MainNavigationService } from '../../services/main-navigation.service';
-import { Grid } from 'systelab-components-test';
-import { FormButtonElement, FormInputService } from 'systelab-components-test/lib/services';
 import { GeneralParameters } from '../../../general-parameters';
+import { Grid } from 'systelab-components-test';
+import { Check } from 'systelab-components-test/lib/utilities';
+import { FormButtonElement, FormInputService } from 'systelab-components-test/lib/services';
 
 declare const allure: any;
 
@@ -19,14 +19,13 @@ describe('TC0001_PatientManagement_e2e', () => {
     let patientDialog: PatientDialog;
     let patientGrid: Grid;
 
-
     beforeAll(async () => {
+        // Login and navigation
         await LoginNavigationService.login(loginPage);
         await MainNavigationService.navigateToPatientMaintenancePage(mainPage);
         patientMaintenanceDialog = mainPage.getPatientMaintenanceDialog();
         patientDialog = patientMaintenanceDialog.getPatientDialog();
         patientGrid = patientMaintenanceDialog.getPatientsGrid();
-
         await patientMaintenanceDialog.wait();
     });
 
@@ -43,8 +42,11 @@ describe('TC0001_PatientManagement_e2e', () => {
 
     it('Access to the Patient Management Dialog', async () => {
         await Check.checkDialogTitleAndButtons(patientMaintenanceDialog, patientMaintenanceDialog.title, patientMaintenanceDialog.buttons);
-        const titles = ['', 'Name', 'Surname', 'Email'];
-        expect(await patientMaintenanceDialog.getPatientsGrid().getGridHeader()).toEqual(titles);
+    });
+
+    it('Review Patient Management Table', async () => {
+        const gridHeader = await Promise.resolve(patientMaintenanceDialog.getPatientsGrid().getGridHeader());
+        await Check.checkArray(gridHeader, patientMaintenanceDialog.patientGridHeaderTitles, 'table headers');
     });
 
     it('Open Patient Creation Dialog', async () => {
@@ -57,7 +59,7 @@ describe('TC0001_PatientManagement_e2e', () => {
         await patientMaintenanceDialog.getButtonAdd().click();
         await Check.checkDialogTitleAndButtons(patientDialog, title, buttons);
         await Check.checkForm(patientDialog.getInputElements(), 'Patient Creation');
-        await patientDialog.getButtonClose().click()
+        await patientDialog.back();
         await allure.createStep('Action: Close the Allergy Creation dialog', async () => {
             await patientMaintenanceDialog.wait();
             await allure.createStep('The dialog is closed', () => {

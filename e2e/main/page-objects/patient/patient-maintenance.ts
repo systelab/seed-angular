@@ -19,6 +19,7 @@ export class PatientMaintenanceDialog extends SystelabDialogTest {
 		exist:  true,
 		enable: true
 	}];
+	public patientGridHeaderTitles = ['', 'Name', 'Surname', 'Email'];
 
 	public getButtonOptions(): Button {
 		return new Button(this.byId('PatientMaintenanceOptionsButton'));
