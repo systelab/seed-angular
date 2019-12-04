@@ -11,6 +11,7 @@ export class PatientDialog extends SystelabDialogTest {
 		exist:  true,
 		enable: true
 	}];
+	public patientTabTitles = ['General', 'Allergies'];
 
 	public getEnableSwich() {
 		return this.byId('PatientEnableSwitch').element(by.tagname('input'));

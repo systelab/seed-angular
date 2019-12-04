@@ -20,6 +20,7 @@ export class PatientMaintenanceDialog extends SystelabDialogTest {
 		enable: true
 	}];
 	public patientGridHeaderTitles = ['', 'Name', 'Surname', 'Email'];
+	public patientGridMenuItems = ['Update', 'Delete'];
 
 	public getButtonOptions(): Button {
 		return new Button(this.byId('PatientMaintenanceOptionsButton'));

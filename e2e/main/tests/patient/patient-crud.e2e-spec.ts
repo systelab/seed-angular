@@ -49,12 +49,12 @@ describe('TC0001_PatientManagement_e2e', () => {
         await Check.checkArray(gridHeader, patientMaintenanceDialog.patientGridHeaderTitles, 'table headers');
     });
 
-    it('Open Patient Creation Dialog', async () => {
+    it('Access to the Patient Creation Dialog', async () => {
         await patientMaintenanceDialog.getButtonAdd().click();
         await Check.checkDialogTitleAndButtons(patientDialog, patientDialog.title, patientDialog.buttons);
         await Check.checkForm(patientDialog.getInputElements(), 'Patient Creation');
         await patientDialog.back();
-        await allure.createStep('Action: Close the Allergy Creation dialog', async () => {
+        await allure.createStep('Action: Close the Patient Creation dialog', async () => {
             await patientMaintenanceDialog.wait();
             await allure.createStep('The dialog is closed', () => {
             })();
@@ -62,23 +62,21 @@ describe('TC0001_PatientManagement_e2e', () => {
     });
 
     it('Create Patients', async () => {
-
         for (let i = 1; i <= GeneralParameters.REPETEABILITY_NUMBER_PASSES; i++) {
-
             await allure.createStep('Action: Create the patient ' + i, async () => {
-
+                // Open the dialog
                 await patientMaintenanceDialog.getButtonAdd().click();
                 await patientDialog.wait();
-
+                // Enter the Patient information
                 const formData = patientDialog.getInputElements(i);
                 await FormInputService.fillValues(formData, 'Patient Creation Form');
-                await Check.checkForm(formData, 'Patient Creation is correct');
-
+                await Check.checkForm(formData, 'Patient Creation');
+                // Click on Submit
                 await patientDialog.getButtonSubmit().click();
-
                 await patientMaintenanceDialog.wait();
+                // Check the number of patients
                 await Check.checkNumber(patientMaintenanceDialog.getPatientsGrid().getNumberOfRows(), 'Number of Patients', i);
-
+                // Check the Patient is properly created
                 const row = await patientGrid.getRow(i - 1);
                 await checkGridValues(row, formData);
             })();
@@ -86,12 +84,10 @@ describe('TC0001_PatientManagement_e2e', () => {
     });
 
     it('Contextual menu at the patients grid', async () => {
-        const menuItems = ['Update', 'Delete'];
-
         for (let row = 0; row < GeneralParameters.REPETEABILITY_NUMBER_PASSES; row++) {
-            await allure.createStep('Action: Access to the contextual menu at row ' + row + ' in the grid with the buttons: ' + JSON.stringify(menuItems), async () => {
+            await allure.createStep('Action: Access to the contextual menu at row ' + row + ' in the grid with the buttons: ' + JSON.stringify(patientMaintenanceDialog.patientGridMenuItems), async () => {
                 await patientGrid.clickOnRowMenu(row);
-                expect(await patientGrid.getMenu().getOptions()).toEqual(menuItems);
+                expect(await patientGrid.getMenu().getOptions()).toEqual(patientMaintenanceDialog.patientGridMenuItems);
                 await patientGrid.clickOnHeader();
                 await allure.createStep('The contextual menu is in the correct status', () => {
                 })();
@@ -106,40 +102,33 @@ describe('TC0001_PatientManagement_e2e', () => {
         await patientGrid.getMenu().selectOptionByNumber(optionMenuUpdate);
         await patientDialog.wait();
 
-        await patientDialog.getButtonClose().click();
+        await patientDialog.back();
         await patientMaintenanceDialog.wait();
         await allure.createStep('The option works as intended', () => {
         })();
     });
 
    it('Click on a row and open Patient Detail', async () => {
-        const tabNames = ['General', 'Allergies'];
+       await patientGrid.clickOnCell(0, 'name');
+       await patientDialog.wait();
 
-        await patientGrid.clickOnCell(0, 'name');
-        await patientDialog.wait();
-
-        await Check.checkNumber(patientDialog.getTabs().getNumberOfTabs(), 'Tabs number', tabNames.length);
-        for (let i = 0 ; i < tabNames.length; i++) {
-            await Check.checkText(patientDialog.getTabs().getTab(i).getText(), `Tab[${tabNames[i]}]: ${tabNames[i]}`, tabNames[i]);
-        }
+       await Check.checkTabs(patientDialog.getTabs(), patientDialog.patientTabTitles);
 
        await patientDialog.back();
-        await patientMaintenanceDialog.wait();
-       await allure.createStep('The option works as intended', () => {
-       })();
+       await patientMaintenanceDialog.wait();
     });
 
     it('Modify Patients', async () => {
         await patientGrid.clickOnCell(0, 'name');
         await patientDialog.wait();
 
-        await FormInputService.removeValues(patientDialog.getInputElements(), 'Patient Management');
+        await FormInputService.removeValues(patientDialog.getInputElements(), '');
         const elementsToUpdate = patientDialog.getInputElements(4);
-        await FormInputService.fillValues(elementsToUpdate, 'Patient Creation to update previous one');
+        await FormInputService.fillValues(elementsToUpdate, 'Patient Creation to modify the patient');
         await patientDialog.getButtonSubmit().click();
 
         await patientMaintenanceDialog.wait();
-        await Check.checkNumber(patientGrid.getNumberOfRows(), 'Rows in table of Patients', 3);
+        await Check.checkNumber(patientGrid.getNumberOfRows(), 'Number of Patients', 3);
 
         const row = await patientGrid.getRow(2);
         await checkGridValues(row, elementsToUpdate);
