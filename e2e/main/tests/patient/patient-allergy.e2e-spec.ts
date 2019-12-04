@@ -44,7 +44,7 @@ describe('TC0003_PatientManagement_Allergy_e2e', () => {
 			await patientDialog.getAddButton().click();
 			const patientAllergyDialog = patientDialog.getPatientAllergyDialog();
 			await patientAllergyDialog.getAllergyCombobox().click();
-			await patientAllergyDialog.getAllergyCombobox().selectOption(0);
+			await patientAllergyDialog.getAllergyCombobox().selectOptionByText('Name1');
 
 			//		patientAllergyDetailPage.getAssertedDate().setValue('01/01/2019');
 			//		patientAllergyDetailPage.getLastOccurrenceDate().setValue('02/02/2019');
@@ -57,7 +57,7 @@ describe('TC0003_PatientManagement_Allergy_e2e', () => {
 
 		await allure.createStep('Action: Remove an allergy to the patient', async () => {
 			await patientDialog.getAllergyGrid().clickOnRowMenu(0);
-			await patientDialog.getAllergyGrid().getMenu().selectOption(1);
+			await patientDialog.getAllergyGrid().getMenu().selectOptionByText('Delete');
 		})();
 		await Check.checkNumber(patientDialog.getAllergyGrid().getNumberOfRows(), 'Number of Allergies for patient', 0);
   });

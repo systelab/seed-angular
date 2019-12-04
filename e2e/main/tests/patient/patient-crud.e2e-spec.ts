@@ -109,7 +109,7 @@ describe('TC0001_PatientManagement_e2e', () => {
         const optionMenuUpdate = 0;
 
         await patientGrid.clickOnRowMenu(0);
-        await patientGrid.getMenu().selectOption(optionMenuUpdate);
+        await patientGrid.getMenu().selectOptionByNumber(optionMenuUpdate);
         await patientDialog.wait();
 
         await patientDialog.getButtonClose().click();
@@ -156,7 +156,7 @@ describe('TC0001_PatientManagement_e2e', () => {
         for (let k = (GeneralParameters.REPETEABILITY_NUMBER_PASSES - 1); k >= 0; k--) {
             await allure.createStep(`Action: Delete the Patient at the row #${k}`, async () => {
                 await patientGrid.clickOnRowMenu(k);
-                await patientGrid.getMenu().selectOption(optionMenuDelete);
+                await patientGrid.getMenu().selectOptionByNumber(optionMenuDelete);
                 await Check.checkNumber(patientGrid.getNumberOfRows(), 'Number of Patients', k);
             })();
         }

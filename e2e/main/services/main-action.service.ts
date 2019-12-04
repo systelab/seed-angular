@@ -33,14 +33,14 @@ export class MainActionService {
 		const optionMenuDelete = 1;
 		await mainPage.getConfigIcon().click();
 		await mainPage.getAllergyGrid().clickOnRowMenu(0);
-		await mainPage.getAllergyGrid().getMenu().selectOption(optionMenuDelete);
+		await mainPage.getAllergyGrid().getMenu().selectOptionByNumber(optionMenuDelete);
 	}
 
 	public static async deleteFirstPatient(mainPage: MainPage) {
 		const optionMenuDelete = 1;
 		await mainPage.getPatientButton().click();
 		await mainPage.getPatientMaintenanceDialog().getPatientsGrid().clickOnRowMenu(0);
-		await mainPage.getPatientMaintenanceDialog().getPatientsGrid().getMenu().selectOption(optionMenuDelete);
+		await mainPage.getPatientMaintenanceDialog().getPatientsGrid().getMenu().selectOptionByNumber(optionMenuDelete);
 		await mainPage.getPatientMaintenanceDialog().getButtonClose().click();
 	}
 
