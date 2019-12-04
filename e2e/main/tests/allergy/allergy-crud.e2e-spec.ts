@@ -52,10 +52,12 @@ describe('TC0004_AllergyManagement_e2e', () => {
 		await mainPage.wait();
 		await mainPage.getAllergyAddButton().click();
 		await Check.checkDialogTitleAndButtons(allergyDialog, title, buttons);
-		await Check.checkForm(allergyDialog.getInputElements(), 'Allergy Creation is empty');
-		await allergyDialog.back();
-		await allure.createStep('Dialog is closed', async () => {
+		await Check.checkForm(allergyDialog.getInputElements(), 'Allergy Creation');
+		await allure.createStep('Action: Close the Allergy Creation dialog', async () => {
+			await allergyDialog.back();
 			await mainPage.wait();
+			await allure.createStep('The dialog is closed', () => {
+			})();
 		})();
 	});
 
@@ -87,6 +89,8 @@ describe('TC0004_AllergyManagement_e2e', () => {
 			await allergyGrid.clickOnRowMenu(0);
 			expect(await allergyGrid.getMenu().getOptions()).toEqual(menuItems);
 			await allergyGrid.clickOnHeader();
+			await allure.createStep('The contextual menu is in the correct status', () => {
+			})();
 		})();
 	});
 
@@ -98,6 +102,8 @@ describe('TC0004_AllergyManagement_e2e', () => {
 
 		await allergyDialog.back();
 		await mainPage.wait();
+		await allure.createStep('The option works as intended', () => {
+		})();
 	});
 
 	it('Click on a row and open Allergy Detail', async () => {
@@ -105,6 +111,8 @@ describe('TC0004_AllergyManagement_e2e', () => {
 		await allergyDialog.wait();
 		await allergyDialog.back();
 		await mainPage.wait();
+		await allure.createStep('The option works as intended', () => {
+		})();
 	});
 
 	it('Modify Allergies', async () => {

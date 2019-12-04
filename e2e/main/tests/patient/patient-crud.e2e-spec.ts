@@ -56,10 +56,12 @@ describe('TC0001_PatientManagement_e2e', () => {
         }];
         await patientMaintenanceDialog.getButtonAdd().click();
         await Check.checkDialogTitleAndButtons(patientDialog, title, buttons);
-        await Check.checkForm(patientDialog.getInputElements(), 'Patient Creation is empty');
-        await patientDialog.getButtonClose().click();
-        await allure.createStep('Dialog is closed', async () => {
+        await Check.checkForm(patientDialog.getInputElements(), 'Patient Creation');
+        await patientDialog.getButtonClose().click()
+        await allure.createStep('Action: Close the Allergy Creation dialog', async () => {
             await patientMaintenanceDialog.wait();
+            await allure.createStep('The dialog is closed', () => {
+            })();
         })();
     });
 
@@ -95,6 +97,8 @@ describe('TC0001_PatientManagement_e2e', () => {
                 await patientGrid.clickOnRowMenu(row);
                 expect(await patientGrid.getMenu().getOptions()).toEqual(menuItems);
                 await patientGrid.clickOnHeader();
+                await allure.createStep('The contextual menu is in the correct status', () => {
+                })();
             })();
         }
     });
@@ -108,6 +112,8 @@ describe('TC0001_PatientManagement_e2e', () => {
 
         await patientDialog.getButtonClose().click();
         await patientMaintenanceDialog.wait();
+        await allure.createStep('The option works as intended', () => {
+        })();
     });
 
    it('Click on a row and open Patient Detail', async () => {
@@ -117,12 +123,14 @@ describe('TC0001_PatientManagement_e2e', () => {
         await patientDialog.wait();
 
         await Check.checkNumber(patientDialog.getTabs().getNumberOfTabs(), 'Tabs number', tabNames.length);
-        for(let i = 0 ; i < tabNames.length; i++) {
+        for (let i = 0 ; i < tabNames.length; i++) {
             await Check.checkText(patientDialog.getTabs().getTab(i).getText(), `Tab[${tabNames[i]}]: ${tabNames[i]}`, tabNames[i]);
         }
 
        await patientDialog.back();
         await patientMaintenanceDialog.wait();
+       await allure.createStep('The option works as intended', () => {
+       })();
     });
 
     it('Modify Patients', async () => {
