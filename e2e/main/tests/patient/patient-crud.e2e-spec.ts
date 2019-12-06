@@ -11,7 +11,7 @@ import { FormInputService } from 'systelab-components-test/lib/services';
 
 declare const allure: any;
 
-fdescribe('TC0001_PatientManagement_e2e', () => {
+describe('TC0001_PatientManagement_e2e', () => {
 
     const loginPage = new LoginPage();
     const mainPage = new MainPage();
