@@ -11,7 +11,7 @@ import { FormInputService } from 'systelab-components-test/lib/services';
 
 declare const allure: any;
 
-describe('TC0001_PatientManagement_e2e', () => {
+fdescribe('TC0001_PatientManagement_e2e', () => {
 
     const loginPage = new LoginPage();
     const mainPage = new MainPage();
@@ -26,7 +26,7 @@ describe('TC0001_PatientManagement_e2e', () => {
         patientMaintenanceDialog = mainPage.getPatientMaintenanceDialog();
         patientDialog = patientMaintenanceDialog.getPatientDialog();
         patientGrid = patientMaintenanceDialog.getPatientsGrid();
-        await patientMaintenanceDialog.wait();
+        await patientMaintenanceDialog.waitToBePresent();
     });
 
     beforeEach(() => {
@@ -55,7 +55,7 @@ describe('TC0001_PatientManagement_e2e', () => {
         await Check.checkForm(patientDialog.getInputElements(), 'Patient Creation');
         await patientDialog.back();
         await allure.createStep('Action: Close the Patient Creation dialog', async () => {
-            await patientMaintenanceDialog.wait();
+            await patientMaintenanceDialog.waitToBePresent();
             await allure.createStep('The dialog is closed', () => {
             })();
         })();
@@ -66,14 +66,14 @@ describe('TC0001_PatientManagement_e2e', () => {
             await allure.createStep('Action: Create the patient ' + i, async () => {
                 // Open the dialog
                 await patientMaintenanceDialog.getButtonAdd().click();
-                await patientDialog.wait();
+                await patientDialog.waitToBePresent();
                 // Enter the Patient information
                 const formData = patientDialog.getInputElements(i);
                 await FormInputService.fillValues(formData, 'Patient Creation Form');
                 await Check.checkForm(formData, 'Patient Creation');
                 // Click on Submit
                 await patientDialog.getButtonSubmit().click();
-                await patientMaintenanceDialog.wait();
+                await patientMaintenanceDialog.waitToBePresent();
                 // Check the number of patients
                 await Check.checkNumber(patientMaintenanceDialog.getPatientsGrid().getNumberOfRows(), 'Number of Patients', i);
                 // Check the Patient is properly created
@@ -100,34 +100,34 @@ describe('TC0001_PatientManagement_e2e', () => {
 
         await patientGrid.clickOnRowMenu(0);
         await patientGrid.getMenu().selectOptionByNumber(optionMenuUpdate);
-        await patientDialog.wait();
+        await patientDialog.waitToBePresent();
 
         await patientDialog.back();
-        await patientMaintenanceDialog.wait();
+        await patientMaintenanceDialog.waitToBePresent();
         await allure.createStep('The option works as intended', () => {
         })();
     });
 
    it('Click on a row and open Patient Detail', async () => {
        await patientGrid.clickOnCell(0, 'name');
-       await patientDialog.wait();
+       await patientDialog.waitToBePresent();
 
        await Check.checkTabs(patientDialog.getTabs(), patientDialog.patientTabTitles);
 
        await patientDialog.back();
-       await patientMaintenanceDialog.wait();
+       await patientMaintenanceDialog.waitToBePresent();
     });
 
     it('Modify Patients', async () => {
         await patientGrid.clickOnCell(0, 'name');
-        await patientDialog.wait();
+        await patientDialog.waitToBePresent();
 
         await FormInputService.removeValues(patientDialog.getInputElements(), '');
         const elementsToUpdate = patientDialog.getInputElements(4);
         await FormInputService.fillValues(elementsToUpdate, 'Patient Creation to modify the patient');
         await patientDialog.getButtonSubmit().click();
 
-        await patientMaintenanceDialog.wait();
+        await patientMaintenanceDialog.waitToBePresent();
         await Check.checkNumber(patientGrid.getNumberOfRows(), 'Number of Patients', 3);
 
         const row = await patientGrid.getRow(2);

@@ -20,7 +20,7 @@ describe('TC0002_LoginManagement_e2e', () => {
 	it('Login correct', async () => {
 		await LoginNavigationService.loginWithUserNameAndPassword(login, GeneralParameters.USERNAME, GeneralParameters.PASSWORD);
 		await allure.createStep('The home page is displayed', async () => {
-			await mainPage.wait();
+			await mainPage.waitToBePresent();
 			await Check.checkText(mainPage.getFullUsernameField().getText(), 'Logged user', 'Administrator')
 		})();
 	});

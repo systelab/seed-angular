@@ -5,13 +5,13 @@ import { PatientDialog } from '../page-objects/patient/patient-detail/patient-di
 export class MainNavigationService {
 
 	public static async navigateToPatientMaintenancePage(mainPage: MainPage): Promise<PatientMaintenanceDialog> {
-		await mainPage.wait();
+		await mainPage.waitToBePresent();
 		await mainPage.getPatientButton().click();
 		return mainPage.getPatientMaintenanceDialog();
 	}
 
 	public static async navigateToAllergyMaintenancePage(mainPage: MainPage): Promise<MainPage> {
-		await mainPage.wait();
+		await mainPage.waitToBePresent();
 		await mainPage.getConfigIcon().click();
 		return mainPage;
 	}

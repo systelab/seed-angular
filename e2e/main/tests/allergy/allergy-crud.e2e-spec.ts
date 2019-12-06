@@ -41,13 +41,13 @@ describe('TC0004_AllergyManagement_e2e', () => {
 	});
 
 	it('Open Allergy Creation dialog', async () => {
-		await mainPage.wait();
+		await mainPage.waitToBePresent();
 		await mainPage.getAllergyAddButton().click();
 		await Check.checkDialogTitleAndButtons(allergyDialog, allergyDialog.title, allergyDialog.buttons);
 		await Check.checkForm(allergyDialog.getInputElements(), 'Allergy Creation');
 		await allure.createStep('Action: Close the Allergy Creation dialog', async () => {
 			await allergyDialog.back();
-			await mainPage.wait();
+			await mainPage.waitToBePresent();
 			await allure.createStep('The dialog is closed', () => {
 			})();
 		})();
@@ -59,14 +59,14 @@ describe('TC0004_AllergyManagement_e2e', () => {
 			await allure.createStep('Action: Create the allergy ' + i, async () => {
 
 				await mainPage.getAllergyAddButton().click();
-				await allergyDialog.wait();
+				await allergyDialog.waitToBePresent();
 				const formData = allergyDialog.getInputElements(i);
 
 				await FormInputService.fillValues(formData, 'Allergy Creation Form');
 				await Check.checkForm(formData, 'Allergy Creation is correct');
 
 				await allergyDialog.getButtonSubmit().click();
-				await mainPage.wait();
+				await mainPage.waitToBePresent();
 				await Check.checkNumber(allergyGrid.getNumberOfRows(), 'Number of Allergies', i);
 
 				const row = await allergyGrid.getRow(i - 1);
@@ -89,33 +89,33 @@ describe('TC0004_AllergyManagement_e2e', () => {
 		const optionMenuUpdate = 0;
 		await allergyGrid.clickOnRowMenu(0);
 		await allergyGrid.getMenu().selectOptionByNumber(optionMenuUpdate);
-		await allergyDialog.wait();
+		await allergyDialog.waitToBePresent();
 
 		await allergyDialog.back();
-		await mainPage.wait();
+		await mainPage.waitToBePresent();
 		await allure.createStep('The option works as intended', () => {
 		})();
 	});
 
 	it('Click on a row and open Allergy Detail', async () => {
 		await allergyGrid.clickOnCell(0, 'name');
-		await allergyDialog.wait();
+		await allergyDialog.waitToBePresent();
 		await allergyDialog.back();
-		await mainPage.wait();
+		await mainPage.waitToBePresent();
 		await allure.createStep('The option works as intended', () => {
 		})();
 	});
 
 	it('Modify Allergies', async () => {
 		await allergyGrid.clickOnCell(0, 'name');
-		await allergyDialog.wait();
+		await allergyDialog.waitToBePresent();
 		await FormInputService.removeValues(allergyDialog.getInputElements(), 'Allergy Management');
 
 		const elementsToUpdate = allergyDialog.getInputElements(4)
 		await FormInputService.fillValues(elementsToUpdate, 'Allergy Creation to update previous one');
 		await allergyDialog.getButtonSubmit().click();
 
-		await mainPage.wait();
+		await mainPage.waitToBePresent();
 		await Check.checkNumber(allergyGrid.getNumberOfRows(), 'Rows in table of Allergies', 3);
 
 		const row = await allergyGrid.getRow(2);
