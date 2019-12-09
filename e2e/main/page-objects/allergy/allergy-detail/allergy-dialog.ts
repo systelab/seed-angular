@@ -1,52 +1,45 @@
-import { by } from 'protractor';
-import { Button, InputField, SystelabDialogTest } from 'systelab-components-test';
-import { FormButtonElement, FormInputElement } from 'systelab-components-test/lib/services';
+import {by} from 'protractor';
+import {Button, InputField, SystelabDialogTest} from 'systelab-components-test';
 
 export class AllergyDetailDialog extends SystelabDialogTest {
 
-    public title = 'Create Allergy';
-    public buttons: FormButtonElement[] = [{
-        name:   'Create',
-        exist:  true,
-        enable: true
-    }];
+	public getEnableSwitch() {
+		return this.byId('AllergyEnableSwitch').element(by.tagname('input'));
+	}
 
-    public getEnableSwitch() {
-        return this.byId('AllergyEnableSwitch').element(by.tagname('input'));
-    }
+	public getNameInput(): InputField {
+		return new InputField(this.byId('AllergyNameInput'));
+	}
 
-    public getNameInput(): InputField {
-        return new InputField(this.byId('AllergyNameInput'));
-    }
+	public getSignsInput(): InputField {
+		return new InputField(this.byId('AllergySignsInput'));
+	}
 
-    public getSignsInput(): InputField {
-        return new InputField(this.byId('AllergySignsInput'));
-    }
+	public getSymptomsInput(): InputField {
+		return new InputField(this.byId('AllergySymptomsInput'));
+	}
 
-    public getSymptomsInput(): InputField {
-        return new InputField(this.byId('AllergySymptomsInput'));
-    }
+	public getButtonSubmit(): Button {
+		return new Button(this.byId('AllergySubmitButton'));
+	}
 
-    public getButtonSubmit(): Button {
-        return new Button(this.byId('AllergySubmitButton'));
-    }
+	public async clear() {
+		await this.getNameInput().clear();
+		await this.getSignsInput().clear();
+		await this.getSymptomsInput().clear();
+	}
 
-    public getInputElements(i?: number): FormInputElement[]{
-        const baseAllergyValues = ['Name', 'A sign', 'A symptom'];
-        const empty = (i === undefined);
-        const form: FormInputElement[] = [{
-            field: this.getNameInput(),
-            name: 'Name',
-            value: empty ? '' : 'Try #' + i + ': ' + baseAllergyValues[0]
-        }, {
-            field: this.getSignsInput(),
-            name: 'Signs',
-            value: empty ? '' : 'Try #' + i + ': ' + baseAllergyValues[1]
-        }, {
-            field: this.getSymptomsInput(),
-            name: 'Symptoms',
-            value: empty ? '' : 'Try #' + i + ': ' + baseAllergyValues[2]
-        }];
-        return (form);
-    }
+	public async set(allergy) {
+		await this.getNameInput().setText(allergy.name);
+		await this.getSignsInput().setText(allergy.sign);
+		await this.getSymptomsInput().setText(allergy.symptom);
+	}
+
+	public async get() {
+		return {
+			name: await this.getNameInput().getText(),
+			sign: await this.getSignsInput().getText(),
+			symptom: await this.getSymptomsInput().getText()
+		};
+	}
 }

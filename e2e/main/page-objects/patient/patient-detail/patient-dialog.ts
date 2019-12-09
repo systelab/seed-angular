@@ -1,17 +1,8 @@
-import { by, element } from 'protractor';
-import { PatientAllergyDialog } from './patient-allergy-dialog';
-import { Button, Grid, InputField, SystelabDialogTest, Tabs } from 'systelab-components-test';
-import { FormButtonElement, FormInputElement } from 'systelab-components-test/lib/services';
+import {by, element} from 'protractor';
+import {PatientAllergyDialog} from './patient-allergy-dialog';
+import {Button, Grid, InputField, SystelabDialogTest, Tabs} from 'systelab-components-test';
 
 export class PatientDialog extends SystelabDialogTest {
-
-	public title = 'Create Patient';
-	public buttons: FormButtonElement[] = [{
-		name:   'Create',
-		exist:  true,
-		enable: true
-	}];
-	public patientTabTitles = ['General', 'Allergies'];
 
 	public getEnableSwich() {
 		return this.byId('PatientEnableSwitch').element(by.tagname('input'));
@@ -69,39 +60,37 @@ export class PatientDialog extends SystelabDialogTest {
 		return new PatientAllergyDialog(element(by.tagName('patient-allergy-dialog')));
 	}
 
-	public getInputElements(i?: number): FormInputElement[] {
-		const values = ['Surname', 'Name', 'email@werfen.com', 'Plaza de Europa, 21-23', 'Barcelona', '08908', '41.356439, 2.127791'];
+	public async clear() {
+		await this.getNameInput().clear();
+		await this.getSurnameInput().clear();
+		await this.getEmailInput().clear();
+		await this.getAddressStreetInput().clear();
+		await this.getAddressCityInput().clear();
+		await this.getAddressZipInput().clear();
+		await this.getAddressCoordinatesInput().clear();
+	}
 
-		const empty = (i === undefined);
-		const form: FormInputElement[] = [{
-			field: this.getSurnameInput(),
-			name:  'Surname',
-			value: empty ? '' : 'Try #' + i + ': ' + values[0]
-		}, {
-			field: this.getNameInput(),
-			name:  'Name',
-			value: empty ? '' : 'Try #' + i + ': ' + values[1]
-		}, {
-			field: this.getEmailInput(),
-			name:  'Email',
-			value: empty ? '' : 'try_' + i + '_' + values[2]
-		}, {
-			field: this.getAddressStreetInput(),
-			name:  'Address -> Street',
-			value: empty ? '' : 'Try #' + i + ': ' + values[3]
-		}, {
-			field: this.getAddressCityInput(),
-			name:  'Address -> City',
-			value: empty ? '' : 'Try #' + i + ': ' + values[4]
-		}, {
-			field: this.getAddressZipInput(),
-			name:  'Address -> Zip',
-			value: empty ? '' : 'Try #' + i + ': ' + values[5]
-		}, {
-			field: this.getAddressCoordinatesInput(),
-			name:  'Address -> Coordinates',
-			value: empty ? '' : 'Try #' + i + ': ' + values[6]
-		}];
-		return (form);
+	public async set(patient: any) {
+		await this.getNameInput().setText(patient.name);
+		await this.getSurnameInput().setText(patient.surname);
+		await this.getEmailInput().setText(patient.email);
+		await this.getAddressStreetInput().setText(patient.address.street);
+		await this.getAddressCityInput().setText(patient.address.city);
+		await this.getAddressZipInput().setText(patient.address.zip);
+		await this.getAddressCoordinatesInput().setText(patient.address.coordinates);
+	}
+
+	public async get() {
+		return {
+			name: await this.getNameInput().getText(),
+			surname: await this.getSurnameInput().getText(),
+			email: await this.getEmailInput().getText(),
+			address: {
+				street: await this.getAddressStreetInput().getText(),
+				city: await this.getAddressCityInput().getText(),
+				zip: await this.getAddressZipInput().getText(),
+				coordinates: await this.getAddressCoordinatesInput().getText()
+			}
+		};
 	}
 }
