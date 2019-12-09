@@ -1,6 +1,6 @@
 import {LoginPage} from '../page-objects/login.po';
 import {MainPage} from '../../main/page-objects/main.po';
-import {Check} from 'systelab-components-test/lib/utilities';
+import {Check, TestUtil} from 'systelab-components-test/lib/utilities';
 import {GeneralParameters} from '../../general-parameters';
 import {LoginNavigationService} from '../services/login-navigation.service';
 
@@ -11,7 +11,7 @@ describe('TC0002_LoginManagement_e2e', () => {
 	let mainPage: MainPage;
 
 	beforeEach(async () => {
-		Check.init('TC0002_LoginManagement_e2e', 'Goal: The purpose of this test case is to verify the login and log out functionalities',
+		TestUtil.init('TC0002_LoginManagement_e2e', 'Goal: The purpose of this test case is to verify the login and log out functionalities',
 			undefined, 'userName');
 		loginPage = new LoginPage();
 		mainPage = new MainPage();

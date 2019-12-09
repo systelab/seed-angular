@@ -3,8 +3,10 @@ import {MainPage} from '../../page-objects/main.po';
 import {AllergyDetailDialog} from '../../page-objects/allergy/allergy-detail/allergy-dialog';
 import {MainNavigationService} from '../../services/main-navigation.service';
 import {Grid} from 'systelab-components-test';
-import {Check} from 'systelab-components-test/lib/utilities';
+import {Check, TestUtil} from 'systelab-components-test/lib/utilities';
 import {LoginActionService} from '../../../login/services/login-action.service';
+import {GeneralParameters} from '../../../general-parameters';
+
 import * as lodash from 'lodash';
 
 declare const allure: any;
@@ -41,7 +43,7 @@ describe('TC0004_AllergyManagement_e2e', () => {
 	});
 
 	beforeEach(() => {
-		Check.init('TC0004_AllergyManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of an Allergy', loginPage.appVersion, 'userName');
+		TestUtil.init('TC0004_AllergyManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of an Allergy', GeneralParameters.appVersion, 'userName');
 	});
 
 	async function checkValuesInRow(row, a: any) {

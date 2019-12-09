@@ -5,6 +5,6 @@ export class LoginNavigationService {
 
 	public static async navigateToHomePage(loginPage: LoginPage) {
 		await browser.get('/#/login');
-		await loginPage.retrieveAppParams(loginPage);
+		await loginPage.retrieveAppParams();
 	}
 }

@@ -4,8 +4,10 @@ import {PatientMaintenanceDialog} from '../../page-objects/patient/patient-maint
 import {PatientDialog} from '../../page-objects/patient/patient-detail/patient-dialog';
 import {MainActionService} from '../../services/main-action.service';
 import {MainNavigationService} from '../../services/main-navigation.service';
-import {Check} from 'systelab-components-test/lib/utilities';
+import {Check, TestUtil} from 'systelab-components-test/lib/utilities';
 import {LoginActionService} from '../../../login/services/login-action.service';
+import {GeneralParameters} from '../../../general-parameters';
+
 import {browser} from 'protractor';
 import * as lodash from 'lodash';
 
@@ -64,7 +66,7 @@ describe('TC0003_PatientManagement_Allergy_e2e', () => {
 	});
 
 	beforeEach(async () => {
-		await Check.init('TC0003_PatientManagement_Allergy_e2e', 'Purpose: This TC is intended to verify the CRUD of a Patient', loginPage.appVersion, 'userName');
+		await TestUtil.init('TC0003_PatientManagement_Allergy_e2e', 'Purpose: This TC is intended to verify the CRUD of a Patient', GeneralParameters.appVersion, 'userName');
 	});
 
 	async function checkValuesInRow(row, a) {

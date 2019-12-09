@@ -4,8 +4,9 @@ import {PatientMaintenanceDialog} from '../../page-objects/patient/patient-maint
 import {PatientDialog} from '../../page-objects/patient/patient-detail/patient-dialog';
 import {MainNavigationService} from '../../services/main-navigation.service';
 import {Grid} from 'systelab-components-test';
-import {Check} from 'systelab-components-test/lib/utilities';
+import {Check, TestUtil} from 'systelab-components-test/lib/utilities';
 import {LoginActionService} from '../../../login/services/login-action.service';
+import {GeneralParameters} from '../../../general-parameters';
 import * as lodash from 'lodash';
 
 declare const allure: any;
@@ -50,7 +51,7 @@ describe('TC0001_PatientManagement_e2e', () => {
 	});
 
 	beforeEach(() => {
-		Check.init('TC0001_PatientManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of a Patient', loginPage.appVersion, 'userName');
+		TestUtil.init('TC0001_PatientManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of a Patient', GeneralParameters.appVersion, 'userName');
 	});
 
 	async function checkValuesInRow(row, p: any) {
