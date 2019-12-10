@@ -4,7 +4,7 @@ import {PatientMaintenanceDialog} from '../../page-objects/patient/patient-maint
 import {PatientDialog} from '../../page-objects/patient/patient-detail/patient-dialog';
 import {MainActionService} from '../../services/main-action.service';
 import {MainNavigationService} from '../../services/main-navigation.service';
-import {Check, TestUtil} from 'systelab-components-test/lib/utilities';
+import {because, Check, TestUtil} from 'systelab-components-test/lib/utilities';
 import {LoginActionService} from '../../../login/services/login-action.service';
 import {GeneralParameters} from '../../../general-parameters';
 
@@ -70,47 +70,41 @@ describe('TC0003_PatientManagement_Allergy_e2e', () => {
 	});
 
 	async function checkValuesInRow(row, a) {
-		await Check.checkText(Promise.resolve(row[1]), 'Col Name', a.allergy);
-		await Check.checkText(Promise.resolve(row[2]), 'Col Asserted Date', a.assertedDate);
-		await Check.checkText(Promise.resolve(row[3]), 'Col Comments', a.comments);
+		await because(`Col Name ${a.allergy}`).expect(Promise.resolve(row[1])).toEqual(a.allergy);
+		await because(`Col Asserted Date ${a.assertedDate}`).expect(Promise.resolve(row[2])).toEqual(a.assertedDate);
+		await because(`Col Comments ${a.comments}`).expect(Promise.resolve(row[3])).toEqual(a.comments);
 	}
 
-	it('Should show allergies for patient', async () => {
+	it('Show allergies for patient', async () => {
 		await browser.sleep(1000);
-		expect(patientDialog.getAllergyGrid().getGridHeader()).toEqual(['', 'Name', 'Asserted Date', 'Comments']);
+		await because('The patient-allergies grid is displayed').expect(patientDialog.getAllergyGrid().getGridHeader()).toEqual(['', 'Name', 'Asserted Date', 'Comments']);
 	});
 
-	it('Should assign allergies to a patient', async () => {
-		await allure.createStep('Action: Add an allergy to the patient', async () => {
-			await patientDialog.getAddButton().click();
-			const patientAllergyDialog = patientDialog.getPatientAllergyDialog();
-			await patientAllergyDialog.set(allergyForPatient);
-			await patientAllergyDialog.getSubmitButton().click();
-		})();
-		await Check.checkNumber(patientDialog.getAllergyGrid().getNumberOfRows(), 'Number of Allergies for patient', 1);
+	it('Assign an allergy to a patient', async () => {
+		await patientDialog.getAddButton().click();
+		const patientAllergyDialog = patientDialog.getPatientAllergyDialog();
+		await patientAllergyDialog.set(allergyForPatient);
+		await patientAllergyDialog.getSubmitButton().click();
+		await because('Number of allergies from patient 1').expect(patientDialog.getAllergyGrid().getNumberOfRows()).toBe(1);
 		const values = await patientDialog.getAllergyGrid().getValuesInRow(0);
 		await checkValuesInRow(values, allergyForPatient);
 	});
 
-	it('Should show a message on allergy for patient with invalid data', async () => {
+	it('Assign an allergy with invalid data to a patient', async () => {
 		let patientAllergyDialog;
-		await allure.createStep('Action: Add an allergy to the patient', async () => {
-			await patientDialog.getAddButton().click();
-			patientAllergyDialog = patientDialog.getPatientAllergyDialog();
-			await patientAllergyDialog.set(getInvalidAllergyForPatient());
-			await patientAllergyDialog.getSubmitButton().click();
-		})();
-		await Check.checkIsPresent(patientAllergyDialog.getMesssagePopup().getElement(), 'Invalid allergy');
+		await patientDialog.getAddButton().click();
+		patientAllergyDialog = patientDialog.getPatientAllergyDialog();
+		await patientAllergyDialog.set(getInvalidAllergyForPatient());
+		await patientAllergyDialog.getSubmitButton().click();
+		await because('Invalid allergy').expect(patientAllergyDialog.getMesssagePopup().getElement().isPresent()).toBeTruthy();
 		await patientAllergyDialog.getMesssagePopup().close();
 		await patientAllergyDialog.close();
 	});
 
-	it('Should delete allergies from a patient', async () => {
-		await allure.createStep('Action: Remove an allergy to the patient', async () => {
-			await patientDialog.getAllergyGrid().clickOnRowMenu(0);
-			await patientDialog.getAllergyGrid().getMenu().selectOptionByText('Delete');
-		})();
-		await Check.checkNumber(patientDialog.getAllergyGrid().getNumberOfRows(), 'Number of Allergies for patient', 0);
+	it('Remove an allergy from a patient', async () => {
+		await patientDialog.getAllergyGrid().clickOnRowMenu(0);
+		await patientDialog.getAllergyGrid().getMenu().selectOptionByText('Delete');
+		await because('Number of Allergies from patient 0').expect(patientDialog.getAllergyGrid().getNumberOfRows()).toBe(0);
 	});
 
 });

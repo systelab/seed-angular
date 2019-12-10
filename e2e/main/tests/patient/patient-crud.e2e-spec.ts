@@ -4,7 +4,7 @@ import {PatientMaintenanceDialog} from '../../page-objects/patient/patient-maint
 import {PatientDialog} from '../../page-objects/patient/patient-detail/patient-dialog';
 import {MainNavigationService} from '../../services/main-navigation.service';
 import {Grid} from 'systelab-components-test';
-import {Check, TestUtil} from 'systelab-components-test/lib/utilities';
+import {because, Check, TestUtil} from 'systelab-components-test/lib/utilities';
 import {LoginActionService} from '../../../login/services/login-action.service';
 import {GeneralParameters} from '../../../general-parameters';
 import * as lodash from 'lodash';
@@ -55,61 +55,53 @@ describe('TC0001_PatientManagement_e2e', () => {
 	});
 
 	async function checkValuesInRow(row, p: any) {
-		await Check.checkText(Promise.resolve(row[1]), 'Col Name', p.name);
-		await Check.checkText(Promise.resolve(row[2]), 'Col Surname', p.surname);
-		await Check.checkText(Promise.resolve(row[3]), 'Col Email', p.email);
+		await expect(Promise.resolve(row[1])).toEqual(p.name);
+		await expect(Promise.resolve(row[2])).toEqual(p.surname);
+		await because('All fields are evaluated as expected').expect(Promise.resolve(row[3])).toEqual(p.email);
 	}
 
-	it('Should show patients', async () => {
+	it('Show the patients', async () => {
 		await patientGrid.waitToBePresent();
-		await expect(patientGrid.getGridHeader()).toEqual(['', 'Name', 'Surname', 'Email']);
+		await because('The Patient Grid is displayed').expect(patientGrid.getGridHeader()).toEqual(['', 'Name', 'Surname', 'Email']);
 	});
 
-	it('Should create patients', async () => {
-		await allure.createStep('Action: Create a patient', async () => {
-			await patientMaintenanceDialog.getButtonAdd().click();
-			await patientDialog.set(patient);
-			await patientDialog.getButtonSubmit().click();
-			await Check.checkNumber(patientGrid.getNumberOfRows(), 'Number of Patients', 1);
-			const values = await patientGrid.getValuesInRow(0);
-			await checkValuesInRow(values, patient);
-		})();
+	it('Create a patient', async () => {
+		await patientMaintenanceDialog.getButtonAdd().click();
+		await patientDialog.set(patient);
+		await patientDialog.getButtonSubmit().click();
+		await because('Number of Patients is 1').expect(patientGrid.getNumberOfRows()).toBe(1);
+		const values = await patientGrid.getValuesInRow(0);
+		await checkValuesInRow(values, patient);
 	});
 
-	it('Should show a message on patient invalid data', async () => {
-		await allure.createStep('Action: Create a patient', async () => {
-			await patientMaintenanceDialog.getButtonAdd().click();
-			await patientDialog.set(getInvalidPatient());
-			await patientDialog.getButtonSubmit().click();
-			await Check.checkIsPresent(patientDialog.getMesssagePopup().getElement(), 'Invalid patient');
-			await patientDialog.getMesssagePopup().close();
-			await patientDialog.close();
-		})();
+	it('Create a patient with invalid data', async () => {
+		await patientMaintenanceDialog.getButtonAdd().click();
+		await patientDialog.set(getInvalidPatient());
+		await patientDialog.getButtonSubmit().click();
+		await because('Invalid Patient').expect(patientDialog.getMesssagePopup().getElement().isPresent()).toBeTruthy();
+		await patientDialog.getMesssagePopup().close();
+		await patientDialog.close();
 	});
 
-	it('Should view patients', async () => {
-		await allure.createStep('Action: View a patient', async () => {
-			await patientGrid.clickOnCell(0, 'name');
-			expect(await lodash.isEqual(patient, await patientDialog.get())).toBeTruthy();
-			await patientDialog.close();
-		})();
+	it('View a patient', async () => {
+		await patientGrid.clickOnCell(0, 'name');
+		await because('Displayed patient equals to created patient').expect(lodash.isEqual(patient, await patientDialog.get())).toBeTruthy();
+		await patientDialog.close();
 	});
 
-	it('Should modify patients', async () => {
+	it('Modify a patient', async () => {
 		await patientGrid.clickOnCell(0, 'name');
 		await patientDialog.clear();
 		await patientDialog.set(getUpdatePatient());
 		await patientDialog.getButtonSubmit().click();
-		await Check.checkNumber(patientGrid.getNumberOfRows(), 'Number of Patients', 1);
+		await because('Number of Patients is 1').expect(patientGrid.getNumberOfRows()).toBe(1);
 		const values = await patientGrid.getValuesInRow(0);
 		await checkValuesInRow(values, getUpdatePatient());
 	});
 
-	it('Should delete patients', async () => {
-		await allure.createStep(`Action: Delete the Patient at row 0`, async () => {
-			await patientGrid.clickOnRowMenu(0);
-			await patientGrid.getMenu().selectOptionByText('Delete');
-			await Check.checkNumber(patientGrid.getNumberOfRows(), 'Number of Patients', 0);
-		})();
+	it('Delete a patient', async () => {
+		await patientGrid.clickOnRowMenu(0);
+		await patientGrid.getMenu().selectOptionByText('Delete');
+		await because('Number of Patients is 0').expect(patientGrid.getNumberOfRows()).toBe(0);
 	});
 });

@@ -3,7 +3,7 @@ import {MainPage} from '../../page-objects/main.po';
 import {AllergyDetailDialog} from '../../page-objects/allergy/allergy-detail/allergy-dialog';
 import {MainNavigationService} from '../../services/main-navigation.service';
 import {Grid} from 'systelab-components-test';
-import {Check, TestUtil} from 'systelab-components-test/lib/utilities';
+import {because, Check, TestUtil} from 'systelab-components-test/lib/utilities';
 import {LoginActionService} from '../../../login/services/login-action.service';
 import {GeneralParameters} from '../../../general-parameters';
 
@@ -47,63 +47,55 @@ describe('TC0004_AllergyManagement_e2e', () => {
 	});
 
 	async function checkValuesInRow(row, a: any) {
-		await Check.checkText(Promise.resolve(row[1]), 'Col Name', a.name);
-		await Check.checkText(Promise.resolve(row[2]), 'Col Signs', a.sign);
-		await Check.checkText(Promise.resolve(row[3]), 'Col Symptoms', a.symptom);
+		await because(`Col Name ${a.name}`).expect(Promise.resolve(row[1])).toEqual(a.name);
+		await because(`Col Signs ${a.sign}`).expect(Promise.resolve(row[2])).toEqual(a.sign);
+		await because(`Col Symptoms ${a.symptom}`).expect(Promise.resolve(row[3])).toEqual(a.symptom);
 	}
 
-	it('Should show allergies', async () => {
+	it('Show the allergies', async () => {
 		await mainPage.getAllergyGrid().waitToBePresent();
-		await expect(mainPage.getAllergyGrid().getGridHeader()).toEqual(['', 'Name', 'Signs', 'Symptoms']);
+		await because('The allergies grid is displayed').expect(allergyGrid.getGridHeader()).toEqual(['', 'Name', 'Signs', 'Symptoms']);
 	});
 
-	it('Should create allergies', async () => {
-		await allure.createStep('Action: Create an allergy', async () => {
-			await mainPage.getAllergyAddButton().click();
-			await allergyDialog.waitToBePresent();
-			await allergyDialog.set(allergy);
-			await allergyDialog.getButtonSubmit().click();
-			await mainPage.waitToBePresent();
-			await Check.checkNumber(allergyGrid.getNumberOfRows(), 'Number of allergies', 1);
-			const values = await allergyGrid.getValuesInRow(0);
-			await checkValuesInRow(values, allergy);
-		})();
+	it('Create an allergy', async () => {
+		await mainPage.getAllergyAddButton().click();
+		await allergyDialog.waitToBePresent();
+		await allergyDialog.set(allergy);
+		await allergyDialog.getButtonSubmit().click();
+		await mainPage.waitToBePresent();
+		await because('Number of allergies 1').expect(allergyGrid.getNumberOfRows()).toEqual(1);
+		const values = await allergyGrid.getValuesInRow(0);
+		await checkValuesInRow(values, allergy);
 	});
 
-	it('Should show a message on allergy invalid data', async () => {
-		await allure.createStep('Action: Create an allergy', async () => {
-			await mainPage.getAllergyAddButton().click();
-			await allergyDialog.set(getInvalidAllergy());
-			await allergyDialog.getButtonSubmit().click();
-			await Check.checkIsPresent(allergyDialog.getMesssagePopup().getElement(), 'Invalid allergy');
-			await allergyDialog.getMesssagePopup().close();
-			await allergyDialog.close();
-		})();
+	it('Create an allergy with invalid data', async () => {
+		await mainPage.getAllergyAddButton().click();
+		await allergyDialog.set(getInvalidAllergy());
+		await allergyDialog.getButtonSubmit().click();
+		await because('Invalid allergy').expect(allergyDialog.getMesssagePopup().getElement().isPresent()).toBeTruthy();
+		await allergyDialog.getMesssagePopup().close();
+		await allergyDialog.close();
 	});
 
-	it('Should view allergies', async () => {
-		await allure.createStep('Action: View an allergy', async () => {
-			await allergyGrid.clickOnCell(0, 'name');
-			expect(await lodash.isEqual(allergy, await allergyDialog.get())).toBeTruthy();
-			await allergyDialog.close();
-		})();
+	it('View an allergy', async () => {
+		await allergyGrid.clickOnCell(0, 'name');
+		await because('Displayed allergy equals to created allergy').expect(allergyDialog.get()).toEqual(allergy);
+		await allergyDialog.close();
 	});
 
-	it('Should modify allergies', async () => {
+	it('Modify an allergy', async () => {
 		await allergyGrid.clickOnCell(0, 'name');
 		await allergyDialog.clear();
 		await allergyDialog.set(getUpdateAllergy());
 		await allergyDialog.getButtonSubmit().click();
-		await Check.checkNumber(allergyGrid.getNumberOfRows(), 'Number of allergies', 1);
+		await because('Number of allergies 1').expect(allergyGrid.getNumberOfRows()).toBe(1);
 		const values = await allergyGrid.getValuesInRow(0);
 		await checkValuesInRow(values, getUpdateAllergy());
 	});
 
-	it('Should delete allergies', async () => {
-		await allure.createStep(`Action: Delete the Allergy at row 0`, async () => {
-			await allergyGrid.clickOnRowMenu(0);
-			await allergyGrid.getMenu().selectOptionByText('Delete');
-			await Check.checkNumber(allergyGrid.getNumberOfRows(), 'Number of allergies', 0);
-		})();
+	it('Delete an allergy', async () => {
+		await allergyGrid.clickOnRowMenu(0);
+		await allergyGrid.getMenu().selectOptionByText('Delete');
+		await because('Number of allergies 0').expect(allergyGrid.getNumberOfRows()).toBe(0);
 	});
 });
