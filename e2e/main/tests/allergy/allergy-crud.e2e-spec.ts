@@ -47,9 +47,9 @@ describe('TC0004_AllergyManagement_e2e', () => {
 	});
 
 	async function checkValuesInRow(row, a: any) {
-		await because(`Col Name ${a.name}`).expect(Promise.resolve(row[1])).toEqual(a.name);
-		await because(`Col Signs ${a.sign}`).expect(Promise.resolve(row[2])).toEqual(a.sign);
-		await because(`Col Symptoms ${a.symptom}`).expect(Promise.resolve(row[3])).toEqual(a.symptom);
+		await expect(Promise.resolve(row[1])).toEqual(a.name);
+		await expect(Promise.resolve(row[2])).toEqual(a.sign);
+		await because('All fields are evaluated as expected').expect(Promise.resolve(row[3])).toEqual(a.symptom);
 	}
 
 	it('Show the allergies', async () => {
@@ -57,7 +57,7 @@ describe('TC0004_AllergyManagement_e2e', () => {
 		await because('The allergies grid is displayed').expect(allergyGrid.getGridHeader()).toEqual(['', 'Name', 'Signs', 'Symptoms']);
 	});
 
-	it('Create an allergy', async () => {
+	it(`Create an allergy: [name: ${allergy.name}, sign: ${allergy.sign}, symptom: ${allergy.symptom}]`, async () => {
 		await mainPage.getAllergyAddButton().click();
 		await allergyDialog.waitToBePresent();
 		await allergyDialog.set(allergy);
@@ -83,7 +83,7 @@ describe('TC0004_AllergyManagement_e2e', () => {
 		await allergyDialog.close();
 	});
 
-	it('Modify an allergy', async () => {
+	it(`Modify an allergy: [name: ${getUpdateAllergy().name}, sign: ${getUpdateAllergy().name}, symptom: ${getUpdateAllergy().symptom}]`, async () => {
 		await allergyGrid.clickOnCell(0, 'name');
 		await allergyDialog.clear();
 		await allergyDialog.set(getUpdateAllergy());

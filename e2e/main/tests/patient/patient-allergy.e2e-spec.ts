@@ -70,9 +70,9 @@ describe('TC0003_PatientManagement_Allergy_e2e', () => {
 	});
 
 	async function checkValuesInRow(row, a) {
-		await because(`Col Name ${a.allergy}`).expect(Promise.resolve(row[1])).toEqual(a.allergy);
-		await because(`Col Asserted Date ${a.assertedDate}`).expect(Promise.resolve(row[2])).toEqual(a.assertedDate);
-		await because(`Col Comments ${a.comments}`).expect(Promise.resolve(row[3])).toEqual(a.comments);
+		await expect(Promise.resolve(row[1])).toEqual(a.allergy);
+		await expect(Promise.resolve(row[2])).toEqual(a.assertedDate);
+		await because('All fields are evaluated as expected').expect(Promise.resolve(row[3])).toEqual(a.comments);
 	}
 
 	it('Show allergies for patient', async () => {
@@ -80,7 +80,7 @@ describe('TC0003_PatientManagement_Allergy_e2e', () => {
 		await because('The patient-allergies grid is displayed').expect(patientDialog.getAllergyGrid().getGridHeader()).toEqual(['', 'Name', 'Asserted Date', 'Comments']);
 	});
 
-	it('Assign an allergy to a patient', async () => {
+	it(`Assign an allergy to a patient: [name: ${allergyForPatient.allergy}, assertedDate: ${allergyForPatient.assertedDate}, comments: ${allergyForPatient.comments}]`, async () => {
 		await patientDialog.getAddButton().click();
 		const patientAllergyDialog = patientDialog.getPatientAllergyDialog();
 		await patientAllergyDialog.set(allergyForPatient);

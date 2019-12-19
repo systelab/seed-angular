@@ -65,7 +65,7 @@ describe('TC0001_PatientManagement_e2e', () => {
 		await because('The Patient Grid is displayed').expect(patientGrid.getGridHeader()).toEqual(['', 'Name', 'Surname', 'Email']);
 	});
 
-	it('Create a patient', async () => {
+	it(`Create a patient: [name: ${patient.name}, surname: ${patient.surname}, email: ${patient.email}]`, async () => {
 		await patientMaintenanceDialog.getButtonAdd().click();
 		await patientDialog.set(patient);
 		await patientDialog.getButtonSubmit().click();
@@ -89,7 +89,7 @@ describe('TC0001_PatientManagement_e2e', () => {
 		await patientDialog.close();
 	});
 
-	it('Modify a patient', async () => {
+	it(`Modify a patient: [name: ${getUpdatePatient().name}, surname: ${getUpdatePatient().surname}, email: ${getUpdatePatient().email}]`, async () => {
 		await patientGrid.clickOnCell(0, 'name');
 		await patientDialog.clear();
 		await patientDialog.set(getUpdatePatient());
