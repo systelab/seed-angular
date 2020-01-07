@@ -3,7 +3,7 @@ import {MainPage} from '../../page-objects/main.po';
 import {AllergyDetailDialog} from '../../page-objects/allergy/allergy-detail/allergy-dialog';
 import {MainNavigationService} from '../../services/main-navigation.service';
 import {Grid} from 'systelab-components-test';
-import {because, Check, TestUtil} from 'systelab-components-test/lib/utilities';
+import {because, TestUtil} from 'systelab-components-test/lib/utilities';
 import {LoginActionService} from '../../../login/services/login-action.service';
 import {GeneralParameters} from '../../../general-parameters';
 

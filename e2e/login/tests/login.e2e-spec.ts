@@ -1,6 +1,6 @@
 import {LoginPage} from '../page-objects/login.po';
 import {MainPage} from '../../main/page-objects/main.po';
-import {because, Check, TestUtil} from 'systelab-components-test/lib/utilities';
+import {because, TestUtil} from 'systelab-components-test/lib/utilities';
 import {GeneralParameters} from '../../general-parameters';
 import {LoginNavigationService} from '../services/login-navigation.service';
 

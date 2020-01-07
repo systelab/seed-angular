@@ -4,7 +4,7 @@ import {PatientMaintenanceDialog} from '../../page-objects/patient/patient-maint
 import {PatientDialog} from '../../page-objects/patient/patient-detail/patient-dialog';
 import {MainActionService} from '../../services/main-action.service';
 import {MainNavigationService} from '../../services/main-navigation.service';
-import {because, Check, TestUtil} from 'systelab-components-test/lib/utilities';
+import {because, TestUtil} from 'systelab-components-test/lib/utilities';
 import {LoginActionService} from '../../../login/services/login-action.service';
 import {GeneralParameters} from '../../../general-parameters';
 
