@@ -1,4 +1,4 @@
-import { HttpHeaders } from '@angular/common/http';
+import {HttpHeaders, HttpParams} from '@angular/common/http';
 import { ApiGlobalsService } from '@globals/globals.service';
 
 export class BaseService {
@@ -28,6 +28,21 @@ export class BaseService {
 	public isJsonMime(mime: string): boolean {
 		const jsonMime: RegExp = new RegExp('^(application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(;.*)?$', 'i');
 		return mime != null && (jsonMime.test(mime) || mime.toLowerCase() === 'application/json-patch+json');
+	}
+
+	public getOptions(): {
+		headers?: HttpHeaders | {
+			[header: string]: string | string[];
+		};
+		observe?: 'body';
+		params?: HttpParams | {
+			[param: string]: string | string[];
+		};
+		reportProgress?: boolean;
+		responseType?: 'json';
+		withCredentials?: boolean;
+	} {
+		return { headers: this.getAuthorizationHeader()};
 	}
 
 }

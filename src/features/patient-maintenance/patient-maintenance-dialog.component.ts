@@ -40,8 +40,7 @@ export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenan
 	public doCreatePatient() {
 		const parameters: PatientDialogParameters = PatientDialog.getParameters();
 		this.dialogService.showDialog(PatientDialog, parameters)
-			.subscribe(
-				(result) => {
+			.subscribe((result) => {
 					if (result) {
 						this.patientgrid.refresh();
 					}
@@ -54,8 +53,7 @@ export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenan
 		parameters.patientId = patient.id;
 
 		this.dialogService.showDialog(PatientDialog, parameters)
-			.subscribe(
-				(result) => {
+			.subscribe((result) => {
 					if (result) {
 						this.patientgrid.refresh();
 					}
@@ -66,7 +64,8 @@ export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenan
 	public getMenu(): Array<GridContextMenuOption<Patient>> {
 		const menuDefs: Array<GridContextMenuOption<Patient>> = [];
 		this.i18nService.get(['COMMON_UPDATE', 'COMMON_DELETE']).subscribe((res) => {
-			menuDefs.push(new GridContextMenuOption('action1', res.COMMON_UPDATE), new GridContextMenuOption('action2', res.COMMON_DELETE));
+			menuDefs.push(new GridContextMenuOption('action1', res.COMMON_UPDATE));
+			menuDefs.push(new GridContextMenuOption('action2', res.COMMON_DELETE));
 		});
 		return menuDefs;
 	}

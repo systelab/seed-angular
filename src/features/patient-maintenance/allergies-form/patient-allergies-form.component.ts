@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { PatientAllergyGrid } from '../../../common/components/patient-allergy/grid/patient-allergy-grid.component';
+import { PatientAllergyGrid } from '@components/patient-allergy/grid/patient-allergy-grid.component';
 import { PatientAllergyDialog, PatientAllergyDialogParameters } from '@features/patient-maintenance/patient-allergy-detail-dialog/patient-allergy-dialog.component';
 import { DialogService } from 'systelab-components/widgets/modal';
 import { GridContextMenuOption } from 'systelab-components/widgets/grid/contextmenu/grid-context-menu-option';
@@ -33,8 +33,7 @@ export class PatientAllergiesFormComponent {
 		parameters.patientAllergy = patientAllergy;
 
 		this.dialogService.showDialog(PatientAllergyDialog, parameters)
-			.subscribe(
-				(result) => {
+			.subscribe((result) => {
 					if (result) {
 						this.grid.refresh();
 					}
@@ -45,7 +44,8 @@ export class PatientAllergiesFormComponent {
 	public getMenu(): Array<GridContextMenuOption<PatientAllergy>> {
 		const menuDefs: Array<GridContextMenuOption<PatientAllergy>> = [];
 		this.i18nService.get(['COMMON_UPDATE', 'COMMON_DELETE']).subscribe((res) => {
-			menuDefs.push(new GridContextMenuOption('action1', res.COMMON_UPDATE), new GridContextMenuOption('action2', res.COMMON_DELETE));
+			menuDefs.push(new GridContextMenuOption('action1', res.COMMON_UPDATE));
+			menuDefs.push(new GridContextMenuOption('action2', res.COMMON_DELETE));
 		});
 		return menuDefs;
 	}

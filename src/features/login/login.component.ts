@@ -14,15 +14,14 @@ export class LoginComponent {
 	public userName = '';
 	public password = '';
 
-	constructor(protected router: Router, protected userService: UserService, protected apiGlobalsService: ApiGlobalsService, protected i18NService: I18nService,
-	            protected messagePopupService: MessagePopupService) {
+	constructor(protected router: Router, protected userService: UserService, protected apiGlobalsService: ApiGlobalsService,
+				protected i18NService: I18nService, protected messagePopupService: MessagePopupService) {
 	}
 
 	public doLogin(event: any) {
 		if (this.userName && this.password) {
 			this.userService.authenticateUser(this.userName, this.password)
-				.subscribe(
-					(response) => {
+				.subscribe((response) => {
 						this.apiGlobalsService.bearer = response.headers.get('Authorization');
 						this.router.navigateByUrl('/main');
 					},

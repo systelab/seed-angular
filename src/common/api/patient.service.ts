@@ -18,32 +18,20 @@ export class PatientService extends BaseService {
 		super(basePath, apiGlobalsService);
 	}
 
-	/**
-	 * Create a Patient
-	 *
-	 * @param body Patient
-	 */
-	public createPatient(body: Patient): Observable<Patient> {
-		if (body === null || body === undefined) {
-			throw new Error('Required parameter body was null or undefined when calling createPatient.');
+	public createPatient(patient: Patient): Observable<Patient> {
+		if (!patient) {
+			throw new Error('Required parameter patient was null or undefined when calling createPatient.');
 		}
-
-		return this.httpClient.post<any>(`${this.basePath}/patients/patient`, body, {
-			headers: this.getAuthorizationHeader(),
-		});
+		return this.httpClient.post<any>(`${this.basePath}/patients/patient`, patient, this.getOptions());
 	}
 
-	/**
-	 * Get all Patients
-	 *
-	 */
 	public getAllPatients(page: number, itemsPerPage: number): Observable<Page<Patient>> {
 
 		let queryParameters = new HttpParams();
-		if (page !== null) {
+		if (page) {
 			queryParameters = queryParameters.set('page', <any>page);
 		}
-		if (itemsPerPage !== null) {
+		if (itemsPerPage) {
 			queryParameters = queryParameters.set('size', <any>itemsPerPage);
 		}
 		return this.httpClient.get<any>(`${this.basePath}/patients`, {
@@ -52,52 +40,27 @@ export class PatientService extends BaseService {
 		});
 	}
 
-	/**
-	 * Get Patient
-	 *
-	 * @param uid
-	 */
 	public getPatient(uid: string): Observable<Patient> {
-		if (uid === null || uid === undefined) {
+		if (!uid) {
 			throw new Error('Required parameter uid was null or undefined when calling getPatient.');
 		}
-
-		return this.httpClient.get<any>(`${this.basePath}/patients/${encodeURIComponent(String(uid))}`, {
-			headers: this.getAuthorizationHeader(),
-		});
+		return this.httpClient.get<any>(`${this.basePath}/patients/${encodeURIComponent(String(uid))}`, this.getOptions());
 	}
 
-	/**
-	 * Delete a Patient
-	 *
-	 * @param uid
-	 */
 	public remove(uid: string): Observable<{}> {
-		if (uid === null || uid === undefined) {
+		if (!uid) {
 			throw new Error('Required parameter uid was null or undefined when calling remove.');
 		}
-
-		return this.httpClient.delete<any>(`${this.basePath}/patients/${encodeURIComponent(String(uid))}`, {
-			headers: this.getAuthorizationHeader(),
-		});
+		return this.httpClient.delete<any>(`${this.basePath}/patients/${encodeURIComponent(String(uid))}`, this.getOptions());
 	}
 
-	/**
-	 * Create or Update (idempotent) an existing Patient
-	 *
-	 * @param uid
-	 * @param body Patient
-	 */
-	public updatePatient(uid: string, body: Patient): Observable<Patient> {
-		if (uid === null || uid === undefined) {
+	public updatePatient(uid: string, patient: Patient): Observable<Patient> {
+		if (!uid) {
 			throw new Error('Required parameter uid was null or undefined when calling updatePatient.');
 		}
-		if (body === null || body === undefined) {
-			throw new Error('Required parameter body was null or undefined when calling updatePatient.');
+		if (!patient) {
+			throw new Error('Required parameter patient was null or undefined when calling updatePatient.');
 		}
-
-		return this.httpClient.put<any>(`${this.basePath}/patients/${encodeURIComponent(String(uid))}`, body, {
-			headers: this.getAuthorizationHeader(),
-		});
+		return this.httpClient.put<any>(`${this.basePath}/patients/${encodeURIComponent(String(uid))}`, patient, this.getOptions());
 	}
 }
