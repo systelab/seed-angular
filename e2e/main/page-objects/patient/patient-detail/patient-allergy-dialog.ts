@@ -27,8 +27,8 @@ export class PatientAllergyDialog extends SystelabDialogTest {
 		await this.getAllergyCombobox().click();
 		await this.getAllergyCombobox().selectOptionByText(allergyForPatient.allergy);
 
-		// patientAllergyDetailPage.getAssertedDate().setValue('01/01/2019');
-		// patientAllergyDetailPage.getLastOccurrenceDate().setValue('02/02/2019');
+		await this.getAssertedDate().setValue(allergyForPatient.assertedDate);
+		await this.getLastOccurrenceDate().setValue(allergyForPatient.lastOccurrenceDate);
 
 		await this.getAllergyNotes().setText(allergyForPatient.comments);
 	}

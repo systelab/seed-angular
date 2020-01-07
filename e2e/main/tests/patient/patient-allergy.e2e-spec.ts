@@ -40,7 +40,8 @@ describe('TC0003_PatientManagement_Allergy_e2e', () => {
 
 	const allergyForPatient = {
 		allergy: 'Name',
-		assertedDate: '',
+		assertedDate: '01/01/2019',
+		lastOccurrenceDate: '02/02/2019',
 		comments: 'Comments'
 	};
 
