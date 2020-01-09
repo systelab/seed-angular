@@ -1,8 +1,8 @@
 import {by, element} from 'protractor';
 import {PatientDialog} from './patient-detail/patient-dialog';
-import {Button, Grid, SystelabDialogTest} from 'systelab-components-test';
+import {Button, Grid, Dialog} from 'systelab-components-test';
 
-export class PatientMaintenanceDialog extends SystelabDialogTest {
+export class PatientMaintenanceDialog extends Dialog {
 
 	public getButtonOptions(): Button {
 		return new Button(this.byId('PatientMaintenanceOptionsButton'));

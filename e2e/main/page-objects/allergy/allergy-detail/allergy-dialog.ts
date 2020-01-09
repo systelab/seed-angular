@@ -1,7 +1,7 @@
 import {by} from 'protractor';
-import {Button, InputField, SystelabDialogTest} from 'systelab-components-test';
+import {Button, InputField, Dialog} from 'systelab-components-test';
 
-export class AllergyDetailDialog extends SystelabDialogTest {
+export class AllergyDetailDialog extends Dialog {
 
 	public getEnableSwitch() {
 		return this.byId('AllergyEnableSwitch').element(by.tagname('input'));
