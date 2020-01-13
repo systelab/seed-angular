@@ -20,7 +20,7 @@ describe('TC0002_LoginManagement_e2e', () => {
 
 	beforeEach(async () => {
 		TestUtil.init('TC0002_LoginManagement_e2e', 'Goal: The purpose of this test case is to verify the login and log out functionalities',
-			undefined, 'userName');
+			GeneralParameters.appVersion, GeneralParameters.USERNAME);
 		loginPage = new LoginPage();
 		mainPage = new MainPage();
 		await allure.createStep('Action: Open home page', async () => {

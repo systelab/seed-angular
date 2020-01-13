@@ -43,7 +43,7 @@ describe('TC0004_AllergyManagement_e2e', () => {
 	});
 
 	beforeEach(() => {
-		TestUtil.init('TC0004_AllergyManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of an Allergy', GeneralParameters.appVersion, 'userName');
+		TestUtil.init('TC0004_AllergyManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of an Allergy', GeneralParameters.appVersion, GeneralParameters.USERNAME);
 	});
 
 	async function checkValuesInRow(row, a: any) {

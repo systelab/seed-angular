@@ -67,7 +67,7 @@ describe('TC0003_PatientManagement_Allergy_e2e', () => {
 	});
 
 	beforeEach(async () => {
-		await TestUtil.init('TC0003_PatientManagement_Allergy_e2e', 'Purpose: This TC is intended to verify the CRUD of a Patient', GeneralParameters.appVersion, 'userName');
+		await TestUtil.init('TC0003_PatientManagement_Allergy_e2e', 'Purpose: This TC is intended to verify the CRUD of a Patient', GeneralParameters.appVersion, GeneralParameters.USERNAME);
 	});
 
 	async function checkValuesInRow(row, a) {
