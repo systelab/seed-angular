@@ -57,6 +57,7 @@ describe('TC0003_PatientManagement_Allergy_e2e', () => {
 		await MainActionService.createPatient(mainPage, patient);
 		patientMaintenanceDialog = await MainNavigationService.navigateToPatientMaintenancePage(mainPage);
 		patientDialog = await MainNavigationService.navigateToPatientDialog(patientMaintenanceDialog, 0);
+		patientDialog.waitToBePresent();
 	});
 
 	afterAll(async () => {
@@ -75,11 +76,6 @@ describe('TC0003_PatientManagement_Allergy_e2e', () => {
 		await expect(Promise.resolve(row[2])).toEqual(a.assertedDate);
 		await because('All fields are evaluated as expected').expect(Promise.resolve(row[3])).toEqual(a.comments);
 	}
-
-	it('Show allergies for patient', async () => {
-		await browser.sleep(1000);
-		await because('The patient-allergies grid is displayed').expect(patientDialog.getAllergyGrid().getGridHeader()).toEqual(['', 'Name', 'Asserted Date', 'Comments']);
-	});
 
 	it(`Assign an allergy to a patient: [name: ${allergyForPatient.allergy}, assertedDate: ${allergyForPatient.assertedDate}, comments: ${allergyForPatient.comments}]`, async () => {
 		await patientDialog.getAddButton().click();

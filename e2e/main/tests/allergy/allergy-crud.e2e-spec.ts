@@ -23,6 +23,8 @@ describe('TC0004_AllergyManagement_e2e', () => {
 		symptom: 'Symptom'
 	};
 
+	const updatedAllergy = getUpdateAllergy(), invalidAllergy = getInvalidAllergy();
+
 	function getInvalidAllergy() {
 		const wrongAllergy = lodash.cloneDeep(allergy);
 		wrongAllergy.name = '';
@@ -52,10 +54,13 @@ describe('TC0004_AllergyManagement_e2e', () => {
 		await because('All fields are evaluated as expected').expect(Promise.resolve(row[3])).toEqual(a.symptom);
 	}
 
-	it('Show the allergies', async () => {
-		await mainPage.getAllergyGrid().waitToBePresent();
-		await because('The allergies grid is displayed').expect(allergyGrid.getGridHeader()).toEqual(['', 'Name', 'Signs', 'Symptoms']);
-	});
+	async function checkAllergy(allergy: any) {
+		await because('Number of allergies 1')
+			.expect(allergyGrid.getNumberOfRows())
+			.toBe(1);
+		const values = await allergyGrid.getValuesInRow(0);
+		await checkValuesInRow(values, allergy);
+	}
 
 	it(`Create an allergy: [name: ${allergy.name}, sign: ${allergy.sign}, symptom: ${allergy.symptom}]`, async () => {
 		await mainPage.getAllergyAddButton().click();
@@ -63,14 +68,12 @@ describe('TC0004_AllergyManagement_e2e', () => {
 		await allergyDialog.set(allergy);
 		await allergyDialog.getButtonSubmit().click();
 		await mainPage.waitToBePresent();
-		await because('Number of allergies 1').expect(allergyGrid.getNumberOfRows()).toEqual(1);
-		const values = await allergyGrid.getValuesInRow(0);
-		await checkValuesInRow(values, allergy);
+		await checkAllergy(allergy);
 	});
 
 	it('Create an allergy with invalid data', async () => {
 		await mainPage.getAllergyAddButton().click();
-		await allergyDialog.set(getInvalidAllergy());
+		await allergyDialog.set(invalidAllergy);
 		await allergyDialog.getButtonSubmit().click();
 		await because('Invalid allergy').expect(allergyDialog.getMesssagePopup().getElement().isPresent()).toBeTruthy();
 		await allergyDialog.getMesssagePopup().close();
@@ -79,18 +82,16 @@ describe('TC0004_AllergyManagement_e2e', () => {
 
 	it('View an allergy', async () => {
 		await allergyGrid.clickOnCell(0, 'name');
-		await because('Displayed allergy equals to created allergy').expect(allergyDialog.get()).toEqual(allergy);
+		await because('All Allergy fields are evaluated as expected').expect(allergyDialog.get()).toEqual(allergy);
 		await allergyDialog.close();
 	});
 
-	it(`Modify an allergy: [name: ${getUpdateAllergy().name}, sign: ${getUpdateAllergy().name}, symptom: ${getUpdateAllergy().symptom}]`, async () => {
+	it(`Modify an allergy: [name: ${updatedAllergy.name}, sign: ${updatedAllergy.sign}, symptom: ${updatedAllergy.symptom}]`, async () => {
 		await allergyGrid.clickOnCell(0, 'name');
 		await allergyDialog.clear();
-		await allergyDialog.set(getUpdateAllergy());
+		await allergyDialog.set(updatedAllergy);
 		await allergyDialog.getButtonSubmit().click();
-		await because('Number of allergies 1').expect(allergyGrid.getNumberOfRows()).toBe(1);
-		const values = await allergyGrid.getValuesInRow(0);
-		await checkValuesInRow(values, getUpdateAllergy());
+		await checkAllergy(updatedAllergy);
 	});
 
 	it('Delete an allergy', async () => {

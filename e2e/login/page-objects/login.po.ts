@@ -1,7 +1,6 @@
 import {by, element} from 'protractor';
-import {Button, InputField, MesssagePopup} from 'systelab-components-test';
+import { Button, InputField, Label, MesssagePopup } from 'systelab-components-test';
 import {BasePage} from 'systelab-components-test/lib/page-objects/base-page';
-import {GeneralParameters} from '../../general-parameters';
 
 export class LoginPage extends BasePage {
 
@@ -9,11 +8,24 @@ export class LoginPage extends BasePage {
 		super('systelab-login');
 	}
 
-	public retrieveAppParams() {
-		this.current.all(by.className('slab-text')).get(0).getText().then(inText => GeneralParameters.appName = inText.trim());
-		this.current.all(by.className('slab-text')).get(1).getText().then(inText => GeneralParameters.appDescription = inText.trim());
-		this.current.all(by.className('slab-text')).get(2).getText().then(inText => GeneralParameters.appVersion = inText.trim());
-		this.current.all(by.className('slab-text')).get(4).getText().then(inText => GeneralParameters.appCopyright = inText.trim());
+	public getAppNameLabel(): Label {
+		return new Label(this.current.all(by.className('slab-text'))
+			.get(0));
+	}
+
+	public getAppDescriptionLabel(): Label {
+		return new Label(this.current.all(by.className('slab-text'))
+			.get(1));
+	}
+
+	public getAppVersionLabel(): Label {
+		return new Label(this.current.all(by.className('slab-text'))
+			.get(2));
+	}
+
+	public getAppCopyrightLabel(): Label {
+		return new Label(this.current.all(by.className('slab-text'))
+			.get(4));
 	}
 
 	public getUsernameField(): InputField {
@@ -30,10 +42,5 @@ export class LoginPage extends BasePage {
 
 	public getMesssagePopup(): MesssagePopup {
 		return new MesssagePopup();
-	}
-
-	public async set(username: string, password: string) {
-		await this.getUsernameField().setText(username);
-		await this.getPasswordField().setText(password);
 	}
 }
