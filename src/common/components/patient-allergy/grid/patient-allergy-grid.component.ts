@@ -1,15 +1,15 @@
-import { Component, Input } from '@angular/core';
-import { I18nService } from 'systelab-translate/lib/i18n.service';
-import { DialogService } from 'systelab-components/widgets/modal/dialog/dialog.service';
-import { PreferencesService } from 'systelab-preferences/lib/preferences.service';
-import { AbstractApiGrid } from 'systelab-components/widgets/grid/abstract-api-grid.component';
-import { map } from 'rxjs/internal/operators';
-import { PatientAllergy } from '@model/patient-allergy';
-import { PatientAllergyService } from '@api/patient-allergy.service';
-import { Observable } from 'rxjs';
+import {Component, Input} from '@angular/core';
+import {I18nService} from 'systelab-translate/lib/i18n.service';
+import {DialogService} from 'systelab-components/widgets/modal/dialog/dialog.service';
+import {PreferencesService} from 'systelab-preferences/lib/preferences.service';
+import {AbstractApiGrid} from 'systelab-components/widgets/grid/abstract-api-grid.component';
+import {map} from 'rxjs/internal/operators';
+import {PatientAllergy} from '@model/patient-allergy';
+import {PatientAllergyService} from '@api/patient-allergy.service';
+import {Observable} from 'rxjs';
 
 @Component({
-	selector:    'patient-allergy-grid',
+	selector: 'patient-allergy-grid',
 	templateUrl: '../../../../../node_modules/systelab-components/html/abstract-grid.component.html'
 })
 export class PatientAllergyGrid extends AbstractApiGrid<PatientAllergy> {
@@ -28,11 +28,11 @@ export class PatientAllergyGrid extends AbstractApiGrid<PatientAllergy> {
 		this.i18nService.get(['COMMON_NAME', 'COMMON_ASSERTED_DATE', 'COMMON_NOTES'])
 			.subscribe((res) => {
 				columnDefs.push({
-					colId:    'name', headerName: res.COMMON_NAME, valueGetter: (params: any) => {
+					colId: 'name', headerName: res.COMMON_NAME, valueGetter: (params: any) => {
 						return this.getAllergyName(params.data);
 					}, width: 300
 				}, {
-					colId:    'asserted', headerName: res.COMMON_ASSERTED_DATE, valueGetter: (params: any) => {
+					colId: 'asserted', headerName: res.COMMON_ASSERTED_DATE, valueGetter: (params: any) => {
 						return this.getAssertedDate(params.data);
 					}, width: 200
 				}, {
@@ -47,7 +47,7 @@ export class PatientAllergyGrid extends AbstractApiGrid<PatientAllergy> {
 	}
 
 	private getAssertedDate(patientAllergy: PatientAllergy): string {
-		return (patientAllergy && patientAllergy.assertedDate) ? this.i18nService.formatDate(patientAllergy.assertedDate) : '';
+		return (patientAllergy && patientAllergy.assertedDate) ? this.i18nService.formatDateFullYear(patientAllergy.assertedDate) : '';
 	}
 
 	private getLastOccurrenceDate(patientAllergy: PatientAllergy): string {

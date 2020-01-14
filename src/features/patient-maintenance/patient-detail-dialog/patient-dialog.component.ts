@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { I18nService } from 'systelab-translate/lib/i18n.service';
-import { PatientService } from '@api/patient.service';
-import { Patient } from '@model/patient';
-import { DialogRef, ModalComponent, SystelabModalContext } from 'systelab-components/widgets/modal';
-import { PatientAllergiesFormComponent } from '@features/patient-maintenance/allergies-form/patient-allergies-form.component';
-import { ErrorService } from '@globals/error.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {I18nService} from 'systelab-translate/lib/i18n.service';
+import {PatientService} from '@api/patient.service';
+import {Patient} from '@model/patient';
+import {DialogRef, ModalComponent, SystelabModalContext} from 'systelab-components/widgets/modal';
+import {PatientAllergiesFormComponent} from '@features/patient-maintenance/allergies-form/patient-allergies-form.component';
+import {ErrorService} from '@globals/error.service';
 
 export class PatientDialogParameters extends SystelabModalContext {
 	public patientId: string;
@@ -13,7 +13,7 @@ export class PatientDialogParameters extends SystelabModalContext {
 }
 
 @Component({
-	selector:    'patient-dialog',
+	selector: 'patient-dialog',
 	templateUrl: 'patient-dialog.component.html',
 })
 export class PatientDialog implements ModalComponent<PatientDialogParameters>, OnInit {
@@ -30,21 +30,8 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 	};
 
 	constructor(public dialog: DialogRef<PatientDialogParameters>, protected i18NService: I18nService,
-	            protected patientService: PatientService, protected errorService: ErrorService) {
+				protected patientService: PatientService, protected errorService: ErrorService) {
 		this.parameters = dialog.context;
-		if (this.isUpdate()) {
-			i18NService.get(['COMMON_UPDATE', 'COMMON_UPDATE_PATIENT'])
-				.subscribe((res) => {
-					this.humanReadableAction = res.COMMON_UPDATE;
-					this.title = res.COMMON_UPDATE_PATIENT;
-				});
-		} else {
-			i18NService.get(['COMMON_CREATE', 'COMMON_CREATE_PATIENT'])
-				.subscribe((res) => {
-					this.humanReadableAction = res.COMMON_CREATE;
-					this.title = res.COMMON_CREATE_PATIENT;
-				});
-		}
 	}
 
 	public static getParameters(): PatientDialogParameters {
@@ -53,14 +40,18 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 
 	public ngOnInit() {
 		if (this.isUpdate()) {
-			this.patientService.getPatient(this.parameters.patientId)
-				.subscribe((response) => {
-						if (!response.address) {
-							response.address = {};
-						}
-						this.patient = response;
-					}
-				);
+			this.i18NService.get(['COMMON_UPDATE', 'COMMON_UPDATE_PATIENT'])
+				.subscribe((res) => {
+					this.humanReadableAction = res.COMMON_UPDATE;
+					this.title = res.COMMON_UPDATE_PATIENT;
+				});
+			this.loadPatient(this.parameters.patientId);
+		} else {
+			this.i18NService.get(['COMMON_CREATE', 'COMMON_CREATE_PATIENT'])
+				.subscribe((res) => {
+					this.humanReadableAction = res.COMMON_CREATE;
+					this.title = res.COMMON_CREATE_PATIENT;
+				});
 		}
 	}
 
@@ -92,19 +83,26 @@ export class PatientDialog implements ModalComponent<PatientDialogParameters>, O
 		this.allergies.doShowOptions();
 	}
 
+	private loadPatient(patientId: string) {
+		this.patientService.getPatient(patientId)
+			.subscribe((response) => {
+					if (!response.address) {
+						response.address = {};
+					}
+					this.patient = response;
+				}
+			);
+	}
+
 	private createPatient(patient: Patient) {
 		this.patientService.createPatient(patient)
-			.subscribe((result) => {
-					this.dialog.close(true);
-				},
+			.subscribe((result) => this.dialog.close(true),
 				(error) => this.errorService.showError(error));
 	}
 
 	private updatePatient(patient: Patient) {
 		this.patientService.updatePatient(patient.id, patient)
-			.subscribe((result) => {
-					this.dialog.close(true);
-				},
+			.subscribe((result) => this.dialog.close(true),
 				(error) => this.errorService.showError(error));
 	}
 

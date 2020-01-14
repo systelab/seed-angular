@@ -2,30 +2,42 @@
 
 This folder contains the End to End test for the application using the standard tools Jasmine, Protractor and Selenium. Please, read the following [document][serversetup] to get more information on how to Set Up the Selenium Server.
 
-## What to test - Recommendations
-
-The recommendation is to focus in layers under UI. When the project achieves a good level of coverage in terms of Unit/Component and API/Service test, E2E test can be considered.
-For further details, refer to Test Automation Strategy at Werfen Clinical Software.
-
-The best way to prevent over-documented Test Cases:
-- You need to decide if it's necessary to report the unit test as formal.
-- Do not document the util methods
-
 ## How to use Allure in Protractor
 
-The attributes are TmsLink and Feature at Spec level and Allure steps each test and step. Refer to the file patient.e2e-spec.ts
-- TmsLink: Name of the Test Case.
+The attributes we need are specified in the mapping model table. Refer to the table to know the considerations and purposes for each one, and the way to be used when programming tests. 
 
-   It must be the same as the Test Case name in Jama
-   We highly recommend you not to use the TmsLink for additional traceability purposes. It's better to keep it simple so that it is maintainable
-- Feature: Description of the Test Case. You can also add additional information as text such as preconditions, environment, etc.
-- Additional Information such as Browser, appVersion, tester, testExecutionDateAndTime
-- IT description: Step Action in the Test Case. You must enter the action to perform.
-- Allure Step: Step Expected Result or Action in the Test Case.
+See the documentation in [allure-reporter](https://systelab.github.io/allure-reporter/) site. 
 
-   You can use allure.createStep('Action:.. to identify that a step is an Action. Otherwise, all the Allure Steps will be considered as Expected Results.
-   Consider that it may be nested Steps
-   All the Expected Results are documented just once, for each type of object. Refer to the file test-util.ts
+# E2E Best practices
+
+## Folder structure
+The purpose of this page is to document the structure for the e2e source code.
+
+e2e - contains a sub-folder for each one of the modules or functional areas of the application (login, patient, allergy, etc.)
+
+For each one of the modules or functional areas, three sub-folders should be placed:
+
+page-objects - contains only the access to the components in the view (by ID or by tag name), which returns a Widget type such as Button, InputField or Popup, which rare defined in the [systelab-components-test](https://github.com/systelab/systelab-components-test) library.
+
+services - contains the action and navigation services. (e.g: goToThatPage(), createPatient(), deleteFirstAllergy() functions)
+
+tests - contains the Test Cases. The file name must contain *.e2e-spec.ts. The recommendation is to split the test cases having 1 for each screen or dialog. 
+
+* When documenting the test cases we can use the allure.createStep() or the [systelab-components-test](https://github.com/systelab/systelab-components-test) library, that includes the because(message).expect() function.
+
+## What to test
+
+The recommendation is to focus in layers under UI. When the project achieves a good level of coverage in terms of Unit/Component and API/Service test, E2E test can be considered.
+
+With this in mind:
+
+- Focus on the actions that are the main use-cases, in order to capture the user's perspective. (not the UI design or css-styles)
+
+- Don't be exhaustive in error reporting cases, just a case to verify it is correctly reported.
+
+- Don't overload the test with excessive validations, the aim is to keep the specs as simple and readable as possible.
+
+- If testing a CRUD or management dialog, one test for each action should be enough.
 
 ## Configuration to test in multiple browsers
 
@@ -83,47 +95,6 @@ You can also run the E2E automatic test with the following command:
 ```bash
 protractor protractor.conf.js -suite login,patient --baseUrl http://localhost:4200 --params.login.password=Systelab --params.login.user=Systelab
 ```
-
-# Protractor Locators (Selectors)
-
-The most used:
-
-```
-$('#some-id')
-```
-
-or
-
-```
-element(by.id('some-id'))
-```
-
-The $ is not a jQuery selector, but a shorthanded version of element(by.css('#some-id')). In this fashion, we’d be able to select elements by id, class and attributes:
-
-```
-$('.some-class')             // element(by.className())
-$('tag-name')                // element(by.tagName())
-$('[ng-message=required]')   // remember to leave out the double quotes around the value of attribute
-$('#parent #child')          // select one child inside parent
-$('ul li')                   // select all children inside parent
-$('ul li').first()           // select first of children
-$('ul li').last()            // select last of children
-$('ul li').get(index)        // select index-th of children
-```
-
-Then we get the more interesting ones:
-
-```
-element(by.model('data'));
-element(by.repeater('cat in pets'));
-element(by.options('c for c in colors'))
-element(by.binding('value'));           // only look through the elements with ng-binding attribute
-element(by.buttonText('Save'));         // the whole of button text
-element(by.partialButtonText('Save'));  // part of button text
-element(by.cssContainingText('.pet', 'Dog')) // for selecting this: <li class="pet">Dog</li>
-element(by.deepCss('span'))             // for selecting all level of spans <span><span>x</span></span>
-```
-
 
 [serversetup]: https://github.com/angular/protractor/blob/master/docs/server-setup.md
 

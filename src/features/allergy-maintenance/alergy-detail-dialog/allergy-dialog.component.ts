@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { I18nService } from 'systelab-translate/lib/i18n.service';
-import { AllergyService } from '@api/allergy.service';
-import { Allergy } from '@model/allergy';
-import { DialogRef, ModalComponent, SystelabModalContext } from 'systelab-components/widgets/modal';
-import { ErrorService } from '@globals/error.service';
+import {Component, OnInit} from '@angular/core';
+import {I18nService} from 'systelab-translate/lib/i18n.service';
+import {AllergyService} from '@api/allergy.service';
+import {Allergy} from '@model/allergy';
+import {DialogRef, ModalComponent, SystelabModalContext} from 'systelab-components/widgets/modal';
+import {ErrorService} from '@globals/error.service';
 
 export class AllergyDialogParameters extends SystelabModalContext {
 	public allergyId: string;
@@ -12,7 +12,7 @@ export class AllergyDialogParameters extends SystelabModalContext {
 }
 
 @Component({
-	selector:    'allergy-dialog',
+	selector: 'allergy-dialog',
 	templateUrl: 'allergy-dialog.component.html',
 })
 export class AllergyDialog implements ModalComponent<AllergyDialogParameters>, OnInit {
@@ -26,22 +26,8 @@ export class AllergyDialog implements ModalComponent<AllergyDialogParameters>, O
 	public allergy: Allergy = {};
 
 	constructor(public dialog: DialogRef<AllergyDialogParameters>, protected i18nService: I18nService,
-	            protected errorService: ErrorService, protected allergyService: AllergyService) {
+				protected errorService: ErrorService, protected allergyService: AllergyService) {
 		this.parameters = dialog.context;
-		if (this.parameters.allergyId) {
-			this.i18nService.get(['COMMON_UPDATE', 'COMMON_UPDATE_ALLERGY'])
-				.subscribe((res) => {
-					this.humanReadableAction = res.COMMON_UPDATE;
-					this.title = res.COMMON_UPDATE_ALLERGY;
-				});
-		} else {
-			this.i18nService.get(['COMMON_CREATE', 'COMMON_CREATE_ALLERGY'])
-				.subscribe((res) => {
-					this.humanReadableAction = res.COMMON_CREATE;
-					this.title = res.COMMON_CREATE_ALLERGY;
-				});
-
-		}
 	}
 
 	public static getParameters(): AllergyDialogParameters {
@@ -50,12 +36,18 @@ export class AllergyDialog implements ModalComponent<AllergyDialogParameters>, O
 
 	public ngOnInit() {
 		if (this.parameters.allergyId) {
-
-			this.allergyService.getAllergy(this.parameters.allergyId)
-				.subscribe((response) => {
-						this.allergy = response;
-					}
-				);
+			this.i18nService.get(['COMMON_UPDATE', 'COMMON_UPDATE_ALLERGY'])
+				.subscribe((res) => {
+					this.humanReadableAction = res.COMMON_UPDATE;
+					this.title = res.COMMON_UPDATE_ALLERGY;
+				});
+			this.loadAllergy(this.parameters.allergyId);
+		} else {
+			this.i18nService.get(['COMMON_CREATE', 'COMMON_CREATE_ALLERGY'])
+				.subscribe((res) => {
+					this.humanReadableAction = res.COMMON_CREATE;
+					this.title = res.COMMON_CREATE_ALLERGY;
+				});
 		}
 	}
 
@@ -71,19 +63,20 @@ export class AllergyDialog implements ModalComponent<AllergyDialogParameters>, O
 		}
 	}
 
+	private loadAllergy(allergyId: string) {
+		this.allergyService.getAllergy(allergyId)
+			.subscribe((response) => this.allergy = response);
+	}
+
 	private createAllergy(allergy: Allergy) {
 		this.allergyService.createAllergy(allergy)
-			.subscribe((result) => {
-					this.dialog.close(true);
-				},
+			.subscribe((result) => this.dialog.close(true),
 				(error) => this.errorService.showError(error));
 	}
 
 	private updateAllergy(allergy: Allergy) {
 		this.allergyService.updateAllergy(allergy.id, allergy)
-			.subscribe((result) => {
-					this.dialog.close(true);
-				},
+			.subscribe((result) => this.dialog.close(true),
 				(error) => this.errorService.showError(error));
 	}
 

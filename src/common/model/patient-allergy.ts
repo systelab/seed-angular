@@ -1,10 +1,9 @@
-import { Allergy } from './allergy';
+import {Allergy} from './allergy';
 
-
-export interface PatientAllergy { 
-    allergy?: Allergy;
-    lastOccurrence?: Date;
-    assertedDate?: Date;
-    note: string;
+export interface PatientAllergy {
+	allergy?: Allergy;
+	lastOccurrence?: Date;
+	assertedDate?: Date;
+	note: string;
 }
 

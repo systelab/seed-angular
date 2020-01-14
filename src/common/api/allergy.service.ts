@@ -17,18 +17,13 @@ export class AllergyService extends BaseService {
 		super(basePath, apiGlobalsService);
 	}
 
-	/**
-	 * Get all Allergies
-	 * @param page
-	 * @param itemsPerPage
-	 */
 	public getAllAllergies(page?: number, itemsPerPage?: number): Observable<Page<Allergy>> {
 
 		let queryParameters = new HttpParams();
-		if (page !== null) {
+		if (page) {
 			queryParameters = queryParameters.set('page', <any>page);
 		}
-		if (itemsPerPage !== null) {
+		if (itemsPerPage) {
 			queryParameters = queryParameters.set('size', <any>itemsPerPage);
 		}
 		return this.httpClient.get<Page<Allergy>>(`${this.basePath}/allergies`,
@@ -39,71 +34,34 @@ export class AllergyService extends BaseService {
 		);
 	}
 
-	/**
-	 * Get Allergy
-	 * @param uid
-	 */
 	public getAllergy(uid: string): Observable<Allergy> {
-		if (uid === null || uid === undefined) {
+		if (!uid) {
 			throw new Error('Required parameter uid was null or undefined when calling getAllergy.');
 		}
-
-		return this.httpClient.get<Allergy>(`${this.basePath}/allergies/${encodeURIComponent(String(uid))}`,
-			{
-				headers: this.getAuthorizationHeader()
-			}
-		);
+		return this.httpClient.get<Allergy>(`${this.basePath}/allergies/${encodeURIComponent(String(uid))}`, this.getOptions());
 	}
 
-	/**
-	 * Create an Allergy
-	 * @param allergy Allergy
-	 */
 	public createAllergy(allergy: Allergy): Observable<Allergy> {
-		if (allergy === null || allergy === undefined) {
+		if (!allergy) {
 			throw new Error('Required parameter allergy was null or undefined when calling createAllergy.');
 		}
-
-		return this.httpClient.post<Allergy>(`${this.basePath}/allergies/allergy`, allergy,
-			{
-				headers: this.getAuthorizationHeader()
-			}
-		);
+		return this.httpClient.post<Allergy>(`${this.basePath}/allergies/allergy`, allergy, this.getOptions());
 	}
 
-	/**
-	 * Create or Update (idempotent) an existing Allergy
-	 * @param uid
-	 * @param allergy Allergy
-	 */
 	public updateAllergy(uid: string, allergy: Allergy): Observable<Allergy> {
-		if (uid === null || uid === undefined) {
+		if (!uid) {
 			throw new Error('Required parameter uid was null or undefined when calling updateAllergy.');
 		}
-		if (allergy === null || allergy === undefined) {
+		if (!allergy) {
 			throw new Error('Required parameter allergy was null or undefined when calling updateAllergy.');
 		}
-
-		return this.httpClient.put<Allergy>(`${this.basePath}/allergies/${encodeURIComponent(String(uid))}`, allergy,
-			{
-				headers: this.getAuthorizationHeader()
-			}
-		);
+		return this.httpClient.put<Allergy>(`${this.basePath}/allergies/${encodeURIComponent(String(uid))}`, allergy, this.getOptions());
 	}
 
-	/**
-	 * Delete an Allergy
-	 * @param uid
-	 */
 	public removeAllergy(uid: string): Observable<any> {
-		if (uid === null || uid === undefined) {
+		if (!uid) {
 			throw new Error('Required parameter uid was null or undefined when calling remove.');
 		}
-
-		return this.httpClient.delete<any>(`${this.basePath}/allergies/${encodeURIComponent(String(uid))}`,
-			{
-				headers: this.getAuthorizationHeader()
-			}
-		);
+		return this.httpClient.delete<any>(`${this.basePath}/allergies/${encodeURIComponent(String(uid))}`, this.getOptions());
 	}
 }

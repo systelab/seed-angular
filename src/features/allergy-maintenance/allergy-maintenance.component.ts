@@ -1,41 +1,35 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { GridContextMenuOption } from 'systelab-components/widgets/grid/contextmenu/grid-context-menu-option';
-import { GridContextMenuActionData } from 'systelab-components/widgets/grid/contextmenu/grid-context-menu-action-data';
-import { DialogService } from 'systelab-components/widgets/modal';
-import { I18nService } from 'systelab-translate/lib/i18n.service';
-import { AllergyGrid } from '@components/allergy/grid/allergy-grid.component';
-import { AllergyService } from '@api/allergy.service';
-import { Allergy } from '@model/allergy';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {GridContextMenuOption} from 'systelab-components/widgets/grid/contextmenu/grid-context-menu-option';
+import {GridContextMenuActionData} from 'systelab-components/widgets/grid/contextmenu/grid-context-menu-action-data';
+import {DialogService} from 'systelab-components/widgets/modal';
+import {I18nService} from 'systelab-translate/lib/i18n.service';
+import {AllergyGrid} from '@components/allergy/grid/allergy-grid.component';
+import {AllergyService} from '@api/allergy.service';
+import {Allergy} from '@model/allergy';
 import { AllergyDialog, AllergyDialogParameters } from '@features/allergy-maintenance/alergy-detail-dialog/allergy-dialog.component';
-import { ErrorService } from '@globals/error.service';
+import {ErrorService} from '@globals/error.service';
 
 @Component({
-	selector:    'allergy-maintenance',
+	selector: 'allergy-maintenance',
 	templateUrl: './allergy-maintenance.component.html'
 })
-export class AllergyMaintenanceComponent implements OnInit {
+export class AllergyMaintenanceComponent {
 
 	@ViewChild('allergygrid', {static: false}) public allergygrid: AllergyGrid;
 
 	constructor(protected dialogService: DialogService, protected allergyService: AllergyService,
-	            protected i18nService: I18nService, protected errorService: ErrorService) {
-	}
-
-	public ngOnInit() {
+				protected i18nService: I18nService, protected errorService: ErrorService) {
 	}
 
 	public doCreateAllergy() {
-
 		const parameters: AllergyDialogParameters = AllergyDialog.getParameters();
 		this.dialogService.showDialog(AllergyDialog, parameters)
-			.subscribe(
-				(result) => {
+			.subscribe((result) => {
 					if (result) {
 						this.allergygrid.refresh();
 					}
 				}
 			);
-
 	}
 
 	public doSelect(allergy: Allergy): void {
@@ -44,21 +38,20 @@ export class AllergyMaintenanceComponent implements OnInit {
 		parameters.allergyId = allergy.id;
 
 		this.dialogService.showDialog(AllergyDialog, parameters)
-			.subscribe(
-				(result) => {
+			.subscribe((result) => {
 					if (result) {
 						this.allergygrid.refresh();
 					}
 				}
 			);
-
 	}
 
 	public getMenu(): Array<GridContextMenuOption<Allergy>> {
 		const menuDefs: Array<GridContextMenuOption<Allergy>> = [];
 		this.i18nService.get(['COMMON_UPDATE', 'COMMON_DELETE'])
 			.subscribe((res) => {
-				menuDefs.push(new GridContextMenuOption('action1', res.COMMON_UPDATE), new GridContextMenuOption('action2', res.COMMON_DELETE));
+				menuDefs.push(new GridContextMenuOption('action1', res.COMMON_UPDATE));
+				menuDefs.push(new GridContextMenuOption('action2', res.COMMON_DELETE));
 			});
 		return menuDefs;
 	}
@@ -77,6 +70,7 @@ export class AllergyMaintenanceComponent implements OnInit {
 
 	private deleteAllergy(contextMenuActionData: GridContextMenuActionData<Allergy>) {
 		this.allergyService.removeAllergy(contextMenuActionData.data.id)
-			.subscribe(result => this.allergygrid.refresh(), error => this.errorService.showError(error));
+			.subscribe(result => this.allergygrid.refresh(),
+				error => this.errorService.showError(error));
 	}
 }
