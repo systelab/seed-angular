@@ -25,7 +25,7 @@
     "core-js": "^2.6.5",
     "rxjs": "6.5.2",
     "lodash": "^4.17.11",
-    "systelab-components": "^9.0.2",
+    "systelab-components": "^10.0.0",
     "systelab-login": "^7.0.0",
     "systelab-preferences": "^5.0.0",
     "systelab-translate": "^6.0.0",
