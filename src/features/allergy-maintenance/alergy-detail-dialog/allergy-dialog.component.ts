@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {I18nService} from 'systelab-translate/lib/i18n.service';
+import {I18nService} from 'systelab-translate';
 import {AllergyService} from '@api/allergy.service';
 import {Allergy} from '@model/allergy';
-import {DialogRef, ModalComponent, SystelabModalContext} from 'systelab-components/widgets/modal';
+import {DialogRef, ModalComponent, SystelabModalContext} from 'systelab-components';
 import {ErrorService} from '@globals/error.service';
 
 export class AllergyDialogParameters extends SystelabModalContext {

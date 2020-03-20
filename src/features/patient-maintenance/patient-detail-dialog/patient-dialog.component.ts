@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {I18nService} from 'systelab-translate/lib/i18n.service';
+import {I18nService} from 'systelab-translate';
 import {PatientService} from '@api/patient.service';
 import {Patient} from '@model/patient';
-import {DialogRef, ModalComponent, SystelabModalContext} from 'systelab-components/widgets/modal';
+import {DialogRef, ModalComponent, SystelabModalContext} from 'systelab-components';
 import {PatientAllergiesFormComponent} from '@features/patient-maintenance/allergies-form/patient-allergies-form.component';
 import {ErrorService} from '@globals/error.service';
 

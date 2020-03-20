@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { I18nService } from 'systelab-translate/lib/i18n.service';
-import { MessagePopupService } from 'systelab-components/widgets/modal';
+import { I18nService } from 'systelab-translate';
+import { MessagePopupService } from 'systelab-components';
 
 @Injectable({
 	providedIn: 'root'

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { I18nService } from 'systelab-translate/lib/i18n.service';
-import { DialogService } from 'systelab-components/widgets/modal/dialog/dialog.service';
-import { PreferencesService } from 'systelab-preferences/lib/preferences.service';
-import { AbstractApiGrid } from 'systelab-components/widgets/grid/abstract-api-grid.component';
+import { I18nService } from 'systelab-translate';
+import { DialogService } from 'systelab-components';
+import { PreferencesService } from 'systelab-preferences';
+import { AbstractApiGrid } from 'systelab-components';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators';
 import { AllergyService } from '@api/allergy.service';

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {I18nService} from 'systelab-translate/lib/i18n.service';
-import {DialogRef, ModalComponent, SystelabModalContext} from 'systelab-components/widgets/modal';
+import {I18nService} from 'systelab-translate';
+import {DialogRef, ModalComponent, SystelabModalContext} from 'systelab-components';
 import {PatientAllergyService} from '@api/patient-allergy.service';
 import {PatientAllergy} from '@model/patient-allergy';
 import {ErrorService} from '@globals/error.service';

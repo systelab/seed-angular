@@ -1,15 +1,15 @@
 import {Observable, of} from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { I18nService } from 'systelab-translate/lib/i18n.service';
+import { I18nService } from 'systelab-translate';
 import { ApiGlobalsService } from '@globals/globals.service';
 import { Router } from '@angular/router';
-import { MessagePopupService } from 'systelab-components/widgets/modal';
-import { DialogService } from 'systelab-components/widgets/modal/dialog/dialog.service';
+import { MessagePopupService } from 'systelab-components';
+import { DialogService } from 'systelab-components';
 import { PatientMaintenanceDialog, PatientMaintenanceDialogParameters } from '@features/patient-maintenance/patient-maintenance-dialog.component';
-import { ApplicationHeaderMenuEntry } from 'systelab-components/widgets/applicationframe/header/app-header.component';
-import { ApplicationSidebarAction, ApplicationSidebarTab } from 'systelab-components/widgets/applicationframe/sidebar/app-sidebar.component';
-import { ChangePasswordDialog, ChangePasswordDialogParameters } from 'systelab-login/widgets/change-password-dialog.component';
-import { LocalStorageService } from 'systelab-preferences/lib/local-storage.service';
+import { ApplicationHeaderMenuEntry } from 'systelab-components';
+import { ApplicationSidebarAction, ApplicationSidebarTab } from 'systelab-components';
+import { ChangePasswordDialog, ChangePasswordDialogParameters } from 'systelab-login';
+import { LocalStorageService } from 'systelab-preferences';
 
 @Component({
 	selector:    'main',

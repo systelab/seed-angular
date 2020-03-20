@@ -11,14 +11,14 @@ import { BASE_PATH } from '@api/variables';
 import { environment } from '../environments/environment';
 import { MainComponent } from './main/main.component';
 import { AppRoutingModule } from './app.routing';
-import { MessagePopupService } from 'systelab-components/widgets/modal';
-import { DialogService } from 'systelab-components/widgets/modal/dialog/dialog.service';
+import { MessagePopupService } from 'systelab-components';
+import { DialogService } from 'systelab-components';
 import { SystelabLoginModule } from 'systelab-login';
 import { EmptyBodyInterceptor } from '@api/empty-body.interceptor';
-import { GridHeaderContextMenuComponent } from 'systelab-components/widgets/grid/contextmenu/grid-header-context-menu.component';
+import { GridHeaderContextMenuComponent } from 'systelab-components';
 import { AgGridModule } from 'ag-grid-angular';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { GridContextMenuCellRendererComponent } from 'systelab-components/widgets/grid/contextmenu/grid-context-menu-cell-renderer.component';
+import { GridContextMenuCellRendererComponent } from 'systelab-components';
 import { LoginModule } from '@features/login/login.module';
 import { PatientMaintenanceModule } from '@features/patient-maintenance/patient-maintenance.module';
 import { AllergyMaintenanceModule } from '@features/allergy-maintenance/allergy-maintenance.module';
@@ -32,10 +32,10 @@ import { AllergyMaintenanceModule } from '@features/allergy-maintenance/allergy-
 		PatientMaintenanceModule,
 		AllergyMaintenanceModule,
 		LoginModule,
-		SystelabTranslateModule.forRoot(),
-		SystelabPreferencesModule.forRoot(),
-		SystelabComponentsModule.forRoot(),
-		SystelabLoginModule.forRoot(),
+		SystelabTranslateModule,
+		SystelabPreferencesModule,
+		SystelabComponentsModule,
+		SystelabLoginModule,
 		AgGridModule.withComponents([
 			GridContextMenuCellRendererComponent,
 			GridHeaderContextMenuComponent

@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, Renderer2 } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AbstractApiComboBox } from 'systelab-components/widgets/combobox/abstract-api-combobox.component';
+import { AbstractApiComboBox } from 'systelab-components';
 import { Allergy } from '@model/allergy';
 import { AllergyService } from '@api/allergy.service';
 import { map } from 'rxjs/operators';
