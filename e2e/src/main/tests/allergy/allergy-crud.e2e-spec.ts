@@ -5,7 +5,7 @@ import {MainNavigationService} from '../../services/main-navigation.service';
 import {Grid} from 'systelab-components-test';
 import {because, TestUtil} from 'systelab-components-test/lib/utilities';
 import {LoginActionService} from '../../../login/services/login-action.service';
-import {GeneralParameters} from '../../../general-parameters';
+import {GeneralParameters} from '../../../../general-parameters';
 
 import * as lodash from 'lodash';
 

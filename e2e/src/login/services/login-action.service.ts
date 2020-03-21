@@ -1,5 +1,5 @@
 import {LoginPage} from '../page-objects/login.po';
-import {GeneralParameters} from '../../general-parameters';
+import {GeneralParameters} from '../../../general-parameters';
 import {LoginNavigationService} from './login-navigation.service';
 
 export class LoginActionService {

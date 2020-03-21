@@ -6,7 +6,7 @@
             <patient-form class="w-100 m-2" [patient]="patient"></patient-form>
         </systelab-tab>
         <systelab-tab *ngIf="isUpdate()" [title]="'Allergies'" [id]="'Tab2'" class="p-1">
-            <patient-allergies-form #allergies class="slab-flex-1 d-flex" [patientId]="parameters.patientId"></patient-allergies-form>
+            <patient-allergies-form #allergies class="slab-flex-1 d-flex border rounded" [patientId]="parameters.patientId"></patient-allergies-form>
         </systelab-tab>
     </systelab-tabs>
 

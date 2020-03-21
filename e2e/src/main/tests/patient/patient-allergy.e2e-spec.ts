@@ -6,7 +6,7 @@ import {MainActionService} from '../../services/main-action.service';
 import {MainNavigationService} from '../../services/main-navigation.service';
 import {because, TestUtil} from 'systelab-components-test/lib/utilities';
 import {LoginActionService} from '../../../login/services/login-action.service';
-import {GeneralParameters} from '../../../general-parameters';
+import {GeneralParameters} from '../../../../general-parameters';
 
 import {browser} from 'protractor';
 import * as lodash from 'lodash';
