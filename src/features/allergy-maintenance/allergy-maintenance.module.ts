@@ -18,13 +18,7 @@ import {AllergyDialog} from '@features/allergy-maintenance/alergy-detail-dialog/
 		AllergyMaintenanceComponent,
 		AllergyDialog],
 	exports: [
-		AllergyMaintenanceComponent],
-	entryComponents: [
-		AllergyDialog],
-	providers: [
-		MessagePopupService,
-		DialogService,
-	],
+		AllergyMaintenanceComponent]
 })
 export class AllergyMaintenanceModule {
 }

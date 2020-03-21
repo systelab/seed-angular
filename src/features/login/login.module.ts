@@ -21,12 +21,7 @@ import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 	],
 	exports: [
 		PageNotFoundComponent
-	],
-	entryComponents: [],
-	providers: [
-		MessagePopupService,
-		DialogService,
-	],
+	]
 })
 export class LoginModule {
 }

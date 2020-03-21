@@ -27,17 +27,7 @@ import {PatientAllergiesFormComponent} from '@features/patient-maintenance/aller
 		PatientAllergyDialog,
 		PatientFormComponent,
 		PatientAllergiesFormComponent
-	],
-	exports: [],
-	entryComponents: [
-		PatientMaintenanceDialog,
-		PatientDialog,
-		PatientAllergyDialog
-	],
-	providers: [
-		MessagePopupService,
-		DialogService,
-	],
+	]
 })
 export class PatientMaintenanceModule {
 }

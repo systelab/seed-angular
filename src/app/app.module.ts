@@ -48,11 +48,7 @@ import { AllergyMaintenanceModule } from '@features/allergy-maintenance/allergy-
 	],
 	providers:       [
 		{provide: BASE_PATH, useValue: environment.API_BASE_PATH},
-		{provide: HTTP_INTERCEPTORS, useClass: EmptyBodyInterceptor, multi: true},
-		MessagePopupService,
-		DialogService
-	],
-	entryComponents: [
+		{provide: HTTP_INTERCEPTORS, useClass: EmptyBodyInterceptor, multi: true}
 	],
 	bootstrap:       [AppComponent]
 })
