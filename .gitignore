@@ -6,6 +6,7 @@
 /out-tsc
 # Only exists if Bazel was run
 /bazel-out
+/allure-results
 
 # dependencies
 /node_modules
