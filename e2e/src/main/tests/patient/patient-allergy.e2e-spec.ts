@@ -40,8 +40,8 @@ describe('TC0003_PatientManagement_Allergy_e2e', () => {
 
 	const allergyForPatient = {
 		allergy: 'Name',
-		assertedDate: '01/01/2019',
-		lastOccurrenceDate: '02/02/2019',
+		// assertedDate: '01/01/2019',
+		// lastOccurrenceDate: '02/02/2019'
 		comments: 'Comments'
 	};
 
@@ -73,11 +73,11 @@ describe('TC0003_PatientManagement_Allergy_e2e', () => {
 
 	async function checkValuesInRow(row, a) {
 		await expect(Promise.resolve(row[1])).toEqual(a.allergy);
-		await expect(Promise.resolve(row[2])).toEqual(a.assertedDate);
+		// await expect(Promise.resolve(row[2])).toEqual(a.assertedDate);
 		await because('All fields are evaluated as expected').expect(Promise.resolve(row[3])).toEqual(a.comments);
 	}
 
-	it(`Assign an allergy to a patient: [name: ${allergyForPatient.allergy}, assertedDate: ${allergyForPatient.assertedDate}, comments: ${allergyForPatient.comments}]`, async () => {
+	it(`Assign an allergy to a patient: [name: ${allergyForPatient.allergy}, comments: ${allergyForPatient.comments}]`, async () => {
 		await patientDialog.getAddButton().click();
 		const patientAllergyDialog = patientDialog.getPatientAllergyDialog();
 		await patientAllergyDialog.set(allergyForPatient);

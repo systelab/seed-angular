@@ -27,8 +27,8 @@ export class PatientAllergyDialog extends Dialog {
 		await this.getAllergyCombobox().click();
 		await this.getAllergyCombobox().selectOptionByText(allergyForPatient.allergy);
 
-		await this.getAssertedDate().setValue(allergyForPatient.assertedDate);
-		await this.getLastOccurrenceDate().setValue(allergyForPatient.lastOccurrenceDate);
+		// await this.getAssertedDate().setValue(allergyForPatient.assertedDate);
+		// await this.getLastOccurrenceDate().setValue(allergyForPatient.lastOccurrenceDate);
 
 		await this.getAllergyNotes().setText(allergyForPatient.comments);
 	}
