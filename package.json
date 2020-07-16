@@ -24,7 +24,7 @@
     "bootstrap": "^4.3.1",
     "core-js": "^2.6.5",
     "rxjs": "6.5.2",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "systelab-components": "^9.0.2",
     "systelab-login": "^7.0.0",
     "systelab-preferences": "^5.0.0",
