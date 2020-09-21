@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { ApiGlobalsService } from '@globals/globals.service';
-import { UserService } from '@api/user.service';
-import { MessagePopupService } from 'systelab-components/widgets/modal';
-import { I18nService } from 'systelab-translate/lib/i18n.service';
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
+import {ApiGlobalsService} from '@globals/globals.service';
+import {UserService} from '@api/user.service';
+import {MessagePopupService} from 'systelab-components';
+import {I18nService} from 'systelab-translate';
 
 @Component({
-	selector:    'login',
+	selector: 'login',
 	templateUrl: 'login.component.html'
 })
 export class LoginComponent {

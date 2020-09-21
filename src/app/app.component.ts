@@ -1,7 +1,7 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { I18nService } from 'systelab-translate/lib/i18n.service';
+import { Component } from '@angular/core';
+import { I18nService } from 'systelab-translate';
 import { Router } from '@angular/router';
-import { LocalStorageService } from 'systelab-preferences/lib/local-storage.service';
+import { LocalStorageService } from 'systelab-preferences';
 
 @Component({
 	selector: 'app-root',

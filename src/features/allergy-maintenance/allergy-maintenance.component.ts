@@ -1,12 +1,13 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {GridContextMenuOption} from 'systelab-components/widgets/grid/contextmenu/grid-context-menu-option';
-import {GridContextMenuActionData} from 'systelab-components/widgets/grid/contextmenu/grid-context-menu-action-data';
-import {DialogService} from 'systelab-components/widgets/modal';
-import {I18nService} from 'systelab-translate/lib/i18n.service';
+import {Component, ViewChild} from '@angular/core';
+import {DialogService, GridContextMenuActionData, GridContextMenuOption} from 'systelab-components';
+import {I18nService} from 'systelab-translate';
 import {AllergyGrid} from '@components/allergy/grid/allergy-grid.component';
 import {AllergyService} from '@api/allergy.service';
 import {Allergy} from '@model/allergy';
-import { AllergyDialog, AllergyDialogParameters } from '@features/allergy-maintenance/alergy-detail-dialog/allergy-dialog.component';
+import {
+	AllergyDialog,
+	AllergyDialogParameters
+} from '@features/allergy-maintenance/alergy-detail-dialog/allergy-dialog.component';
 import {ErrorService} from '@globals/error.service';
 
 @Component({

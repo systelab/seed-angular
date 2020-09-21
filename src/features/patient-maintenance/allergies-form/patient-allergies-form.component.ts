@@ -1,16 +1,17 @@
-import { Component, Input, ViewChild } from '@angular/core';
-import { PatientAllergyGrid } from '@components/patient-allergy/grid/patient-allergy-grid.component';
-import { PatientAllergyDialog, PatientAllergyDialogParameters } from '@features/patient-maintenance/patient-allergy-detail-dialog/patient-allergy-dialog.component';
-import { DialogService } from 'systelab-components/widgets/modal';
-import { GridContextMenuOption } from 'systelab-components/widgets/grid/contextmenu/grid-context-menu-option';
-import { GridContextMenuActionData } from 'systelab-components/widgets/grid/contextmenu/grid-context-menu-action-data';
-import { I18nService } from 'systelab-translate/lib/i18n.service';
-import { PatientAllergy } from '@model/patient-allergy';
-import { PatientAllergyService } from '@api/patient-allergy.service';
-import { ErrorService } from '@globals/error.service';
+import {Component, Input, ViewChild} from '@angular/core';
+import {PatientAllergyGrid} from '@components/patient-allergy/grid/patient-allergy-grid.component';
+import {
+	PatientAllergyDialog,
+	PatientAllergyDialogParameters
+} from '@features/patient-maintenance/patient-allergy-detail-dialog/patient-allergy-dialog.component';
+import {DialogService, GridContextMenuActionData, GridContextMenuOption} from 'systelab-components';
+import {I18nService} from 'systelab-translate';
+import {PatientAllergy} from '@model/patient-allergy';
+import {PatientAllergyService} from '@api/patient-allergy.service';
+import {ErrorService} from '@globals/error.service';
 
 @Component({
-	selector:    'patient-allergies-form',
+	selector: 'patient-allergies-form',
 	templateUrl: './patient-allergies-form.component.html'
 })
 export class PatientAllergiesFormComponent {
@@ -20,7 +21,7 @@ export class PatientAllergiesFormComponent {
 	@ViewChild('grid', {static: false}) public grid: PatientAllergyGrid;
 
 	constructor(protected dialogService: DialogService, protected patientAllergyService: PatientAllergyService,
-	            protected i18nService: I18nService, protected errorService: ErrorService) {
+				protected i18nService: I18nService, protected errorService: ErrorService) {
 	}
 
 	public doShowOptions() {

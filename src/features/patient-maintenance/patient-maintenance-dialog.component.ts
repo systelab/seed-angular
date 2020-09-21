@@ -1,13 +1,18 @@
-import { Component, ViewChild } from '@angular/core';
-import { PatientService } from '@api/patient.service';
-import { DialogRef, DialogService, ModalComponent, SystelabModalContext } from 'systelab-components/widgets/modal';
-import { PatientDialog, PatientDialogParameters } from './patient-detail-dialog/patient-dialog.component';
-import { GridContextMenuActionData } from 'systelab-components/widgets/grid/contextmenu/grid-context-menu-action-data';
-import { Patient } from '@model/patient';
-import { GridContextMenuOption } from 'systelab-components/widgets/grid/contextmenu/grid-context-menu-option';
-import { I18nService } from 'systelab-translate/lib/i18n.service';
-import { PatientGrid } from '@components/patient/grid/patient-grid.component';
-import { ErrorService } from '@globals/error.service';
+import {Component, ViewChild} from '@angular/core';
+import {PatientService} from '@api/patient.service';
+import {
+	DialogRef,
+	DialogService,
+	GridContextMenuActionData,
+	GridContextMenuOption,
+	ModalComponent,
+	SystelabModalContext
+} from 'systelab-components';
+import {PatientDialog, PatientDialogParameters} from './patient-detail-dialog/patient-dialog.component';
+import {Patient} from '@model/patient';
+import {I18nService} from 'systelab-translate';
+import {PatientGrid} from '@components/patient/grid/patient-grid.component';
+import {ErrorService} from '@globals/error.service';
 
 export class PatientMaintenanceDialogParameters extends SystelabModalContext {
 	public width = 900;
@@ -15,7 +20,7 @@ export class PatientMaintenanceDialogParameters extends SystelabModalContext {
 }
 
 @Component({
-	selector:    'patient-maintenance-dialog',
+	selector: 'patient-maintenance-dialog',
 	templateUrl: 'patient-maintenance-dialog.component.html',
 })
 export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenanceDialogParameters> {
@@ -25,7 +30,7 @@ export class PatientMaintenanceDialog implements ModalComponent<PatientMaintenan
 	@ViewChild('patientgrid', {static: false}) public patientgrid: PatientGrid;
 
 	constructor(public dialog: DialogRef<PatientMaintenanceDialogParameters>, protected dialogService: DialogService, protected patientService: PatientService,
-	            protected i18nService: I18nService, protected errorService: ErrorService) {
+				protected i18nService: I18nService, protected errorService: ErrorService) {
 		this.parameters = dialog.context;
 	}
 
