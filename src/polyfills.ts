@@ -46,6 +46,8 @@ import 'core-js/es7/reflect';
  * Zone JS is required by Angular itself.
  */
 import 'zone.js/dist/zone'; // Included with Angular CLI.
+// See https://www.mokkapps.de/blog/the-last-guide-for-angular-change-detection-you-will-ever-need/
+import 'zone.js/dist/zone-patch-rxjs'; // Import RxJS patch to make sure RxJS runs in the correct zone
 
 /***************************************************************************************************
  * APPLICATION IMPORTS

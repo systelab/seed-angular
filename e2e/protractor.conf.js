@@ -22,11 +22,9 @@ exports.config = {
         browser.manage()
             .timeouts()
             .implicitlyWait(5000);
-        require('ts-node')
-            .register({
-                project: 'e2e/tsconfig.json'
-            });
-
+        require('ts-node').register({
+            project: require('path').join(__dirname, './tsconfig.json')
+        });
         var SpecReporter = require('jasmine-spec-reporter').SpecReporter;
         jasmine.getEnv()
             .addReporter(new SpecReporter({
