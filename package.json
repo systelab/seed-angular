@@ -40,7 +40,7 @@
     "systelab-preferences": "^7.0.0",
     "systelab-translate": "^9.0.0",
     "systelab-components": "^11.0.0",
-    "systelab-login": "^8.2.0",
+    "systelab-login": "^9.0.0",
     "pako": "^1.0.6",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
