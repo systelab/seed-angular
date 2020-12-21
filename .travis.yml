@@ -1,14 +1,17 @@
 sudo: required
-dist: xenial
+dist: trusty
 language: node_js
 node_js:
   - '10'
 addons:
   apt:
+    update: true
     sources:
       - google-chrome
     packages:
-      - google-chrome-stable
+      - dpkg
+  chrome: stable
+
 services:
   - docker
 
