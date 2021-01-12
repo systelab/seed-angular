@@ -96,7 +96,7 @@ describe('TC0004_AllergyManagement_e2e', () => {
 
 	it('Delete an allergy', async () => {
 		await allergyGrid.clickOnRowMenu(0);
-		await allergyGrid.getMenu().selectOptionByText('Delete');
+		await allergyGrid.getMenu().selectOptionByNumber(1);
 		await because('Number of allergies 0').expect(allergyGrid.getNumberOfRows()).toBe(0);
 	});
 });

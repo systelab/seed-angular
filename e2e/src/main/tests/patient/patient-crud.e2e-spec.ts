@@ -103,7 +103,7 @@ describe('TC0001_PatientManagement_e2e', () => {
 
 	it('Delete a patient', async () => {
 		await patientGrid.clickOnRowMenu(0);
-		await patientGrid.getMenu().selectOptionByText('Delete');
+		await patientGrid.getMenu().selectOptionByNumber(1);
 		await because('Number of Patients is 0').expect(patientGrid.getNumberOfRows()).toBe(0);
 	});
 });
