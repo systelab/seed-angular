@@ -1,7 +1,10 @@
-import {by} from 'protractor';
+import {by, ElementFinder} from 'protractor';
 import {Button, ComboBox, Datepicker, InputField, Dialog} from 'systelab-components-test';
 
 export class PatientAllergyDialog extends Dialog {
+	constructor(elem: ElementFinder) {
+		super(elem);
+	}
 
 	public getSubmitButton(): Button {
 		return new Button(this.byId('PatientSubmitButton'));

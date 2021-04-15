@@ -1,8 +1,11 @@
-import {by, element} from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import {PatientAllergyDialog} from './patient-allergy-dialog';
 import {Button, Grid, InputField, Dialog, Tabs} from 'systelab-components-test';
 
 export class PatientDialog extends Dialog {
+	constructor(elem: ElementFinder) {
+		super(elem);
+	}
 
 	public getEnableSwich() {
 		return this.byId('PatientEnableSwitch').element(by.tagname('input'));

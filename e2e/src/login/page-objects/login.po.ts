@@ -1,5 +1,5 @@
 import {by, element} from 'protractor';
-import { Button, InputField, Label, MesssagePopup } from 'systelab-components-test';
+import { Button, InputField, Label, MessagePopup } from 'systelab-components-test';
 import {BasePage} from 'systelab-components-test/lib/page-objects/base-page';
 
 export class LoginPage extends BasePage {
@@ -40,7 +40,7 @@ export class LoginPage extends BasePage {
 		return new Button(element(by.buttonText('Enter'))); // this depends on the system locale...
 	}
 
-	public getMesssagePopup(): MesssagePopup {
-		return new MesssagePopup();
+	public getMesssagePopup(): MessagePopup {
+		return new MessagePopup();
 	}
 }

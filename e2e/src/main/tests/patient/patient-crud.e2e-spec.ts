@@ -54,7 +54,8 @@ describe('TC0001_PatientManagement_e2e', () => {
 	});
 
 	beforeEach(() => {
-		TestUtil.init('TC0001_PatientManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of a Patient', GeneralParameters.appVersion, GeneralParameters.USERNAME);
+		TestUtil.init('TC0001_PatientManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of a Patient',
+			GeneralParameters.appVersion, GeneralParameters.USERNAME);
 	});
 
 	async function checkValuesInRow(row, p: any) {
@@ -64,7 +65,7 @@ describe('TC0001_PatientManagement_e2e', () => {
 	}
 
 	async function checkPatient(patient: any) {
-		await because('Number of allergies 1')
+		await because('Number of patients 1')
 			.expect(patientGrid.getNumberOfRows())
 			.toBe(1);
 		const values = await patientGrid.getValuesInRow(0);
@@ -82,8 +83,8 @@ describe('TC0001_PatientManagement_e2e', () => {
 		await patientMaintenanceDialog.getButtonAdd().click();
 		await patientDialog.set(invalidPatient);
 		await patientDialog.getButtonSubmit().click();
-		await because('Invalid Patient').expect(patientDialog.getMesssagePopup().getElement().isPresent()).toBeTruthy();
-		await patientDialog.getMesssagePopup().close();
+		await because('Invalid Patient').expect(patientDialog.getMessagePopup().getElement().isPresent()).toBeTruthy();
+		await patientDialog.getMessagePopup().close();
 		await patientDialog.close();
 	});
 

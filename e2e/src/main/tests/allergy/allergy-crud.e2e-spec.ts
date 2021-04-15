@@ -45,7 +45,8 @@ describe('TC0004_AllergyManagement_e2e', () => {
 	});
 
 	beforeEach(() => {
-		TestUtil.init('TC0004_AllergyManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of an Allergy', GeneralParameters.appVersion, GeneralParameters.USERNAME);
+		TestUtil.init('TC0004_AllergyManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of an Allergy',
+			GeneralParameters.appVersion, GeneralParameters.USERNAME);
 	});
 
 	async function checkValuesInRow(row, a: any) {
@@ -75,8 +76,8 @@ describe('TC0004_AllergyManagement_e2e', () => {
 		await mainPage.getAllergyAddButton().click();
 		await allergyDialog.set(invalidAllergy);
 		await allergyDialog.getButtonSubmit().click();
-		await because('Invalid allergy').expect(allergyDialog.getMesssagePopup().getElement().isPresent()).toBeTruthy();
-		await allergyDialog.getMesssagePopup().close();
+		await because('Invalid allergy').expect(allergyDialog.getMessagePopup().getElement().isPresent()).toBeTruthy();
+		await allergyDialog.getMessagePopup().close();
 		await allergyDialog.close();
 	});
 
