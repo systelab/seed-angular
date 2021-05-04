@@ -45,7 +45,8 @@ describe('TC0004_AllergyManagement_e2e', () => {
 	});
 
 	beforeEach(() => {
-		TestUtil.init('TC0004_AllergyManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of an Allergy', GeneralParameters.appVersion, GeneralParameters.USERNAME);
+		TestUtil.init('TC0004_AllergyManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of an Allergy',
+			GeneralParameters.appVersion, GeneralParameters.USERNAME);
 	});
 
 	async function checkValuesInRow(row, a: any) {
@@ -54,12 +55,12 @@ describe('TC0004_AllergyManagement_e2e', () => {
 		await because('All fields are evaluated as expected').expect(Promise.resolve(row[3])).toEqual(a.symptom);
 	}
 
-	async function checkAllergy(allergy: any) {
+	async function checkAllergy(pAllergy: any) {
 		await because('Number of allergies 1')
 			.expect(allergyGrid.getNumberOfRows())
 			.toBe(1);
 		const values = await allergyGrid.getValuesInRow(0);
-		await checkValuesInRow(values, allergy);
+		await checkValuesInRow(values, pAllergy);
 	}
 
 	it(`Create an allergy: [name: ${allergy.name}, sign: ${allergy.sign}, symptom: ${allergy.symptom}]`, async () => {
@@ -75,8 +76,8 @@ describe('TC0004_AllergyManagement_e2e', () => {
 		await mainPage.getAllergyAddButton().click();
 		await allergyDialog.set(invalidAllergy);
 		await allergyDialog.getButtonSubmit().click();
-		await because('Invalid allergy').expect(allergyDialog.getMesssagePopup().getElement().isPresent()).toBeTruthy();
-		await allergyDialog.getMesssagePopup().close();
+		await because('Invalid allergy').expect(allergyDialog.getMessagePopup().getElement().isPresent()).toBeTruthy();
+		await allergyDialog.getMessagePopup().close();
 		await allergyDialog.close();
 	});
 

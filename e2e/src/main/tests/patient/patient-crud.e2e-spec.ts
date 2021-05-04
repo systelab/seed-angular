@@ -54,7 +54,8 @@ describe('TC0001_PatientManagement_e2e', () => {
 	});
 
 	beforeEach(() => {
-		TestUtil.init('TC0001_PatientManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of a Patient', GeneralParameters.appVersion, GeneralParameters.USERNAME);
+		TestUtil.init('TC0001_PatientManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of a Patient',
+			GeneralParameters.appVersion, GeneralParameters.USERNAME);
 	});
 
 	async function checkValuesInRow(row, p: any) {
@@ -63,12 +64,12 @@ describe('TC0001_PatientManagement_e2e', () => {
 		await because('All fields are evaluated as expected').expect(Promise.resolve(row[3])).toEqual(p.email);
 	}
 
-	async function checkPatient(patient: any) {
+	async function checkPatient(pPatient: any) {
 		await because('Number of allergies 1')
 			.expect(patientGrid.getNumberOfRows())
 			.toBe(1);
 		const values = await patientGrid.getValuesInRow(0);
-		await checkValuesInRow(values, patient);
+		await checkValuesInRow(values, pPatient);
 	}
 
 	it(`Create a patient: [name: ${patient.name}, surname: ${patient.surname}, email: ${patient.email}]`, async () => {
@@ -82,8 +83,8 @@ describe('TC0001_PatientManagement_e2e', () => {
 		await patientMaintenanceDialog.getButtonAdd().click();
 		await patientDialog.set(invalidPatient);
 		await patientDialog.getButtonSubmit().click();
-		await because('Invalid Patient').expect(patientDialog.getMesssagePopup().getElement().isPresent()).toBeTruthy();
-		await patientDialog.getMesssagePopup().close();
+		await because('Invalid Patient').expect(patientDialog.getMessagePopup().getElement().isPresent()).toBeTruthy();
+		await patientDialog.getMessagePopup().close();
 		await patientDialog.close();
 	});
 
