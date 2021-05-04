@@ -73,7 +73,7 @@
     "allure-js-commons": "^1.3.2",
     "jasmine-allure-reporter": "^1.0.2",
     "systelab-schematics": "^1.2.10",
-    "systelab-components-test": "^2.1.0",
+    "systelab-components-test": "^2.2.3",
     "reflect-metadata": "^0.1.13"
   }
 }
