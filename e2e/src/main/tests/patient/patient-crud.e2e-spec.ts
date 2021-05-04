@@ -19,7 +19,7 @@ describe('TC0001_PatientManagement_e2e', () => {
 	let patientDialog: PatientDialog;
 	let patientGrid: Grid;
 
-	const patient = {
+	const patientData = {
 		name: 'Name',
 		surname: 'Surname',
 		email: 'name@yahoo.com',
@@ -34,13 +34,13 @@ describe('TC0001_PatientManagement_e2e', () => {
 	const updatedPatient = getUpdatePatient(), invalidPatient = getInvalidPatient();
 
 	function getInvalidPatient() {
-		const wrongPatient = lodash.cloneDeep(patient);
+		const wrongPatient = lodash.cloneDeep(patientData);
 		wrongPatient.name = '';
 		return wrongPatient;
 	}
 
 	function getUpdatePatient() {
-		const updatePatient = lodash.cloneDeep(patient);
+		const updatePatient = lodash.cloneDeep(patientData);
 		updatePatient.name = 'Alternative name';
 		return updatePatient;
 	}
@@ -64,19 +64,19 @@ describe('TC0001_PatientManagement_e2e', () => {
 		await because('All fields are evaluated as expected').expect(Promise.resolve(row[3])).toEqual(p.email);
 	}
 
-	async function checkPatient(pPatient: any) {
+	async function checkPatient(patient: any) {
 		await because('Number of allergies 1')
 			.expect(patientGrid.getNumberOfRows())
 			.toBe(1);
 		const values = await patientGrid.getValuesInRow(0);
-		await checkValuesInRow(values, pPatient);
+		await checkValuesInRow(values, patient);
 	}
 
-	it(`Create a patient: [name: ${patient.name}, surname: ${patient.surname}, email: ${patient.email}]`, async () => {
+	it(`Create a patient: [name: ${patientData.name}, surname: ${patientData.surname}, email: ${patientData.email}]`, async () => {
 		await patientMaintenanceDialog.getButtonAdd().click();
-		await patientDialog.set(patient);
+		await patientDialog.set(patientData);
 		await patientDialog.getButtonSubmit().click();
-		await checkPatient(patient);
+		await checkPatient(patientData);
 	});
 
 	it('Create a patient with invalid data', async () => {
@@ -90,7 +90,7 @@ describe('TC0001_PatientManagement_e2e', () => {
 
 	it('View a patient', async () => {
 		await patientGrid.clickOnCell(0, 'name');
-		await because('All Patient fields are evaluated as expected').expect(lodash.isEqual(patient, await patientDialog.get())).toBeTruthy();
+		await because('All Patient fields are evaluated as expected').expect(lodash.isEqual(patientData, await patientDialog.get())).toBeTruthy();
 		await patientDialog.close();
 	});
 
