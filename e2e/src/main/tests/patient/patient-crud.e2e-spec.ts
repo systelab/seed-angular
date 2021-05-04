@@ -19,7 +19,7 @@ describe('TC0001_PatientManagement_e2e', () => {
 	let patientDialog: PatientDialog;
 	let patientGrid: Grid;
 
-	const patient = {
+	const patientData = {
 		name: 'Name',
 		surname: 'Surname',
 		email: 'name@yahoo.com',
@@ -34,13 +34,13 @@ describe('TC0001_PatientManagement_e2e', () => {
 	const updatedPatient = getUpdatePatient(), invalidPatient = getInvalidPatient();
 
 	function getInvalidPatient() {
-		const wrongPatient = lodash.cloneDeep(patient);
+		const wrongPatient = lodash.cloneDeep(patientData);
 		wrongPatient.name = '';
 		return wrongPatient;
 	}
 
 	function getUpdatePatient() {
-		const updatePatient = lodash.cloneDeep(patient);
+		const updatePatient = lodash.cloneDeep(patientData);
 		updatePatient.name = 'Alternative name';
 		return updatePatient;
 	}
@@ -54,7 +54,8 @@ describe('TC0001_PatientManagement_e2e', () => {
 	});
 
 	beforeEach(() => {
-		TestUtil.init('TC0001_PatientManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of a Patient', GeneralParameters.appVersion, GeneralParameters.USERNAME);
+		TestUtil.init('TC0001_PatientManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of a Patient',
+			GeneralParameters.appVersion, GeneralParameters.USERNAME);
 	});
 
 	async function checkValuesInRow(row, p: any) {
@@ -71,25 +72,25 @@ describe('TC0001_PatientManagement_e2e', () => {
 		await checkValuesInRow(values, patient);
 	}
 
-	it(`Create a patient: [name: ${patient.name}, surname: ${patient.surname}, email: ${patient.email}]`, async () => {
+	it(`Create a patient: [name: ${patientData.name}, surname: ${patientData.surname}, email: ${patientData.email}]`, async () => {
 		await patientMaintenanceDialog.getButtonAdd().click();
-		await patientDialog.set(patient);
+		await patientDialog.set(patientData);
 		await patientDialog.getButtonSubmit().click();
-		await checkPatient(patient);
+		await checkPatient(patientData);
 	});
 
 	it('Create a patient with invalid data', async () => {
 		await patientMaintenanceDialog.getButtonAdd().click();
 		await patientDialog.set(invalidPatient);
 		await patientDialog.getButtonSubmit().click();
-		await because('Invalid Patient').expect(patientDialog.getMesssagePopup().getElement().isPresent()).toBeTruthy();
-		await patientDialog.getMesssagePopup().close();
+		await because('Invalid Patient').expect(patientDialog.getMessagePopup().getElement().isPresent()).toBeTruthy();
+		await patientDialog.getMessagePopup().close();
 		await patientDialog.close();
 	});
 
 	it('View a patient', async () => {
 		await patientGrid.clickOnCell(0, 'name');
-		await because('All Patient fields are evaluated as expected').expect(lodash.isEqual(patient, await patientDialog.get())).toBeTruthy();
+		await because('All Patient fields are evaluated as expected').expect(lodash.isEqual(patientData, await patientDialog.get())).toBeTruthy();
 		await patientDialog.close();
 	});
 
@@ -103,7 +104,7 @@ describe('TC0001_PatientManagement_e2e', () => {
 
 	it('Delete a patient', async () => {
 		await patientGrid.clickOnRowMenu(0);
-		await patientGrid.getMenu().selectOptionByText('Delete');
+		await patientGrid.getMenu().selectOptionByNumber(1);
 		await because('Number of Patients is 0').expect(patientGrid.getNumberOfRows()).toBe(0);
 	});
 });

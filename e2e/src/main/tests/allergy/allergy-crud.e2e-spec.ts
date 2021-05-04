@@ -17,7 +17,7 @@ describe('TC0004_AllergyManagement_e2e', () => {
 	let allergyDialog: AllergyDetailDialog;
 	let allergyGrid: Grid;
 
-	const allergy = {
+	const allergyData = {
 		name: 'Name',
 		sign: 'Sign',
 		symptom: 'Symptom'
@@ -26,13 +26,13 @@ describe('TC0004_AllergyManagement_e2e', () => {
 	const updatedAllergy = getUpdateAllergy(), invalidAllergy = getInvalidAllergy();
 
 	function getInvalidAllergy() {
-		const wrongAllergy = lodash.cloneDeep(allergy);
+		const wrongAllergy = lodash.cloneDeep(allergyData);
 		wrongAllergy.name = '';
 		return wrongAllergy;
 	}
 
 	function getUpdateAllergy() {
-		const updateAllergy = lodash.cloneDeep(allergy);
+		const updateAllergy = lodash.cloneDeep(allergyData);
 		updateAllergy.name = 'Alternative name';
 		return updateAllergy;
 	}
@@ -45,7 +45,8 @@ describe('TC0004_AllergyManagement_e2e', () => {
 	});
 
 	beforeEach(() => {
-		TestUtil.init('TC0004_AllergyManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of an Allergy', GeneralParameters.appVersion, GeneralParameters.USERNAME);
+		TestUtil.init('TC0004_AllergyManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of an Allergy',
+			GeneralParameters.appVersion, GeneralParameters.USERNAME);
 	});
 
 	async function checkValuesInRow(row, a: any) {
@@ -62,27 +63,27 @@ describe('TC0004_AllergyManagement_e2e', () => {
 		await checkValuesInRow(values, allergy);
 	}
 
-	it(`Create an allergy: [name: ${allergy.name}, sign: ${allergy.sign}, symptom: ${allergy.symptom}]`, async () => {
+	it(`Create an allergy: [name: ${allergyData.name}, sign: ${allergyData.sign}, symptom: ${allergyData.symptom}]`, async () => {
 		await mainPage.getAllergyAddButton().click();
 		await allergyDialog.waitToBePresent();
-		await allergyDialog.set(allergy);
+		await allergyDialog.set(allergyData);
 		await allergyDialog.getButtonSubmit().click();
 		await mainPage.waitToBePresent();
-		await checkAllergy(allergy);
+		await checkAllergy(allergyData);
 	});
 
 	it('Create an allergy with invalid data', async () => {
 		await mainPage.getAllergyAddButton().click();
 		await allergyDialog.set(invalidAllergy);
 		await allergyDialog.getButtonSubmit().click();
-		await because('Invalid allergy').expect(allergyDialog.getMesssagePopup().getElement().isPresent()).toBeTruthy();
-		await allergyDialog.getMesssagePopup().close();
+		await because('Invalid allergy').expect(allergyDialog.getMessagePopup().getElement().isPresent()).toBeTruthy();
+		await allergyDialog.getMessagePopup().close();
 		await allergyDialog.close();
 	});
 
 	it('View an allergy', async () => {
 		await allergyGrid.clickOnCell(0, 'name');
-		await because('All Allergy fields are evaluated as expected').expect(allergyDialog.get()).toEqual(allergy);
+		await because('All Allergy fields are evaluated as expected').expect(allergyDialog.get()).toEqual(allergyData);
 		await allergyDialog.close();
 	});
 
@@ -96,7 +97,7 @@ describe('TC0004_AllergyManagement_e2e', () => {
 
 	it('Delete an allergy', async () => {
 		await allergyGrid.clickOnRowMenu(0);
-		await allergyGrid.getMenu().selectOptionByText('Delete');
+		await allergyGrid.getMenu().selectOptionByNumber(1);
 		await because('Number of allergies 0').expect(allergyGrid.getNumberOfRows()).toBe(0);
 	});
 });

@@ -36,6 +36,7 @@ describe('TC0002_LoginManagement_e2e', () => {
 		await allure.createStep(`Action: Set an invalid username and password`, async () => {
 			await LoginActionService.login(loginPage, wrongUser.user, wrongUser.password);
 		})();
-		await because('Invalid username or password message is displayed').expect(await loginPage.getMesssagePopup().getTextMessage()).toEqual('Invalid username or password');
+		await because('Invalid username or password message is displayed')
+			.expect(await loginPage.getMessagePopup().getTextMessage()).toEqual('Invalid username or password');
 	});
 });

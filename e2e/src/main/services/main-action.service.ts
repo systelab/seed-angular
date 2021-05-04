@@ -22,7 +22,7 @@ export class MainActionService {
 	public static async deleteFirstAllergy(mainPage: MainPage) {
 		await mainPage.getConfigIcon().click();
 		await mainPage.getAllergyGrid().clickOnRowMenu(0);
-		await mainPage.getAllergyGrid().getMenu().selectOptionByText('Delete');
+		await mainPage.getAllergyGrid().getMenu().selectOptionByNumber(1);
 	}
 
 	public static async deleteFirstPatient(mainPage: MainPage) {

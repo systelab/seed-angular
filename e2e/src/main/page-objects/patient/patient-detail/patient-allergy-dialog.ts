@@ -1,7 +1,10 @@
-import {by} from 'protractor';
+import { by, ElementFinder } from 'protractor';
 import {Button, ComboBox, Datepicker, InputField, Dialog} from 'systelab-components-test';
 
 export class PatientAllergyDialog extends Dialog {
+	constructor(elem: ElementFinder) {
+		super(elem);
+	}
 
 	public getSubmitButton(): Button {
 		return new Button(this.byId('PatientSubmitButton'));
@@ -27,8 +30,6 @@ export class PatientAllergyDialog extends Dialog {
 		await this.getAllergyCombobox().click();
 		await this.getAllergyCombobox().selectOptionByText(allergyForPatient.allergy);
 
-		// await this.getAssertedDate().setValue(allergyForPatient.assertedDate);
-		// await this.getLastOccurrenceDate().setValue(allergyForPatient.lastOccurrenceDate);
 
 		await this.getAllergyNotes().setText(allergyForPatient.comments);
 	}
