@@ -27,18 +27,18 @@ exports.config = {
         autoCompile: true,
         tsNodeOpts: {
             transpileOnly: true,
-            project: 'tsconfig.wdio.json'
+            project: 'e2e-wdio/tsconfig.wdio.json'
         },
         tsConfigPathsOpts: {
             baseUrl: './',
             paths: {
                 "environments/*": ["src/environments/*"],
-                "@page-objects": ["e2e-wdio/src/login/page-objects", "e2e-wdio/src/main/page-objects"]
+                "@page-objects/*": ["e2e-wdio/src/login/page-objects/*", "e2e-wdio/src/main/page-objects/*"]
             }
         }
     },
     specs: [
-        './**/*.e2e-spec.ts'
+        './e2e-wdio/**/*.e2e-spec.ts'
     ],
     // Patterns to exclude.
     exclude: [
@@ -154,7 +154,7 @@ exports.config = {
     // see also: https://webdriver.io/docs/dot-reporter
     reporters: [
         ['allure', {
-            outputDir: 'allure-report-wdio',
+            outputDir: 'allure-results',
             disableWebdriverStepsReporting: true,
             disableWebdriverScreenshotsReporting: true,
             disableMochaHooks: true
