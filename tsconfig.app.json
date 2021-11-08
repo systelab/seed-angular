@@ -5,7 +5,7 @@
     "types": []
   },
   "exclude": [
-    "test.ts",
+    "src/test.ts",
     "**/*.spec.ts",
     "e2e-wdio",
     "e2e"
