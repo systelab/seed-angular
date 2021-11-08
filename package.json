@@ -9,6 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "wdio": "npx wdio run e2e-wdio/wdio.conf.js"
   },
   "private": true,
   "dependencies": {
