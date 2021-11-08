@@ -1,7 +1,7 @@
-import {LoginPage} from '@page-objects';
-import {MainPage} from '@page-objects';
-import {because, TestUtil} from 'systelab-components-test/lib/utilities';
-import {GeneralParameters} from '../../../general-parameters';
+import { LoginPage} from '../page-objects/login.po';
+import { MainPage } from '../../main/page-objects/main.po';
+import { because, TestUtil } from 'systelab-components-test/lib/utilities';
+import { GeneralParameters } from '../../../general-parameters';
 import { LoginActionService } from '../services/login-action.service';
 
 declare const allure: any;
