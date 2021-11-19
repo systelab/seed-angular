@@ -31,7 +31,7 @@ cd seed-angular
 To install the dependencies you must run:
 
 ```bash
-npm install
+npm install --force
 ```
 > In case you have any issue, remove the "node_modules" folder and execute the previous command again.
 
