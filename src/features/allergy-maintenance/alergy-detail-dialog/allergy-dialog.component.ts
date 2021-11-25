@@ -8,7 +8,7 @@ import {ErrorService} from '@globals/error.service';
 export class AllergyDialogParameters extends SystelabModalContext {
 	public allergyId: string;
 	public width = 700;
-	public height = 450;
+	public height = 530;
 }
 
 @Component({
