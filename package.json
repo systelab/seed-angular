@@ -26,7 +26,7 @@
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
     "ag-grid-angular": "^24.0.0",
-    "ag-grid-community": "^24.0.0",
+    "ag-grid-community": "^25.2.0",
     "angular-split": "^4.0.0",
     "bootstrap": "^4.5.2",
     "chart.js": "^2.9.3",
