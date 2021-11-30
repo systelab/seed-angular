@@ -1,5 +1,5 @@
 //const ScreenshotReporter = require('./wdio/reporters/screenshot.reporter')
-//const TestCaseReporter = require('./wdio/reporters/test-case.reporter')
+const TestCaseReporter = require('systelab-components-wdio-test/src/reporters/test-case.reporter')
 
 exports.config = {
     //
@@ -153,13 +153,13 @@ exports.config = {
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
     reporters: [
-        'spec',
         ['allure', {
             outputDir: 'allure-results',
             disableWebdriverStepsReporting: true,
             disableWebdriverScreenshotsReporting: true,
             disableMochaHooks: true
-         }]
+         }],
+         TestCaseReporter.default
     ],
     
     //
