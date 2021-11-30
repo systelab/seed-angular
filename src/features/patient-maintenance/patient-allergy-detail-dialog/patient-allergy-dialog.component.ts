@@ -9,7 +9,7 @@ export class PatientAllergyDialogParameters extends SystelabModalContext {
 	public patientId: string;
 	public patientAllergy: PatientAllergy;
 	public width = 600;
-	public height = 340;
+	public height = 415;
 }
 
 @Component({

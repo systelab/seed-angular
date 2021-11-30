@@ -9,7 +9,7 @@ import {ErrorService} from '@globals/error.service';
 export class PatientDialogParameters extends SystelabModalContext {
 	public patientId: string;
 	public width = 710;
-	public height = 460;
+	public height = 560;
 }
 
 @Component({
