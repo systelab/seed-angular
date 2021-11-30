@@ -38,7 +38,7 @@ describe('TC0002_LoginManagement_e2e', () => {
 		};
 		await LoginActionService.login(loginPage, wrongUser.user, wrongUser.password);
 	
-		await ReportUtility.addExpectedResult("'Invalid username or password' message is displayed", async () =>
+		await ReportUtility.addExpectedResult("Message popup with 'Invalid username or password' text is displayed", async () =>
 		{
 			AssertionUtility.expectEqual(await loginPage.getMessagePopup().getTextMessage(), 'Invalid username or password');
 		});
