@@ -32,6 +32,7 @@ exports.config = {
         tsConfigPathsOpts: {
             baseUrl: './',
             paths: {
+                "@e2e-model": ["e2e-wdio/model/index.ts"],
                 "@e2e-pages": ["e2e-wdio/page-objects/index.ts"],
                 "@e2e-services": ["e2e-wdio/services/index.ts"],
                 "@e2e-utils": ["e2e-wdio/utils/index.ts"]
