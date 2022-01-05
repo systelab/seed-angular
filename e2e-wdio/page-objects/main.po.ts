@@ -1,7 +1,7 @@
 import { BasePage, Button, Grid, Icon, Label, Tabs } from "systelab-components-wdio-test";
 
 import { AllergyDetailDialog } from "./allergy-dialog.po";
-// import {PatientMaintenanceDialog} from "./patient/patient-maintenance";
+import { PatientMaintenanceDialog } from "./patient-maintenance-dialog.po";
 
 
 export class MainPage extends BasePage {
@@ -43,10 +43,10 @@ export class MainPage extends BasePage {
     }
 
     public getAllergyDetailDialog(): AllergyDetailDialog {
-        return new AllergyDetailDialog(this.byTagName("allergy-dialog"));
+        return new AllergyDetailDialog(browser.$("allergy-dialog"));
     }
 
-    // 	public getPatientMaintenanceDialog(): PatientMaintenanceDialog {
-    // 		return new PatientMaintenanceDialog(element(by.tagName("patient-maintenance-dialog")));
-    // 	}
+    public getPatientMaintenanceDialog(): PatientMaintenanceDialog {
+        return new PatientMaintenanceDialog(browser.$("patient-maintenance-dialog"));
+    }
 }
