@@ -3,24 +3,21 @@ import { AssertionUtility, Grid, ReportUtility, TestIdentification } from "syste
 import { LoginPage, MainPage, AllergyDetailDialog } from "@e2e-pages";
 import { LoginActionService, MainNavigationService } from "@e2e-services";
 import { CSSAnimationUtility, GeneralParameters } from "@e2e-utils";
+import { Allergy } from "@e2e-model";
 
 
 describe("TC0004_AllergyManagement_e2e", () => {
 
     let loginPage: LoginPage;
     let mainPage: MainPage;
-    let allergyDialog: AllergyDetailDialog;
-    let allergyGrid: Grid;
 
-    const allergyData = { name: "Name", sign: "Sign", symptom: "Symptom" };
-    const updatedAllergy = { ...allergyData, name: "Alternative name" };
-    const invalidAllergy = { ...allergyData, name: "" };
+    const allergyData: Allergy = { name: "Insect bites", signs: "Skin rashes", symptoms: "Cough, itching and fever" };
+    const updatedAllergyData: Allergy = { ...allergyData, name: "Mosquito bites" };
+    const invalidAllergyData: Allergy = { ...allergyData, name: "" };
 
     beforeAll(async () => {
         loginPage = new LoginPage();
         mainPage = new MainPage();
-        allergyDialog = mainPage.getAllergyDetailDialog();
-        allergyGrid = mainPage.getAllergyGrid();
 
         await CSSAnimationUtility.disable();
         await LoginActionService.login(loginPage);
@@ -35,59 +32,72 @@ describe("TC0004_AllergyManagement_e2e", () => {
 
     });
 
-    // async function checkValuesInRow(row, a: any) {
-    //     await expect(Promise.resolve(row[1])).toEqual(a.name);
-    //     await expect(Promise.resolve(row[2])).toEqual(a.sign);
-    //     await /*because('All fields are evaluated as expected'). */expect(Promise.resolve(row[3])).toEqual(a.symptom);
-    // }
+    async function expectAllergiesGridRowCount(expectedRowCount: number): Promise<void> {
+        await ReportUtility.addExpectedResult(`Allergies grid has ${expectedRowCount} rows`, async () => {
+            AssertionUtility.expectEqual(await mainPage.getAllergyGrid().getNumberOfRows(), expectedRowCount);
+        });
+    }
 
-    // async function checkAllergy(allergy: any) {
-    //     await /*because('Number of allergies 1')
-    //         .*/expect(allergyGrid.getNumberOfRows())
-    //         .toBe(1);
-    //     const values = await allergyGrid.getValuesInRow(0);
-    //     await checkValuesInRow(values, allergy);
-    // }
+    async function expectAllergiesGridRowValues(rowIndex: number, expectedAllergy: Allergy) {
+        const rowValues: string[] = await mainPage.getAllergyGrid().getValuesInRow(rowIndex);
+        await ReportUtility.addExpectedResult(`Value of 'Name' for row ${rowIndex} of allergies grid is '${expectedAllergy.name}'`, async () => {
+            AssertionUtility.expectEqual(rowValues[1], expectedAllergy.name);
+        });
 
-    // it(`Create an allergy: [name: ${allergyData.name}, sign: ${allergyData.sign}, symptom: ${allergyData.symptom}]`, async () => {
-    //     await mainPage.getAllergyAddButton().click();
-    //     await allergyDialog.waitToBePresent();
-    //     await allergyDialog.set(allergyData);
-    //     await allergyDialog.getButtonSubmit().click();
-    //     await mainPage.waitToBePresent();
-    //     await checkAllergy(allergyData);
-    // });
+        await ReportUtility.addExpectedResult(`Value of 'Signs' for row ${rowIndex} of allergies grid is '${expectedAllergy.signs}'`, async () => {
+            AssertionUtility.expectEqual(rowValues[2], expectedAllergy.signs);
+        });
+
+        await ReportUtility.addExpectedResult(`Value of 'Symptoms' for row ${rowIndex} of allergies grid is '${expectedAllergy.symptoms}'`, async () => {
+            AssertionUtility.expectEqual(rowValues[3], expectedAllergy.symptoms);
+        });
+    }
+
+    it(`Create an allergy with the following data: [name: '${allergyData.name}', sign: '${allergyData.signs}', symptom: '${allergyData.symptoms}']`, async () => {
+        await mainPage.getAllergyAddButton().click();
+        await mainPage.getAllergyDetailDialog().waitToBePresent();
+        await mainPage.getAllergyDetailDialog().set(allergyData);
+        await mainPage.getAllergyDetailDialog().getButtonSubmit().click();
+        await mainPage.waitToBePresent();
+
+        await expectAllergiesGridRowCount(1);
+        await expectAllergiesGridRowValues(0, allergyData);
+    });
 
     it("Try to create another allergy with invalid data (empty name)", async () => {
         await mainPage.getAllergyAddButton().click();
-        await allergyDialog.set(invalidAllergy);
-        await allergyDialog.getButtonSubmit().click();
+        await mainPage.getAllergyDetailDialog().set(invalidAllergyData);
+        await mainPage.getAllergyDetailDialog().getButtonSubmit().click();
 
         await ReportUtility.addExpectedResult("Error message popup is shown", async () => {
-            AssertionUtility.expectTrue(await allergyDialog.getMessagePopup().isPresent());
+            AssertionUtility.expectTrue(await mainPage.getAllergyDetailDialog().getMessagePopup().isPresent());
         });
 
-        await allergyDialog.getMessagePopup().close();
-        await allergyDialog.close();
+        await mainPage.getAllergyDetailDialog().getMessagePopup().close();
+        await mainPage.getAllergyDetailDialog().close();
+        await mainPage.waitToBePresent();
     });
 
-    // it("View an allergy", async () => {
-    //     await allergyGrid.clickOnCell(0, 'name');
-    //     await because('All Allergy fields are evaluated as expected').expect(allergyDialog.get()).toEqual(allergyData);
-    //     await allergyDialog.close();
-    // });
+    it("Click on first row of allergies grid to view details of just created allergy", async () => {
+        await mainPage.getAllergyGrid().clickOnCell(0, "name");
+        await mainPage.getAllergyDetailDialog().expectData(allergyData);
+        await mainPage.getAllergyDetailDialog().close();
+        await mainPage.waitToBePresent();
+    });
 
-    // it(`Modify an allergy: [name: ${updatedAllergy.name}, sign: ${updatedAllergy.sign}, symptom: ${updatedAllergy.symptom}]`, async () => {
-    //     await allergyGrid.clickOnCell(0, 'name');
-    //     await allergyDialog.clear();
-    //     await allergyDialog.set(updatedAllergy);
-    //     await allergyDialog.getButtonSubmit().click();
-    //     await checkAllergy(updatedAllergy);
-    // });
+    it(`Edit name of existing allergy and set it to '${updatedAllergyData.name}'`, async () => {
+        await mainPage.getAllergyGrid().clickOnCell(0, "name");
+        await mainPage.getAllergyDetailDialog().clear();
+        await mainPage.getAllergyDetailDialog().set(updatedAllergyData);
+        await mainPage.getAllergyDetailDialog().getButtonSubmit().click();
 
-    // it("Delete an allergy", async () => {
-    //     await allergyGrid.clickOnRowMenu(0);
-    //     await allergyGrid.getMenu().selectOptionByNumber(1);
-    //     await because('Number of allergies 0').expect(allergyGrid.getNumberOfRows()).toBe(0);
-    // });
+        await expectAllergiesGridRowCount(1);
+        await expectAllergiesGridRowValues(0, updatedAllergyData);
+    });
+
+    it("Delete an allergy", async () => {
+        await mainPage.getAllergyGrid().clickOnRowMenu(0);
+        await mainPage.getAllergyGrid().getMenu().selectOptionByNumber(1);
+        await expectAllergiesGridRowCount(0);
+    });
 });
