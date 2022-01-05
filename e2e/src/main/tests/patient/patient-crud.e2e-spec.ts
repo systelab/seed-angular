@@ -6,7 +6,7 @@ import {MainNavigationService} from '../../services/main-navigation.service';
 import {Grid} from 'systelab-components-test';
 import {because, TestUtil} from 'systelab-components-test/lib/utilities';
 import {LoginActionService} from '../../../login/services/login-action.service';
-import {GeneralParameters} from '../../../../general-parameters';
+import {disableCSSAnimation, GeneralParameters} from '../../../../general-parameters';
 import * as lodash from 'lodash';
 
 declare const allure: any;
@@ -47,6 +47,7 @@ describe('TC0001_PatientManagement_e2e', () => {
 
 	beforeAll(async () => {
 		await LoginActionService.login(loginPage);
+		disableCSSAnimation();
 		patientMaintenanceDialog = await MainNavigationService.navigateToPatientMaintenancePage(mainPage);
 		patientDialog = patientMaintenanceDialog.getPatientDialog();
 		patientGrid = patientMaintenanceDialog.getPatientsGrid();

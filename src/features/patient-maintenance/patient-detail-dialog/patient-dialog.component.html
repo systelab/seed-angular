@@ -12,9 +12,9 @@
 
 </div>
 <systelab-dialog-bottom>
-    <button *ngIf="selectedTab==='Tab2'" type="button" id="PatientMaintenanceOptionsButton" class="btn mr-1" (click)="doShowOptions()"><i
+    <button *ngIf="selectedTab==='Tab2'" type="button" id="PatientMaintenanceOptionsButton" class="btn btn-outline-primary mr-1" (click)="doShowOptions()"><i
             class="fas fa-random mr-1"></i>{{'COMMON_OPTIONS' | translate | async}} </button>
-    <button *ngIf="selectedTab==='Tab2'" type="button" id="PatientMaintenanceAddButton" class="btn" (click)="doAddAllergy()"><i class="far fa-plus-square mr-1"></i>{{'COMMON_ADD' | translate | async}}
+    <button *ngIf="selectedTab==='Tab2'" type="button" id="PatientMaintenanceAddButton" class="btn btn-outline-primary" (click)="doAddAllergy()"><i class="far fa-plus-square mr-1"></i>{{'COMMON_ADD' | translate | async}}
     </button>
-    <button *ngIf="selectedTab==='Tab1'" type="button" id="PatientSubmitButton" class="btn ml-auto" (click)="doPerformAction()"><i class="fas fa-download mr-1"></i>{{humanReadableAction}}</button>
+    <button *ngIf="selectedTab==='Tab1'" type="button" id="PatientSubmitButton" class="btn btn-outline-primary ml-auto" (click)="doPerformAction()"><i class="fas fa-download mr-1"></i>{{humanReadableAction}}</button>
 </systelab-dialog-bottom>
