@@ -24,8 +24,7 @@ describe("TC0002_LoginManagement_e2e", () => {
         await LoginActionService.login(loginPage);
         await mainPage.waitToBePresent();
 
-        await ReportUtility.addExpectedResult("The logged user is 'Administrator'", async () =>
-        {
+        await ReportUtility.addExpectedResult("The logged user is 'Administrator'", async () => {
             AssertionUtility.expectEqual(await mainPage.getFullUsernameField().getText(), "Administrator");
         });
     });
@@ -38,8 +37,7 @@ describe("TC0002_LoginManagement_e2e", () => {
         };
         await LoginActionService.login(loginPage, wrongUser.user, wrongUser.password);
 
-        await ReportUtility.addExpectedResult("Message popup with 'Invalid username or password' text is displayed", async () =>
-        {
+        await ReportUtility.addExpectedResult("Message popup with 'Invalid username or password' text is displayed", async () => {
             AssertionUtility.expectEqual(await loginPage.getMessagePopup().getTextMessage(), "Invalid username or password");
         });
     });
