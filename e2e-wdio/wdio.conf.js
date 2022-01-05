@@ -32,13 +32,14 @@ exports.config = {
         tsConfigPathsOpts: {
             baseUrl: './',
             paths: {
-                "environments/*": ["src/environments/*"],
-                "@page-objects/*": ["e2e-wdio/src/login/page-objects/*", "e2e-wdio/src/main/page-objects/*"]
+                "@e2e-pages": ["e2e-wdio/page-objects/index.ts"],
+                "@e2e-services": ["e2e-wdio/services/index.ts"],
+                "@e2e-utils": ["e2e-wdio/utils/index.ts"]
             }
         }
     },
     specs: [
-        './e2e-wdio/**/*.e2e-spec.ts'
+        './e2e-wdio/tests/**/*.e2e-spec.ts'
     ],
     // Patterns to exclude.
     exclude: [
