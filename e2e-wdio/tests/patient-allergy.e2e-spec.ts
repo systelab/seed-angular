@@ -1,20 +1,17 @@
+
+import { LoginPage } from 'e2e-wdio/page-objects/login.po';
+import { MainPage } from 'e2e-wdio/page-objects/main.po';
+import { PatientDialog } from 'e2e-wdio/page-objects/patient-dialog.po';
+import { PatientMaintenanceDialog } from 'e2e-wdio/page-objects/patient-maintenance-dialog.po';
+import { LoginActionService } from 'e2e-wdio/services/login-action.service';
+import { MainActionService } from 'e2e-wdio/services/main-action.service';
+import { MainNavigationService } from 'e2e-wdio/services/main-navigation.service';
+import { GeneralParameters } from 'e2e-wdio/utils/general-parameters';
 import * as lodash from 'lodash';
-import { because, TestUtil } from 'systelab-components-test/lib/utilities';
-import { disableCSSAnimation, GeneralParameters } from '../../../../general-parameters';
-import { LoginPage } from '../../../login/page-objects/login.po';
-import { LoginActionService } from '../../../login/services/login-action.service';
-import { MainPage } from '../../page-objects/main.po';
-import { PatientDialog } from '../../page-objects/patient/patient-detail/patient-dialog';
-import { PatientMaintenanceDialog } from '../../page-objects/patient/patient-maintenance';
-import { MainActionService } from '../../services/main-action.service';
-import { MainNavigationService } from '../../services/main-navigation.service';
-
-
-declare const allure: any;
+import { because, TestUtil } from "systelab-components-test/lib/utilities";
 
 describe('TC0003_PatientManagement_Allergy_e2e', () => {
-
-	const loginPage = new LoginPage();
+    const loginPage = new LoginPage();
 	const mainPage = new MainPage();
 	let patientMaintenanceDialog: PatientMaintenanceDialog;
 	let patientDialog: PatientDialog;
@@ -31,7 +28,7 @@ describe('TC0003_PatientManagement_Allergy_e2e', () => {
 		}
 	};
 
-	const allergy = {
+    const allergy = {
 		name: 'Name',
 		sign: 'Sign',
 		symptom: 'Symptom'
@@ -39,7 +36,7 @@ describe('TC0003_PatientManagement_Allergy_e2e', () => {
 
 	const allergyForPatient = {
 		allergy: 'Name',
-		name: 'Name',
+        name: 'Name',
 		// assertedDate: '01/01/2019',
 		// lastOccurrenceDate: '02/02/2019'
 		comments: 'Comments'
@@ -51,9 +48,8 @@ describe('TC0003_PatientManagement_Allergy_e2e', () => {
 		return wrongAllergyForPatient;
 	}
 
-	beforeAll(async () => {
+    beforeAll(async () => {
 		await LoginActionService.login(loginPage);
-		disableCSSAnimation();
 		await MainActionService.createAllergy(mainPage, allergy);
 		await MainActionService.createPatient(mainPage, patient);
 		patientMaintenanceDialog = await MainNavigationService.navigateToPatientMaintenancePage(mainPage);
@@ -105,5 +101,6 @@ describe('TC0003_PatientManagement_Allergy_e2e', () => {
 		await patientDialog.getAllergyGrid().getMenu().selectOptionByText('Delete');
 		await because('Number of Allergies from patient 0').expect(patientDialog.getAllergyGrid().getNumberOfRows()).toBe(0);
 	});
+
 
 });

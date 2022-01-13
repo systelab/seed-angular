@@ -1,8 +1,8 @@
+import { LoginPage, MainPage } from "@e2e-pages";
+import { LoginActionService } from "@e2e-services";
+import { GeneralParameters } from "@e2e-utils";
 import { AssertionUtility, ReportUtility, TestIdentification } from "systelab-components-wdio-test";
 
-import { LoginPage, MainPage } from "@e2e-pages";
-import { GeneralParameters } from "@e2e-utils";
-import { LoginActionService } from "@e2e-services";
 
 
 describe("TC0002_LoginManagement_e2e", () => {
@@ -19,25 +19,23 @@ describe("TC0002_LoginManagement_e2e", () => {
         mainPage = new MainPage();
     });
 
-    it("Fill in the login form with a valid username and password", async () =>
-    {
+    it("Fill in the login form with a valid username and password", async () => {
         await LoginActionService.login(loginPage);
         await mainPage.waitToBePresent();
 
-        await ReportUtility.addExpectedResult("The logged user is 'Administrator'", async () => {
+        await ReportUtility.addExpectedResult("The logged user is Administrator", async () => {
             AssertionUtility.expectEqual(await mainPage.getFullUsernameField().getText(), "Administrator");
         });
     });
 
-    it("Fill in the login form with an invalid username and password", async () =>
-    {
+    it("Invalid username or password message is displayed", async () => {
         const wrongUser = {
             user: "noUser",
             password: "noPass"
         };
         await LoginActionService.login(loginPage, wrongUser.user, wrongUser.password);
 
-        await ReportUtility.addExpectedResult("Message popup with 'Invalid username or password' text is displayed", async () => {
+        await ReportUtility.addExpectedResult("Invalid username or password message is displayed", async () => {
             AssertionUtility.expectEqual(await loginPage.getMessagePopup().getTextMessage(), "Invalid username or password");
         });
     });
