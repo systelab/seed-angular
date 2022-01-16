@@ -1,4 +1,4 @@
-import { Button, Dialog, Grid, InputField, Switch, Tabs } from "systelab-components-wdio-test";
+import { Browser, Button, Dialog, Grid, InputField, Switch, Tabs } from "systelab-components-wdio-test";
 import { PatientAllergyDialog } from "./patient-allergy-dialog.po";
 
 
@@ -57,7 +57,7 @@ export class PatientDialog extends Dialog {
     }
 
     public getPatientAllergyDialog(): PatientAllergyDialog {
-        return new PatientAllergyDialog(browser.$("patient-allergy-dialog"));
+        return new PatientAllergyDialog(Browser.byTagName("patient-allergy-dialog"));
     }
 
     public async clear() {

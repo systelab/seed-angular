@@ -12,11 +12,11 @@ export class PatientAllergyDialog extends Dialog {
     }
 
     public getAssertedDate(): Datepicker {
-        return new Datepicker(this.allByTagName("systelab-datepicker")[0]);
+        return new Datepicker(this.allByTagName("systelab-datepicker").get(0));
     }
 
     public getLastOccurrenceDate(): Datepicker {
-        return new Datepicker(this.allByTagName("systelab-datepicker")[1]);
+        return new Datepicker(this.allByTagName("systelab-datepicker").get(1));
     }
 
     public getAllergyCombobox(): ComboBox {

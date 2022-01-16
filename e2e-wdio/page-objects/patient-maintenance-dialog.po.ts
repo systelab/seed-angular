@@ -1,4 +1,4 @@
-import { Button, Grid, Dialog } from "systelab-components-wdio-test";
+import {Button, Grid, Dialog, Browser} from "systelab-components-wdio-test";
 import { PatientDialog } from "./patient-dialog.po";
 
 
@@ -21,6 +21,6 @@ export class PatientMaintenanceDialog extends Dialog {
     }
 
     public getPatientDialog(): PatientDialog {
-        return new PatientDialog(browser.$("patient-dialog"));
+        return new PatientDialog(Browser.byTagName("patient-dialog"));
     }
 }

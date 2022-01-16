@@ -8,19 +8,19 @@ export class LoginPage extends BasePage {
     }
 
     public getAppNameLabel(): Label {
-        return new Label(this.allByCSS(".slab-text")[0]);
+        return new Label(this.allByCSS(".slab-text").get(0));
     }
 
     public getAppDescriptionLabel(): Label {
-        return new Label(this.allByCSS(".slab-text")[1]);
+        return new Label(this.allByCSS(".slab-text").get(1));
     }
 
     public getAppVersionLabel(): Label {
-        return new Label(this.allByCSS(".slab-text")[2]);
+        return new Label(this.allByCSS(".slab-text").get(2));
     }
 
     public getAppCopyrightLabel(): Label {
-        return new Label(this.allByCSS(".slab-text")[4]);
+        return new Label(this.allByCSS(".slab-text").get(4));
     }
 
     public getUsernameField(): InputField {
@@ -32,10 +32,10 @@ export class LoginPage extends BasePage {
     }
 
     public getEnterButton(): Button {
-        return new Button(this.current.$("button=Enter")); // this depends on the system locale...
+        return new Button(this.byButtonText("Enter")); // this depends on the system locale...
     }
 
     public getMessagePopup(): MessagePopup {
         return new MessagePopup();
     }
-    }
+}
