@@ -1,107 +1,121 @@
+import { AssertionUtility, Grid, ReportUtility, TestIdentification } from "systelab-components-wdio-test";
 
-import { LoginPage } from 'e2e-wdio/page-objects/login.po';
-import { MainPage } from 'e2e-wdio/page-objects/main.po';
-import { PatientDialog } from 'e2e-wdio/page-objects/patient-dialog.po';
-import { PatientMaintenanceDialog } from 'e2e-wdio/page-objects/patient-maintenance-dialog.po';
-import { LoginActionService } from 'e2e-wdio/services/login-action.service';
-import { MainNavigationService } from 'e2e-wdio/services/main-navigation.service';
-import { GeneralParameters } from 'e2e-wdio/utils/general-parameters';
-import * as lodash from 'lodash';
-import { because, TestUtil } from 'systelab-components-test/lib/utilities';
-import { Grid } from 'systelab-components-wdio-test';
+import { LoginPage, MainPage, PatientDialog, PatientMaintenanceDialog } from '@e2e-pages';
+import { LoginActionService, MainNavigationService } from '@e2e-services';
+import { CSSAnimationUtility, GeneralParameters } from '@e2e-utils';
+import { Patient } from "@e2e-model";
+
 
 describe('TC0001_PatientManagement_e2e', () => {
-    const loginPage = new LoginPage();
-	const mainPage = new MainPage();
-	let patientMaintenanceDialog: PatientMaintenanceDialog;
-	let patientDialog: PatientDialog;
-	let patientGrid: Grid;
 
-	const patientData = {
-		name: 'Name',
-		surname: 'Surname',
-		email: 'name@yahoo.com',
-		address: {
-			street: 'Street',
-			city: 'City',
-			zip: '08001',
-			coordinates: '11212, 1212'
-		}
-	};
-    const updatedPatient = getUpdatePatient(), invalidPatient = getInvalidPatient();
+    let loginPage: LoginPage;
+    let mainPage: MainPage;
+    let patientMaintenanceDialog: PatientMaintenanceDialog;
+    let patientDetailDialog: PatientDialog;
+    let patientGrid: Grid;
 
-	function getInvalidPatient() {
-		const wrongPatient = lodash.cloneDeep(patientData);
-		wrongPatient.name = '';
-		return wrongPatient;
-	}
+    const patientData: Patient = {
+        name: 'John',
+        surname: 'Smith',
+        email: 'jsmith@yahoo.com',
+        address: {
+            street: 'Main Street',
+            city: 'Toronto',
+            zip: '12345',
+            coordinates: '11212, 1212'
+        }
+    };
+    const updatedPatientData: Patient = { ...patientData, name: "Peter" };
+    const invalidPatientData: Patient = { ...patientData, name: "" };
 
-	function getUpdatePatient() {
-		const updatePatient = lodash.cloneDeep(patientData);
-		updatePatient.name = 'Alternative name';
-		return updatePatient;
-	}
 
-	beforeAll(async () => {
-		await LoginActionService.login(loginPage);
-		patientMaintenanceDialog = await MainNavigationService.navigateToPatientMaintenancePage(mainPage);
-		patientDialog = patientMaintenanceDialog.getPatientDialog();
-		patientGrid = patientMaintenanceDialog.getPatientsGrid();
-		await patientGrid.waitToBePresent();
-	});
+    beforeAll(async () => {
+        loginPage = new LoginPage();
+        mainPage = new MainPage();
 
-	beforeEach(() => {
-		TestUtil.init('TC0001_PatientManagement_e2e', 'Purpose: This TC is intended to verify the CRUD of a Patient',
-			GeneralParameters.appVersion, GeneralParameters.USERNAME);
-	});
+        await LoginActionService.login(loginPage);
+        await CSSAnimationUtility.disable();
 
-	async function checkValuesInRow(row, p: any) {
-		await expect(Promise.resolve(row[1])).toEqual(p.name);
-		await expect(Promise.resolve(row[2])).toEqual(p.surname);
-		await because('All fields are evaluated as expected').expect(Promise.resolve(row[3])).toEqual(p.email);
-	}
+        patientMaintenanceDialog = await MainNavigationService.navigateToPatientMaintenancePage(mainPage);
+        patientDetailDialog = patientMaintenanceDialog.getPatientDialog();
+        patientGrid = patientMaintenanceDialog.getPatientsGrid();
+        await patientGrid.waitToBePresent();
+    });
 
-	async function checkPatient(patient: any) {
-		await because('Number of allergies 1')
-			.expect(patientGrid.getNumberOfRows())
-			.toBe(1);
-		const values = await patientGrid.getValuesInRow(0);
-		await checkValuesInRow(values, patient);
-	}
+    beforeEach(() => {
+        TestIdentification.setTmsLink("TC0001_PatientManagement_e2e");
+        TestIdentification.setDescription("Goal: The purpose of this test case is to verify the CRUD of a Patient");
+        TestIdentification.setAppVersion(GeneralParameters.appVersion);
+        TestIdentification.captureEnvironment();
+    });
 
-	it(`Create a patient: [name: ${patientData.name}, surname: ${patientData.surname}, email: ${patientData.email}]`, async () => {
-		await patientMaintenanceDialog.getButtonAdd().click();
-		await patientDialog.set(patientData);
-		await patientDialog.getButtonSubmit().click();
-		await checkPatient(patientData);
-	});
+    async function expectPatientsGridRowCount(expectedRowCount: number): Promise<void> {
+        await ReportUtility.addExpectedResult(`Patients grid has ${expectedRowCount} rows`, async () => {
+            AssertionUtility.expectEqual(await patientMaintenanceDialog.getPatientsGrid().getNumberOfRows(), expectedRowCount);
+        });
+    }
 
-	it('Create a patient with invalid data', async () => {
-		await patientMaintenanceDialog.getButtonAdd().click();
-		await patientDialog.set(invalidPatient);
-		await patientDialog.getButtonSubmit().click();
-		await because('Invalid Patient').expect(patientDialog.getMessagePopup().isPresent()).toBeTruthy();
-		await patientDialog.getMessagePopup().close();
-		await patientDialog.close();
-	});
+    async function expectPatientsGridRowValues(rowIndex: number, expectedPatient: Patient) {
+        const rowValues: string[] = await patientMaintenanceDialog.getPatientsGrid().getValuesInRow(rowIndex);
+        await ReportUtility.addExpectedResult(`Value of 'Name' for row ${rowIndex} of patients grid is '${expectedPatient.name}'`, async () => {
+            AssertionUtility.expectEqual(rowValues[1], expectedPatient.name);
+        });
 
-	it('View a patient', async () => {
-		await patientGrid.clickOnCell(0, 'name');
-		await because('All Patient fields are evaluated as expected').expect(lodash.isEqual(patientData, await patientDialog.get())).toBeTruthy();
-		await patientDialog.close();
-	});
+        await ReportUtility.addExpectedResult(`Value of 'Surname' for row ${rowIndex} of patients grid is '${expectedPatient.surname}'`, async () => {
+            AssertionUtility.expectEqual(rowValues[2], expectedPatient.surname);
+        });
 
-	it(`Modify a patient: [name: ${updatedPatient.name}, surname: ${updatedPatient.surname}, email: ${updatedPatient.email}]`, async () => {
-		await patientGrid.clickOnCell(0, 'name');
-		await patientDialog.clear();
-		await patientDialog.set(updatedPatient);
-		await patientDialog.getButtonSubmit().click();
-		await checkPatient(updatedPatient);
-	});
+        await ReportUtility.addExpectedResult(`Value of 'Email' for row ${rowIndex} of patients grid is '${expectedPatient.email}'`, async () => {
+            AssertionUtility.expectEqual(rowValues[3], expectedPatient.email);
+        });
+    }
 
-	it('Delete a patient', async () => {
-		await patientGrid.clickOnRowMenu(0);
-		await patientGrid.getMenu().selectOptionByNumber(1);
-		await because('Number of Patients is 0').expect(patientGrid.getNumberOfRows()).toBe(0);
-	});
+    it(`Create a patient with the following data: [name: ${patientData.name}, surname: ${patientData.surname}, email: ${patientData.email}]`, async () => {
+        await patientMaintenanceDialog.getButtonAdd().click();
+        await patientMaintenanceDialog.getPatientDialog().waitToBePresent();
+        await patientMaintenanceDialog.getPatientDialog().set(patientData);
+        await patientMaintenanceDialog.getPatientDialog().getButtonSubmit().click();
+        await patientMaintenanceDialog.waitUntil(async () => (await patientMaintenanceDialog.getPatientsGrid().getNumberOfRows()) > 0);
+
+        await expectPatientsGridRowCount(1);
+        await expectPatientsGridRowValues(0, patientData);
+    });
+
+    it('Try to create another patient with invalid data (empty name)', async () => {
+        await patientMaintenanceDialog.getButtonAdd().click();
+        await patientMaintenanceDialog.getPatientDialog().set(invalidPatientData);
+        await patientMaintenanceDialog.getPatientDialog().getButtonSubmit().click();
+
+        await ReportUtility.addExpectedResult("Error message popup is shown", async () => {
+            AssertionUtility.expectTrue(await patientMaintenanceDialog.getPatientDialog().getMessagePopup().isPresent());
+        });
+
+        await patientMaintenanceDialog.getPatientDialog().getMessagePopup().close();
+        await patientMaintenanceDialog.getPatientDialog().close();
+        await patientMaintenanceDialog.waitToBePresent();
+    });
+
+    it('Click on first row of patients grid to view details of just created patient', async () => {
+        await patientGrid.clickOnCell(0, 'name');
+        await patientMaintenanceDialog.getPatientDialog().expectData(patientData);
+        await patientMaintenanceDialog.getPatientDialog().close();
+        await patientMaintenanceDialog.waitToBePresent();
+    });
+
+    it(`Edit name of existing patient and set it to '${updatedPatientData.name}'`, async () => {
+        await patientGrid.clickOnCell(0, 'name');
+        await patientMaintenanceDialog.getPatientDialog().clear();
+        await patientMaintenanceDialog.getPatientDialog().set(updatedPatientData);
+        await patientMaintenanceDialog.getPatientDialog().getButtonSubmit().click();
+
+        await expectPatientsGridRowCount(1);
+        await expectPatientsGridRowValues(0, updatedPatientData);
+    });
+
+    it('Delete a patient', async () => {
+        await patientMaintenanceDialog.getPatientsGrid().clickOnRowMenu(0);
+        await patientMaintenanceDialog.getPatientsGrid().getMenu().selectOptionByNumber(1);
+        await patientMaintenanceDialog.getPatientsGrid().getMenu().waitToBeNotPresent();
+        await expectPatientsGridRowCount(0);
+    });
 });
