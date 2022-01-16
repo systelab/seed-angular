@@ -19,9 +19,9 @@ describe("TC0004_AllergyManagement_e2e", () => {
         loginPage = new LoginPage();
         mainPage = new MainPage();
 
-        await CSSAnimationUtility.disable();
         await LoginActionService.login(loginPage);
         await MainNavigationService.navigateToAllergyMaintenancePage(mainPage);
+        await CSSAnimationUtility.disable();
     });
 
     beforeEach(() => {
@@ -98,6 +98,7 @@ describe("TC0004_AllergyManagement_e2e", () => {
     it("Delete an allergy", async () => {
         await mainPage.getAllergyGrid().clickOnRowMenu(0);
         await mainPage.getAllergyGrid().getMenu().selectOptionByNumber(1);
+        await mainPage.getAllergyGrid().getMenu().waitToBeNotPresent();
         await expectAllergiesGridRowCount(0);
     });
 });
