@@ -1,5 +1,6 @@
-import { Browser, Button, Dialog, Grid, InputField, Switch, Tabs } from "systelab-components-wdio-test";
+import { AssertionUtility, Browser, Button, Dialog, Grid, InputField, ReportUtility, Switch, Tabs } from "systelab-components-wdio-test";
 import { PatientAllergyDialog } from "./patient-allergy-dialog.po";
+import { Patient } from "@e2e-model";
 
 
 export class PatientDialog extends Dialog {
@@ -70,7 +71,7 @@ export class PatientDialog extends Dialog {
         await this.getAddressCoordinatesInput().clear();
     }
 
-    public async set(patient: any) {
+    public async set(patient: Patient) {
         await this.getNameInput().setText(patient.name);
         await this.getSurnameInput().setText(patient.surname);
         await this.getEmailInput().setText(patient.email);
@@ -80,7 +81,7 @@ export class PatientDialog extends Dialog {
         await this.getAddressCoordinatesInput().setText(patient.address.coordinates);
     }
 
-    public async get() {
+    public async get(): Promise<Patient> {
         return {
             name: await this.getNameInput().getText(),
             surname: await this.getSurnameInput().getText(),
@@ -92,5 +93,15 @@ export class PatientDialog extends Dialog {
                 coordinates: await this.getAddressCoordinatesInput().getText()
             }
         };
+    }
+
+    public async expectData(expectedData: Patient): Promise<void> {
+        await ReportUtility.addExpectedResult("Patient data shown on dialog is: " +
+            `[name: '${expectedData.name}', sign: '${expectedData.surname}', email: '${expectedData.email}, ` +
+            `address: '${expectedData.address.street}, ${expectedData.address.city}, ` +
+            `${expectedData.address.zip}, ${expectedData.address.coordinates}']`, async () => {
+            const actualData = await this.get();
+            AssertionUtility.expectDeepEqual(actualData, expectedData);
+        });
     }
 }
