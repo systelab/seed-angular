@@ -24,8 +24,12 @@ export class PatientAllergyDialog extends Dialog {
     }
 
     public async set(allergyForPatient) {
-        await this.getAllergyCombobox().click();
-        await this.getAllergyCombobox().selectOptionByText(allergyForPatient.allergy);
+        if (allergyForPatient.allergy != "") {
+            await this.getAllergyCombobox().click();
+            await this.getAllergyCombobox().selectOptionByText(allergyForPatient.allergy);
+        }
+        await this.getAssertedDate().setValue(allergyForPatient.assertedDate);
+        await this.getLastOccurrenceDate().setValue(allergyForPatient.lastOccurrence);
         await this.getAllergyNotes().setText(allergyForPatient.comments);
     }
 }
