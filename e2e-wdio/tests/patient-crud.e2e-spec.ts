@@ -1,6 +1,6 @@
 import { AssertionUtility, Grid, ReportUtility, TestIdentification } from "systelab-components-wdio-test";
 
-import { LoginPage, MainPage, PatientDialog, PatientMaintenanceDialog } from '@e2e-pages';
+import { LoginPage, MainPage, PatientMaintenanceDialog } from '@e2e-pages';
 import { LoginActionService, MainNavigationService } from '@e2e-services';
 import { CSSAnimationUtility, GeneralParameters } from '@e2e-utils';
 import { Patient } from "@e2e-model";
@@ -11,8 +11,6 @@ describe('TC0001_PatientManagement_e2e', () => {
     let loginPage: LoginPage;
     let mainPage: MainPage;
     let patientMaintenanceDialog: PatientMaintenanceDialog;
-    let patientDetailDialog: PatientDialog;
-    let patientGrid: Grid;
 
     const patientData: Patient = {
         name: 'John',
@@ -37,9 +35,7 @@ describe('TC0001_PatientManagement_e2e', () => {
         await CSSAnimationUtility.disable();
 
         patientMaintenanceDialog = await MainNavigationService.navigateToPatientMaintenancePage(mainPage);
-        patientDetailDialog = patientMaintenanceDialog.getPatientDialog();
-        patientGrid = patientMaintenanceDialog.getPatientsGrid();
-        await patientGrid.waitToBePresent();
+        await patientMaintenanceDialog.getPatientsGrid().waitToBePresent();
     });
 
     beforeEach(() => {
@@ -96,14 +92,14 @@ describe('TC0001_PatientManagement_e2e', () => {
     });
 
     it('Click on first row of patients grid to view details of just created patient', async () => {
-        await patientGrid.clickOnCell(0, 'name');
+        await patientMaintenanceDialog.getPatientsGrid().clickOnCell(0, 'name');
         await patientMaintenanceDialog.getPatientDialog().expectData(patientData);
         await patientMaintenanceDialog.getPatientDialog().close();
         await patientMaintenanceDialog.waitToBePresent();
     });
 
     it(`Edit name of existing patient and set it to '${updatedPatientData.name}'`, async () => {
-        await patientGrid.clickOnCell(0, 'name');
+        await patientMaintenanceDialog.getPatientsGrid().clickOnCell(0, 'name');
         await patientMaintenanceDialog.getPatientDialog().clear();
         await patientMaintenanceDialog.getPatientDialog().set(updatedPatientData);
         await patientMaintenanceDialog.getPatientDialog().getButtonSubmit().click();
