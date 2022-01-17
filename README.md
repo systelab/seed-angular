@@ -51,18 +51,29 @@ ng serve
 
 By default, the Angular Live Development Server is listening on localhost:4200, open your browser on http://localhost:4200/
 
+### E2E Testing
+
+To run e2e testing, use the following command:
+```bash
+npm run wdio
+```
+or
+```bash
+npx wdio run e2e-wdio/wdio.conf.js
+```
+
 ## Docker
 
 ### Build docker image
 
-There is an Automated Build Task in Docker Cloud in order to build the Docker Image. 
+There is an Automated Build Task in Docker Cloud in order to build the Docker Image.
 This task, triggers a new build with every git push to your source code repository to create a 'latest' image.
 There is another build rule to trigger a new tag and create a 'version-x.y.z' image
 
 You can always manually create the image with the following command:
 
 ```bash
-docker build -t systelab/seed-angular . 
+docker build -t systelab/seed-angular .
 ```
 
 The image created, will contain a [nginx server][nginx] with the application files.
