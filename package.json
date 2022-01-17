@@ -86,7 +86,7 @@
     "ng-packagr": "^13.0.3",
     "reflect-metadata": "^0.1.13",
     "systelab-components-test": "^2.2.4",
-    "systelab-components-wdio-test": "file:../systelab-components-wdio-test/systelab-components-wdio-test-1.0.0.tgz",
+    "systelab-components-wdio-test": "^1.1.0",
     "systelab-schematics": "^1.2.10",
     "ts-node": "10.4.0",
     "tsconfig-paths": "3.8.0",
