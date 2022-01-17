@@ -1,106 +1,124 @@
+import { LoginPage, MainPage, PatientDialog, PatientMaintenanceDialog } from '@e2e-pages';
+import { LoginActionService, MainActionService, MainNavigationService } from '@e2e-services';
+import { CSSAnimationUtility, GeneralParameters} from '@e2e-utils';
+import { Allergy, Patient, PatientAllergy } from "@e2e-model";
 
-import { LoginPage } from 'e2e-wdio/page-objects/login.po';
-import { MainPage } from 'e2e-wdio/page-objects/main.po';
-import { PatientDialog } from 'e2e-wdio/page-objects/patient-dialog.po';
-import { PatientMaintenanceDialog } from 'e2e-wdio/page-objects/patient-maintenance-dialog.po';
-import { LoginActionService } from 'e2e-wdio/services/login-action.service';
-import { MainActionService } from 'e2e-wdio/services/main-action.service';
-import { MainNavigationService } from 'e2e-wdio/services/main-navigation.service';
-import { GeneralParameters } from 'e2e-wdio/utils/general-parameters';
-import * as lodash from 'lodash';
-import { because, TestUtil } from "systelab-components-test/lib/utilities";
+import { because } from "systelab-components-test/lib/utilities";
+import { AssertionUtility, ReportUtility, TestIdentification } from "systelab-components-wdio-test";
+
 
 describe('TC0003_PatientManagement_Allergy_e2e', () => {
-    const loginPage = new LoginPage();
-	const mainPage = new MainPage();
-	let patientMaintenanceDialog: PatientMaintenanceDialog;
-	let patientDialog: PatientDialog;
 
-	const patient = {
-		name: 'Name',
-		surname: 'Surname',
-		email: 'name@yahoo.com',
-		address: {
-			street: 'Street',
-			city: 'City',
-			zip: '08001',
-			coordinates: '11212, 1212'
-		}
-	};
+    let loginPage;
+    let mainPage;
+    let patientMaintenanceDialog: PatientMaintenanceDialog;
+    let patientDialog: PatientDialog;
 
-    const allergy = {
-		name: 'Name',
-		sign: 'Sign',
-		symptom: 'Symptom'
-	};
-
-	const allergyForPatient = {
-		allergy: 'Name',
-        name: 'Name',
-		// assertedDate: '01/01/2019',
-		// lastOccurrenceDate: '02/02/2019'
-		comments: 'Comments'
-	};
-
-	function getInvalidAllergyForPatient() {
-		const wrongAllergyForPatient = lodash.cloneDeep(allergyForPatient);
-		wrongAllergyForPatient.name = '';
-		return wrongAllergyForPatient;
-	}
+    const patientData: Patient = {
+        name: 'John',
+        surname: 'Smith',
+        email: 'jsmith@yahoo.com',
+        address: {
+            street: 'Main Street',
+            city: 'Toronto',
+            zip: '08001',
+            coordinates: '11212, 1212'
+        }
+    };
+    const allergyData: Allergy = {
+        name: 'Insect Bites',
+        signs: 'Skin rashes',
+        symptoms: 'Cough, itching and fever'
+    };
+    const allergyForPatientData: PatientAllergy = {
+        allergy: 'Insect Bites',
+        assertedDate: '01/01/2019',
+        lastOccurrence: '02/02/2019',
+        comments: 'Comments should go here'
+    };
+    const invalidAllergyForPatientData: PatientAllergy = { ...allergyForPatientData, allergy: '' };
 
     beforeAll(async () => {
-		await LoginActionService.login(loginPage);
-		await MainActionService.createAllergy(mainPage, allergy);
-		await MainActionService.createPatient(mainPage, patient);
-		patientMaintenanceDialog = await MainNavigationService.navigateToPatientMaintenancePage(mainPage);
-		patientDialog = await MainNavigationService.navigateToPatientDialog(patientMaintenanceDialog, 0);
-		patientDialog.waitToBePresent();
-	});
+        loginPage = new LoginPage();
+        mainPage = new MainPage();
 
-	afterAll(async () => {
-		await patientDialog.close();
-		await patientMaintenanceDialog.close();
-		await MainActionService.deleteFirstPatient(mainPage);
-		await MainActionService.deleteFirstAllergy(mainPage);
-	});
+        await LoginActionService.login(loginPage);
+        await CSSAnimationUtility.disable();
 
-	beforeEach(async () => {
-		await TestUtil.init('TC0003_PatientManagement_Allergy_e2e', 'Purpose: This TC is intended to verify the CRUD of a Patient',
-			GeneralParameters.appVersion, GeneralParameters.USERNAME);
-	});
+        await MainActionService.createAllergy(mainPage, allergyData);
+        await MainActionService.createPatient(mainPage, patientData);
 
-	async function checkValuesInRow(row, a) {
-		await expect(Promise.resolve(row[1])).toEqual(a.allergy);
-		// await expect(Promise.resolve(row[2])).toEqual(a.assertedDate);
-		await because('All fields are evaluated as expected').expect(Promise.resolve(row[3])).toEqual(a.comments);
-	}
+        patientMaintenanceDialog = await MainNavigationService.navigateToPatientMaintenancePage(mainPage);
+        patientDialog = await MainNavigationService.navigateToPatientDialog(patientMaintenanceDialog, 0);
+        patientDialog.waitToBePresent();
+    });
 
-	it(`Assign an allergy to a patient: [name: ${allergyForPatient.allergy}, comments: ${allergyForPatient.comments}]`, async () => {
-		await patientDialog.getAddButton().click();
-		const patientAllergyDialog = patientDialog.getPatientAllergyDialog();
-		await patientAllergyDialog.set(allergyForPatient);
-		await patientAllergyDialog.getSubmitButton().click();
-		await because('Number of allergies from patient 1').expect(patientDialog.getAllergyGrid().getNumberOfRows()).toBe(1);
-		const values = await patientDialog.getAllergyGrid().getValuesInRow(0);
-		await checkValuesInRow(values, allergyForPatient);
-	});
+    afterAll(async () => {
+        await patientDialog.close();
+        await patientMaintenanceDialog.close();
+        await MainActionService.deleteFirstPatient(mainPage);
+        await MainActionService.deleteFirstAllergy(mainPage);
+    });
 
-	it('Assign an allergy with invalid data to a patient', async () => {
-		let patientAllergyDialog;
-		await patientDialog.getAddButton().click();
-		patientAllergyDialog = patientDialog.getPatientAllergyDialog();
-		await patientAllergyDialog.set(getInvalidAllergyForPatient());
-		await patientAllergyDialog.getSubmitButton().click();
-		await because('Invalid allergy').expect(patientAllergyDialog.getMessagePopup().getElement().isPresent()).toBeTruthy();
-		await patientAllergyDialog.getMessagePopup().close();
-		await patientAllergyDialog.close();
-	});
+    beforeEach(async () => {
+        TestIdentification.setTmsLink("TC0003_PatientManagement_Allergy_e2e");
+        TestIdentification.setDescription("Goal: The purpose of this test case is to verify the CRUD of a Patient Allergy");
+        TestIdentification.setAppVersion(GeneralParameters.appVersion);
+        TestIdentification.captureEnvironment();
+    });
 
-	it('Remove an allergy from a patient', async () => {
-		await patientDialog.getAllergyGrid().clickOnRowMenu(0);
-		await patientDialog.getAllergyGrid().getMenu().selectOptionByText('Delete');
-		await because('Number of Allergies from patient 0').expect(patientDialog.getAllergyGrid().getNumberOfRows()).toBe(0);
-	});
+    async function expectPatientAllergiesGridRowCount(expectedRowCount: number): Promise<void> {
+        await ReportUtility.addExpectedResult(`Patient allergies grid has ${expectedRowCount} rows`, async () => {
+            AssertionUtility.expectEqual(await patientDialog.getAllergyGrid().getNumberOfRows(), expectedRowCount);
+        });
+    }
 
+    async function expectPatientAllergiesRowValues(rowIndex: number, expectedPatientAllergy: PatientAllergy) {
+        const rowValues: string[] = await patientDialog.getAllergyGrid().getValuesInRow(rowIndex);
+        await ReportUtility.addExpectedResult(`Value of 'Name' for row ${rowIndex} of patient allergies grid is '${expectedPatientAllergy.allergy}'`, async () => {
+            AssertionUtility.expectEqual(rowValues[1], expectedPatientAllergy.allergy);
+        });
 
+        await ReportUtility.addExpectedResult(`Value of 'Asserted Date' for row ${rowIndex} of patient allergies grid is '${expectedPatientAllergy.assertedDate}'`, async () => {
+            AssertionUtility.expectEqual(rowValues[2], expectedPatientAllergy.assertedDate);
+        });
+
+        await ReportUtility.addExpectedResult(`Value of 'Comments' for row ${rowIndex} of patient allergies grid is '${expectedPatientAllergy.comments}'`, async () => {
+            AssertionUtility.expectEqual(rowValues[3], expectedPatientAllergy.comments);
+        });
+    }
+
+    it(`Assign an allergy to a patient: [name: ${allergyForPatientData.allergy}, ` +
+       `asserted date: ${allergyForPatientData.assertedDate}, comments: ${allergyForPatientData.comments}]`, async () => {
+        await patientDialog.getAddButton().click();
+        await patientDialog.getPatientAllergyDialog().waitToBePresent();
+        await patientDialog.getPatientAllergyDialog().set(allergyForPatientData);
+        await patientDialog.getPatientAllergyDialog().getSubmitButton().click();
+
+        await expectPatientAllergiesGridRowCount(1);
+        await expectPatientAllergiesRowValues(0, allergyForPatientData);
+    });
+
+    it('Try to assign an allergy with invalid data to a patient (no allergy selected)', async () => {
+        await patientDialog.getAddButton().click();
+        await patientDialog.getPatientAllergyDialog().waitToBePresent();
+        await patientDialog.getPatientAllergyDialog().set(invalidAllergyForPatientData);
+        await patientDialog.getPatientAllergyDialog().getSubmitButton().click();
+
+        await ReportUtility.addExpectedResult("Error message popup is shown", async () => {
+            AssertionUtility.expectTrue(await patientDialog.getPatientAllergyDialog().getMessagePopup().isPresent());
+        });
+
+        await patientDialog.getPatientAllergyDialog().getMessagePopup().close();
+        await patientDialog.getPatientAllergyDialog().close();
+        await patientDialog.waitToBePresent();
+    });
+
+    it('Remove an allergy from a patient', async () => {
+        await patientDialog.getAllergyGrid().clickOnRowMenu(0);
+        await patientDialog.getAllergyGrid().getMenu().selectOptionByNumber(1);
+        await patientDialog.getAllergyGrid().getMenu().waitToBeNotPresent();
+
+        await expectPatientAllergiesGridRowCount(0);
+    });
 });
