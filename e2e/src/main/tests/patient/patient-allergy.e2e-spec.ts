@@ -1,15 +1,14 @@
-import {LoginPage} from '../../../login/page-objects/login.po';
-import {MainPage} from '../../page-objects/main.po';
-import {PatientMaintenanceDialog} from '../../page-objects/patient/patient-maintenance';
-import {PatientDialog} from '../../page-objects/patient/patient-detail/patient-dialog';
-import {MainActionService} from '../../services/main-action.service';
-import {MainNavigationService} from '../../services/main-navigation.service';
-import {because, TestUtil} from 'systelab-components-test/lib/utilities';
-import {LoginActionService} from '../../../login/services/login-action.service';
-import {disableCSSAnimation, GeneralParameters} from '../../../../general-parameters';
-
-import {browser} from 'protractor';
 import * as lodash from 'lodash';
+import { because, TestUtil } from 'systelab-components-test/lib/utilities';
+import { disableCSSAnimation, GeneralParameters } from '../../../../general-parameters';
+import { LoginPage } from '../../../login/page-objects/login.po';
+import { LoginActionService } from '../../../login/services/login-action.service';
+import { MainPage } from '../../page-objects/main.po';
+import { PatientDialog } from '../../page-objects/patient/patient-detail/patient-dialog';
+import { PatientMaintenanceDialog } from '../../page-objects/patient/patient-maintenance';
+import { MainActionService } from '../../services/main-action.service';
+import { MainNavigationService } from '../../services/main-navigation.service';
+
 
 declare const allure: any;
 
@@ -40,6 +39,7 @@ describe('TC0003_PatientManagement_Allergy_e2e', () => {
 
 	const allergyForPatient = {
 		allergy: 'Name',
+		name: 'Name',
 		// assertedDate: '01/01/2019',
 		// lastOccurrenceDate: '02/02/2019'
 		comments: 'Comments'
