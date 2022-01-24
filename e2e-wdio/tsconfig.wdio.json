@@ -13,7 +13,7 @@
             "node",
             "webdriverio/async",
             "@wdio/jasmine-framework",
-            "expect-webdriverio"
+            "expect-webdriverio",
         ]
     },
     "include": [
