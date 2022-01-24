@@ -30,7 +30,7 @@
     "ag-grid-community": "^24.0.0",
     "angular-split": "^4.0.0",
     "bootstrap": "^4.5.2",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "core-js": "3.19.1",
     "date-fns": "^2.15.0",
     "jquery": "^3.5.1",
