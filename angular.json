@@ -22,6 +22,10 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+            "allowedCommonJsDependencies": [
+              "interactjs",
+              "mobile-drag-drop"
+            ],
             "assets": [
               "src/assets",
               "src/assets/img/brand/werfen.png",
@@ -188,8 +192,9 @@
       }
     }
   },
-  "defaultProject": "seed-angular",
   "cli": {
-    "defaultCollection": "@angular-eslint/schematics"
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

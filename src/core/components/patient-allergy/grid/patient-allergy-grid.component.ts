@@ -2,10 +2,9 @@ import {Component, Input} from '@angular/core';
 import {I18nService} from 'systelab-translate';
 import {AbstractApiGrid, DialogService} from 'systelab-components';
 import {PreferencesService} from 'systelab-preferences';
-import {map} from 'rxjs/internal/operators';
 import {PatientAllergy} from '@model/patient-allergy';
 import {PatientAllergyService} from '@api/patient-allergy.service';
-import {Observable} from 'rxjs';
+import {Observable, map} from 'rxjs';
 
 @Component({
 	selector: 'patient-allergy-grid',

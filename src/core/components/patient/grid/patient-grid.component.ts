@@ -4,8 +4,7 @@ import {Patient} from '@model/patient';
 import {PatientService} from '@api/patient.service';
 import {AbstractApiGrid, DialogService} from 'systelab-components';
 import {PreferencesService} from 'systelab-preferences';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/internal/operators';
+import {Observable, map} from 'rxjs';
 
 @Component({
 	selector: 'patient-grid',
