@@ -15,10 +15,8 @@ import { MessagePopupService } from 'systelab-components';
 import { DialogService } from 'systelab-components';
 import { SystelabLoginModule } from 'systelab-login';
 import { EmptyBodyInterceptor } from '@api/empty-body.interceptor';
-import { GridHeaderContextMenuComponent } from 'systelab-components';
 import { AgGridModule } from 'ag-grid-angular';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { GridContextMenuCellRendererComponent } from 'systelab-components';
 import { LoginModule } from '@features/login/login.module';
 import { PatientMaintenanceModule } from '@features/patient-maintenance/patient-maintenance.module';
 import { AllergyMaintenanceModule } from '@features/allergy-maintenance/allergy-maintenance.module';
@@ -36,10 +34,7 @@ import { AllergyMaintenanceModule } from '@features/allergy-maintenance/allergy-
 		SystelabPreferencesModule,
 		SystelabComponentsModule,
 		SystelabLoginModule,
-		AgGridModule.withComponents([
-			GridContextMenuCellRendererComponent,
-			GridHeaderContextMenuComponent
-		]),
+		AgGridModule,
 		AppRoutingModule
 	],
 	declarations:    [
