@@ -32,7 +32,7 @@
     "bootstrap": "^4.5.2",
     "chart.js": "^2.9.4",
     "core-js": "3.19.1",
-    "date-fns": "^2.15.0",
+    "date-fns": "^2.29.3",
     "interactjs": "^1.10.17",
     "jquery": "^3.5.1",
     "mobile-drag-drop": "^2.3.0-rc.2",
