@@ -10,7 +10,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2020",
+    "target": "ES2022",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -19,16 +19,35 @@
       "dom"
     ],
     "paths": {
-      "@globals/*": ["src/core/globals/*"],
-      "@components/*": ["src/core/components/*"],
-      "@api/*": ["src/core/api/*"],
-      "@model/*": ["src/core/model/*"],
-      "@features/*": ["src/features/*"],
-      "@e2e-model": ["e2e-wdio/model/index.ts"],
-      "@e2e-pages": ["e2e-wdio/page-objects/index.ts"],
-      "@e2e-services": ["e2e-wdio/services/index.ts"],
-      "@e2e-utils": ["e2e-wdio/utils/index.ts"],
-    }
+      "@globals/*": [
+        "src/core/globals/*"
+      ],
+      "@components/*": [
+        "src/core/components/*"
+      ],
+      "@api/*": [
+        "src/core/api/*"
+      ],
+      "@model/*": [
+        "src/core/model/*"
+      ],
+      "@features/*": [
+        "src/features/*"
+      ],
+      "@e2e-model": [
+        "e2e-wdio/model/index.ts"
+      ],
+      "@e2e-pages": [
+        "e2e-wdio/page-objects/index.ts"
+      ],
+      "@e2e-services": [
+        "e2e-wdio/services/index.ts"
+      ],
+      "@e2e-utils": [
+        "e2e-wdio/utils/index.ts"
+      ]
+    },
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
