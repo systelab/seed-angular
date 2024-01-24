@@ -40,21 +40,21 @@
     "pako": "1.0.6",
     "popper.js": "1.16.1",
     "primeicons": "6.0.1",
-    "primeng": "14.2.17-lts",
+    "primeng": "16.9.4-lts",
     "rxjs": "7.5.7",
     "systelab-components": "15.10.4",
     "systelab-login": "15.6.0",
     "systelab-preferences": "15.0.0",
     "systelab-translate": "15.0.0",
     "tslib": "2.3.1",
-    "zone.js": "0.11.8"
+    "zone.js": "0.13.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "15.2.10",
     "@angular-eslint/builder": "15.2.1",
     "@angular-eslint/eslint-plugin": "15.2.1",
     "@angular-eslint/eslint-plugin-template": "15.2.1",
-    "@angular-eslint/schematics": "15.2.1",
+    "@angular-eslint/schematics": "16.3.1",
     "@angular-eslint/template-parser": "15.2.1",
     "@angular/cli": "15.2.10",
     "@angular/compiler-cli": "15.2.10",
@@ -91,7 +91,7 @@
     "ts-node": "10.9.1",
     "tsconfig-paths": "3.8.0",
     "tslint": "5.18.0",
-    "typescript": "4.8.4",
+    "typescript": "4.9.3",
     "wdio-chromedriver-service": "7.2.2"
   }
 }
