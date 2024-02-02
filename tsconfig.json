@@ -1,37 +1,45 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "downlevelIteration": true,
+    "importHelpers": true,
+    "module": "es2020",
     "outDir": "./dist/out-tsc",
+    "baseUrl": "src",
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
-    "experimentalDecorators": true,
-    "module": "esnext",
     "moduleResolution": "node",
-    "importHelpers": true,
-    "target": "es2020",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "target": "ES2022",
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
-      "es2018",
+      "ES2018",
       "dom"
     ],
+    "useDefineForClassFields": false,
     "paths": {
-      "@globals/*": ["src/core/globals/*"],
-      "@components/*": ["src/core/components/*"],
-      "@api/*": ["src/core/api/*"],
-      "@model/*": ["src/core/model/*"],
-      "@features/*": ["src/features/*"],
+      "@globals/*": ["core/globals/*"],
+      "@components/*": ["core/components/*"],
+      "@api/*": ["core/api/*"],
+      "@model/*": ["core/model/*"],
+      "@features/*": ["features/*"],
       "@e2e-model": ["e2e-wdio/model/index.ts"],
       "@e2e-pages": ["e2e-wdio/page-objects/index.ts"],
       "@e2e-services": ["e2e-wdio/services/index.ts"],
       "@e2e-utils": ["e2e-wdio/utils/index.ts"],
     }
   },
-  "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
-  }
+  "include": [
+    "src",
+    "types"
+  ],
+  "exclude": [
+    "src/test.ts",
+    "e2e"
+  ]
 }

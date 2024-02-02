@@ -1,7 +1,7 @@
 <systelab-app-frame [userName]="userName" [userFullName]="userFullName" [title]="hospitalName" [menu]="menu" [tabs]="sidetabs" [logoIcon]="logoIcon"
                     [actions]="sideactions" [largeSideBar]="false" (selected)="doSelect($event)">
     <div header-content class="row justify-content-end mr-3">
-        <button type="button" class="btn btn-sm btn-outline-primary float-left mt-2" (click)="doPatientSearch();">{{'COMMON_PATIENT' | translate | async}}</button>
+        <systelab-button class="float-left mt-2" (action)="doPatientSearch();">{{'COMMON_PATIENT' | translate | async}}</systelab-button>
     </div>
     <div main-content class="slab-flex-1 d-flex">
         <systelab-tabs *ngIf="showConfiguration" class="slab-flex-1 mt-2" [showTabBackground]="false">
