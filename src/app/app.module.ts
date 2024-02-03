@@ -32,7 +32,7 @@ import { AllergyMaintenanceModule } from '@features/allergy-maintenance/allergy-
 		LoginModule,
 		SystelabTranslateModule,
 		SystelabPreferencesModule,
-		SystelabComponentsModule,
+		SystelabComponentsModule.forRoot(),
 		SystelabLoginModule,
 		AgGridModule,
 		AppRoutingModule
