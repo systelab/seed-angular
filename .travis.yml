@@ -1,8 +1,8 @@
 sudo: required
-dist: trusty
+dist: jammy
 language: node_js
 node_js:
-  - '14.18.1'
+  - '20.11.0'
 addons:
   apt:
     update: true
@@ -12,21 +12,26 @@ addons:
       - dpkg
   chrome: stable
 
+
 services:
   - docker
+  - xvfb
 
 before_script:
-  - export CHROME_BIN=chromium-browser
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-  - ./node_modules/protractor/bin/webdriver-manager update --versions.chrome=96.0.4664.45 --gecko=false
+  - export NODE_OPTIONS="--max-old-space-size=8192"
 
 before_install:
+  - export CHROME_BIN=/usr/bin/google-chrome
+  - export DISPLAY=:99.0
+  - npm i -g npm@8.19.4
+  - npm --version
   - docker pull mysql:5.7.22
   - docker run --name db -d -e MYSQL_ROOT_PASSWORD=supersecret -e MYSQL_DATABASE=SEED -e MYSQL_USER=SEED -e MYSQL_PASSWORD=SEED -p 3307:3306  mysql:5.7.22
   - docker pull systelab/seed-jee:latest
   - docker run --link db:db -d -e MYSQL_HOST=db -e MYSQL_PORT=3306 -e MYSQL_DATABASE=SEED -e MYSQL_USER=SEED -e MYSQL_PASSWORD=SEED -p 8080:8080 systelab/seed-jee:latest
+
 install:
-  - npm install
+  - npm ci
+
 script:
   - npm run e2e

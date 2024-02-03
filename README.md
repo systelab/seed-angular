@@ -28,7 +28,7 @@ cd seed-angular
 
 ### Install Dependencies
 
-To install the dependencies you must run:
+To install the dependencies you  need to install Node and run the following command:
 
 ```bash
 npm install
